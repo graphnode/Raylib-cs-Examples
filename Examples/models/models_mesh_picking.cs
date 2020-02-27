@@ -12,9 +12,11 @@
 
 using Raylib_cs;
 using static Raylib_cs.Raylib;
+using static Raylib_cs.Raymath;
+using static Raylib_cs.Color;
 using static Raylib_cs.CameraType;
 using static Raylib_cs.CameraMode;
-using static Raylib_cs.TexmapIndex;
+using static Raylib_cs.MaterialMapType;
 
 namespace Examples
 {
@@ -22,7 +24,7 @@ namespace Examples
     {
         public const float FLT_MAX = 3.40282347E+38F;
 
-        public static int Main()
+        public unsafe static int Main()
         {
             // Initialization
             //--------------------------------------------------------------------------------------
@@ -43,10 +45,17 @@ namespace Examples
 
             Model tower = LoadModel("resources/models/turret.obj");                     // Load OBJ model
             Texture2D texture = LoadTexture("resources/models/turret_diffuse.png");     // Load model texture
-            tower.material.maps[(int)MAP_ALBEDO].texture = texture;                     // Set model diffuse texture
+
+            // Set map diffuse texture
+            Material *materials = (Material*)tower.materials.ToPointer();
+            MaterialMap* maps = (MaterialMap*)materials[0].maps.ToPointer();
+            maps[(int)MAP_ALBEDO].texture = texture;
 
             Vector3 towerPos = new Vector3(0.0f, 0.0f, 0.0f);       // Set model position
-            BoundingBox towerBBox = MeshBoundingBox(tower.mesh);    // Get mesh bounding box
+
+            Mesh* meshes = (Mesh*)tower.meshes.ToPointer();
+            BoundingBox towerBBox = MeshBoundingBox(meshes[0]);    // Get mesh bounding box
+
             bool hitMeshBBox = false;
             bool hitTriangle = false;
 

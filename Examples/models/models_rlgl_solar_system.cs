@@ -11,19 +11,18 @@
 *
 ********************************************************************************************/
 
+using System;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
+using static Raylib_cs.Rlgl;
 using static Raylib_cs.Color;
+using static Raylib_cs.CameraMode;
+using static Raylib_cs.CameraType;
 
 namespace Examples
 {
     public class models_rlgl_solar_system
     {
-        //------------------------------------------------------------------------------------
-        // Module Functions Declaration
-        //------------------------------------------------------------------------------------
-        void DrawSphereBasic(Color color);      // Draw sphere without any matrix transformation
-
         //------------------------------------------------------------------------------------
         // Program main entry point
         //------------------------------------------------------------------------------------
@@ -43,7 +42,7 @@ namespace Examples
             InitWindow(screenWidth, screenHeight, "raylib [models] example - rlgl module usage with push/pop matrix transformations");
 
             // Define the camera to look into our 3d world
-            Camera3D camera = new Camera(0);
+            Camera3D camera = new Camera3D();
             camera.position = new Vector3(16.0f, 16.0f, 16.0f);
             camera.target = new Vector3(0.0f, 0.0f, 0.0f);
             camera.up = new Vector3(0.0f, 1.0f, 0.0f);
@@ -60,14 +59,14 @@ namespace Examples
             float moonOrbitRotation = 0.0f;     // Rotation of moon around earth in degrees
 
             SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
-                                                //--------------------------------------------------------------------------------------
+            //--------------------------------------------------------------------------------------
 
             // Main game loop
             while (!WindowShouldClose())        // Detect window close button or ESC key
             {
                 // Update
                 //----------------------------------------------------------------------------------
-                UpdateCamera(ref);
+                UpdateCamera(ref camera);
 
                 earthRotation += (5.0f * rotationSpeed);
                 earthOrbitRotation += (365 / 360.0f * (5.0f * rotationSpeed) * rotationSpeed);
@@ -94,7 +93,7 @@ namespace Examples
                 rlRotatef(-earthOrbitRotation, 0.0f, 1.0f, 0.0f);   // Rotation for Earth orbit around Sun inverted
 
                 rlPushMatrix();
-                rlRotatef(earthRotation, 0.25, 1.0, 0.0);       // Rotation for Earth itself
+                rlRotatef(earthRotation, 0.25f, 1.0f, 0.0f);       // Rotation for Earth itself
                 rlScalef(earthRadius, earthRadius, earthRadius);// Scale Earth
 
                 DrawSphereBasic(BLUE);                          // Draw the Earth
@@ -110,8 +109,8 @@ namespace Examples
                 rlPopMatrix();
 
                 // Some reference elements (not affected by previous matrix transformations)
-                DrawCircle3D(new Vector3(0.0f, 0.0f, 0.0f }, earthOrbitRadius, (Vector3){
-                1, 0, 0 ), 90.0f, Fade(RED, 0.5f));
+                DrawCircle3D(new Vector3(0.0f, 0.0f, 0.0f), earthOrbitRadius, new Vector3(
+                1, 0, 0), 90.0f, Fade(RED, 0.5f));
                 DrawGrid(20, 1.0f);
 
                 EndMode3D();
@@ -137,7 +136,7 @@ namespace Examples
 
         // Draw sphere without any matrix transformation
         // NOTE: Sphere is drawn in world position ( 0, 0, 0 ) with radius 1.0f
-        void DrawSphereBasic(Color color)
+        static void DrawSphereBasic(Color color)
         {
             int rings = 16;
             int slices = 16;
@@ -149,30 +148,28 @@ namespace Examples
             {
                 for (int j = 0; j < slices; j++)
                 {
-                    rlVertex3f(cosf(DEG2RAD * (270 + (180 / (rings + 1)) * i)) * sinf(DEG2RAD * (j * 360 / slices)),
-                               sinf(DEG2RAD * (270 + (180 / (rings + 1)) * i)),
-                               cosf(DEG2RAD * (270 + (180 / (rings + 1)) * i)) * cosf(DEG2RAD * (j * 360 / slices)));
-                    rlVertex3f(cosf(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))) * sinf(DEG2RAD * ((j + 1) * 360 / slices)),
-                               sinf(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))),
-                               cosf(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))) * cosf(DEG2RAD * ((j + 1) * 360 / slices)));
-                    rlVertex3f(cosf(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))) * sinf(DEG2RAD * (j * 360 / slices)),
-                               sinf(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))),
-                               cosf(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))) * cosf(DEG2RAD * (j * 360 / slices)));
+                    rlVertex3f((float)Math.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * i)) * (float)Math.Sin(DEG2RAD * (j * 360 / slices)),
+                               (float)Math.Sin(DEG2RAD * (270 + (180 / (rings + 1)) * i)),
+                               (float)Math.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * i)) * (float)Math.Cos(DEG2RAD * (j * 360 / slices)));
+                    rlVertex3f((float)Math.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))) * (float)Math.Sin(DEG2RAD * ((j + 1) * 360 / slices)),
+                               (float)Math.Sin(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))),
+                               (float)Math.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))) * (float)Math.Cos(DEG2RAD * ((j + 1) * 360 / slices)));
+                    rlVertex3f((float)Math.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))) * (float)Math.Sin(DEG2RAD * (j * 360 / slices)),
+                               (float)Math.Sin(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))),
+                               (float)Math.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))) * (float)Math.Cos(DEG2RAD * (j * 360 / slices)));
 
-                    rlVertex3f(cosf(DEG2RAD * (270 + (180 / (rings + 1)) * i)) * sinf(DEG2RAD * (j * 360 / slices)),
-                               sinf(DEG2RAD * (270 + (180 / (rings + 1)) * i)),
-                               cosf(DEG2RAD * (270 + (180 / (rings + 1)) * i)) * cosf(DEG2RAD * (j * 360 / slices)));
-                    rlVertex3f(cosf(DEG2RAD * (270 + (180 / (rings + 1)) * (i))) * sinf(DEG2RAD * ((j + 1) * 360 / slices)),
-                               sinf(DEG2RAD * (270 + (180 / (rings + 1)) * (i))),
-                               cosf(DEG2RAD * (270 + (180 / (rings + 1)) * (i))) * cosf(DEG2RAD * ((j + 1) * 360 / slices)));
-                    rlVertex3f(cosf(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))) * sinf(DEG2RAD * ((j + 1) * 360 / slices)),
-                               sinf(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))),
-                               cosf(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))) * cosf(DEG2RAD * ((j + 1) * 360 / slices)));
+                    rlVertex3f((float)Math.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * i)) * (float)Math.Sin(DEG2RAD * (j * 360 / slices)),
+                               (float)Math.Sin(DEG2RAD * (270 + (180 / (rings + 1)) * i)),
+                               (float)Math.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * i)) * (float)Math.Cos(DEG2RAD * (j * 360 / slices)));
+                    rlVertex3f((float)Math.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * (i))) * (float)Math.Sin(DEG2RAD * ((j + 1) * 360 / slices)),
+                               (float)Math.Sin(DEG2RAD * (270 + (180 / (rings + 1)) * (i))),
+                               (float)Math.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * (i))) * (float)Math.Cos(DEG2RAD * ((j + 1) * 360 / slices)));
+                    rlVertex3f((float)Math.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))) * (float)Math.Sin(DEG2RAD * ((j + 1) * 360 / slices)),
+                               (float)Math.Sin(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))),
+                               (float)Math.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))) * (float)Math.Cos(DEG2RAD * ((j + 1) * 360 / slices)));
                 }
             }
             rlEnd();
         }
-
     }
-
 }

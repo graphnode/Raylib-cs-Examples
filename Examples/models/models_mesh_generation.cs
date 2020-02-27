@@ -11,8 +11,10 @@
 
 using Raylib_cs;
 using static Raylib_cs.Raylib;
+using static Raylib_cs.Color;
 using static Raylib_cs.CameraMode;
-using static Raylib_cs.TexmapIndex;
+using static Raylib_cs.MaterialMapType;
+using static Raylib_cs.MouseButton;
 
 namespace Examples
 {
@@ -20,7 +22,7 @@ namespace Examples
     {
         public const int NUM_MODELS = 7;
 
-        public static int Main()
+        public unsafe static int Main()
         {
             // Initialization
             //--------------------------------------------------------------------------------------
@@ -45,7 +47,13 @@ namespace Examples
             models[6] = LoadModelFromMesh(GenMeshKnot(1.0f, 2.0f, 16, 128));
 
             // Set isChecked texture as default diffuse component for all models material
-            for (int i = 0; i < NUM_MODELS; i++) models[i].material.maps[(int)MAP_ALBEDO].texture = texture;
+            for (int i = 0; i < NUM_MODELS; i++)
+            {
+                // Set map diffuse texture
+                Material *materials = (Material*)models[i].materials.ToPointer();
+                MaterialMap* maps = (MaterialMap*)materials[0].maps.ToPointer();
+                maps[(int)MAP_ALBEDO].texture = texture;
+            }
 
             // Define the camera to look into our 3d world
             Camera3D camera = new Camera3D(new Vector3(5.0f, 5.0f, 5.0f), new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.0f, 1.0f, 0.0f), 45.0f, 0);
@@ -58,7 +66,7 @@ namespace Examples
             SetCameraMode(camera, CAMERA_ORBITAL);  // Set a orbital camera mode
 
             SetTargetFPS(60);                       // Set our game to run at 60 frames-per-second
-                                                    //--------------------------------------------------------------------------------------
+            //--------------------------------------------------------------------------------------
 
             // Main game loop
             while (!WindowShouldClose())    // Detect window close button or ESC key

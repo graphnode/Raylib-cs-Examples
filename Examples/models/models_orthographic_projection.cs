@@ -13,8 +13,9 @@
 
 using Raylib_cs;
 using static Raylib_cs.Raylib;
+using static Raylib_cs.Color;
 using static Raylib_cs.CameraType;
-using static Raylib_cs.CameraMode;
+using static Raylib_cs.KeyboardKey;
 
 namespace Examples
 {
@@ -36,7 +37,7 @@ namespace Examples
             Camera3D camera = new Camera3D(new Vector3(0.0f, 10.0f, 10.0f), new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.0f, 1.0f, 0.0f), FOVY_PERSPECTIVE, CAMERA_PERSPECTIVE);
 
             SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
-                                //--------------------------------------------------------------------------------------
+            //--------------------------------------------------------------------------------------
 
             // Main game loop
             while (!WindowShouldClose())    // Detect window close button or ESC key

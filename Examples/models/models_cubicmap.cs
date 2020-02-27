@@ -19,7 +19,7 @@ namespace Examples
 {
     public class models_cubicmap
     {
-        public static int Main()
+        public unsafe static int Main()
         {
             // Initialization
             //--------------------------------------------------------------------------------------
@@ -39,7 +39,11 @@ namespace Examples
 
             // NOTE: By default each cube is mapped to one part of texture atlas
             Texture2D texture = LoadTexture("resources/cubicmap_atlas.png");    // Load map texture
-            model.materials.maps[(int)MAP_ALBEDO].texture = texture;                 // Set map diffuse texture
+
+            // Set map diffuse texture
+            Material *materials = (Material*)model.materials.ToPointer();
+            MaterialMap* maps = (MaterialMap*)materials[0].maps.ToPointer();
+            maps[(int)MAP_ALBEDO].texture = texture;
 
             Vector3 mapPosition = new Vector3(-16.0f, 0.0f, -8.0f);          // Set model position
 

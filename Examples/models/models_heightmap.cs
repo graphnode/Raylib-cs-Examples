@@ -11,6 +11,7 @@
 
 using Raylib_cs;
 using static Raylib_cs.Raylib;
+using static Raylib_cs.Color;
 using static Raylib_cs.CameraMode;
 using static Raylib_cs.MaterialMapType;
 
@@ -18,7 +19,7 @@ namespace Examples
 {
     public class models_heightmap
     {
-        public static int Main()
+        public unsafe static int Main()
         {
             // Initialization
             //--------------------------------------------------------------------------------------
@@ -36,7 +37,11 @@ namespace Examples
             Mesh mesh = GenMeshHeightmap(image, new Vector3(16, 8, 16));    // Generate heightmap mesh (RAM and VRAM)
             Model model = LoadModelFromMesh(mesh);                          // Load model from generated mesh
 
-            model.material.maps[(int)MAP_ALBEDO].texture = texture;             // Set map diffuse texture
+            // Set map diffuse texture
+            Material *materials = (Material*)model.materials.ToPointer();
+            MaterialMap* maps = (MaterialMap*)materials[0].maps.ToPointer();
+            maps[(int)MAP_ALBEDO].texture = texture;
+
             Vector3 mapPosition = new Vector3(-8.0f, 0.0f, -8.0f);                   // Define model position
 
             UnloadImage(image);                     // Unload heightmap image from RAM, already uploaded to VRAM
@@ -44,7 +49,7 @@ namespace Examples
             SetCameraMode(camera, CAMERA_ORBITAL);  // Set an orbital camera mode
 
             SetTargetFPS(60);                       // Set our game to run at 60 frames-per-second
-                                                    //--------------------------------------------------------------------------------------
+            //--------------------------------------------------------------------------------------
 
             // Main game loop
             while (!WindowShouldClose())            // Detect window close button or ESC key
@@ -52,7 +57,7 @@ namespace Examples
                 // Update
                 //----------------------------------------------------------------------------------
                 UpdateCamera(ref camera);              // Update camera
-                                                       //----------------------------------------------------------------------------------
+                //----------------------------------------------------------------------------------
 
                 // Draw
                 //----------------------------------------------------------------------------------

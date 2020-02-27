@@ -17,6 +17,7 @@
 *
 ********************************************************************************************/
 
+using System;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
@@ -28,7 +29,7 @@ namespace Examples
 {
     public class models_animation
     {
-        public static int Main()
+        public unsafe static int Main()
         {
             // Initialization
             //--------------------------------------------------------------------------------------
@@ -53,7 +54,7 @@ namespace Examples
 
             // Load animation data
             int animsCount = 0;
-            ModelAnimation[] anims = LoadModelAnimations("resources/guy/guyanim.iqm", ref animsCount);
+            IntPtr anims = LoadModelAnimations("resources/guy/guyanim.iqm", ref animsCount);
             int animFrameCounter = 0;
 
             SetCameraMode(camera, CAMERA_FREE); // Set free camera mode
@@ -72,8 +73,8 @@ namespace Examples
                 if (IsKeyDown(KEY_SPACE))
                 {
                     animFrameCounter++;
-                    UpdateModelAnimation(model, anims[0], animFrameCounter);
-                    if (animFrameCounter >= anims[0].frameCount) animFrameCounter = 0;
+                    // UpdateModelAnimation(model, anims[0], animFrameCounter);
+                    // if (animFrameCounter >= anims[0].frameCount) animFrameCounter = 0;
                 }
                 //----------------------------------------------------------------------------------
 
@@ -89,7 +90,7 @@ namespace Examples
 
                 for (int i = 0; i < model.boneCount; i++)
                 {
-                    DrawCube(anims[0].framePoses[animFrameCounter][i].translation, 0.2f, 0.2f, 0.2f, RED);
+                    // DrawCube(anims[0].framePoses[animFrameCounter][i].translation, 0.2f, 0.2f, 0.2f, RED);
                 }
 
                 DrawGrid(10, 1.0f);         // Draw a grid
@@ -108,7 +109,7 @@ namespace Examples
             UnloadTexture(texture);     // Unload texture
 
             // Unload model animations data
-            for (int i = 0; i < animsCount; i++) UnloadModelAnimation(anims[i]);
+            // for (int i = 0; i < animsCount; i++) UnloadModelAnimation(anims[i]);
 
             UnloadModel(model);         // Unload model
 

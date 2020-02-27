@@ -11,7 +11,9 @@
   <Import Project="../netfx.props" />
 
   <ItemGroup>
-    <Compile Remove="models/*.cs" />
+    <!-- <Compile Remove="models/*.cs" /> -->
+    <Compile Remove="models/models_material_pbr.cs" />
+    <Compile Remove="models/models_skybox.cs" />
     <Compile Remove="others/*.cs" />
     <Compile Remove="physics/*.cs" />
     <Compile Remove="shaders/*.cs" />

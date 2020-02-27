@@ -21,12 +21,16 @@
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
+using static Raylib_cs.CameraMode;
+using static Raylib_cs.CameraType;
+using static Raylib_cs.MouseButton;
+using static Raylib_cs.MaterialMapType;
 
 namespace Examples
 {
     public class models_loading
     {
-        public static int Main()
+        public unsafe static int Main()
         {
             // Initialization
             //--------------------------------------------------------------------------------------
@@ -36,7 +40,7 @@ namespace Examples
             InitWindow(screenWidth, screenHeight, "raylib [models] example - models loading");
 
             // Define the camera to look into our 3d world
-            Camera3D camera = new Camera(0);
+            Camera3D camera = new Camera3D();
             camera.position = new Vector3(50.0f, 50.0f, 50.0f); // Camera position
             camera.target = new Vector3(0.0f, 10.0f, 0.0f);     // Camera looking at point
             camera.up = new Vector3(0.0f, 1.0f, 0.0f);          // Camera up vector (rotation towards target)
@@ -45,11 +49,16 @@ namespace Examples
 
             Model model = LoadModel("resources/models/castle.obj");                 // Load model
             Texture2D texture = LoadTexture("resources/models/castle_diffuse.png"); // Load model texture
-            model.materials[0].maps[MAP_DIFFUSE].texture = texture;                 // Set map diffuse texture
+
+            // Set map diffuse texture
+            Material *materials = (Material*)model.materials.ToPointer();
+            MaterialMap* maps = (MaterialMap*)materials[0].maps.ToPointer();
+            maps[(int)MAP_ALBEDO].texture = texture;
 
             Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);                // Set model position
 
-            BoundingBox bounds = MeshBoundingBox(model.meshes[0]);  // Set model bounds
+            Mesh *meshes = (Mesh*)model.meshes.ToPointer();
+            BoundingBox bounds = MeshBoundingBox(meshes[0]);  // Set model bounds
 
             // NOTE: bounds are calculated from the original size of the model,
             // if model is scaled on drawing, bounds must be also scaled
@@ -66,13 +75,13 @@ namespace Examples
             {
                 // Update
                 //----------------------------------------------------------------------------------
-                UpdateCamera(ref);
+                UpdateCamera(ref camera);
 
                 // Load new models/textures on dragref
                 if (IsFileDropped())
                 {
                     int count = 0;
-                    char** droppedFiles = GetDroppedFiles(ref);
+                    string[] droppedFiles = GetDroppedFiles(ref count);
 
                     if (count == 1) // Only support one file dropped
                     {
@@ -82,9 +91,14 @@ namespace Examples
                         {
                             UnloadModel(model);                     // Unload previous model
                             model = LoadModel(droppedFiles[0]);     // Load new model
-                            model.materials[0].maps[MAP_DIFFUSE].texture = texture; // Set current map diffuse texture
 
-                            bounds = MeshBoundingBox(model.meshes[0]);
+                            // Set current map diffuse texture
+                            materials = (Material*)model.materials.ToPointer();
+                            maps = (MaterialMap*)materials[0].maps.ToPointer();
+                            maps[(int)MAP_ALBEDO].texture = texture;
+
+                            meshes = (Mesh*)model.meshes.ToPointer();
+                            bounds = MeshBoundingBox(meshes[0]);
 
                             // TODO: Move camera position from target enough distance to visualize model properly
                         }
@@ -93,7 +107,7 @@ namespace Examples
                             // Unload current model texture and load new one
                             UnloadTexture(texture);
                             texture = LoadTexture(droppedFiles[0]);
-                            model.materials[0].maps[MAP_DIFFUSE].texture = texture;
+                            maps[(int)MAP_ALBEDO].texture = texture;
                         }
                     }
 

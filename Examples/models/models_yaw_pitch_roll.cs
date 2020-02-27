@@ -14,21 +14,21 @@
 
 using Raylib_cs;
 using static Raylib_cs.Raylib;
+using static Raylib_cs.Raymath;
+using static Raylib_cs.Color;
 using static Raylib_cs.CameraType;
-using static Raylib_cs.TexmapIndex;
+using static Raylib_cs.MaterialMapType;
 using static Raylib_cs.BlendMode;
+using static Raylib_cs.KeyboardKey;
 
 namespace Examples
 {
     public class models_yaw_pitch_roll
     {
-        // Draw angle gauge controls
-        //void DrawAngleGauge(Texture2D angleGauge, int x, int y, float angle, char title[], Color color);
-
         //----------------------------------------------------------------------------------
         // Main entry point
         //----------------------------------------------------------------------------------
-        public static int Main()
+        public unsafe static int Main()
         {
             // Initialization
             //--------------------------------------------------------------------------------------
@@ -46,16 +46,20 @@ namespace Examples
 
             // Model loading
             Model model = LoadModel("resources/plane.obj");      // Load OBJ model
-            model.material.maps[(int)MAP_ALBEDO].texture = LoadTexture("resources/plane_diffuse.png"); // Set map diffuse texture
 
-            GenTextureMipmaps(ref model.material.maps[(int)MAP_ALBEDO].texture);
+            // Set map diffuse texture
+            Material *materials = (Material*)model.materials.ToPointer();
+            MaterialMap* maps = (MaterialMap*)materials[0].maps.ToPointer();
+            maps[(int)MAP_ALBEDO].texture = LoadTexture("resources/plane_diffuse.png");
+
+            GenTextureMipmaps(ref maps[(int)MAP_ALBEDO].texture);
 
             Camera3D camera = new Camera3D();
-            camera.position = new Vector3(0.0f, 60.0f, -120.0f);// Camera3D position perspective
-            camera.target = new Vector3(0.0f, 12.0f, 0.0f);     // Camera3D looking at point
-            camera.up = new Vector3(0.0f, 1.0f, 0.0f);          // Camera3D up vector (rotation towards target)
-            camera.fovy = 30.0f;                                // Camera3D field-of-view Y
-            camera.type = CAMERA_PERSPECTIVE;                   // Camera3D type
+            camera.position = new Vector3(0.0f, 60.0f, -120.0f);  // Camera3D position perspective
+            camera.target = new Vector3(0.0f, 12.0f, 0.0f);       // Camera3D looking at point
+            camera.up = new Vector3(0.0f, 1.0f, 0.0f);            // Camera3D up vector (rotation towards target)
+            camera.fovy = 30.0f;                                  // Camera3D field-of-view Y
+            camera.type = CAMERA_PERSPECTIVE;                     // Camera3D type
 
             float pitch = 0.0f;
             float roll = 0.0f;
@@ -63,7 +67,6 @@ namespace Examples
 
             SetTargetFPS(60);
             //--------------------------------------------------------------------------------------
-
 
             while (!WindowShouldClose())    // Detect window close button or ESC key
             {
