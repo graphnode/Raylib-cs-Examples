@@ -75,12 +75,11 @@ namespace Examples
 
             // Define lights attributes
             // NOTE: Shader is passed to every light on creation to define shader bindings internally
-            Light[] lights = new Light[]
-            {
-            CreateLight(LightType.LIGHT_POINT, new Vector3( LIGHT_DISTANCE, LIGHT_HEIGHT, 0.0f ), new Vector3( 0.0f, 0.0f, 0.0f ), new Color( 255, 0, 0, 255 ), model.material.shader),
-            CreateLight(LightType.LIGHT_POINT, new Vector3( 0.0f, LIGHT_HEIGHT, LIGHT_DISTANCE ), new Vector3( 0.0f, 0.0f, 0.0f ), new Color( 0, 255, 0, 255 ), model.material.shader),
-            CreateLight(LightType.LIGHT_POINT, new Vector3( -LIGHT_DISTANCE, LIGHT_HEIGHT, 0.0f ), new Vector3( 0.0f, 0.0f, 0.0f ),new Color( 0, 0, 255, 255 ), model.material.shader),
-            CreateLight(LightType.LIGHT_DIRECTIONAL, new Vector3(0.0f, LIGHT_HEIGHT * 2.0f, -LIGHT_DISTANCE ), new Vector3( 0.0f, 0.0f, 0.0f ), new Color(255, 0, 255, 255 ), model.material.shader)
+            Light[] lights = new Light[] {
+                CreateLight(LightType.LIGHT_POINT, new Vector3( LIGHT_DISTANCE, LIGHT_HEIGHT, 0.0f ), new Vector3( 0.0f, 0.0f, 0.0f ), new Color( 255, 0, 0, 255 ), model.material.shader),
+                CreateLight(LightType.LIGHT_POINT, new Vector3( 0.0f, LIGHT_HEIGHT, LIGHT_DISTANCE ), new Vector3( 0.0f, 0.0f, 0.0f ), new Color( 0, 255, 0, 255 ), model.material.shader),
+                CreateLight(LightType.LIGHT_POINT, new Vector3( -LIGHT_DISTANCE, LIGHT_HEIGHT, 0.0f ), new Vector3( 0.0f, 0.0f, 0.0f ),new Color( 0, 0, 255, 255 ), model.material.shader),
+                CreateLight(LightType.LIGHT_DIRECTIONAL, new Vector3(0.0f, LIGHT_HEIGHT * 2.0f, -LIGHT_DISTANCE ), new Vector3( 0.0f, 0.0f, 0.0f ), new Color(255, 0, 255, 255 ), model.material.shader)
             };
 
             SetCameraMode(camera, CAMERA_ORBITAL);  // Set an orbital camera mode

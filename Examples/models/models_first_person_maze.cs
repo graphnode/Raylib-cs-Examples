@@ -9,6 +9,7 @@
 *
 ********************************************************************************************/
 
+using System;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
@@ -19,7 +20,7 @@ namespace Examples
 {
     public class model_first_person_maze
     {
-        public static int Main()
+        public unsafe static int Main()
         {
             // Initialization
             //--------------------------------------------------------------------------------------
@@ -29,7 +30,7 @@ namespace Examples
             InitWindow(screenWidth, screenHeight, "raylib [models] example - first person maze");
 
             // Define the camera to look into our 3d world
-            Camera3D camera = new Camera(new Vector3(0.2f, 0.4f, 0.2f), new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.0f, 1.0f, 0.0f), 45.0f, 0);
+            Camera3D camera = new Camera3D(new Vector3(0.2f, 0.4f, 0.2f), new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.0f, 1.0f, 0.0f), 45.0f, CameraType.CAMERA_PERSPECTIVE);
 
             Image imMap = LoadImage("resources/cubicmap.png");      // Load cubicmap image (RAM)
             Texture2D cubicmap = LoadTextureFromImage(imMap);       // Convert image to texture to display (VRAM)
@@ -38,10 +39,14 @@ namespace Examples
 
             // NOTE: By default each cube is mapped to one part of texture atlas
             Texture2D texture = LoadTexture("resources/cubicmap_atlas.png");    // Load map texture
-            model.materials[0].maps[MAP_ALBEDO].texture = texture;             // Set map diffuse texture
+
+            // Set map diffuse texture
+            Material *materials = (Material*)model.materials.ToPointer();
+            MaterialMap* maps = (MaterialMap*)materials[0].maps.ToPointer();
+            maps[(int)MAP_ALBEDO].texture = texture;
 
             // Get map image data to be used for collision detection
-            Color[] mapPixels = GetImageData(imMap);
+            IntPtr mapPixelsData = GetImageData(imMap);
             UnloadImage(imMap);             // Unload image from RAM
 
             Vector3 mapPosition = new Vector3(-16.0f, 0.0f, -8.0f);  // Set model position
@@ -81,6 +86,7 @@ namespace Examples
                 {
                     for (int x = 0; x < cubicmap.width; x++)
                     {
+                        Color *mapPixels = (Color*)mapPixelsData.ToPointer();
                         if ((mapPixels[y * cubicmap.width + x].r == 255) &&       // Collision: white pixel, only check R channel
                             (CheckCollisionCircleRec(playerPos, playerRadius,
                             new Rectangle(mapPosition.x - 0.5f + x * 1.0f, mapPosition.z - 0.5f + y * 1.0f, 1.0f, 1.0f))))
@@ -101,7 +107,7 @@ namespace Examples
                 BeginMode3D(camera);
 
                 DrawModel(model, mapPosition, 1.0f, WHITE);                     // Draw maze map
-                                                                                //DrawCubeV(playerPosition, new Vector3( 0.2f, 0.4f, 0.2f ), RED);  // Draw player
+                // DrawCubeV(playerPosition, new Vector3( 0.2f, 0.4f, 0.2f ), RED);  // Draw player
 
                 EndMode3D();
 
@@ -128,7 +134,5 @@ namespace Examples
 
             return 0;
         }
-
     }
-
 }

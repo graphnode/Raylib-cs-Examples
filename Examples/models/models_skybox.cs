@@ -11,15 +11,16 @@
 
 using Raylib_cs;
 using static Raylib_cs.Raylib;
+using static Raylib_cs.Color;
 using static Raylib_cs.CameraMode;
-using static Raylib_cs.TexmapIndex;
+using static Raylib_cs.MaterialMapType;
 
 namespace Examples
 {
     public class models_skybox
     {
 
-        public static int Main()
+        public unsafe static int Main()
         {
             // Initialization
             //--------------------------------------------------------------------------------------
@@ -57,7 +58,7 @@ namespace Examples
             SetCameraMode(camera, CAMERA_FIRST_PERSON);  // Set a first person camera mode
 
             SetTargetFPS(60);                       // Set our game to run at 60 frames-per-second
-                                                    //--------------------------------------------------------------------------------------
+            //--------------------------------------------------------------------------------------
 
             // Main game loop
             while (!WindowShouldClose())            // Detect window close button or ESC key
@@ -65,7 +66,7 @@ namespace Examples
                 // Update
                 //----------------------------------------------------------------------------------
                 UpdateCamera(ref camera);              // Update camera
-                                                       //----------------------------------------------------------------------------------
+                //----------------------------------------------------------------------------------
 
                 // Draw
                 //----------------------------------------------------------------------------------
