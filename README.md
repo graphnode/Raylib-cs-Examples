@@ -1,8 +1,8 @@
+# Raylib-cs-Examples
+
 ![Raylib-cs Logo](https://github.com/ChrisDill/Raylib-cs/blob/master/Logo/raylib-cs_256x256.png "Raylib-cs Logo")
 
 [discord](https://discord.gg/VkzNHUE)
-
-# Raylib-cs-Examples
 
 C# examples for raylib-cs, a simple and easy-to-use library to learn videogames programming (www.raylib.com)
 
@@ -14,11 +14,11 @@ C# examples for raylib-cs, a simple and easy-to-use library to learn videogames 
 
 2. `cd Raylib-cs`
 
-3. `dotnet build --Configuration Release`
+3. `dotnet build -c Release`
 
 ### Running
 
-1. `dotnet run --project=Examples/Examples.csproj --Configuration Release`
+1. `dotnet run -p Examples/Examples.csproj -c Release`
 
 ## Contributing
 
