@@ -21,6 +21,7 @@
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
+using static Raylib_cs.ShaderUniformDataType;
 
 namespace Examples
 {
@@ -28,7 +29,7 @@ namespace Examples
     {
         const int GLSL_VERSION = 330;
 
-        public static int Main()
+        public unsafe static int Main()
         {
             // Initialization
             //--------------------------------------------------------------------------------------
@@ -41,7 +42,7 @@ namespace Examples
             Texture2D texture = LoadTexture("resources/space.png");
 
             // Load shader and setup location points and values
-            Shader shader = LoadShader(0, FormatText("resources/shaders/glsl%i/wave.fs", GLSL_VERSION));
+            Shader shader = LoadShader(null, string.Format("resources/shaders/glsl{0}/wave.fs", GLSL_VERSION));
 
             int secondsLoc = GetShaderLocation(shader, "secondes");
             int freqXLoc = GetShaderLocation(shader, "freqX");
@@ -59,19 +60,19 @@ namespace Examples
             float speedX = 8.0f;
             float speedY = 8.0f;
 
-            float screenSize[2] = { (float)GetScreenWidth(), (float)GetScreenHeight() };
-            SetShaderValue(shader, GetShaderLocation(shader, "size"), ref, UNIFORM_VEC2);
-            SetShaderValue(shader, freqXLoc, ref, UNIFORM_FLOAT);
-            SetShaderValue(shader, freqYLoc, ref, UNIFORM_FLOAT);
-            SetShaderValue(shader, ampXLoc, ref, UNIFORM_FLOAT);
-            SetShaderValue(shader, ampYLoc, ref, UNIFORM_FLOAT);
-            SetShaderValue(shader, speedXLoc, ref, UNIFORM_FLOAT);
-            SetShaderValue(shader, speedYLoc, ref, UNIFORM_FLOAT);
+            float[] screenSize = { (float)GetScreenWidth(), (float)GetScreenHeight() };
+            SetShaderValue(shader, GetShaderLocation(shader, "size"), ref screenSize, UNIFORM_VEC2);
+            SetShaderValue(shader, freqXLoc, ref freqX, UNIFORM_FLOAT);
+            SetShaderValue(shader, freqYLoc, ref freqY, UNIFORM_FLOAT);
+            SetShaderValue(shader, ampXLoc, ref ampX, UNIFORM_FLOAT);
+            SetShaderValue(shader, ampYLoc, ref ampY, UNIFORM_FLOAT);
+            SetShaderValue(shader, speedXLoc, ref speedX, UNIFORM_FLOAT);
+            SetShaderValue(shader, speedYLoc, ref speedY, UNIFORM_FLOAT);
 
             float seconds = 0.0f;
 
             SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
-                                            // -------------------------------------------------------------------------------------------------------------
+            // -------------------------------------------------------------------------------------------------------------
 
             // Main game loop
             while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -80,7 +81,7 @@ namespace Examples
                 //----------------------------------------------------------------------------------
                 seconds += GetFrameTime();
 
-                SetShaderValue(shader, secondsLoc, ref, UNIFORM_FLOAT);
+                SetShaderValue(shader, secondsLoc, ref seconds, UNIFORM_FLOAT);
                 //----------------------------------------------------------------------------------
 
                 // Draw

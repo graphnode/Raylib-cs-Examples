@@ -48,7 +48,7 @@ namespace Examples
 
             Model model = LoadModel("resources/guy/guy.iqm");               // Load the animated model mesh and basic data
             Texture2D texture = LoadTexture("resources/guy/guytex.png");    // Load model texture and set material
-                                                                            // SetMaterialTexture(model.materials[0], MAP_ALBEDO, texture);  // Set model material map texture
+            // SetMaterialTexture(model.materials[0], MAP_ALBEDO, texture);  // Set model material map texture
 
             Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);            // Set model position
 
@@ -60,7 +60,7 @@ namespace Examples
             SetCameraMode(camera, CAMERA_FREE); // Set free camera mode
 
             SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
-                                                //--------------------------------------------------------------------------------------
+            //--------------------------------------------------------------------------------------
 
             // Main game loop
             while (!WindowShouldClose())        // Detect window close button or ESC key

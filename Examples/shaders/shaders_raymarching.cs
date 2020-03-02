@@ -18,29 +18,30 @@
 
 using Raylib_cs;
 using static Raylib_cs.Raylib;
+using static Raylib_cs.ConfigFlag;
+using static Raylib_cs.CameraMode;
+using static Raylib_cs.CameraType;
 using static Raylib_cs.Color;
+using static Raylib_cs.ShaderUniformDataType;
 
 namespace Examples
 {
     public class shaders_raymarching
     {
-#if defined(PLATFORM_DESKTOP)
-#define GLSL_VERSION            330
-#else   // PLATFORM_RPI, PLATFORM_ANDROID, PLATFORM_WEB
-#define GLSL_VERSION            100
-#endif
+        public const int GLSL_VERSION = 330;
+        // public const int GLSL_VERSION = 100;
 
         public static int Main()
         {
             // Initialization
             //--------------------------------------------------------------------------------------
-            const int screenWidth = 800;
-            const int screenHeight = 450;
+            int screenWidth = 800;
+            int screenHeight = 450;
 
             SetConfigFlags(FLAG_WINDOW_RESIZABLE);
             InitWindow(screenWidth, screenHeight, "raylib [shaders] example - raymarching shapes");
 
-            Camera3D camera = new Camera(0);
+            Camera3D camera = new Camera3D();
             camera.position = new Vector3(2.5f, 2.5f, 3.0f);    // Camera position
             camera.target = new Vector3(0.0f, 0.0f, 0.7f);      // Camera looking at point
             camera.up = new Vector3(0.0f, 1.0f, 0.0f);          // Camera up vector (rotation towards target)
@@ -50,7 +51,7 @@ namespace Examples
 
             // Load raymarching shader
             // NOTE: Defining 0 (NULL) for vertex shader forces usage of internal default vertex shader
-            Shader shader = LoadShader(0, FormatText("resources/shaders/glsl%i/raymarching.fs", GLSL_VERSION));
+            Shader shader = LoadShader(null, string.Format("resources/shaders/glsl{0}/raymarching.fs", GLSL_VERSION));
 
             // Get shader locations for required uniforms
             int viewEyeLoc = GetShaderLocation(shader, "viewEye");
@@ -58,13 +59,13 @@ namespace Examples
             int runTimeLoc = GetShaderLocation(shader, "runTime");
             int resolutionLoc = GetShaderLocation(shader, "resolution");
 
-            float resolution[2] = { (float)screenWidth, (float)screenHeight };
-            SetShaderValue(shader, resolutionLoc, resolution, UNIFORM_VEC2);
+            float[] resolution = { (float)screenWidth, (float)screenHeight };
+            SetShaderValue(shader, resolutionLoc, ref resolution, UNIFORM_VEC2);
 
             float runTime = 0.0f;
 
             SetTargetFPS(60);                       // Set our game to run at 60 frames-per-second
-                                                    //--------------------------------------------------------------------------------------
+            //--------------------------------------------------------------------------------------
 
             // Main game loop
             while (!WindowShouldClose())            // Detect window close button or ESC key
@@ -75,24 +76,24 @@ namespace Examples
                 {
                     screenWidth = GetScreenWidth();
                     screenHeight = GetScreenHeight();
-                    float resolution[2] = { (float)screenWidth, (float)screenHeight };
-                    SetShaderValue(shader, resolutionLoc, resolution, UNIFORM_VEC2);
+                    resolution = new float[] { (float)screenWidth, (float)screenHeight };
+                    SetShaderValue(shader, resolutionLoc, ref resolution, UNIFORM_VEC2);
                 }
 
                 // Update
                 //----------------------------------------------------------------------------------
-                UpdateCamera(ref);              // Update camera
+                UpdateCamera(ref camera);              // Update camera
 
-                float cameraPos[3] = { camera.position.x, camera.position.y, camera.position.z };
-                float cameraTarget[3] = { camera.target.x, camera.target.y, camera.target.z };
+                float[] cameraPos = { camera.position.x, camera.position.y, camera.position.z };
+                float[] cameraTarget = { camera.target.x, camera.target.y, camera.target.z };
 
                 float deltaTime = GetFrameTime();
                 runTime += deltaTime;
 
                 // Set shader required uniform values
-                SetShaderValue(shader, viewEyeLoc, cameraPos, UNIFORM_VEC3);
-                SetShaderValue(shader, viewCenterLoc, cameraTarget, UNIFORM_VEC3);
-                SetShaderValue(shader, runTimeLoc, ref, UNIFORM_FLOAT);
+                SetShaderValue(shader, viewEyeLoc, ref cameraPos, UNIFORM_VEC3);
+                SetShaderValue(shader, viewCenterLoc, ref cameraTarget, UNIFORM_VEC3);
+                SetShaderValue(shader, runTimeLoc, ref runTime, UNIFORM_FLOAT);
                 //----------------------------------------------------------------------------------
 
                 // Draw
@@ -122,7 +123,5 @@ namespace Examples
 
             return 0;
         }
-
     }
-
 }

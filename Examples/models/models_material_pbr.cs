@@ -14,6 +14,7 @@ using static Raylib_cs.Raylib;
 using static Raylib_cs.Raymath;
 using static Raylib_cs.Color;
 using static Raylib_cs.CameraMode;
+using static Raylib_cs.CameraType;
 using static Raylib_cs.TextureFilterMode;
 using static Raylib_cs.ShaderLocationIndex;
 
@@ -23,8 +24,8 @@ public enum LightType
     LIGHT_POINT
 };
 
-//TODO: move the light system out into it's own class file, rlights.h original
-//also make it work properly
+// TODO: move the light system out into it's own class file, rlights.h original
+// also make it work properly
 public struct Light
 {
     public bool enabled;
@@ -47,13 +48,11 @@ namespace Examples
         public const int IRRADIANCE_SIZE = 32;
         public const int PREFILTERED_SIZE = 256;
         public const int BRDF_SIZE = 512;
+
         public const int MAX_LIGHTS = 4;
         public static int lightsCount = 0;
         public const float LIGHT_DISTANCE = 3.5f;
         public const float LIGHT_HEIGHT = 1.0f;
-
-        // PBR material loading
-        //private static Material LoadMaterialPBR(Color albedo, float metalness, float roughness);
 
         public unsafe static int Main()
         {
@@ -66,26 +65,36 @@ namespace Examples
             InitWindow(screenWidth, screenHeight, "raylib [models] example - pbr material");
 
             // Define the camera to look into our 3d world
-            Camera3D camera = new Camera3D(new Vector3(4.0f, 4.0f, 4.0f), new Vector3(0.0f, 0.5f, 0.0f), new Vector3(0.0f, 1.0f, 0.0f), 45.0f, 0);
+            Camera3D camera = new Camera3D();
+            camera.position = new Vector3(4.0f, 4.0f, 4.0f);
+            camera.target = new Vector3(0.0f, 0.5f, 0.0f);
+            camera.up = new Vector3(0.0f, 1.0f, 0.0f);
+            camera.fovy = 45.0f;
+            camera.type = CAMERA_PERSPECTIVE;
 
             // Load model and PBR material
             Model model = LoadModel("resources/pbr/trooper.obj");
-            MeshTangents(ref model.mesh);
-            model.material = LoadMaterialPBR(new Color(255, 255, 255, 255), 1.0f, 1.0f);
+
+            // Mesh tangents are generated... and uploaded to GPU
+            // NOTE: New VBO for tangents is generated at default location and also binded to mesh VAO
+            Mesh* meshes = (Mesh *)model.meshes.ToPointer();
+            MeshTangents(ref meshes[0]);
+
+            Material *materials = (Material *)model.materials.ToPointer();
+            UnloadMaterial(materials[0]); // get rid of default material
+            materials[0] = LoadMaterialPBR(new Color(255, 255, 255, 255), 1.0f, 1.0f);
 
             // Define lights attributes
             // NOTE: Shader is passed to every light on creation to define shader bindings internally
-            Light[] lights = new Light[] {
-                CreateLight(LightType.LIGHT_POINT, new Vector3( LIGHT_DISTANCE, LIGHT_HEIGHT, 0.0f ), new Vector3( 0.0f, 0.0f, 0.0f ), new Color( 255, 0, 0, 255 ), model.material.shader),
-                CreateLight(LightType.LIGHT_POINT, new Vector3( 0.0f, LIGHT_HEIGHT, LIGHT_DISTANCE ), new Vector3( 0.0f, 0.0f, 0.0f ), new Color( 0, 255, 0, 255 ), model.material.shader),
-                CreateLight(LightType.LIGHT_POINT, new Vector3( -LIGHT_DISTANCE, LIGHT_HEIGHT, 0.0f ), new Vector3( 0.0f, 0.0f, 0.0f ),new Color( 0, 0, 255, 255 ), model.material.shader),
-                CreateLight(LightType.LIGHT_DIRECTIONAL, new Vector3(0.0f, LIGHT_HEIGHT * 2.0f, -LIGHT_DISTANCE ), new Vector3( 0.0f, 0.0f, 0.0f ), new Color(255, 0, 255, 255 ), model.material.shader)
-            };
+            CreateLight(LightType.LIGHT_POINT, new Vector3( LIGHT_DISTANCE, LIGHT_HEIGHT, 0.0f ), new Vector3( 0.0f, 0.0f, 0.0f ), new Color( 255, 0, 0, 255 ), model.material.shader);
+            CreateLight(LightType.LIGHT_POINT, new Vector3( 0.0f, LIGHT_HEIGHT, LIGHT_DISTANCE ), new Vector3( 0.0f, 0.0f, 0.0f ), new Color( 0, 255, 0, 255 ), model.material.shader);
+            CreateLight(LightType.LIGHT_POINT, new Vector3( -LIGHT_DISTANCE, LIGHT_HEIGHT, 0.0f ), new Vector3( 0.0f, 0.0f, 0.0f ),new Color( 0, 0, 255, 255 ), model.material.shader);
+            CreateLight(LightType.LIGHT_DIRECTIONAL, new Vector3(0.0f, LIGHT_HEIGHT * 2.0f, -LIGHT_DISTANCE ), new Vector3( 0.0f, 0.0f, 0.0f ), new Color(255, 0, 255, 255 ), model.material.shader);
 
             SetCameraMode(camera, CAMERA_ORBITAL);  // Set an orbital camera mode
 
-            SetTargetFPS(60); // Set our game to run at 60 frames-per-second
-                              //--------------------------------------------------------------------------------------
+            SetTargetFPS(60);                       // Set our game to run at 60 frames-per-second
+            //--------------------------------------------------------------------------------------
 
             // Main game loop
             while (!WindowShouldClose()) // Detect window close button or ESC key
@@ -96,7 +105,8 @@ namespace Examples
 
                 // Send to material PBR shader camera view position
                 float[] cameraPos = { camera.position.x, camera.position.y, camera.position.z };
-                SetShaderValue(model.material.shader, model.material.shader.locs[(int)ShaderLocationIndex.LOC_VECTOR_VIEW], cameraPos, 3);
+                int *locs = (int *)materials[0].shader.locs.ToPointer();
+                SetShaderValue(materials[0].shader, locs[(int)ShaderLocationIndex.LOC_VECTOR_VIEW], cameraPos, 3);
 
                 //----------------------------------------------------------------------------------
                 // Draw
@@ -121,10 +131,24 @@ namespace Examples
 
             // De-Initialization
             //--------------------------------------------------------------------------------------
+
+            // Shaders and textures must be unloaded by user,
+            // they could be in use by other models
+            UnloadTexture(model.materials[0].maps[MAP_ALBEDO].texture);
+            UnloadTexture(model.materials[0].maps[MAP_NORMAL].texture);
+            UnloadTexture(model.materials[0].maps[MAP_METALNESS].texture);
+            UnloadTexture(model.materials[0].maps[MAP_ROUGHNESS].texture);
+            UnloadTexture(model.materials[0].maps[MAP_OCCLUSION].texture);
+            UnloadTexture(model.materials[0].maps[MAP_IRRADIANCE].texture);
+            UnloadTexture(model.materials[0].maps[MAP_PREFILTER].texture);
+            UnloadTexture(model.materials[0].maps[MAP_BRDF].texture);
+            UnloadShader(model.materials[0].shader);
+
             UnloadModel(model);         // Unload skybox model
 
             CloseWindow();              // Close window and OpenGL context
             //--------------------------------------------------------------------------------------
+
             return 0;
         }
 
@@ -179,9 +203,9 @@ namespace Examples
             Shader shdrBRDF = LoadShader(PATH_BRDF_VS, PATH_BRDF_FS);
 
             // Setup required shader locations
-            SetShaderValuei(shdrCubemap, GetShaderLocation(shdrCubemap, "equirectangularMap"), new int[] { 0 }, 1);
-            SetShaderValuei(shdrIrradiance, GetShaderLocation(shdrIrradiance, "environmentMap"), new int[] { 0 }, 1);
-            SetShaderValuei(shdrPrefilter, GetShaderLocation(shdrPrefilter, "environmentMap"), new int[] { 0 }, 1);
+            SetShaderValue(shdrCubemap, GetShaderLocation(shdrCubemap, "equirectangularMap"), new int[] { 0 }, 1);
+            SetShaderValue(shdrIrradiance, GetShaderLocation(shdrIrradiance, "environmentMap"), new int[] { 0 }, 1);
+            SetShaderValue(shdrPrefilter, GetShaderLocation(shdrPrefilter, "environmentMap"), new int[] { 0 }, 1);
 
             Texture2D texHDR = LoadTexture("resources/dresden_square.hdr");
             Texture2D cubemap = GenTextureCubemap(shdrCubemap, texHDR, CUBEMAP_SIZE);
@@ -205,14 +229,14 @@ namespace Examples
             SetTextureFilter(mat.maps[(int)TexmapIndex.MAP_OCCLUSION].texture, FILTER_BILINEAR);
 
             // Enable sample usage in shader for assigned textures
-            SetShaderValuei(mat.shader, GetShaderLocation(mat.shader, "albedo.useSampler"), new int[] { 1 }, 1);
-            SetShaderValuei(mat.shader, GetShaderLocation(mat.shader, "normals.useSampler"), new int[] { 1 }, 1);
-            SetShaderValuei(mat.shader, GetShaderLocation(mat.shader, "metalness.useSampler"), new int[] { 1 }, 1);
-            SetShaderValuei(mat.shader, GetShaderLocation(mat.shader, "roughness.useSampler"), new int[] { 1 }, 1);
-            SetShaderValuei(mat.shader, GetShaderLocation(mat.shader, "occlusion.useSampler"), new int[] { 1 }, 1);
+            SetShaderValue(mat.shader, GetShaderLocation(mat.shader, "albedo.useSampler"), new int[] { 1 }, 1);
+            SetShaderValue(mat.shader, GetShaderLocation(mat.shader, "normals.useSampler"), new int[] { 1 }, 1);
+            SetShaderValue(mat.shader, GetShaderLocation(mat.shader, "metalness.useSampler"), new int[] { 1 }, 1);
+            SetShaderValue(mat.shader, GetShaderLocation(mat.shader, "roughness.useSampler"), new int[] { 1 }, 1);
+            SetShaderValue(mat.shader, GetShaderLocation(mat.shader, "occlusion.useSampler"), new int[] { 1 }, 1);
 
             int renderModeLoc = GetShaderLocation(mat.shader, "renderMode");
-            SetShaderValuei(mat.shader, renderModeLoc, new int[] { 0 }, 1);
+            SetShaderValue(mat.shader, renderModeLoc, new int[] { 0 }, 1);
 
             // Set up material properties color
             mat.maps[(int)TexmapIndex.MAP_ALBEDO].color = albedo;
@@ -228,7 +252,6 @@ namespace Examples
 
         public static Light CreateLight(LightType type, Vector3 pos, Vector3 targ, Color color, Shader shader)
         {
-
             Light light = new Light();
 
             if (lightsCount < MAX_LIGHTS)
@@ -260,8 +283,8 @@ namespace Examples
         public static void UpdateLightValues(Shader shader, Light light)
         {
             // Send to shader light enabled state and type
-            SetShaderValuei(shader, light.enabledLoc, new int[] { light.enabled ? 1 : 0 }, 1);
-            SetShaderValuei(shader, light.typeLoc, new int[] { (int)light.type }, 1);
+            SetShaderValue(shader, light.enabledLoc, new int[] { light.enabled ? 1 : 0 }, 1);
+            SetShaderValue(shader, light.typeLoc, new int[] { (int)light.type }, 1);
 
             // Send to shader light position values
             float[] position = { light.position.x, light.position.y, light.position.z };

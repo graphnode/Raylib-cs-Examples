@@ -29,7 +29,7 @@ namespace Examples
 {
     public class shaders_custom_uniform
     {
-        public static int Main()
+        public unsafe static int Main()
         {
             // Initialization
             //--------------------------------------------------------------------------------------
@@ -51,10 +51,8 @@ namespace Examples
             Model model = LoadModel("resources/models/barracks.obj");                   // Load OBJ model
             Texture2D texture = LoadTexture("resources/models/barracks_diffuse.png");   // Load model texture (diffuse map)
 
-            Material[] materials = (Material[])Marshal.PtrToStructure(model.materials, typeof(Material[]));
-            System.Console.WriteLine(materials.Length);
-            materials[0].maps[(int)MAP_ALBEDO].texture = texture;                 // Set model diffuse texture
-                                                                                  // model.materials[0].maps[(int)MAP_ALBEDO].texture = texture;                 // Set model diffuse texture
+            // Set model diffuse texture
+            Utils.SetMaterialTexture(ref model, 0, MAP_ALBEDO, ref texture);
 
             Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);                                // Set model position
 
@@ -74,7 +72,7 @@ namespace Examples
             SetCameraMode(camera, CAMERA_ORBITAL);  // Set an orbital camera mode
 
             SetTargetFPS(60);                       // Set our game to run at 60 frames-per-second
-                                                    //--------------------------------------------------------------------------------------
+            //--------------------------------------------------------------------------------------
 
             // Main game loop
             while (!WindowShouldClose())            // Detect window close button or ESC key
@@ -88,10 +86,10 @@ namespace Examples
 
                 // Send new value to the shader to be used on drawing
                 IntPtr value = Marshal.UnsafeAddrOfPinnedArrayElement(swirlCenter, 0);
-                SetShaderValue(shader, swirlCenterLoc, value, 2);
+                SetShaderValue(shader, swirlCenterLoc, value, ShaderUniformDataType.UNIFORM_VEC2);
 
                 UpdateCamera(ref camera);              // Update camera
-                                                       //----------------------------------------------------------------------------------
+                //----------------------------------------------------------------------------------
 
                 // Draw
                 //----------------------------------------------------------------------------------

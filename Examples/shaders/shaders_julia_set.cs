@@ -19,6 +19,10 @@
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
+using static Raylib_cs.KeyboardKey;
+using static Raylib_cs.MouseButton;
+using static Raylib_cs.ShaderLocationIndex;
+using static Raylib_cs.ShaderUniformDataType;
 
 namespace Examples
 {
@@ -27,17 +31,16 @@ namespace Examples
         const int GLSL_VERSION = 330;
 
         // A few good julia sets
-        const float POINTS_OF_INTEREST[6][2] =
-    {
-        { -0.348827, 0.607167 },
-        { -0.786268, 0.169728 },
-        { -0.8, 0.156 },
-        { 0.285, 0.0 },
-        { -0.835, -0.2321 },
-        { -0.70176, -0.3842 },
-    };
+        static float[][] POINTS_OF_INTEREST = new float[][] {
+            new float[] { -0.348827f, 0.607167f },
+            new float[] { -0.786268f, 0.169728f },
+            new float[] { -0.8f, 0.156f },
+            new float[] { 0.285f, 0.0f },
+            new float[] { -0.835f, -0.2321f },
+            new float[] { -0.70176f, -0.3842f },
+        };
 
-    public static int Main()
+        public static int Main()
         {
             // Initialization
             //--------------------------------------------------------------------------------------
@@ -48,13 +51,13 @@ namespace Examples
 
             // Load julia set shader
             // NOTE: Defining 0 (NULL) for vertex shader forces usage of internal default vertex shader
-            Shader shader = LoadShader(0, FormatText("resources/shaders/glsl%i/julia_set.fs", GLSL_VERSION));
+            Shader shader = LoadShader(null, string.Format("resources/shaders/glsl{0}/julia_set.fs", GLSL_VERSION));
 
             // c constant to use in z^2 + c
-            float c[2] = { POINTS_OF_INTEREST[0][0], POINTS_OF_INTEREST[0][1] };
+            float[] c = new float[2] { POINTS_OF_INTEREST[0][0], POINTS_OF_INTEREST[0][1] };
 
             // Offset and zoom to draw the julia set at. (centered on screen and default size)
-            float offset[2] = { -(float)screenWidth / 2, -(float)screenHeight / 2 };
+            float[] offset = { -(float)screenWidth / 2, -(float)screenHeight / 2 };
             float zoom = 1.0f;
 
             Vector2 offsetSpeed = new Vector2(0.0f, 0.0f);
@@ -66,12 +69,12 @@ namespace Examples
             int offsetLoc = GetShaderLocation(shader, "offset");
 
             // Tell the shader what the screen dimensions, zoom, offset and c are
-            float screenDims[2] = { (float)screenWidth, (float)screenHeight };
-            SetShaderValue(shader, GetShaderLocation(shader, "screenDims"), screenDims, UNIFORM_VEC2);
+            float[] screenDims = { (float)screenWidth, (float)screenHeight };
+            SetShaderValue(shader, GetShaderLocation(shader, "screenDims"), ref screenDims, UNIFORM_VEC2);
 
-            SetShaderValue(shader, cLoc, c, UNIFORM_VEC2);
+            SetShaderValue(shader, cLoc, ref c, UNIFORM_VEC2);
             SetShaderValue(shader, zoomLoc, ref zoomLoc, UNIFORM_FLOAT);
-            SetShaderValue(shader, offsetLoc, offset, UNIFORM_VEC2);
+            SetShaderValue(shader, offsetLoc, ref offset, UNIFORM_VEC2);
 
             // Create a RenderTexture2D to be used for render to texture
             RenderTexture2D target = LoadRenderTexture(screenWidth, screenHeight);
@@ -96,14 +99,38 @@ namespace Examples
                     IsKeyPressed(KEY_FIVE) ||
                     IsKeyPressed(KEY_SIX))
                 {
-                    if (IsKeyPressed(KEY_ONE)) c[0] = POINTS_OF_INTEREST[0][0], c[1] = POINTS_OF_INTEREST[0][1];
-                else if (IsKeyPressed(KEY_TWO)) c[0] = POINTS_OF_INTEREST[1][0], c[1] = POINTS_OF_INTEREST[1][1];
-                else if (IsKeyPressed(KEY_THREE)) c[0] = POINTS_OF_INTEREST[2][0], c[1] = POINTS_OF_INTEREST[2][1];
-                else if (IsKeyPressed(KEY_FOUR)) c[0] = POINTS_OF_INTEREST[3][0], c[1] = POINTS_OF_INTEREST[3][1];
-                else if (IsKeyPressed(KEY_FIVE)) c[0] = POINTS_OF_INTEREST[4][0], c[1] = POINTS_OF_INTEREST[4][1];
-                else if (IsKeyPressed(KEY_SIX)) c[0] = POINTS_OF_INTEREST[5][0], c[1] = POINTS_OF_INTEREST[5][1];
 
-                    SetShaderValue(shader, cLoc, c, UNIFORM_VEC2);
+                    if (IsKeyPressed(KEY_ONE))
+                    {
+                        c[0] = POINTS_OF_INTEREST[0][0];
+                        c[1] = POINTS_OF_INTEREST[0][1];
+                    }
+                    else if (IsKeyPressed(KEY_TWO))
+                    {
+                        c[0] = POINTS_OF_INTEREST[1][0];
+                        c[1] = POINTS_OF_INTEREST[1][1];
+                    }
+                    else if (IsKeyPressed(KEY_THREE))
+                    {
+                        c[0] = POINTS_OF_INTEREST[2][0];
+                        c[1] = POINTS_OF_INTEREST[2][1];
+                    }
+                    else if (IsKeyPressed(KEY_FOUR))
+                    {
+                        c[0] = POINTS_OF_INTEREST[3][0];
+                        c[1] = POINTS_OF_INTEREST[3][1];
+                    }
+                    else if (IsKeyPressed(KEY_FIVE))
+                    {
+                        c[0] = POINTS_OF_INTEREST[4][0];
+                        c[1] = POINTS_OF_INTEREST[4][1];
+                    }
+                    else if (IsKeyPressed(KEY_SIX))
+                    {
+                        c[0] = POINTS_OF_INTEREST[5][0];
+                        c[1] = POINTS_OF_INTEREST[5][1];
+                    }
+                    SetShaderValue(shader, cLoc, ref c, UNIFORM_VEC2);
                 }
 
                 if (IsKeyPressed(KEY_SPACE)) pause = !pause;                 // Pause animation (c change)
@@ -132,15 +159,15 @@ namespace Examples
                     }
                     else offsetSpeed = new Vector2(0.0f, 0.0f);
 
-                    SetShaderValue(shader, zoomLoc, ref, UNIFORM_FLOAT);
-                    SetShaderValue(shader, offsetLoc, offset, UNIFORM_VEC2);
+                    SetShaderValue(shader, zoomLoc, ref zoom, UNIFORM_FLOAT);
+                    SetShaderValue(shader, offsetLoc, ref offset, UNIFORM_VEC2);
 
                     // Increment c value with time
                     float amount = GetFrameTime() * incrementSpeed * 0.0005f;
                     c[0] += amount;
                     c[1] += amount;
 
-                    SetShaderValue(shader, cLoc, c, UNIFORM_VEC2);
+                    SetShaderValue(shader, cLoc, ref c, UNIFORM_VEC2);
                 }
                 //----------------------------------------------------------------------------------
 
@@ -190,7 +217,5 @@ namespace Examples
 
             return 0;
         }
-
     }
-
 }
