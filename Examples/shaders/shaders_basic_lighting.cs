@@ -25,13 +25,19 @@
 *
 ********************************************************************************************/
 
+using System;
+using System.Runtime.InteropServices;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
+using static Raylib_cs.Raymath;
 using static Raylib_cs.Color;
 using static Raylib_cs.ConfigFlag;
 using static Raylib_cs.CameraMode;
 using static Raylib_cs.CameraType;
 using static Raylib_cs.KeyboardKey;
+using static Raylib_cs.ShaderLocationIndex;
+using static Raylib_cs.ShaderUniformDataType;
+using static Raylib_cs.MaterialMapType;
 
 namespace Examples
 {
@@ -39,7 +45,7 @@ namespace Examples
     {
         const int GLSL_VERSION = 330;
 
-        public static int Main()
+        public unsafe static int Main()
         {
             // Initialization
             //--------------------------------------------------------------------------------------
@@ -66,30 +72,31 @@ namespace Examples
             Texture2D texture = LoadTexture("resources/texel_checker.png");
 
             // Assign texture to default model material
-            modelA.materials[0].maps[MAP_DIFFUSE].texture = texture;
-            modelB.materials[0].maps[MAP_DIFFUSE].texture = texture;
-            modelC.materials[0].maps[MAP_DIFFUSE].texture = texture;
+            Utils.SetMaterialTexture(ref modelA, 0, MAP_ALBEDO, ref texture);
+            Utils.SetMaterialTexture(ref modelB, 0, MAP_ALBEDO, ref texture);
+            Utils.SetMaterialTexture(ref modelC, 0, MAP_ALBEDO, ref texture);
 
             Shader shader = LoadShader("resources/shaders/glsl330/basic_lighting.vs",
                                        "resources/shaders/glsl330/basic_lighting.fs");
 
             // Get some shader loactions
-            shader.locs[LOC_MATRIX_MODEL] = GetShaderLocation(shader, "matModel");
-            shader.locs[LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
+            int *locs = (int*)shader.locs.ToPointer();
+            locs[(int)LOC_MATRIX_MODEL] = GetShaderLocation(shader, "matModel");
+            locs[(int)LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
 
             // ambient light level
             int ambientLoc = GetShaderLocation(shader, "ambient");
-            SetShaderValue(shader, ambientLoc, (float[4]){ 0.2f, 0.2f, 0.2f, 1.0f }, UNIFORM_VEC4);
+            SetShaderValue(shader, ambientLoc, new float[] { 0.2f, 0.2f, 0.2f, 1.0f }, UNIFORM_VEC4);
 
             float angle = 6.282f;
 
             // All models use the same shader
-            modelA.materials[0].shader = shader;
-            modelB.materials[0].shader = shader;
-            modelC.materials[0].shader = shader;
+            Utils.SetMaterialShader(ref modelA, 0, ref shader);
+            Utils.SetMaterialShader(ref modelB, 0, ref shader);
+            Utils.SetMaterialShader(ref modelC, 0, ref shader);
 
             // Using 4 point lights, white, red, green and blue
-            Light lights[MAX_LIGHTS] = { 0 };
+            Light[] lights = new Light[MAX_LIGHTS];
             lights[0] = CreateLight(LIGHT_POINT, new Vector3(4, 2, 4), Vector3Zero(), WHITE, shader);
             lights[1] = CreateLight(LIGHT_POINT, new Vector3(4, 2, 4), Vector3Zero(), RED, shader);
             lights[2] = CreateLight(LIGHT_POINT, new Vector3(0, 4, 2), Vector3Zero(), GREEN, shader);
@@ -98,7 +105,7 @@ namespace Examples
             SetCameraMode(camera, CAMERA_ORBITAL);  // Set an orbital camera mode
 
             SetTargetFPS(60);                       // Set our game to run at 60 frames-per-second
-                                                    //--------------------------------------------------------------------------------------
+            //--------------------------------------------------------------------------------------
 
             // Main game loop
             while (!WindowShouldClose())            // Detect window close button or ESC key
@@ -113,15 +120,15 @@ namespace Examples
                 UpdateCamera(ref camera);              // Update camera
 
                 // Make the lights do differing orbits
-                angle -= 0.02;
-                lights[0].position.x = cosf(angle) * 4.0f;
-                lights[0].position.z = sinf(angle) * 4.0f;
-                lights[1].position.x = cosf(-angle * 0.6f) * 4.0f;
-                lights[1].position.z = sinf(-angle * 0.6f) * 4.0f;
-                lights[2].position.y = cosf(angle * 0.2f) * 4.0f;
-                lights[2].position.z = sinf(angle * 0.2f) * 4.0f;
-                lights[3].position.y = cosf(-angle * 0.35f) * 4.0f;
-                lights[3].position.z = sinf(-angle * 0.35f) * 4.0f;
+                angle -= 0.02f;
+                lights[0].position.x = (float)Math.Cos(angle) * 4.0f;
+                lights[0].position.z = (float)Math.Sin(angle) * 4.0f;
+                lights[1].position.x = (float)Math.Cos(-angle * 0.6f) * 4.0f;
+                lights[1].position.z = (float)Math.Sin(-angle * 0.6f) * 4.0f;
+                lights[2].position.y = (float)Math.Cos(angle * 0.2f) * 4.0f;
+                lights[2].position.z = (float)Math.Sin(angle * 0.2f) * 4.0f;
+                lights[3].position.y = (float)Math.Cos(-angle * 0.35f) * 4.0f;
+                lights[3].position.z = (float)Math.Sin(-angle * 0.35f) * 4.0f;
 
                 UpdateLightValues(shader, lights[0]);
                 UpdateLightValues(shader, lights[1]);
@@ -129,12 +136,13 @@ namespace Examples
                 UpdateLightValues(shader, lights[3]);
 
                 // Rotate the torus
-                modelA.transform = MatrixMultiply(modelA.transform, MatrixRotateX(-0.025));
-                modelA.transform = MatrixMultiply(modelA.transform, MatrixRotateZ(0.012));
+                modelA.transform = MatrixMultiply(modelA.transform, MatrixRotateX(-0.025f));
+                modelA.transform = MatrixMultiply(modelA.transform, MatrixRotateZ(0.012f));
 
                 // Update the light shader with the camera view position
-                float[] cameraPos = new float[] { camera.position.x, camera.position.y, camera.position.z };
-                SetShaderValue(shader, shader.locs[LOC_VECTOR_VIEW], cameraPos, UNIFORM_VEC3);
+                float[] cameraPos = { camera.position.x, camera.position.y, camera.position.z };
+                IntPtr value = Marshal.UnsafeAddrOfPinnedArrayElement(cameraPos, 0);
+                // SetShaderValue(shader, shader.locs[LOC_VECTOR_VIEW], cameraPos, UNIFORM_VEC3);
                 //----------------------------------------------------------------------------------
 
                 // Draw
@@ -147,8 +155,8 @@ namespace Examples
 
                 // Draw the three models
                 DrawModel(modelA, Vector3Zero(), 1.0f, WHITE);
-                DrawModel(modelB, new Vector3(-1.6, 0, 0), 1.0f, WHITE);
-                DrawModel(modelC, new Vector3(1.6, 0, 0), 1.0f, WHITE);
+                DrawModel(modelB, new Vector3(-1.6f, 0, 0), 1.0f, WHITE);
+                DrawModel(modelC, new Vector3(1.6f, 0, 0), 1.0f, WHITE);
 
                 // Draw markers to show where the lights are
                 if (lights[0].enabled) { DrawSphereEx(lights[0].position, 0.2f, 8, 8, WHITE); }

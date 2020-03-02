@@ -36,7 +36,7 @@ namespace Examples
             camera.fovy = 45.0f;
             camera.type = CAMERA_PERSPECTIVE;
 
-            Texture2D bill = LoadTexture("resources/billboard.png");     // Our texture billboard
+            Texture2D bill = LoadTexture("resources/billboard.png");              // Our texture billboard
             Vector3 billPosition = new Vector3(0.0f, 2.0f, 0.0f);                 // Position where draw billboard
 
             SetCameraMode(camera, CAMERA_ORBITAL);  // Set an orbital camera mode

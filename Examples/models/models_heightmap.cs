@@ -38,9 +38,7 @@ namespace Examples
             Model model = LoadModelFromMesh(mesh);                          // Load model from generated mesh
 
             // Set map diffuse texture
-            Material *materials = (Material*)model.materials.ToPointer();
-            MaterialMap* maps = (MaterialMap*)materials[0].maps.ToPointer();
-            maps[(int)MAP_ALBEDO].texture = texture;
+            Utils.SetMaterialTexture(ref model, 0, MAP_ALBEDO, ref texture);
 
             Vector3 mapPosition = new Vector3(-8.0f, 0.0f, -8.0f);                   // Define model position
 

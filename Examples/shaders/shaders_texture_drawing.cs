@@ -16,6 +16,7 @@
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
+using static Raylib_cs.ShaderUniformDataType;
 
 namespace Examples
 {
@@ -37,22 +38,22 @@ namespace Examples
             UnloadImage(imBlank);
 
             // NOTE: Using GLSL 330 shader version, on OpenGL ES 2.0 use GLSL 100 shader version
-            Shader shader = LoadShader(0, FormatText("resources/shaders/glsl%i/cubes_panning.fs", GLSL_VERSION));
+            Shader shader = LoadShader(null, string.Format("resources/shaders/glsl{0}/cubes_panning.fs", GLSL_VERSION));
 
             float time = 0.0f;
             int timeLoc = GetShaderLocation(shader, "uTime");
-            SetShaderValue(shader, timeLoc, ref, UNIFORM_FLOAT);
+            SetShaderValue(shader, timeLoc, ref time, UNIFORM_FLOAT);
 
             SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
-                                            // -------------------------------------------------------------------------------------------------------------
+            // -------------------------------------------------------------------------------------------------------------
 
             // Main game loop
             while (!WindowShouldClose())    // Detect window close button or ESC key
             {
                 // Update
                 //----------------------------------------------------------------------------------
-                time = GetTime();
-                SetShaderValue(shader, timeLoc, ref, UNIFORM_FLOAT);
+                time = (float)GetTime();
+                SetShaderValue(shader, timeLoc, ref time, UNIFORM_FLOAT);
                 //----------------------------------------------------------------------------------
 
                 // Draw
@@ -80,7 +81,5 @@ namespace Examples
 
             return 0;
         }
-
     }
-
 }

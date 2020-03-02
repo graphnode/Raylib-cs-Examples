@@ -50,9 +50,7 @@ namespace Examples
             for (int i = 0; i < NUM_MODELS; i++)
             {
                 // Set map diffuse texture
-                Material *materials = (Material*)models[i].materials.ToPointer();
-                MaterialMap* maps = (MaterialMap*)materials[0].maps.ToPointer();
-                maps[(int)MAP_ALBEDO].texture = texture;
+                Utils.SetMaterialTexture(ref models[i], 0, MAP_ALBEDO, ref texture);
             }
 
             // Define the camera to look into our 3d world

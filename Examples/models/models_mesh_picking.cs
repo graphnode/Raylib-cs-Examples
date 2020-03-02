@@ -47,9 +47,7 @@ namespace Examples
             Texture2D texture = LoadTexture("resources/models/turret_diffuse.png");     // Load model texture
 
             // Set map diffuse texture
-            Material *materials = (Material*)tower.materials.ToPointer();
-            MaterialMap* maps = (MaterialMap*)materials[0].maps.ToPointer();
-            maps[(int)MAP_ALBEDO].texture = texture;
+            Utils.SetMaterialTexture(ref tower, 0, MAP_ALBEDO, ref texture);
 
             Vector3 towerPos = new Vector3(0.0f, 0.0f, 0.0f);       // Set model position
 

@@ -18,8 +18,10 @@
 
 using Raylib_cs;
 using static Raylib_cs.Raylib;
+using static Raylib_cs.Color;
 using static Raylib_cs.CameraMode;
 using static Raylib_cs.MaterialMapType;
+using static Raylib_cs.KeyboardKey;
 
 namespace Examples
 {
@@ -47,24 +49,23 @@ namespace Examples
             //FX_FXAA
         }
 
-        static string[] postproShaderText =
-        {
-        "GRAYSCALE",
-        "POSTERIZATION",
-        "DREAM_VISION",
-        "PIXELIZER",
-        "CROSS_HATCHING",
-        "CROSS_STITCHING",
-        "PREDATOR_VIEW",
-        "SCANLINES",
-        "FISHEYE",
-        "SOBEL",
-        "BLOOM",
-        "BLUR",
-        //"FXAA"
-    };
+        static string[] postproShaderText = new string[] {
+            "GRAYSCALE",
+            "POSTERIZATION",
+            "DREAM_VISION",
+            "PIXELIZER",
+            "CROSS_HATCHING",
+            "CROSS_STITCHING",
+            "PREDATOR_VIEW",
+            "SCANLINES",
+            "FISHEYE",
+            "SOBEL",
+            "BLOOM",
+            "BLUR",
+            //"FXAA"
+        };
 
-        public static int Main()
+        public unsafe static int Main()
         {
             // Initialization
             //--------------------------------------------------------------------------------------
@@ -80,7 +81,9 @@ namespace Examples
 
             Model model = LoadModel("resources/models/church.obj");                 // Load OBJ model
             Texture2D texture = LoadTexture("resources/models/church_diffuse.png"); // Load model texture (diffuse map)
-            model.materials[0].maps[(int)MAP_ALBEDO].texture = texture;                     // Set model diffuse texture
+
+            // Set model diffuse texture
+            Utils.SetMaterialTexture(ref model, 0, MAP_ALBEDO, ref texture);
 
             Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);                             // Set model position
 
@@ -112,7 +115,7 @@ namespace Examples
             SetCameraMode(camera, CAMERA_ORBITAL);  // Set an orbital camera mode
 
             SetTargetFPS(60);                       // Set our game to run at 60 frames-per-second
-                                                    //--------------------------------------------------------------------------------------
+            //--------------------------------------------------------------------------------------
 
             // Main game loop
             while (!WindowShouldClose())            // Detect window close button or ESC key

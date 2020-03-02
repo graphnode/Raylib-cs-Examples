@@ -18,6 +18,7 @@
 *
 ********************************************************************************************/
 
+using System;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
@@ -51,9 +52,7 @@ namespace Examples
             Texture2D texture = LoadTexture("resources/models/castle_diffuse.png"); // Load model texture
 
             // Set map diffuse texture
-            Material *materials = (Material*)model.materials.ToPointer();
-            MaterialMap* maps = (MaterialMap*)materials[0].maps.ToPointer();
-            maps[(int)MAP_ALBEDO].texture = texture;
+            Utils.SetMaterialTexture(ref model, 0, MAP_ALBEDO, ref texture);
 
             Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);                // Set model position
 
@@ -81,7 +80,7 @@ namespace Examples
                 if (IsFileDropped())
                 {
                     int count = 0;
-                    string[] droppedFiles = GetDroppedFiles(ref count);
+                    /*string[] droppedFiles = GetDroppedFiles(ref count);
 
                     if (count == 1) // Only support one file dropped
                     {
@@ -93,9 +92,7 @@ namespace Examples
                             model = LoadModel(droppedFiles[0]);     // Load new model
 
                             // Set current map diffuse texture
-                            materials = (Material*)model.materials.ToPointer();
-                            maps = (MaterialMap*)materials[0].maps.ToPointer();
-                            maps[(int)MAP_ALBEDO].texture = texture;
+                            Utils.SetMaterial(ref model, 0, MAP_ALBEDO, ref texture);
 
                             meshes = (Mesh*)model.meshes.ToPointer();
                             bounds = MeshBoundingBox(meshes[0]);
@@ -107,9 +104,9 @@ namespace Examples
                             // Unload current model texture and load new one
                             UnloadTexture(texture);
                             texture = LoadTexture(droppedFiles[0]);
-                            maps[(int)MAP_ALBEDO].texture = texture;
+                            Utils.SetMaterial(ref model, 0, MAP_ALBEDO, ref texture);
                         }
-                    }
+                    }*/
 
                     ClearDroppedFiles();    // Clear internal buffers
                 }

@@ -18,9 +18,10 @@
 
 using Raylib_cs;
 using static Raylib_cs.Raylib;
+using static Raylib_cs.Color;
 using static Raylib_cs.CameraType;
 using static Raylib_cs.CameraMode;
-using static Raylib_cs.TexmapIndex;
+using static Raylib_cs.MaterialMapType;
 
 namespace Examples
 {
@@ -50,15 +51,15 @@ namespace Examples
             Shader shader = LoadShader("resources/shaders/glsl330/base.vs",
                                        "resources/shaders/glsl330/grayscale.fs");   // Load model shader
 
-            model.material.shader = shader;                     // Set shader effect to 3d model
-            model.material.maps[(int)MAP_ALBEDO].texture = texture; // Bind texture to model
+            Utils.SetMaterialShader(ref model, 0, ref shader);  // Set shader effect to 3d model
+            Utils.SetMaterialTexture(ref model, 0, MAP_ALBEDO, ref texture);    // Bind texture to model
 
             Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);    // Set model position
 
             SetCameraMode(camera, CAMERA_FREE);         // Set an orbital camera mode
 
             SetTargetFPS(60);                           // Set our game to run at 60 frames-per-second
-                                                        //--------------------------------------------------------------------------------------
+            //--------------------------------------------------------------------------------------
 
             // Main game loop
             while (!WindowShouldClose())                // Detect window close button or ESC key
@@ -66,7 +67,7 @@ namespace Examples
                 // Update
                 //----------------------------------------------------------------------------------
                 UpdateCamera(ref camera);                  // Update camera
-                                                           //----------------------------------------------------------------------------------
+                //----------------------------------------------------------------------------------
 
                 // Draw
                 //----------------------------------------------------------------------------------

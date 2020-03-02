@@ -41,9 +41,7 @@ namespace Examples
             Texture2D texture = LoadTexture("resources/cubicmap_atlas.png");    // Load map texture
 
             // Set map diffuse texture
-            Material *materials = (Material*)model.materials.ToPointer();
-            MaterialMap* maps = (MaterialMap*)materials[0].maps.ToPointer();
-            maps[(int)MAP_ALBEDO].texture = texture;
+            Utils.SetMaterialTexture(ref model, 0, MAP_ALBEDO, ref texture);
 
             Vector3 mapPosition = new Vector3(-16.0f, 0.0f, -8.0f);          // Set model position
 
@@ -52,7 +50,7 @@ namespace Examples
             SetCameraMode(camera, CAMERA_ORBITAL);  // Set an orbital camera mode
 
             SetTargetFPS(60);                       // Set our game to run at 60 frames-per-second
-                                                    //--------------------------------------------------------------------------------------
+            //--------------------------------------------------------------------------------------
 
             // Main game loop
             while (!WindowShouldClose())            // Detect window close button or ESC key
@@ -60,7 +58,7 @@ namespace Examples
                 // Update
                 //----------------------------------------------------------------------------------
                 UpdateCamera(ref camera);              // Update camera
-                                                       //----------------------------------------------------------------------------------
+                //----------------------------------------------------------------------------------
 
                 // Draw
                 //----------------------------------------------------------------------------------
