@@ -38,9 +38,9 @@ namespace Examples
             fontDefault.charsCount = 95;
             // Parameters > font size: 16, no chars array provided (0), chars count: 95 (autogenerate chars array)
             // TODO: fix conversion
-            fontDefault.chars = LoadFontData("resources/AnonymousPro-Bold.ttf", 16, null, 95, (int)FontType.FONT_DEFAULT);
+            fontDefault.chars = LoadFontData("resources/AnonymousPro-Bold.ttf", 16, null, 95, FontType.FONT_DEFAULT);
             // Parameters > chars count: 95, font size: 16, chars padding in image: 4 px, pack method: 0 (default)
-            Image atlas = GenImageFontAtlas(fontDefault.chars, 95, 16, 4, 0);
+            Image atlas = GenImageFontAtlas(fontDefault.chars, ref fontDefault.recs, 95, 16, 4, 0);
             fontDefault.texture = LoadTextureFromImage(atlas);
             UnloadImage(atlas);
 
@@ -52,7 +52,7 @@ namespace Examples
             // Parameters > font size: 16, no chars array provided (0), chars count: 0 (defaults to 95)
             fontSDF.chars = LoadFontData("resources/AnonymousPro-Bold.ttf", 16, null, 0, (int)FontType.FONT_DEFAULT);
             // Parameters > chars count: 95, font size: 16, chars padding in image: 0 px, pack method: 1 (Skyline algorythm)
-            atlas = GenImageFontAtlas(fontSDF.chars, 95, 16, 0, 1);
+            atlas = GenImageFontAtlas(fontSDF.chars, ref fontSDF.recs, 95, 16, 0, 1);
             fontSDF.texture = LoadTextureFromImage(atlas);
             UnloadImage(atlas);
 
