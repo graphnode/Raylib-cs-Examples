@@ -49,7 +49,7 @@ namespace Examples
 
             // Setup texture scaling filter
             SetTextureFilter(font.texture, FILTER_POINT);
-            int currentFontFilter = 0;      // FILTER_POINT
+            TextureFilterMode currentFontFilter = FILTER_POINT;      // FILTER_POINT
 
             SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
             //--------------------------------------------------------------------------------------
@@ -65,18 +65,18 @@ namespace Examples
                 if (IsKeyPressed(KEY_ONE))
                 {
                     SetTextureFilter(font.texture, FILTER_POINT);
-                    currentFontFilter = 0;
+                    currentFontFilter = FILTER_POINT;
                 }
                 else if (IsKeyPressed(KEY_TWO))
                 {
                     SetTextureFilter(font.texture, FILTER_BILINEAR);
-                    currentFontFilter = 1;
+                    currentFontFilter = FILTER_BILINEAR;
                 }
                 else if (IsKeyPressed(KEY_THREE))
                 {
                     // NOTE: Trilinear filter won't be noticed on 2D drawing
                     SetTextureFilter(font.texture, FILTER_TRILINEAR);
-                    currentFontFilter = 2;
+                    currentFontFilter = FILTER_TRILINEAR;
                 }
 
                 textSize = MeasureTextEx(font, msg, fontSize, 0);
@@ -88,7 +88,7 @@ namespace Examples
                 if (IsFileDropped())
                 {
                     int count = 0;
-                    string[] droppedFiles = GetDroppedFiles(ref count);
+                    string[] droppedFiles = Utils.MarshalDroppedFiles(ref count);
 
                     // NOTE: We only support first ttf file dropped
                     if (IsFileExtension(droppedFiles[0], ".ttf"))
@@ -113,17 +113,12 @@ namespace Examples
 
                 DrawTextEx(font, msg, fontPosition, fontSize, 0, BLACK);
 
-                // TODO: It seems texSize measurement is not accurate due to chars offsets...
-                //DrawRectangleLines(fontPosition.x, fontPosition.y, textSize.x, textSize.y, RED);
-
                 DrawRectangle(0, screenHeight - 80, screenWidth, 80, LIGHTGRAY);
-                // DrawText(FormatText("Font size: %02.02f", fontSize), 20, screenHeight - 50, 10, DARKGRAY);
-                // DrawText(FormatText("Text size: [%02.02f, %02.02f]", textSize.x, textSize.y), 20, screenHeight - 30, 10, DARKGRAY);
                 DrawText("CURRENT TEXTURE FILTER:", 250, 400, 20, GRAY);
 
-                if (currentFontFilter == 0) DrawText("POINT", 570, 400, 20, BLACK);
-                else if (currentFontFilter == 1) DrawText("BILINEAR", 570, 400, 20, BLACK);
-                else if (currentFontFilter == 2) DrawText("TRILINEAR", 570, 400, 20, BLACK);
+                if (currentFontFilter == FILTER_POINT) DrawText("POINT", 570, 400, 20, BLACK);
+                else if (currentFontFilter == FILTER_POINT) DrawText("BILINEAR", 570, 400, 20, BLACK);
+                else if (currentFontFilter == FILTER_TRILINEAR) DrawText("TRILINEAR", 570, 400, 20, BLACK);
 
                 EndDrawing();
                 //----------------------------------------------------------------------------------
