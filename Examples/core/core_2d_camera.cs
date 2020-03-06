@@ -61,16 +61,10 @@ namespace Examples
             {
                 // Update
                 //----------------------------------------------------------------------------------
-                if (IsKeyDown(KEY_RIGHT))
-                {
-                    player.x += 2;              // Player movement
-                    camera.offset.x -= 2;       // Camera3D displacement with player movement
-                }
-                else if (IsKeyDown(KEY_LEFT))
-                {
-                    player.x -= 2;              // Player movement
-                    camera.offset.x += 2;       // Camera3D displacement with player movement
-                }
+
+                // Player movement
+                if (IsKeyDown(KEY_RIGHT))player.x += 2;
+                else if (IsKeyDown(KEY_LEFT)) player.x -= 2;
 
                 // Camera3D target follows player
                 camera.target = new Vector2(player.x + 20, player.y + 20);
