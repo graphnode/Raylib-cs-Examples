@@ -16,7 +16,6 @@ using static Raylib_cs.Raylib;
 using static Raylib_cs.Easings;
 using static Raylib_cs.Color;
 using static Raylib_cs.KeyboardKey;
-using static Raylib_cs.MouseButton;
 
 namespace Examples
 {
@@ -64,7 +63,7 @@ namespace Examples
             EASING_NONE = NUM_EASING_TYPES
         };
 
-        delegate float EaseFunc(float a, float b, float c, float d);
+        public delegate float EaseFunc(float a, float b, float c, float d);
 
         // Easing functions reference data
         public struct EasingFunc
@@ -74,36 +73,36 @@ namespace Examples
         }
 
         static EasingFunc[] easings = new EasingFunc[] {
-        new EasingFunc { name = "EaseLinearNone", func = EaseLinearNone },
-        new EasingFunc { name = "EaseLinearIn", func = EaseLinearIn },
-        new EasingFunc { name = "EaseLinearOut", func = EaseLinearOut },
-        new EasingFunc { name = "EaseLinearInOut", func = EaseLinearInOut },
-        new EasingFunc { name = "EaseSineIn", func = EaseSineIn },
-        new EasingFunc { name = "EaseSineOut", func = EaseSineOut },
-        new EasingFunc { name = "EaseSineInOut", func = EaseSineInOut },
-        new EasingFunc { name = "EaseCircIn", func = EaseCircIn },
-        new EasingFunc { name = "EaseCircOut", func = EaseCircOut },
-        new EasingFunc { name = "EaseCircInOut", func = EaseCircInOut },
-        new EasingFunc { name = "EaseCubicIn", func = EaseCubicIn },
-        new EasingFunc { name = "EaseCubicOut", func = EaseCubicOut },
-        new EasingFunc { name = "EaseCubicInOut", func = EaseCubicInOut },
-        new EasingFunc { name = "EaseQuadIn", func = EaseQuadIn },
-        new EasingFunc { name = "EaseQuadOut", func = EaseQuadOut },
-        new EasingFunc { name = "EaseQuadInOut", func = EaseQuadInOut },
-        new EasingFunc { name = "EaseExpoIn", func = EaseExpoIn },
-        new EasingFunc { name = "EaseExpoOut", func = EaseExpoOut },
-        new EasingFunc { name = "EaseExpoInOut", func = EaseExpoInOut },
-        new EasingFunc { name = "EaseBackIn", func = EaseBackIn },
-        new EasingFunc { name = "EaseBackOut", func = EaseBackOut },
-        new EasingFunc { name = "EaseBackInOut", func = EaseBackInOut },
-        new EasingFunc { name = "EaseBounceOut", func = EaseBounceOut },
-        new EasingFunc { name = "EaseBounceIn", func = EaseBounceIn },
-        new EasingFunc { name = "EaseBounceInOut", func = EaseBounceInOut },
-        new EasingFunc { name = "EaseElasticIn", func = EaseElasticIn },
-        new EasingFunc { name = "EaseElasticOut", func = EaseElasticOut },
-        new EasingFunc { name = "EaseElasticInOut", func = EaseElasticInOut },
-        new EasingFunc { name = "None", func = NoEase },
-    };
+            new EasingFunc { name = "EaseLinearNone", func = EaseLinearNone },
+            new EasingFunc { name = "EaseLinearIn", func = EaseLinearIn },
+            new EasingFunc { name = "EaseLinearOut", func = EaseLinearOut },
+            new EasingFunc { name = "EaseLinearInOut", func = EaseLinearInOut },
+            new EasingFunc { name = "EaseSineIn", func = EaseSineIn },
+            new EasingFunc { name = "EaseSineOut", func = EaseSineOut },
+            new EasingFunc { name = "EaseSineInOut", func = EaseSineInOut },
+            new EasingFunc { name = "EaseCircIn", func = EaseCircIn },
+            new EasingFunc { name = "EaseCircOut", func = EaseCircOut },
+            new EasingFunc { name = "EaseCircInOut", func = EaseCircInOut },
+            new EasingFunc { name = "EaseCubicIn", func = EaseCubicIn },
+            new EasingFunc { name = "EaseCubicOut", func = EaseCubicOut },
+            new EasingFunc { name = "EaseCubicInOut", func = EaseCubicInOut },
+            new EasingFunc { name = "EaseQuadIn", func = EaseQuadIn },
+            new EasingFunc { name = "EaseQuadOut", func = EaseQuadOut },
+            new EasingFunc { name = "EaseQuadInOut", func = EaseQuadInOut },
+            new EasingFunc { name = "EaseExpoIn", func = EaseExpoIn },
+            new EasingFunc { name = "EaseExpoOut", func = EaseExpoOut },
+            new EasingFunc { name = "EaseExpoInOut", func = EaseExpoInOut },
+            new EasingFunc { name = "EaseBackIn", func = EaseBackIn },
+            new EasingFunc { name = "EaseBackOut", func = EaseBackOut },
+            new EasingFunc { name = "EaseBackInOut", func = EaseBackInOut },
+            new EasingFunc { name = "EaseBounceOut", func = EaseBounceOut },
+            new EasingFunc { name = "EaseBounceIn", func = EaseBounceIn },
+            new EasingFunc { name = "EaseBounceInOut", func = EaseBounceInOut },
+            new EasingFunc { name = "EaseElasticIn", func = EaseElasticIn },
+            new EasingFunc { name = "EaseElasticOut", func = EaseElasticOut },
+            new EasingFunc { name = "EaseElasticInOut", func = EaseElasticInOut },
+            new EasingFunc { name = "None", func = NoEase },
+        };
 
         public static int Main()
         {
@@ -201,7 +200,7 @@ namespace Examples
                 // Draw information text
                 DrawText(string.Format("Easing x: {0}", easings[(int)easingX].name), 0, FONT_SIZE * 2, FONT_SIZE, LIGHTGRAY);
                 DrawText(string.Format("Easing y: {0}", easings[(int)easingY].name), 0, FONT_SIZE * 3, FONT_SIZE, LIGHTGRAY);
-                DrawText(string.Format("t (%c) = %.2f d = %.2f", (boundedT == true) ? 'b' : 'u', t, d), 0, FONT_SIZE * 4, FONT_SIZE, LIGHTGRAY);
+                DrawText(string.Format("t ({0}) = {1:0.##} d = {2:0.##}", (boundedT == true) ? 'b' : 'u', t, d), 0, FONT_SIZE * 4, FONT_SIZE, LIGHTGRAY);
 
                 // Draw instructions text
                 DrawText("Use ENTER to play or pause movement, use SPACE to restart", 0, GetScreenHeight() - FONT_SIZE * 2, FONT_SIZE, LIGHTGRAY);
