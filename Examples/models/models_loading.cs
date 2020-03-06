@@ -80,7 +80,7 @@ namespace Examples
                 if (IsFileDropped())
                 {
                     int count = 0;
-                    /*string[] droppedFiles = GetDroppedFiles(ref count);
+                    string[] droppedFiles = Utils.MarshalDroppedFiles(ref count);
 
                     if (count == 1) // Only support one file dropped
                     {
@@ -92,7 +92,7 @@ namespace Examples
                             model = LoadModel(droppedFiles[0]);     // Load new model
 
                             // Set current map diffuse texture
-                            Utils.SetMaterial(ref model, 0, MAP_ALBEDO, ref texture);
+                            Utils.SetMaterialTexture(ref model, 0, MAP_ALBEDO, ref texture);
 
                             meshes = (Mesh*)model.meshes.ToPointer();
                             bounds = MeshBoundingBox(meshes[0]);
@@ -104,9 +104,9 @@ namespace Examples
                             // Unload current model texture and load new one
                             UnloadTexture(texture);
                             texture = LoadTexture(droppedFiles[0]);
-                            Utils.SetMaterial(ref model, 0, MAP_ALBEDO, ref texture);
+                            Utils.SetMaterialTexture(ref model, 0, MAP_ALBEDO, ref texture);
                         }
-                    }*/
+                    }
 
                     ClearDroppedFiles();    // Clear internal buffers
                 }
@@ -130,7 +130,7 @@ namespace Examples
 
                 DrawModel(model, position, 1.0f, WHITE);        // Draw 3d model with texture
 
-                DrawGrid(20, 10.0f);         // Draw a grid
+                DrawGrid(20, 10.0f);                            // Draw a grid
 
                 if (selected) DrawBoundingBox(bounds, GREEN);   // Draw selection box
 

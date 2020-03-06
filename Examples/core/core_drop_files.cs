@@ -11,8 +11,6 @@
 *
 ********************************************************************************************/
 
-using System;
-using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
 
@@ -20,7 +18,9 @@ namespace Examples
 {
     public class core_drop_files
     {
-        public static int Main()
+
+
+        public unsafe static int Main()
         {
             // Initialization
             //--------------------------------------------------------------------------------------
@@ -30,7 +30,7 @@ namespace Examples
             InitWindow(screenWidth, screenHeight, "raylib [core] example - drop files");
 
             int count = 0;
-            string[] droppedFiles = { };
+            string[] droppedFiles = {};
 
             SetTargetFPS(60);
             //--------------------------------------------------------------------------------------
@@ -42,9 +42,7 @@ namespace Examples
                 //----------------------------------------------------------------------------------
                 if (IsFileDropped())
                 {
-                    droppedFiles = GetDroppedFiles(ref count);
-                    // Console.WriteLine(count);
-                    // Console.WriteLine(droppedFiles[0]);
+                    droppedFiles = Utils.MarshalDroppedFiles(ref count);
                 }
 
                 //----------------------------------------------------------------------------------
