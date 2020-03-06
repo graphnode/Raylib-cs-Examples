@@ -68,7 +68,7 @@ namespace Examples
             EndTextureMode();
 
             SetTargetFPS(120);              // Set our game to run at 120 frames-per-second
-                                            //--------------------------------------------------------------------------------------
+            //--------------------------------------------------------------------------------------
 
             // Main game loop
             while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -123,8 +123,7 @@ namespace Examples
                     if (mousePos.y > 50) DrawCircle((int)mousePos.x, (int)mousePos.y, brushSize, colors[colorSelected]);
                     EndTextureMode();
                 }
-
-                if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON))
+                else if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON))
                 {
                     colorSelected = 0;
 
@@ -133,7 +132,10 @@ namespace Examples
                     if (mousePos.y > 50) DrawCircle((int)mousePos.x, (int)mousePos.y, brushSize, colors[0]);
                     EndTextureMode();
                 }
-                else colorSelected = colorSelectedPrev;
+                else
+                {
+                    colorSelected = colorSelectedPrev;
+                }
 
                 // Check mouse hover save button
                 if (CheckCollisionPointRec(mousePos, btnSaveRec)) btnSaveMouseHover = true;
@@ -183,7 +185,11 @@ namespace Examples
                 DrawLine(0, 50, GetScreenWidth(), 50, LIGHTGRAY);
 
                 // Draw color selection rectangles
-                for (int i = 0; i < MAX_COLORS_COUNT; i++) DrawRectangleRec(colorsRecs[i], colors[i]);
+                for (int i = 0; i < MAX_COLORS_COUNT; i++)
+                {
+                    DrawRectangleRec(colorsRecs[i], colors[i]);
+                }
+
                 DrawRectangleLines(10, 10, 30, 30, LIGHTGRAY);
 
                 if (colorMouseHover >= 0) DrawRectangleRec(colorsRecs[colorMouseHover], Fade(WHITE, 0.6f));
