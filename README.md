@@ -10,9 +10,9 @@ C# examples for raylib-cs, a simple and easy-to-use library to learn videogames 
 
 ### Building
 
-1. `git clone https://github.com/ChrisDill/Raylib-cs`
+1. `git clone --recursive https://github.com/ChrisDill/Raylib-cs-Examples.git
 
-2. `cd Raylib-cs`
+2. `cd Raylib-cs-Examples`
 
 3. `dotnet build -c Release`
 
