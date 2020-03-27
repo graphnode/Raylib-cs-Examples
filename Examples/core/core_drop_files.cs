@@ -18,9 +18,7 @@ namespace Examples
 {
     public class core_drop_files
     {
-
-
-        public unsafe static int Main()
+        public static int Main()
         {
             // Initialization
             //--------------------------------------------------------------------------------------
@@ -44,7 +42,6 @@ namespace Examples
                 {
                     droppedFiles = Utils.MarshalDroppedFiles(ref count);
                 }
-
                 //----------------------------------------------------------------------------------
 
                 // Draw

@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 using Raylib_cs;
 using static Raylib_cs.MaterialMapType;
 
@@ -87,11 +88,24 @@ namespace Examples
             return s;
         }
 
+        public unsafe static Material GetMaterial(ref Model model, int materialIndex)
+        {
+            Material *materials = (Material*)model.materials.ToPointer();
+            return *materials;
+        }
+
+        public unsafe static Texture2D GetMaterialTexture(ref Model model, int materialIndex, MaterialMapType mapIndex)
+        {
+            Material *materials = (Material*)model.materials.ToPointer();
+            MaterialMap* maps = (MaterialMap*)materials[0].maps.ToPointer();
+            return maps[(int)mapIndex].texture;
+        }
+
         public unsafe static void SetMaterialTexture(ref Model model, int materialIndex, MaterialMapType mapIndex, ref Texture2D texture)
         {
             Material *materials = (Material*)model.materials.ToPointer();
             MaterialMap* maps = (MaterialMap*)materials[0].maps.ToPointer();
-            maps[(int)MAP_ALBEDO].texture = texture;
+            maps[(int)mapIndex].texture = texture;
         }
 
         public unsafe static void SetMaterialShader(ref Model model, int materialIndex, ref Shader shader)
