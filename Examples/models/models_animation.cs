@@ -24,6 +24,7 @@ using static Raylib_cs.Color;
 using static Raylib_cs.CameraType;
 using static Raylib_cs.CameraMode;
 using static Raylib_cs.KeyboardKey;
+using static Raylib_cs.MaterialMapType;
 
 namespace Examples
 {
@@ -46,15 +47,18 @@ namespace Examples
             camera.fovy = 45.0f;                                // Camera field-of-view Y
             camera.type = CAMERA_PERSPECTIVE;                   // Camera mode type
 
-            Model model = LoadModel("resources/guy/guy.iqm");               // Load the animated model mesh and basic data
-            Texture2D texture = LoadTexture("resources/guy/guytex.png");    // Load model texture and set material
-            // SetMaterialTexture(model.materials[0], MAP_ALBEDO, texture);  // Set model material map texture
+            Model model = LoadModel("resources/guy/guy.iqm");                // Load the animated model mesh and basic data
+            Texture2D texture = LoadTexture("resources/guy/guytex.png");     // Load model texture and set material
+            Utils.SetMaterialTexture(ref model, 0, MAP_ALBEDO, ref texture); // Set model material map texture
 
             Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);            // Set model position
 
             // Load animation data
             int animsCount = 0;
-            IntPtr anims = LoadModelAnimations("resources/guy/guyanim.iqm", ref animsCount);
+            IntPtr animsPtr = LoadModelAnimations("resources/guy/guyanim.iqm", ref animsCount);
+
+            ModelAnimation *anims = (ModelAnimation*)animsPtr.ToPointer();
+
             int animFrameCounter = 0;
 
             SetCameraMode(camera, CAMERA_FREE); // Set free camera mode
@@ -73,8 +77,8 @@ namespace Examples
                 if (IsKeyDown(KEY_SPACE))
                 {
                     animFrameCounter++;
-                    // UpdateModelAnimation(model, anims[0], animFrameCounter);
-                    // if (animFrameCounter >= anims[0].frameCount) animFrameCounter = 0;
+                    UpdateModelAnimation(model, anims[0], animFrameCounter);
+                    if (animFrameCounter >= anims[0].frameCount) animFrameCounter = 0;
                 }
                 //----------------------------------------------------------------------------------
 
@@ -90,7 +94,8 @@ namespace Examples
 
                 for (int i = 0; i < model.boneCount; i++)
                 {
-                    // DrawCube(anims[0].framePoses[animFrameCounter][i].translation, 0.2f, 0.2f, 0.2f, RED);
+                    Transform **framePoses = (Transform**)anims[0].framePoses.ToPointer();
+                    DrawCube(framePoses[animFrameCounter][i].translation, 0.2f, 0.2f, 0.2f, RED);
                 }
 
                 DrawGrid(10, 1.0f);         // Draw a grid
@@ -109,7 +114,7 @@ namespace Examples
             UnloadTexture(texture);     // Unload texture
 
             // Unload model animations data
-            // for (int i = 0; i < animsCount; i++) UnloadModelAnimation(anims[i]);
+            for (int i = 0; i < animsCount; i++) UnloadModelAnimation(anims[i]);
 
             UnloadModel(model);         // Unload model
 

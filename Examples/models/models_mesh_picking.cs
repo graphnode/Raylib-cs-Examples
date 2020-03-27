@@ -38,22 +38,18 @@ namespace Examples
             camera.position = new Vector3(20.0f, 20.0f, 20.0f); // Camera3D position
             camera.target = new Vector3(0.0f, 8.0f, 0.0f);      // Camera3D looking at point
             camera.up = new Vector3(0.0f, 1.6f, 0.0f);          // Camera3D up vector (rotation towards target)
-            camera.fovy = 45.0f;                                    // Camera3D field-of-view Y
-            camera.type = CAMERA_PERSPECTIVE;                       // Camera3D mode type
+            camera.fovy = 45.0f;                                // Camera3D field-of-view Y
+            camera.type = CAMERA_PERSPECTIVE;                   // Camera3D mode type
 
-            Ray ray;        // Picking ray
+            Ray ray = new Ray();        // Picking ray
 
             Model tower = LoadModel("resources/models/turret.obj");                     // Load OBJ model
             Texture2D texture = LoadTexture("resources/models/turret_diffuse.png");     // Load model texture
-
-            // Set map diffuse texture
-            Utils.SetMaterialTexture(ref tower, 0, MAP_ALBEDO, ref texture);
+            Utils.SetMaterialTexture(ref tower, 0, MAP_ALBEDO, ref texture);            // Set map diffuse texture
 
             Vector3 towerPos = new Vector3(0.0f, 0.0f, 0.0f);       // Set model position
-
             Mesh* meshes = (Mesh*)tower.meshes.ToPointer();
-            BoundingBox towerBBox = MeshBoundingBox(meshes[0]);    // Get mesh bounding box
-
+            BoundingBox towerBBox = MeshBoundingBox(meshes[0]);     // Get mesh bounding box
             bool hitMeshBBox = false;
             bool hitTriangle = false;
 
@@ -112,7 +108,7 @@ namespace Examples
                 }
                 else hitTriangle = false;
 
-                RayHitInfo meshHitInfo;
+                RayHitInfo meshHitInfo = new RayHitInfo();
 
                 // Check ray collision against bounding box first, before trying the full ray-mesh test
                 if (CheckCollisionRayBox(ray, towerBBox))
@@ -121,7 +117,7 @@ namespace Examples
 
                     // Check ray collision against model
                     // NOTE: It considers model.transform matrix!
-                    meshHitInfo = GetCollisionRayModel(ray, ref tower);
+                    meshHitInfo = GetCollisionRayModel(ray, tower);
 
                     if ((meshHitInfo.hit) && (meshHitInfo.distance < nearestHit.distance))
                     {
@@ -133,6 +129,7 @@ namespace Examples
                 }
                 hitMeshBBox = false;
                 //----------------------------------------------------------------------------------
+
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
