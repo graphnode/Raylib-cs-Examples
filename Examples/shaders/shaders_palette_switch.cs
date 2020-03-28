@@ -35,7 +35,7 @@ namespace Examples
         const int VALUES_PER_COLOR =        3;
 
         static int[][] palettes = new int[][] {
-            {   // 3-BIT RGB
+            new int[] {   // 3-BIT RGB
                 0, 0, 0,
                 255, 0, 0,
                 0, 255, 0,
@@ -45,7 +45,7 @@ namespace Examples
                 255, 255, 0,
                 255, 255, 255,
             },
-            {   // AMMO-8 (GameBoy-like)
+            new int[] {   // AMMO-8 (GameBoy-like)
                 4, 12, 6,
                 17, 35, 24,
                 30, 58, 41,
@@ -55,7 +55,7 @@ namespace Examples
                 190, 220, 127,
                 238, 255, 204,
             },
-            {   // RKBV (2-strip film)
+            new int[] {   // RKBV (2-strip film)
                 21, 25, 26,
                 138, 76, 88,
                 217, 98, 117,
@@ -110,7 +110,7 @@ namespace Examples
 
                 // Send new value to the shader to be used on drawing.
                 // NOTE: We are sending RGB triplets w/o the alpha channel
-                SetShaderValueV(shader, paletteLoc, ref palettes[currentPalette], UNIFORM_IVEC3, COLORS_PER_PALETTE);
+                Utils.SetShaderValueV(shader, paletteLoc, palettes[currentPalette], UNIFORM_IVEC3, COLORS_PER_PALETTE);
                 //----------------------------------------------------------------------------------
 
                 // Draw

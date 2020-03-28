@@ -60,7 +60,7 @@ namespace Examples
             int resolutionLoc = GetShaderLocation(shader, "resolution");
 
             float[] resolution = { (float)screenWidth, (float)screenHeight };
-            SetShaderValue(shader, resolutionLoc, ref resolution, UNIFORM_VEC2);
+            Utils.SetShaderValue(shader, resolutionLoc, resolution, UNIFORM_VEC2);
 
             float runTime = 0.0f;
 
@@ -77,7 +77,7 @@ namespace Examples
                     screenWidth = GetScreenWidth();
                     screenHeight = GetScreenHeight();
                     resolution = new float[] { (float)screenWidth, (float)screenHeight };
-                    SetShaderValue(shader, resolutionLoc, ref resolution, UNIFORM_VEC2);
+                    Utils.SetShaderValue(shader, resolutionLoc, resolution, UNIFORM_VEC2);
                 }
 
                 // Update
@@ -91,9 +91,9 @@ namespace Examples
                 runTime += deltaTime;
 
                 // Set shader required uniform values
-                SetShaderValue(shader, viewEyeLoc, ref cameraPos, UNIFORM_VEC3);
-                SetShaderValue(shader, viewCenterLoc, ref cameraTarget, UNIFORM_VEC3);
-                SetShaderValue(shader, runTimeLoc, ref runTime, UNIFORM_FLOAT);
+                Utils.SetShaderValue(shader, viewEyeLoc, cameraPos, UNIFORM_VEC3);
+                Utils.SetShaderValue(shader, viewCenterLoc, cameraTarget, UNIFORM_VEC3);
+                Utils.SetShaderValue(shader, runTimeLoc, ref runTime, UNIFORM_FLOAT);
                 //----------------------------------------------------------------------------------
 
                 // Draw

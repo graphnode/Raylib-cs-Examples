@@ -81,7 +81,7 @@ namespace Examples
 
             float fogDensity = 0.15f;
             int fogDensityLoc = GetShaderLocation(shader, "fogDensity");
-            SetShaderValue(shader, fogDensityLoc, ref fogDensity, UNIFORM_FLOAT);
+            Utils.SetShaderValue(shader, fogDensityLoc, ref fogDensity, UNIFORM_FLOAT);
 
             // NOTE: All models share the same shader
             Utils.SetMaterialShader(ref modelA, 0, ref shader);
@@ -115,14 +115,14 @@ namespace Examples
                     if (fogDensity < 0.0) fogDensity = 0.0f;
                 }
 
-                SetShaderValue(shader, fogDensityLoc, ref fogDensity, UNIFORM_FLOAT);
+                Utils.SetShaderValue(shader, fogDensityLoc, ref fogDensity, UNIFORM_FLOAT);
 
                 // Rotate the torus
                 modelA.transform = MatrixMultiply(modelA.transform, MatrixRotateX(-0.025f));
                 modelA.transform = MatrixMultiply(modelA.transform, MatrixRotateZ(0.012f));
 
                 // Update the light shader with the camera view position
-                SetShaderValue(shader, locs[(int)LOC_VECTOR_VIEW], ref camera.position.x, UNIFORM_VEC3);
+                Utils.SetShaderValue(shader, locs[(int)LOC_VECTOR_VIEW], ref camera.position.x, UNIFORM_VEC3);
                 //----------------------------------------------------------------------------------
 
                 // Draw
