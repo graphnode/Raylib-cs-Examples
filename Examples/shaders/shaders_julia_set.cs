@@ -21,7 +21,6 @@ using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
 using static Raylib_cs.KeyboardKey;
 using static Raylib_cs.MouseButton;
-using static Raylib_cs.ShaderLocationIndex;
 using static Raylib_cs.ShaderUniformDataType;
 
 namespace Examples
@@ -54,7 +53,7 @@ namespace Examples
             Shader shader = LoadShader(null, string.Format("resources/shaders/glsl{0}/julia_set.fs", GLSL_VERSION));
 
             // c constant to use in z^2 + c
-            float[] c = new float[2] { POINTS_OF_INTEREST[0][0], POINTS_OF_INTEREST[0][1] };
+            float[] c = { POINTS_OF_INTEREST[0][0], POINTS_OF_INTEREST[0][1] };
 
             // Offset and zoom to draw the julia set at. (centered on screen and default size)
             float[] offset = { -(float)screenWidth / 2, -(float)screenHeight / 2 };
@@ -70,11 +69,11 @@ namespace Examples
 
             // Tell the shader what the screen dimensions, zoom, offset and c are
             float[] screenDims = { (float)screenWidth, (float)screenHeight };
-            SetShaderValue(shader, GetShaderLocation(shader, "screenDims"), ref screenDims, UNIFORM_VEC2);
+            Utils.SetShaderValue(shader, GetShaderLocation(shader, "screenDims"), screenDims, UNIFORM_VEC2);
 
-            SetShaderValue(shader, cLoc, ref c, UNIFORM_VEC2);
-            SetShaderValue(shader, zoomLoc, ref zoomLoc, UNIFORM_FLOAT);
-            SetShaderValue(shader, offsetLoc, ref offset, UNIFORM_VEC2);
+            Utils.SetShaderValue(shader, cLoc, c, UNIFORM_VEC2);
+            Utils.SetShaderValue(shader, zoomLoc, ref zoomLoc, UNIFORM_FLOAT);
+            Utils.SetShaderValue(shader, offsetLoc, offset, UNIFORM_VEC2);
 
             // Create a RenderTexture2D to be used for render to texture
             RenderTexture2D target = LoadRenderTexture(screenWidth, screenHeight);
@@ -130,11 +129,20 @@ namespace Examples
                         c[0] = POINTS_OF_INTEREST[5][0];
                         c[1] = POINTS_OF_INTEREST[5][1];
                     }
-                    SetShaderValue(shader, cLoc, ref c, UNIFORM_VEC2);
+                    Utils.SetShaderValue(shader, cLoc, c, UNIFORM_VEC2);
                 }
 
-                if (IsKeyPressed(KEY_SPACE)) pause = !pause;                 // Pause animation (c change)
-                if (IsKeyPressed(KEY_F1)) showControls = !showControls;  // Toggle whether or not to show controls
+                // Pause animation (c change)
+                if (IsKeyPressed(KEY_SPACE))
+                {
+                    pause = !pause;
+                }
+
+                // Toggle whether or not to show controls
+                if (IsKeyPressed(KEY_F1))
+                {
+                    showControls = !showControls;
+                }
 
                 if (!pause)
                 {
@@ -157,17 +165,20 @@ namespace Examples
                         offset[0] += GetFrameTime() * offsetSpeed.x * 0.8f;
                         offset[1] += GetFrameTime() * offsetSpeed.y * 0.8f;
                     }
-                    else offsetSpeed = new Vector2(0.0f, 0.0f);
+                    else
+                    {
+                        offsetSpeed = new Vector2(0.0f, 0.0f);
+                    }
 
-                    SetShaderValue(shader, zoomLoc, ref zoom, UNIFORM_FLOAT);
-                    SetShaderValue(shader, offsetLoc, ref offset, UNIFORM_VEC2);
+                    Utils.SetShaderValue(shader, zoomLoc, ref zoom, UNIFORM_FLOAT);
+                    Utils.SetShaderValue(shader, offsetLoc, offset, UNIFORM_VEC2);
 
                     // Increment c value with time
                     float amount = GetFrameTime() * incrementSpeed * 0.0005f;
                     c[0] += amount;
                     c[1] += amount;
 
-                    SetShaderValue(shader, cLoc, ref c, UNIFORM_VEC2);
+                    Utils.SetShaderValue(shader, cLoc, c, UNIFORM_VEC2);
                 }
                 //----------------------------------------------------------------------------------
 
@@ -179,7 +190,7 @@ namespace Examples
 
                 // Using a render texture to draw Julia set
                 BeginTextureMode(target);       // Enable drawing to texture
-                ClearBackground(BLACK);     // Clear the render texture
+                ClearBackground(BLACK);         // Clear the render texture
 
                 // Draw a rectangle in shader mode to be used as shader canvas
                 // NOTE: Rectangle uses font white character texture coordinates,

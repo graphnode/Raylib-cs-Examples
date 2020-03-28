@@ -61,18 +61,18 @@ namespace Examples
             float speedY = 8.0f;
 
             float[] screenSize = { (float)GetScreenWidth(), (float)GetScreenHeight() };
-            SetShaderValue(shader, GetShaderLocation(shader, "size"), ref screenSize, UNIFORM_VEC2);
-            SetShaderValue(shader, freqXLoc, ref freqX, UNIFORM_FLOAT);
-            SetShaderValue(shader, freqYLoc, ref freqY, UNIFORM_FLOAT);
-            SetShaderValue(shader, ampXLoc, ref ampX, UNIFORM_FLOAT);
-            SetShaderValue(shader, ampYLoc, ref ampY, UNIFORM_FLOAT);
-            SetShaderValue(shader, speedXLoc, ref speedX, UNIFORM_FLOAT);
-            SetShaderValue(shader, speedYLoc, ref speedY, UNIFORM_FLOAT);
+            Utils.SetShaderValue(shader, GetShaderLocation(shader, "size"), screenSize, UNIFORM_VEC2);
+            Utils.SetShaderValue(shader, freqXLoc, ref freqX, UNIFORM_FLOAT);
+            Utils.SetShaderValue(shader, freqYLoc, ref freqY, UNIFORM_FLOAT);
+            Utils.SetShaderValue(shader, ampXLoc, ref ampX, UNIFORM_FLOAT);
+            Utils.SetShaderValue(shader, ampYLoc, ref ampY, UNIFORM_FLOAT);
+            Utils.SetShaderValue(shader, speedXLoc, ref speedX, UNIFORM_FLOAT);
+            Utils.SetShaderValue(shader, speedYLoc, ref speedY, UNIFORM_FLOAT);
 
             float seconds = 0.0f;
 
             SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
-            // -------------------------------------------------------------------------------------------------------------
+            //-------------------------------------------------------------------------------------------------------------
 
             // Main game loop
             while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -81,7 +81,7 @@ namespace Examples
                 //----------------------------------------------------------------------------------
                 seconds += GetFrameTime();
 
-                SetShaderValue(shader, secondsLoc, ref seconds, UNIFORM_FLOAT);
+                Utils.SetShaderValue(shader, secondsLoc, ref seconds, UNIFORM_FLOAT);
                 //----------------------------------------------------------------------------------
 
                 // Draw
@@ -106,7 +106,7 @@ namespace Examples
             UnloadShader(shader);         // Unload shader
             UnloadTexture(texture);       // Unload texture
 
-            CloseWindow();              // Close window and OpenGL context
+            CloseWindow();                // Close window and OpenGL context
             //--------------------------------------------------------------------------------------
 
             return 0;

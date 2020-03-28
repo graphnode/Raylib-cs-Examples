@@ -26,7 +26,6 @@
 ********************************************************************************************/
 
 using System;
-using System.Runtime.InteropServices;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Raymath;
@@ -36,8 +35,10 @@ using static Raylib_cs.CameraMode;
 using static Raylib_cs.CameraType;
 using static Raylib_cs.KeyboardKey;
 using static Raylib_cs.ShaderLocationIndex;
-using static Raylib_cs.ShaderUniformDataType;
 using static Raylib_cs.MaterialMapType;
+using static Raylib_cs.Rlights;
+using static Raylib_cs.LightType;
+using static Raylib_cs.ShaderUniformDataType;
 
 namespace Examples
 {
@@ -86,7 +87,7 @@ namespace Examples
 
             // ambient light level
             int ambientLoc = GetShaderLocation(shader, "ambient");
-            SetShaderValue(shader, ambientLoc, new float[] { 0.2f, 0.2f, 0.2f, 1.0f }, UNIFORM_VEC4);
+            Utils.SetShaderValue(shader, ambientLoc, new float[] { 0.2f, 0.2f, 0.2f, 1.0f }, UNIFORM_VEC4);
 
             float angle = 6.282f;
 
@@ -141,8 +142,7 @@ namespace Examples
 
                 // Update the light shader with the camera view position
                 float[] cameraPos = { camera.position.x, camera.position.y, camera.position.z };
-                IntPtr value = Marshal.UnsafeAddrOfPinnedArrayElement(cameraPos, 0);
-                // SetShaderValue(shader, shader.locs[LOC_VECTOR_VIEW], cameraPos, UNIFORM_VEC3);
+                Utils.SetShaderValue(shader, locs[(int)LOC_VECTOR_VIEW], cameraPos, UNIFORM_VEC3);
                 //----------------------------------------------------------------------------------
 
                 // Draw
