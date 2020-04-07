@@ -1,5 +1,5 @@
 build:
-	dotnet build -f netcoreapp3.1
+	dotnet build Examples/Examples.csproj -f netcoreapp3.1
 build-release:
 	dotnet build -c Release
 clean:
