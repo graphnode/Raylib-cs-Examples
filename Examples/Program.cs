@@ -153,15 +153,6 @@ namespace Examples
             //RunExample("audio_raw_stream.cs");
             //RunExample("audio_sound_loading.cs");
             ChangeDirectory("../");
-
-            // [physics] module examples
-            ChangeDirectory("./physics");
-            RunExample("physics_demo.cs");
-            RunExample("physics_friction.cs");
-            RunExample("physics_movement.cs");
-            RunExample("physics_restitution.cs");
-            RunExample("physics_shatter.cs");
-            ChangeDirectory("../");
         }
     }
 }

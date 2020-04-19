@@ -2,8 +2,8 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFrameworks>net47;netcoreapp3.1</TargetFrameworks>
-    <ApplicationIcon>../Raylib-cs/Logo/raylib-cs.ico</ApplicationIcon>
-    <Platforms>AnyCPU;x64;x86</Platforms>
+    <!-- <ApplicationIcon>../Raylib-cs/Logo/raylib-cs.ico</ApplicationIcon> -->
+    <Platforms>x64</Platforms>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <StartupObject>Examples.Program</StartupObject>
   </PropertyGroup>
@@ -11,15 +11,14 @@
   <Import Project="../netfx.props" />
 
   <ItemGroup>
-    <!-- <Compile Remove="models/*.cs" /> -->
     <Compile Remove="models/models_material_pbr.cs" />
     <Compile Remove="models/models_skybox.cs" />
     <Compile Remove="others/*.cs" />
     <Compile Remove="physics/*.cs" />
-    <Compile Remove="shaders/*.cs" />
     <Compile Remove="core/core_loading_thread.cs" />
     <Compile Remove="text/text_unicode.cs" />
     <Compile Remove="text/text_font_sdf.cs" />
+    <Compile Remove="shaders/shaders_basic_lighting.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../Raylib-cs/Raylib-cs/Raylib-cs.csproj" />
+    <PackageReference Include="Raylib-cs" Version="3.0.0-pre1" />
   </ItemGroup>
 </Project>
