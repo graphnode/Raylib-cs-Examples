@@ -9,6 +9,7 @@
 *
 ********************************************************************************************/
 
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.CameraType;
@@ -62,8 +63,8 @@ namespace Examples
 
                     // Check collision between ray and box
                     collision = CheckCollisionRayBox(ray,
-                                new BoundingBox(new Vector3(cubePosition.x - cubeSize.x / 2, cubePosition.y - cubeSize.y / 2, cubePosition.z - cubeSize.z / 2),
-                                              new Vector3(cubePosition.x + cubeSize.x / 2, cubePosition.y + cubeSize.y / 2, cubePosition.z + cubeSize.z / 2)));
+                                new BoundingBox(new Vector3(cubePosition.X - cubeSize.X / 2, cubePosition.Y - cubeSize.Y / 2, cubePosition.Z - cubeSize.Z / 2),
+                                              new Vector3(cubePosition.X + cubeSize.X / 2, cubePosition.Y + cubeSize.Y / 2, cubePosition.Z + cubeSize.Z / 2)));
                 }
                 //----------------------------------------------------------------------------------
 
@@ -77,15 +78,15 @@ namespace Examples
 
                 if (collision)
                 {
-                    DrawCube(cubePosition, cubeSize.x, cubeSize.y, cubeSize.z, RED);
-                    DrawCubeWires(cubePosition, cubeSize.x, cubeSize.y, cubeSize.z, MAROON);
+                    DrawCube(cubePosition, cubeSize.X, cubeSize.Y, cubeSize.Z, RED);
+                    DrawCubeWires(cubePosition, cubeSize.X, cubeSize.Y, cubeSize.Z, MAROON);
 
-                    DrawCubeWires(cubePosition, cubeSize.x + 0.2f, cubeSize.y + 0.2f, cubeSize.z + 0.2f, GREEN);
+                    DrawCubeWires(cubePosition, cubeSize.X + 0.2f, cubeSize.Y + 0.2f, cubeSize.Z + 0.2f, GREEN);
                 }
                 else
                 {
-                    DrawCube(cubePosition, cubeSize.x, cubeSize.y, cubeSize.z, GRAY);
-                    DrawCubeWires(cubePosition, cubeSize.x, cubeSize.y, cubeSize.z, DARKGRAY);
+                    DrawCube(cubePosition, cubeSize.X, cubeSize.Y, cubeSize.Z, GRAY);
+                    DrawCubeWires(cubePosition, cubeSize.X, cubeSize.Y, cubeSize.Z, DARKGRAY);
                 }
 
                 DrawRay(ray, MAROON);

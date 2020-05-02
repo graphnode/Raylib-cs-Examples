@@ -10,6 +10,7 @@
 ********************************************************************************************/
 
 using System;
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
@@ -52,31 +53,31 @@ namespace Examples
                 // Check not inside the left eye sclera
                 if (!CheckCollisionPointCircle(irisLeftPosition, scleraLeftPosition, scleraRadius - 20))
                 {
-                    dx = irisLeftPosition.x - scleraLeftPosition.x;
-                    dy = irisLeftPosition.y - scleraLeftPosition.y;
+                    dx = irisLeftPosition.X - scleraLeftPosition.X;
+                    dy = irisLeftPosition.Y - scleraLeftPosition.Y;
 
                     angle = (float)Math.Atan2(dy, dx);
 
                     dxx = (scleraRadius - irisRadius) * (float)Math.Cos(angle);
                     dyy = (scleraRadius - irisRadius) * (float)Math.Sin(angle);
 
-                    irisLeftPosition.x = scleraLeftPosition.x + dxx;
-                    irisLeftPosition.y = scleraLeftPosition.y + dyy;
+                    irisLeftPosition.X = scleraLeftPosition.X + dxx;
+                    irisLeftPosition.Y = scleraLeftPosition.Y + dyy;
                 }
 
                 // Check not inside the right eye sclera
                 if (!CheckCollisionPointCircle(irisRightPosition, scleraRightPosition, scleraRadius - 20))
                 {
-                    dx = irisRightPosition.x - scleraRightPosition.x;
-                    dy = irisRightPosition.y - scleraRightPosition.y;
+                    dx = irisRightPosition.X - scleraRightPosition.X;
+                    dy = irisRightPosition.Y - scleraRightPosition.Y;
 
                     angle = (float)Math.Atan2(dy, dx);
 
                     dxx = (scleraRadius - irisRadius) * (float)Math.Cos(angle);
                     dyy = (scleraRadius - irisRadius) * (float)Math.Sin(angle);
 
-                    irisRightPosition.x = scleraRightPosition.x + dxx;
-                    irisRightPosition.y = scleraRightPosition.y + dyy;
+                    irisRightPosition.X = scleraRightPosition.X + dxx;
+                    irisRightPosition.Y = scleraRightPosition.Y + dyy;
                 }
                 //----------------------------------------------------------------------------------
 

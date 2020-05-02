@@ -12,6 +12,7 @@
 *
 ********************************************************************************************/
 
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
@@ -58,14 +59,14 @@ namespace Examples
 
             for (int i = 0; i < MAX_FONTS; i++)
             {
-                positions[i].x = screenWidth / 2 - MeasureTextEx(fonts[i], messages[i], fonts[i].baseSize * 2, spacings[i]).x / 2;
-                positions[i].y = 60 + fonts[i].baseSize + 45 * i;
+                positions[i].X = screenWidth / 2 - MeasureTextEx(fonts[i], messages[i], fonts[i].baseSize * 2, spacings[i]).X / 2;
+                positions[i].Y = 60 + fonts[i].baseSize + 45 * i;
             }
 
             // Small Y position corrections
-            positions[3].y += 8;
-            positions[4].y += 2;
-            positions[7].y -= 8;
+            positions[3].Y += 8;
+            positions[4].Y += 2;
+            positions[7].Y -= 8;
 
             Color[] colors = new Color[MAX_FONTS] { MAROON, ORANGE, DARKGREEN, DARKBLUE, DARKPURPLE, LIME, GOLD, RED };
             //--------------------------------------------------------------------------------------

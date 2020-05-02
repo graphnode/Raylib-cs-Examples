@@ -18,6 +18,7 @@
 *
 ********************************************************************************************/
 
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
@@ -44,13 +45,13 @@ namespace Examples
             Font font2 = LoadFont("resources/custom_alagard.png");        // Font loading
             Font font3 = LoadFont("resources/custom_jupiter_crash.png");  // Font loading
 
-            Vector2 fontPosition1 = new Vector2(screenWidth / 2 - MeasureTextEx(font1, msg1, font1.baseSize, -3).x / 2,
+            Vector2 fontPosition1 = new Vector2(screenWidth / 2 - MeasureTextEx(font1, msg1, font1.baseSize, -3).X / 2,
                                       screenHeight / 2 - font1.baseSize / 2 - 80);
 
-            Vector2 fontPosition2 = new Vector2(screenWidth / 2 - MeasureTextEx(font2, msg2, font2.baseSize, -2).x / 2,
+            Vector2 fontPosition2 = new Vector2(screenWidth / 2 - MeasureTextEx(font2, msg2, font2.baseSize, -2).X / 2,
                                       screenHeight / 2 - font2.baseSize / 2 - 10);
 
-            Vector2 fontPosition3 = new Vector2(screenWidth / 2 - MeasureTextEx(font3, msg3, font3.baseSize, 2).x / 2,
+            Vector2 fontPosition3 = new Vector2(screenWidth / 2 - MeasureTextEx(font3, msg3, font3.baseSize, 2).X / 2,
                                       screenHeight / 2 - font3.baseSize / 2 + 50);
 
             SetTargetFPS(60);               // Set our game to run at 60 frames-per-second

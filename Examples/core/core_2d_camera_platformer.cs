@@ -12,6 +12,7 @@
 ********************************************************************************************/
 
 using System;
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Raymath;
@@ -138,7 +139,7 @@ namespace Examples
 
                 for (int i = 0; i < envItemsLength; i++) DrawRectangleRec(envItems[i].rect, envItems[i].color);
 
-                Rectangle playerRect = new Rectangle(player.position.x - 20, player.position.y - 40, 40, 40);
+                Rectangle playerRect = new Rectangle(player.position.X - 20, player.position.X - 40, 40, 40);
                 DrawRectangleRec(playerRect, RED);
 
                 EndMode2D();
@@ -165,8 +166,8 @@ namespace Examples
 
         static void UpdatePlayer(ref Player player, EnvItem[] envItems, int envItemsLength, float delta)
         {
-            if (IsKeyDown(KEY_LEFT)) player.position.x -= PLAYER_HOR_SPD * delta;
-            if (IsKeyDown(KEY_RIGHT)) player.position.x += PLAYER_HOR_SPD * delta;
+            if (IsKeyDown(KEY_LEFT)) player.position.X -= PLAYER_HOR_SPD * delta;
+            if (IsKeyDown(KEY_RIGHT)) player.position.X += PLAYER_HOR_SPD * delta;
             if (IsKeyDown(KEY_SPACE) && player.canJump)
             {
                 player.speed = -PLAYER_JUMP_SPD;
@@ -179,20 +180,20 @@ namespace Examples
                 EnvItem ei = envItems[i];
                 Vector2 p = player.position;
                 if (ei.blocking != 0 &&
-                    ei.rect.x <= p.x &&
-                    ei.rect.x + ei.rect.width >= p.x &&
-                    ei.rect.y >= p.y &&
-                    ei.rect.y < p.y + player.speed * delta)
+                    ei.rect.x <= p.X &&
+                    ei.rect.x + ei.rect.width >= p.X &&
+                    ei.rect.y >= p.X &&
+                    ei.rect.y < p.X + player.speed * delta)
                 {
                     hitObstacle = 1;
                     player.speed = 0.0f;
-                    p.y = ei.rect.y;
+                    p.X = ei.rect.y;
                 }
             }
 
             if (hitObstacle == 0)
             {
-                player.position.y += player.speed * delta;
+                player.position.X += player.speed * delta;
                 player.speed += G * delta;
                 player.canJump = false;
             }
@@ -223,10 +224,10 @@ namespace Examples
             Vector2 max = GetWorldToScreen2D(new Vector2(maxX, maxY), camera);
             Vector2 min = GetWorldToScreen2D(new Vector2(minX, minY), camera);
 
-            if (max.x < width) camera.offset.x = width - (max.x - width / 2);
-            if (max.y < height) camera.offset.y = height - (max.y - height / 2);
-            if (min.x > 0) camera.offset.x = width / 2 - min.x;
-            if (min.y > 0) camera.offset.y = height / 2 - min.y;
+            if (max.X < width) camera.offset.X = width - (max.X - width / 2);
+            if (max.X < height) camera.offset.X = height - (max.X - height / 2);
+            if (min.X > 0) camera.offset.X = width / 2 - min.X;
+            if (min.X > 0) camera.offset.X = height / 2 - min.X;
         }
 
         static void UpdateCameraCenterSmoothFollow(ref Camera2D camera, ref Player player, EnvItem[] envItems, int envItemsLength, float delta, int width, int height)
@@ -253,37 +254,37 @@ namespace Examples
             float evenOutTarget = 0.0f;
 
             camera.offset = new Vector2(width / 2, height / 2);
-            camera.target.x = player.position.x;
+            camera.target.X = player.position.X;
 
             if (eveningOut != 0)
             {
-                if (evenOutTarget > camera.target.y)
+                if (evenOutTarget > camera.target.X)
                 {
-                    camera.target.y += evenOutSpeed * delta;
+                    camera.target.X += evenOutSpeed * delta;
 
-                    if (camera.target.y > evenOutTarget)
+                    if (camera.target.X > evenOutTarget)
                     {
-                        camera.target.y = evenOutTarget;
+                        camera.target.X = evenOutTarget;
                         eveningOut = 0;
                     }
                 }
                 else
                 {
-                    camera.target.y -= evenOutSpeed * delta;
+                    camera.target.X -= evenOutSpeed * delta;
 
-                    if (camera.target.y < evenOutTarget)
+                    if (camera.target.X < evenOutTarget)
                     {
-                        camera.target.y = evenOutTarget;
+                        camera.target.X = evenOutTarget;
                         eveningOut = 0;
                     }
                 }
             }
             else
             {
-                if (player.canJump && (player.speed == 0) && (player.position.y != camera.target.y))
+                if (player.canJump && (player.speed == 0) && (player.position.X != camera.target.X))
                 {
                     eveningOut = 1;
-                    evenOutTarget = player.position.y;
+                    evenOutTarget = player.position.X;
                 }
             }
         }
@@ -292,14 +293,14 @@ namespace Examples
         {
             Vector2 bbox = new Vector2(0.2f, 0.2f);
 
-            Vector2 bboxWorldMin = GetScreenToWorld2D(new Vector2((1 - bbox.x) * 0.5f * width, (1 - bbox.y) * 0.5f * height), camera);
-            Vector2 bboxWorldMax = GetScreenToWorld2D(new Vector2((1 + bbox.x) * 0.5f * width, (1 + bbox.y) * 0.5f * height), camera);
-            camera.offset = new Vector2((1 - bbox.x) * 0.5f * width, (1 - bbox.y) * 0.5f * height);
+            Vector2 bboxWorldMin = GetScreenToWorld2D(new Vector2((1 - bbox.X) * 0.5f * width, (1 - bbox.X) * 0.5f * height), camera);
+            Vector2 bboxWorldMax = GetScreenToWorld2D(new Vector2((1 + bbox.X) * 0.5f * width, (1 + bbox.X) * 0.5f * height), camera);
+            camera.offset = new Vector2((1 - bbox.X) * 0.5f * width, (1 - bbox.X) * 0.5f * height);
 
-            if (player.position.x < bboxWorldMin.x) camera.target.x = player.position.x;
-            if (player.position.y < bboxWorldMin.y) camera.target.y = player.position.y;
-            if (player.position.x > bboxWorldMax.x) camera.target.x = bboxWorldMin.x + (player.position.x - bboxWorldMax.x);
-            if (player.position.y > bboxWorldMax.y) camera.target.y = bboxWorldMin.y + (player.position.y - bboxWorldMax.y);
+            if (player.position.X < bboxWorldMin.X) camera.target.X = player.position.X;
+            if (player.position.X < bboxWorldMin.X) camera.target.X = player.position.X;
+            if (player.position.X > bboxWorldMax.X) camera.target.X = bboxWorldMin.X + (player.position.X - bboxWorldMax.X);
+            if (player.position.X > bboxWorldMax.X) camera.target.X = bboxWorldMin.X + (player.position.X - bboxWorldMax.X);
         }
     }
 }

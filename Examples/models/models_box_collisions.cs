@@ -9,6 +9,7 @@
 *
 ********************************************************************************************/
 
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
@@ -52,36 +53,36 @@ namespace Examples
                 //----------------------------------------------------------------------------------
 
                 // Move player
-                if (IsKeyDown(KEY_RIGHT)) playerPosition.x += 0.2f;
-                else if (IsKeyDown(KEY_LEFT)) playerPosition.x -= 0.2f;
-                else if (IsKeyDown(KEY_DOWN)) playerPosition.z += 0.2f;
-                else if (IsKeyDown(KEY_UP)) playerPosition.z -= 0.2f;
+                if (IsKeyDown(KEY_RIGHT)) playerPosition.X += 0.2f;
+                else if (IsKeyDown(KEY_LEFT)) playerPosition.X -= 0.2f;
+                else if (IsKeyDown(KEY_DOWN)) playerPosition.Z += 0.2f;
+                else if (IsKeyDown(KEY_UP)) playerPosition.Z -= 0.2f;
 
                 collision = false;
 
                 // Check collisions player vs enemy-box
                 if (CheckCollisionBoxes(
-                    new BoundingBox(new Vector3(playerPosition.x - playerSize.x / 2,
-                                             playerPosition.y - playerSize.y / 2,
-                                             playerPosition.z - playerSize.z / 2),
-                                  new Vector3(playerPosition.x + playerSize.x / 2,
-                                             playerPosition.y + playerSize.y / 2,
-                                             playerPosition.z + playerSize.z / 2)),
-                    new BoundingBox(new Vector3(enemyBoxPos.x - enemyBoxSize.x / 2,
-                                             enemyBoxPos.y - enemyBoxSize.y / 2,
-                                             enemyBoxPos.z - enemyBoxSize.z / 2),
-                                  new Vector3(enemyBoxPos.x + enemyBoxSize.x / 2,
-                                             enemyBoxPos.y + enemyBoxSize.y / 2,
-                                             enemyBoxPos.z + enemyBoxSize.z / 2)))) collision = true;
+                    new BoundingBox(new Vector3(playerPosition.X - playerSize.X / 2,
+                                             playerPosition.Y - playerSize.Y / 2,
+                                             playerPosition.Z - playerSize.Z / 2),
+                                  new Vector3(playerPosition.X + playerSize.X / 2,
+                                             playerPosition.Y + playerSize.Y / 2,
+                                             playerPosition.Z + playerSize.Z / 2)),
+                    new BoundingBox(new Vector3(enemyBoxPos.X - enemyBoxSize.X / 2,
+                                             enemyBoxPos.Y - enemyBoxSize.Y / 2,
+                                             enemyBoxPos.Z - enemyBoxSize.Z / 2),
+                                  new Vector3(enemyBoxPos.X + enemyBoxSize.X / 2,
+                                             enemyBoxPos.Y + enemyBoxSize.Y / 2,
+                                             enemyBoxPos.Z + enemyBoxSize.Z / 2)))) collision = true;
 
                 // Check collisions player vs enemy-sphere
                 if (CheckCollisionBoxSphere(
-                    new BoundingBox(new Vector3(playerPosition.x - playerSize.x / 2,
-                                             playerPosition.y - playerSize.y / 2,
-                                             playerPosition.z - playerSize.z / 2),
-                                  new Vector3(playerPosition.x + playerSize.x / 2,
-                                             playerPosition.y + playerSize.y / 2,
-                                             playerPosition.z + playerSize.z / 2)),
+                    new BoundingBox(new Vector3(playerPosition.X - playerSize.X / 2,
+                                             playerPosition.Y - playerSize.Y / 2,
+                                             playerPosition.Z - playerSize.Z / 2),
+                                  new Vector3(playerPosition.X + playerSize.X / 2,
+                                             playerPosition.Y + playerSize.Y / 2,
+                                             playerPosition.Z + playerSize.Z / 2)),
                     enemySpherePos, enemySphereSize)) collision = true;
 
                 if (collision) playerColor = RED;
@@ -97,8 +98,8 @@ namespace Examples
                 BeginMode3D(camera);
 
                 // Draw enemy-box
-                DrawCube(enemyBoxPos, enemyBoxSize.x, enemyBoxSize.y, enemyBoxSize.z, GRAY);
-                DrawCubeWires(enemyBoxPos, enemyBoxSize.x, enemyBoxSize.y, enemyBoxSize.z, DARKGRAY);
+                DrawCube(enemyBoxPos, enemyBoxSize.X, enemyBoxSize.Y, enemyBoxSize.Z, GRAY);
+                DrawCubeWires(enemyBoxPos, enemyBoxSize.X, enemyBoxSize.Y, enemyBoxSize.Z, DARKGRAY);
 
                 // Draw enemy-sphere
                 DrawSphere(enemySpherePos, enemySphereSize, GRAY);

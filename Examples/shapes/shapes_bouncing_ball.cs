@@ -9,6 +9,7 @@
 *
 ********************************************************************************************/
 
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
@@ -46,12 +47,12 @@ namespace Examples
 
                 if (!pause)
                 {
-                    ballPosition.x += ballSpeed.x;
-                    ballPosition.y += ballSpeed.y;
+                    ballPosition.X += ballSpeed.X;
+                    ballPosition.Y += ballSpeed.Y;
 
                     // Check walls collision for bouncing
-                    if ((ballPosition.x >= (GetScreenWidth() - ballRadius)) || (ballPosition.x <= ballRadius)) ballSpeed.x *= -1.0f;
-                    if ((ballPosition.y >= (GetScreenHeight() - ballRadius)) || (ballPosition.y <= ballRadius)) ballSpeed.y *= -1.0f;
+                    if ((ballPosition.X >= (GetScreenWidth() - ballRadius)) || (ballPosition.X <= ballRadius)) ballSpeed.X *= -1.0f;
+                    if ((ballPosition.Y >= (GetScreenHeight() - ballRadius)) || (ballPosition.Y <= ballRadius)) ballSpeed.Y *= -1.0f;
                 }
                 else framesCounter++;
                 //-----------------------------------------------------

@@ -12,6 +12,7 @@
 ********************************************************************************************/
 
 using System;
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
@@ -56,8 +57,8 @@ namespace Examples
 
                 // Move camera around the scene
                 double cameraTime = time * 0.3;
-                camera.position.x = (float)Math.Cos(cameraTime) * 40.0f;
-                camera.position.z = (float)Math.Sin(cameraTime) * 40.0f;
+                camera.position.X = (float)Math.Cos(cameraTime) * 40.0f;
+                camera.position.Z = (float)Math.Sin(cameraTime) * 40.0f;
                 //----------------------------------------------------------------------------------
 
                 // Draw

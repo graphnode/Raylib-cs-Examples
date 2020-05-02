@@ -10,6 +10,7 @@
 *
 ********************************************************************************************/
 
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Raymath;
@@ -158,9 +159,9 @@ namespace Examples
                     DrawCubeWires(nearestHit.position, 0.3f, 0.3f, 0.3f, RED);
 
                     Vector3 normalEnd;
-                    normalEnd.x = nearestHit.position.x + nearestHit.normal.x;
-                    normalEnd.y = nearestHit.position.y + nearestHit.normal.y;
-                    normalEnd.z = nearestHit.position.z + nearestHit.normal.z;
+                    normalEnd.X = nearestHit.position.X + nearestHit.normal.X;
+                    normalEnd.Y = nearestHit.position.Y + nearestHit.normal.Y;
+                    normalEnd.Z = nearestHit.position.Z + nearestHit.normal.Z;
 
                     DrawLine3D(nearestHit.position, normalEnd, RED);
                 }
@@ -182,16 +183,16 @@ namespace Examples
                     DrawText(string.Format("Distance: {0:000.00}", nearestHit.distance), 10, ypos, 10, BLACK);
 
                     DrawText(string.Format("Hit Pos: {0:000.00} {1:000.00} {2:000.00}",
-                                        nearestHit.position.x,
-                                        nearestHit.position.y,
-                                        nearestHit.position.z), 10, ypos + 15, 10, BLACK);
+                                        nearestHit.position.X,
+                                        nearestHit.position.Y,
+                                        nearestHit.position.Z), 10, ypos + 15, 10, BLACK);
 
                     DrawText(string.Format("Hit Norm: {0:000.00} {1:000.00} {2:000.00}",
-                                        nearestHit.normal.x,
-                                        nearestHit.normal.y,
-                                        nearestHit.normal.z), 10, ypos + 30, 10, BLACK);
+                                        nearestHit.normal.X,
+                                        nearestHit.normal.Y,
+                                        nearestHit.normal.Z), 10, ypos + 30, 10, BLACK);
 
-                    if (hitTriangle) DrawText(string.Format("Barycenter:{0:000.00} {1:000.00} {2:000.00}", bary.x, bary.y, bary.z), 10, ypos + 45, 10, BLACK);
+                    if (hitTriangle) DrawText(string.Format("Barycenter:{0:000.00} {1:000.00} {2:000.00}", bary.X, bary.Y, bary.Z), 10, ypos + 45, 10, BLACK);
                 }
 
                 DrawText("Use Mouse to Move Camera", 10, 430, 10, GRAY);
