@@ -9,6 +9,7 @@
 *
 ********************************************************************************************/
 
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
@@ -66,8 +67,8 @@ namespace Examples
                     DrawTextureV(texture, position, WHITE);
 
                     // Draw text directly using sprite font
-                    DrawTextEx(font, "[Parrots font drawing]", new Vector2(position.x + 20,
-                               position.y + 20 + 280), font.baseSize, 0, WHITE);
+                    DrawTextEx(font, "[Parrots font drawing]", new Vector2(position.X + 20,
+                               position.Y + 20 + 280), font.baseSize, 0, WHITE);
                 }
                 else DrawTexture(font.texture, screenWidth / 2 - font.texture.width / 2, 50, BLACK);
 

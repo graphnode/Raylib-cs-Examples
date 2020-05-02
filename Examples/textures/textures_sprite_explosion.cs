@@ -9,6 +9,7 @@
 *
 ********************************************************************************************/
 
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
@@ -65,8 +66,8 @@ namespace Examples
                     position = GetMousePosition();
                     active = true;
 
-                    position.x -= frameWidth / 2;
-                    position.y -= frameHeight / 2;
+                    position.X -= frameWidth / 2;
+                    position.Y -= frameHeight / 2;
 
                     PlaySound(fxBoom);
                 }

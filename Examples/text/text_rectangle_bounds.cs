@@ -11,6 +11,7 @@
 *
 ********************************************************************************************/
 
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
@@ -71,10 +72,10 @@ namespace Examples
                 {
                     if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) resizing = false;
 
-                    int width = (int)(container.width + (mouse.x - lastMouse.x));
+                    int width = (int)(container.width + (mouse.X - lastMouse.X));
                     container.width = (width > minWidth) ? ((width < maxWidth) ? width : maxWidth) : minWidth;
 
-                    int height = (int)(container.height + (mouse.y - lastMouse.y));
+                    int height = (int)(container.height + (mouse.Y - lastMouse.Y));
                     container.height = (height > minHeight) ? ((height < maxHeight) ? height : maxHeight) : minHeight;
                 }
                 else

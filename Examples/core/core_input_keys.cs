@@ -9,6 +9,7 @@
 *
 ********************************************************************************************/
 
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.KeyboardKey;
@@ -37,10 +38,10 @@ namespace Examples
             {
                 // Update
                 //----------------------------------------------------------------------------------
-                if (IsKeyDown(KEY_RIGHT)) ballPosition.x += 2.0f;
-                if (IsKeyDown(KEY_LEFT)) ballPosition.x -= 2.0f;
-                if (IsKeyDown(KEY_UP)) ballPosition.y -= 2.0f;
-                if (IsKeyDown(KEY_DOWN)) ballPosition.y += 2.0f;
+                if (IsKeyDown(KEY_RIGHT)) ballPosition.X += 2.0f;
+                if (IsKeyDown(KEY_LEFT)) ballPosition.X -= 2.0f;
+                if (IsKeyDown(KEY_UP)) ballPosition.Y -= 2.0f;
+                if (IsKeyDown(KEY_DOWN)) ballPosition.Y += 2.0f;
                 //----------------------------------------------------------------------------------
 
                 // Draw

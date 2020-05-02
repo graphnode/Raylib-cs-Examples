@@ -11,6 +11,7 @@
 *
 ********************************************************************************************/
 
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
@@ -60,8 +61,8 @@ namespace Examples
                 {
                     mouseScaleReady = true;
 
-                    rec.width = (mousePosition.x - rec.x);
-                    rec.height = (mousePosition.y - rec.y);
+                    rec.width = (mousePosition.X - rec.x);
+                    rec.height = (mousePosition.Y - rec.y);
 
                     if (rec.width < MOUSE_SCALE_MARK_SIZE) rec.width = MOUSE_SCALE_MARK_SIZE;
                     if (rec.height < MOUSE_SCALE_MARK_SIZE) rec.height = MOUSE_SCALE_MARK_SIZE;

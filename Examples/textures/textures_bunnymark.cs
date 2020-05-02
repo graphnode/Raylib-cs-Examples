@@ -9,6 +9,7 @@
 *
 ********************************************************************************************/
 
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
@@ -64,8 +65,8 @@ namespace Examples
                         if (bunniesCount < MAX_BUNNIES)
                         {
                             bunnies[bunniesCount].position = GetMousePosition();
-                            bunnies[bunniesCount].speed.x = (float)GetRandomValue(-250, 250) / 60.0f;
-                            bunnies[bunniesCount].speed.y = (float)GetRandomValue(-250, 250) / 60.0f;
+                            bunnies[bunniesCount].speed.X = (float)GetRandomValue(-250, 250) / 60.0f;
+                            bunnies[bunniesCount].speed.Y = (float)GetRandomValue(-250, 250) / 60.0f;
                             bunnies[bunniesCount].color = new Color(GetRandomValue(50, 240),
                                                                GetRandomValue(80, 240),
                                                                GetRandomValue(100, 240), 255);
@@ -77,13 +78,13 @@ namespace Examples
                 // Update bunnies
                 for (int i = 0; i < bunniesCount; i++)
                 {
-                    bunnies[i].position.x += bunnies[i].speed.x;
-                    bunnies[i].position.y += bunnies[i].speed.y;
+                    bunnies[i].position.X += bunnies[i].speed.X;
+                    bunnies[i].position.Y += bunnies[i].speed.Y;
 
-                    if (((bunnies[i].position.x + texBunny.width / 2) > GetScreenWidth()) ||
-                        ((bunnies[i].position.x + texBunny.width / 2) < 0)) bunnies[i].speed.x *= -1;
-                    if (((bunnies[i].position.y + texBunny.height / 2) > GetScreenHeight()) ||
-                        ((bunnies[i].position.y + texBunny.height / 2 - 40) < 0)) bunnies[i].speed.y *= -1;
+                    if (((bunnies[i].position.X + texBunny.width / 2) > GetScreenWidth()) ||
+                        ((bunnies[i].position.X + texBunny.width / 2) < 0)) bunnies[i].speed.X *= -1;
+                    if (((bunnies[i].position.Y + texBunny.height / 2) > GetScreenHeight()) ||
+                        ((bunnies[i].position.Y + texBunny.height / 2 - 40) < 0)) bunnies[i].speed.Y *= -1;
                 }
                 //----------------------------------------------------------------------------------
 
@@ -101,7 +102,7 @@ namespace Examples
                     // Process of sending data is costly and it could happen that GPU data has not been completely
                     // processed for drawing while new data is tried to be sent (updating current in-use buffers)
                     // it could generates a stall and consequently a frame drop, limiting the number of drawn bunnies
-                    DrawTexture(texBunny, (int)bunnies[i].position.x, (int)bunnies[i].position.y, bunnies[i].color);
+                    DrawTexture(texBunny, (int)bunnies[i].position.X, (int)bunnies[i].position.Y, bunnies[i].color);
                 }
 
                 DrawRectangle(0, 0, screenWidth, 40, BLACK);
