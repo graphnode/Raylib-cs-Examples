@@ -17,6 +17,7 @@
     <Compile Remove="core/core_loading_thread.cs" />
     <Compile Remove="text/text_unicode.cs" />
     <Compile Remove="text/text_font_sdf.cs" />
+    <Compile Remove="shaders/shaders_basic_lighting.cs" />
   </ItemGroup>
 
   <ItemGroup>
