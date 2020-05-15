@@ -11,6 +11,7 @@
 *
 ********************************************************************************************/
 
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
@@ -54,8 +55,8 @@ namespace Examples
             {
                 circles[i].alpha = 0.0f;
                 circles[i].radius = GetRandomValue(10, 40);
-                circles[i].position.x = GetRandomValue((int)circles[i].radius, screenWidth - (int)circles[i].radius);
-                circles[i].position.y = GetRandomValue((int)circles[i].radius, screenHeight - (int)circles[i].radius);
+                circles[i].position.X = GetRandomValue((int)circles[i].radius, screenWidth - (int)circles[i].radius);
+                circles[i].position.Y = GetRandomValue((int)circles[i].radius, screenHeight - (int)circles[i].radius);
                 circles[i].speed = (float)GetRandomValue(1, 100) / 20000.0f;
                 circles[i].color = colors[GetRandomValue(0, 13)];
             }
@@ -108,8 +109,8 @@ namespace Examples
                     {
                         circles[i].alpha = 0.0f;
                         circles[i].radius = GetRandomValue(10, 40);
-                        circles[i].position.x = GetRandomValue((int)circles[i].radius, screenWidth - (int)circles[i].radius);
-                        circles[i].position.y = GetRandomValue((int)circles[i].radius, screenHeight - (int)circles[i].radius);
+                        circles[i].position.X = GetRandomValue((int)circles[i].radius, screenWidth - (int)circles[i].radius);
+                        circles[i].position.Y = GetRandomValue((int)circles[i].radius, screenHeight - (int)circles[i].radius);
                         circles[i].color = colors[GetRandomValue(0, 13)];
                         circles[i].speed = (float)GetRandomValue(1, 100) / 20000.0f;
                     }

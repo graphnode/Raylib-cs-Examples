@@ -10,6 +10,7 @@
 ********************************************************************************************/
 
 using System;
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
@@ -65,11 +66,11 @@ namespace Examples
                 UpdateCamera(ref camera);      // Update camera
 
                 // Check player collision (we simplify to 2D collision detection)
-                Vector2 playerPos = new Vector2(camera.position.x, camera.position.z);
+                Vector2 playerPos = new Vector2(camera.position.X, camera.position.Z);
                 float playerRadius = 0.1f;  // Collision radius (player is modelled as a cilinder for collision)
 
-                int playerCellX = (int)(playerPos.x - mapPosition.x + 0.5f);
-                int playerCellY = (int)(playerPos.y - mapPosition.z + 0.5f);
+                int playerCellX = (int)(playerPos.X - mapPosition.X + 0.5f);
+                int playerCellY = (int)(playerPos.Y - mapPosition.Z + 0.5f);
 
                 // Out-of-limits security check
                 if (playerCellX < 0) playerCellX = 0;
@@ -87,7 +88,7 @@ namespace Examples
                         Color *mapPixels = (Color*)mapPixelsData.ToPointer();
                         if ((mapPixels[y * cubicmap.width + x].r == 255) &&       // Collision: white pixel, only check R channel
                             (CheckCollisionCircleRec(playerPos, playerRadius,
-                            new Rectangle(mapPosition.x - 0.5f + x * 1.0f, mapPosition.z - 0.5f + y * 1.0f, 1.0f, 1.0f))))
+                            new Rectangle(mapPosition.X - 0.5f + x * 1.0f, mapPosition.Z - 0.5f + y * 1.0f, 1.0f, 1.0f))))
                         {
                             // Collision detected, reset camera position
                             camera.position = oldCamPos;

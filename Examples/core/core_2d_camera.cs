@@ -9,6 +9,7 @@
 *
 ********************************************************************************************/
 
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.KeyboardKey;
@@ -105,8 +106,8 @@ namespace Examples
 
                 DrawRectangleRec(player, RED);
 
-                DrawRectangle((int)camera.target.x, -500, 1, (int)(screenHeight * 4), GREEN);
-                DrawLine((int)(-screenWidth * 10), (int)camera.target.y, (int)(screenWidth * 10), (int)camera.target.y, GREEN);
+                DrawRectangle((int)camera.target.X, -500, 1, (int)(screenHeight * 4), GREEN);
+                DrawLine((int)(-screenWidth * 10), (int)camera.target.Y, (int)(screenWidth * 10), (int)camera.target.Y, GREEN);
 
                 EndMode2D();
 

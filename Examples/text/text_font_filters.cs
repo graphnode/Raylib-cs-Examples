@@ -13,6 +13,7 @@
 *
 ********************************************************************************************/
 
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
@@ -81,8 +82,8 @@ namespace Examples
 
                 textSize = MeasureTextEx(font, msg, fontSize, 0);
 
-                if (IsKeyDown(KEY_LEFT)) fontPosition.x -= 10;
-                else if (IsKeyDown(KEY_RIGHT)) fontPosition.x += 10;
+                if (IsKeyDown(KEY_LEFT)) fontPosition.X -= 10;
+                else if (IsKeyDown(KEY_RIGHT)) fontPosition.X += 10;
 
                 // Load a dropped TTF file dynamically (at current fontSize)
                 if (IsFileDropped())

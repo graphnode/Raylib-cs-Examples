@@ -12,6 +12,7 @@
 ********************************************************************************************/
 
 using System;
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
@@ -84,7 +85,7 @@ namespace Examples
 
                 if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
                 {
-                    float fp = (float)(mousePosition.y);
+                    float fp = (float)(mousePosition.Y);
                     frequency = 40.0f + (float)(fp);
                 }
 
@@ -151,8 +152,8 @@ namespace Examples
                 // Draw the current buffer state proportionate to the screen
                 for (int i = 0; i < GetScreenWidth(); i++)
                 {
-                    position.x = i;
-                    position.y = 250 + 50*data[i*MAX_SAMPLES/screenWidth]/32000;
+                    position.X = i;
+                    position.Y = 250 + 50*data[i*MAX_SAMPLES/screenWidth]/32000;
 
                     DrawPixelV(position, RED);
                 }
