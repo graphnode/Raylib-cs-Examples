@@ -11,6 +11,7 @@
 *
 ********************************************************************************************/
 
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
@@ -120,7 +121,7 @@ namespace Examples
                     // NOTE: To avoid discontinuous circles, we could store
                     // previous-next mouse points and just draw a line using brush size
                     BeginTextureMode(target);
-                    if (mousePos.y > 50) DrawCircle((int)mousePos.x, (int)mousePos.y, brushSize, colors[colorSelected]);
+                    if (mousePos.Y > 50) DrawCircle((int)mousePos.X, (int)mousePos.Y, brushSize, colors[colorSelected]);
                     EndTextureMode();
                 }
                 else if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON))
@@ -129,7 +130,7 @@ namespace Examples
 
                     // Erase circle from render texture
                     BeginTextureMode(target);
-                    if (mousePos.y > 50) DrawCircle((int)mousePos.x, (int)mousePos.y, brushSize, colors[0]);
+                    if (mousePos.Y > 50) DrawCircle((int)mousePos.X, (int)mousePos.Y, brushSize, colors[0]);
                     EndTextureMode();
                 }
                 else
@@ -174,9 +175,9 @@ namespace Examples
                 DrawTextureRec(target.texture, new Rectangle(0, 0, target.texture.width, -target.texture.height), new Vector2(0, 0), WHITE);
 
                 // Draw drawing circle for reference
-                if (mousePos.y > 50)
+                if (mousePos.Y > 50)
                 {
-                    if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) DrawCircleLines((int)mousePos.x, (int)mousePos.y, brushSize, colors[colorSelected]);
+                    if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) DrawCircleLines((int)mousePos.X, (int)mousePos.Y, brushSize, colors[colorSelected]);
                     else DrawCircle(GetMouseX(), GetMouseY(), brushSize, colors[colorSelected]);
                 }
 

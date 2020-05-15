@@ -13,6 +13,7 @@
 *
 ********************************************************************************************/
 
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
@@ -64,12 +65,12 @@ namespace Examples
                 mousePosition = GetMousePosition();
 
                 // Resize the n-patches based on mouse position
-                dstRec1.width = mousePosition.x - dstRec1.x;
-                dstRec1.height = mousePosition.y - dstRec1.y;
-                dstRec2.width = mousePosition.x - dstRec2.x;
-                dstRec2.height = mousePosition.y - dstRec2.y;
-                dstRecH.width = mousePosition.x - dstRecH.x;
-                dstRecV.height = mousePosition.y - dstRecV.y;
+                dstRec1.width = mousePosition.X - dstRec1.x;
+                dstRec1.height = mousePosition.Y - dstRec1.y;
+                dstRec2.width = mousePosition.X - dstRec2.x;
+                dstRec2.height = mousePosition.Y - dstRec2.y;
+                dstRecH.width = mousePosition.X - dstRecH.x;
+                dstRecV.height = mousePosition.Y - dstRecV.y;
 
                 // Set a minimum width and/or height
                 if (dstRec1.width < 1.0f) dstRec1.width = 1.0f;

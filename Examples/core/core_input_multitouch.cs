@@ -11,6 +11,7 @@
 *
 ********************************************************************************************/
 
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
@@ -69,11 +70,11 @@ namespace Examples
                 {
                     touchPosition = GetTouchPosition(i);                    // Get the touch point
 
-                    if ((touchPosition.x >= 0) && (touchPosition.y >= 0))   // Make sure point is not (-1,-1) as this means there is no touch for it
+                    if ((touchPosition.X >= 0) && (touchPosition.Y >= 0))   // Make sure point is not (-1,-1) as this means there is no touch for it
                     {
                         // Draw circle and touch index number
                         DrawCircleV(touchPosition, 34, ORANGE);
-                        DrawText(string.Format("{0}", i), (int)(touchPosition.x - 10), (int)(touchPosition.y - 70), 40, BLACK);
+                        DrawText(string.Format("{0}", i), (int)(touchPosition.X - 10), (int)(touchPosition.Y - 70), 40, BLACK);
                     }
                 }
 

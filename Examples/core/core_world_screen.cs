@@ -9,6 +9,7 @@
 *
 ********************************************************************************************/
 
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.CameraType;
@@ -53,7 +54,7 @@ namespace Examples
                 UpdateCamera(ref camera);          // Update camera
 
                 // Calculate cube screen space position (with a little offset to be in top)
-                cubeScreenPosition = GetWorldToScreen(new Vector3(cubePosition.x, cubePosition.y + 2.5f, cubePosition.z), camera);
+                cubeScreenPosition = GetWorldToScreen(new Vector3(cubePosition.X, cubePosition.Y + 2.5f, cubePosition.Z), camera);
                 //----------------------------------------------------------------------------------
 
                 // Draw
@@ -71,7 +72,7 @@ namespace Examples
 
                 EndMode3D();
 
-                DrawText("Enemy: 100 / 100", (int)cubeScreenPosition.x - MeasureText("Enemy: 100 / 100", 20) / 2, (int)cubeScreenPosition.y, 20, BLACK);
+                DrawText("Enemy: 100 / 100", (int)cubeScreenPosition.X - MeasureText("Enemy: 100 / 100", 20) / 2, (int)cubeScreenPosition.Y, 20, BLACK);
                 DrawText("Text is always on top of the cube", (screenWidth - MeasureText("Text is always on top of the cube", 20)) / 2, 25, 20, GRAY);
 
                 EndDrawing();
