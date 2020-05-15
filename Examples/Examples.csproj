@@ -1,6 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ApplicationIcon>../Raylib-cs/Logo/raylib-cs.ico</ApplicationIcon>
     <Platforms>AnyCPU;x64;x86</Platforms>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <StartupObject>Examples.Program</StartupObject>
@@ -8,15 +7,12 @@
     <OutputType>Exe</OutputType>
   </PropertyGroup>
 
-  <Import Project="../netfx.props" />
-
   <ItemGroup>
-    <!-- <Compile Remove="models/*.cs" /> -->
     <Compile Remove="models/models_material_pbr.cs" />
     <Compile Remove="models/models_skybox.cs" />
     <Compile Remove="others/*.cs" />
     <Compile Remove="physics/*.cs" />
-    <Compile Remove="shaders/*.cs" />
+    <!-- <Compile Remove="shaders/*.cs" /> -->
     <Compile Remove="core/core_loading_thread.cs" />
     <Compile Remove="text/text_unicode.cs" />
     <Compile Remove="text/text_font_sdf.cs" />
@@ -25,10 +21,9 @@
   <ItemGroup>
     <None Include="../app.config" />
   </ItemGroup>
+  <Import Project="../netfx.props" />
 
   <ItemGroup>
-    <Reference Include="Raylib-cs, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Raylib-cs\Raylib-cs\bin\linux-x64\Debug\netcoreapp3.1\Raylib-cs.dll</HintPath>
-    </Reference>
+    <PackageReference Include="Raylib-cs" Version="3.1.5" />
   </ItemGroup>
 </Project>
