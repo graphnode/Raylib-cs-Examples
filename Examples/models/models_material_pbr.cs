@@ -9,6 +9,7 @@
 *
 ********************************************************************************************/
 
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Raymath;
@@ -16,29 +17,7 @@ using static Raylib_cs.Color;
 using static Raylib_cs.CameraMode;
 using static Raylib_cs.CameraType;
 using static Raylib_cs.TextureFilterMode;
-using static Raylib_cs.ShaderLocationIndex;
-
-public enum LightType
-{
-    LIGHT_DIRECTIONAL,
-    LIGHT_POINT
-};
-
-// TODO: move the light system out into it's own class file, rlights.h original
-// also make it work properly
-public struct Light
-{
-    public bool enabled;
-    public LightType type;
-    public Vector3 position;
-    public Vector3 target;
-    public Color color;
-    public int enabledLoc;
-    public int typeLoc;
-    public int posLoc;
-    public int targetLoc;
-    public int colorLoc;
-}
+using static Examples.Rlights;
 
 namespace Examples
 {
@@ -49,8 +28,6 @@ namespace Examples
         public const int PREFILTERED_SIZE = 256;
         public const int BRDF_SIZE = 512;
 
-        public const int MAX_LIGHTS = 4;
-        public static int lightsCount = 0;
         public const float LIGHT_DISTANCE = 3.5f;
         public const float LIGHT_HEIGHT = 1.0f;
 
@@ -75,21 +52,23 @@ namespace Examples
             // Load model and PBR material
             Model model = LoadModel("resources/pbr/trooper.obj");
 
+            // Unsafe pointers into model arrays.
+            Material *materials = (Material *)model.materials.ToPointer();
+            Mesh* meshes = (Mesh *)model.meshes.ToPointer();
+
             // Mesh tangents are generated... and uploaded to GPU
             // NOTE: New VBO for tangents is generated at default location and also binded to mesh VAO
-            Mesh* meshes = (Mesh *)model.meshes.ToPointer();
             MeshTangents(ref meshes[0]);
 
-            Material *materials = (Material *)model.materials.ToPointer();
             UnloadMaterial(materials[0]); // get rid of default material
             materials[0] = LoadMaterialPBR(new Color(255, 255, 255, 255), 1.0f, 1.0f);
 
             // Define lights attributes
             // NOTE: Shader is passed to every light on creation to define shader bindings internally
-            CreateLight(LightType.LIGHT_POINT, new Vector3( LIGHT_DISTANCE, LIGHT_HEIGHT, 0.0f ), new Vector3( 0.0f, 0.0f, 0.0f ), new Color( 255, 0, 0, 255 ), model.material.shader);
-            CreateLight(LightType.LIGHT_POINT, new Vector3( 0.0f, LIGHT_HEIGHT, LIGHT_DISTANCE ), new Vector3( 0.0f, 0.0f, 0.0f ), new Color( 0, 255, 0, 255 ), model.material.shader);
-            CreateLight(LightType.LIGHT_POINT, new Vector3( -LIGHT_DISTANCE, LIGHT_HEIGHT, 0.0f ), new Vector3( 0.0f, 0.0f, 0.0f ),new Color( 0, 0, 255, 255 ), model.material.shader);
-            CreateLight(LightType.LIGHT_DIRECTIONAL, new Vector3(0.0f, LIGHT_HEIGHT * 2.0f, -LIGHT_DISTANCE ), new Vector3( 0.0f, 0.0f, 0.0f ), new Color(255, 0, 255, 255 ), model.material.shader);
+            CreateLight(LightType.LIGHT_POINT, new Vector3( LIGHT_DISTANCE, LIGHT_HEIGHT, 0.0f ), new Vector3( 0.0f, 0.0f, 0.0f ), new Color( 255, 0, 0, 255 ), materials[0].shader);
+            CreateLight(LightType.LIGHT_POINT, new Vector3( 0.0f, LIGHT_HEIGHT, LIGHT_DISTANCE ), new Vector3( 0.0f, 0.0f, 0.0f ), new Color( 0, 255, 0, 255 ), materials[0].shader);
+            CreateLight(LightType.LIGHT_POINT, new Vector3( -LIGHT_DISTANCE, LIGHT_HEIGHT, 0.0f ), new Vector3( 0.0f, 0.0f, 0.0f ),new Color( 0, 0, 255, 255 ), materials[0].shader);
+            CreateLight(LightType.LIGHT_DIRECTIONAL, new Vector3(0.0f, LIGHT_HEIGHT * 2.0f, -LIGHT_DISTANCE ), new Vector3( 0.0f, 0.0f, 0.0f ), new Color(255, 0, 255, 255 ), materials[0].shader);
 
             SetCameraMode(camera, CAMERA_ORBITAL);  // Set an orbital camera mode
 
@@ -104,9 +83,9 @@ namespace Examples
                 UpdateCamera(ref camera);              // Update camera
 
                 // Send to material PBR shader camera view position
-                float[] cameraPos = { camera.position.x, camera.position.y, camera.position.z };
+                float[] cameraPos = { camera.position.X, camera.position.Y, camera.position.Z };
                 int *locs = (int *)materials[0].shader.locs.ToPointer();
-                SetShaderValue(materials[0].shader, locs[(int)ShaderLocationIndex.LOC_VECTOR_VIEW], cameraPos, 3);
+                Utils.SetShaderValue(materials[0].shader, (int)ShaderLocationIndex.LOC_VECTOR_VIEW, cameraPos, ShaderUniformDataType.UNIFORM_VEC3);
 
                 //----------------------------------------------------------------------------------
                 // Draw
@@ -134,15 +113,16 @@ namespace Examples
 
             // Shaders and textures must be unloaded by user,
             // they could be in use by other models
-            UnloadTexture(model.materials[0].maps[MAP_ALBEDO].texture);
-            UnloadTexture(model.materials[0].maps[MAP_NORMAL].texture);
-            UnloadTexture(model.materials[0].maps[MAP_METALNESS].texture);
-            UnloadTexture(model.materials[0].maps[MAP_ROUGHNESS].texture);
-            UnloadTexture(model.materials[0].maps[MAP_OCCLUSION].texture);
-            UnloadTexture(model.materials[0].maps[MAP_IRRADIANCE].texture);
-            UnloadTexture(model.materials[0].maps[MAP_PREFILTER].texture);
-            UnloadTexture(model.materials[0].maps[MAP_BRDF].texture);
-            UnloadShader(model.materials[0].shader);
+            MaterialMap *maps = (MaterialMap *)materials[0].maps.ToPointer();
+            UnloadTexture(maps[(int)MaterialMapType.MAP_ALBEDO].texture);
+            UnloadTexture(maps[(int)MaterialMapType.MAP_NORMAL].texture);
+            UnloadTexture(maps[(int)MaterialMapType.MAP_METALNESS].texture);
+            UnloadTexture(maps[(int)MaterialMapType.MAP_ROUGHNESS].texture);
+            UnloadTexture(maps[(int)MaterialMapType.MAP_OCCLUSION].texture);
+            UnloadTexture(maps[(int)MaterialMapType.MAP_IRRADIANCE].texture);
+            UnloadTexture(maps[(int)MaterialMapType.MAP_PREFILTER].texture);
+            UnloadTexture(maps[(int)MaterialMapType.MAP_BRDF].texture);
+            UnloadShader(materials[0].shader);
 
             UnloadModel(model);         // Unload skybox model
 
@@ -156,46 +136,47 @@ namespace Examples
         // NOTE: PBR shader is loaded inside this function
         unsafe public static Material LoadMaterialPBR(Color albedo, float metalness, float roughness)
         {
-            Material mat = new Material();   // NOTE: All maps textures are set to { 0 )
+            Material mat = Raylib.LoadMaterialDefault();   // NOTE: All maps textures are set to { 0 )
 
-            string PATH_PBR_VS = "resources/shaders/pbr.vs";
-            string PATH_PBR_FS = "resources/shaders/pbr.fs";
+            string PATH_PBR_VS = "resources/shaders/glsl330/pbr.vs";
+            string PATH_PBR_FS = "resources/shaders/glsl330/pbr.fs";
 
             mat.shader = LoadShader(PATH_PBR_VS, PATH_PBR_FS);
 
+            // Temporary unsafe pointers into material arrays.
+            MaterialMap *maps = (MaterialMap *)mat.maps.ToPointer();
+            int *locs = (int *)mat.shader.locs.ToPointer();
+
             // Get required locations points for PBR material
             // NOTE: Those location names must be available and used in the shader code
-            mat.shader.locs[(int)ShaderLocationIndex.LOC_MAP_ALBEDO] = GetShaderLocation(mat.shader, "albedo.sampler");
-            mat.shader.locs[(int)ShaderLocationIndex.LOC_MAP_METALNESS] = GetShaderLocation(mat.shader, "metalness.sampler");
-            mat.shader.locs[(int)ShaderLocationIndex.LOC_MAP_NORMAL] = GetShaderLocation(mat.shader, "normals.sampler");
-            mat.shader.locs[(int)ShaderLocationIndex.LOC_MAP_ROUGHNESS] = GetShaderLocation(mat.shader, "roughness.sampler");
-            mat.shader.locs[(int)ShaderLocationIndex.LOC_MAP_OCCLUSION] = GetShaderLocation(mat.shader, "occlusion.sampler");
-            //mat.shader.locs[LOC_MAP_EMISSION] = GetShaderLocation(mat.shader, "emission.sampler");
-            //mat.shader.locs[LOC_MAP_HEIGHT] = GetShaderLocation(mat.shader, "height.sampler");
-            mat.shader.locs[(int)ShaderLocationIndex.LOC_MAP_IRRADIANCE] = GetShaderLocation(mat.shader, "irradianceMap");
-            mat.shader.locs[(int)ShaderLocationIndex.LOC_MAP_PREFILTER] = GetShaderLocation(mat.shader, "prefilterMap");
-            mat.shader.locs[(int)ShaderLocationIndex.LOC_MAP_BRDF] = GetShaderLocation(mat.shader, "brdfLUT");
+            locs[(int)ShaderLocationIndex.LOC_MAP_ALBEDO] = GetShaderLocation(mat.shader, "albedo.sampler");
+            locs[(int)ShaderLocationIndex.LOC_MAP_METALNESS] = GetShaderLocation(mat.shader, "metalness.sampler");
+            locs[(int)ShaderLocationIndex.LOC_MAP_NORMAL] = GetShaderLocation(mat.shader, "normals.sampler");
+            locs[(int)ShaderLocationIndex.LOC_MAP_ROUGHNESS] = GetShaderLocation(mat.shader, "roughness.sampler");
+            locs[(int)ShaderLocationIndex.LOC_MAP_OCCLUSION] = GetShaderLocation(mat.shader, "occlusion.sampler");
+            locs[(int)ShaderLocationIndex.LOC_MAP_IRRADIANCE] = GetShaderLocation(mat.shader, "irradianceMap");
+            locs[(int)ShaderLocationIndex.LOC_MAP_PREFILTER] = GetShaderLocation(mat.shader, "prefilterMap");
+            locs[(int)ShaderLocationIndex.LOC_MAP_BRDF] = GetShaderLocation(mat.shader, "brdfLUT");
 
             // Set view matrix location
-            mat.shader.locs[(int)ShaderLocationIndex.LOC_MATRIX_MODEL] = GetShaderLocation(mat.shader, "matModel");
-            mat.shader.locs[(int)ShaderLocationIndex.LOC_MATRIX_VIEW] = GetShaderLocation(mat.shader, "view"); //TODO: figure out why this is the one run warning we get, and it may be all that's needed to fix lights.
-            mat.shader.locs[(int)ShaderLocationIndex.LOC_VECTOR_VIEW] = GetShaderLocation(mat.shader, "viewPos");
+            locs[(int)ShaderLocationIndex.LOC_MATRIX_MODEL] = GetShaderLocation(mat.shader, "matModel");
+            locs[(int)ShaderLocationIndex.LOC_VECTOR_VIEW] = GetShaderLocation(mat.shader, "viewPos");
 
             // Set PBR standard maps
-            mat.maps[(int)TexmapIndex.MAP_ALBEDO].texture = LoadTexture("resources/pbr/trooper_albedo.png");
-            mat.maps[(int)TexmapIndex.MAP_NORMAL].texture = LoadTexture("resources/pbr/trooper_normals.png");
-            mat.maps[(int)TexmapIndex.MAP_METALNESS].texture = LoadTexture("resources/pbr/trooper_metalness.png");
-            mat.maps[(int)TexmapIndex.MAP_ROUGHNESS].texture = LoadTexture("resources/pbr/trooper_roughness.png");
-            mat.maps[(int)TexmapIndex.MAP_OCCLUSION].texture = LoadTexture("resources/pbr/trooper_ao.png");
+            maps[(int)MaterialMapType.MAP_ALBEDO].texture = LoadTexture("resources/pbr/trooper_albedo.png");
+            maps[(int)MaterialMapType.MAP_NORMAL].texture = LoadTexture("resources/pbr/trooper_normals.png");
+            maps[(int)MaterialMapType.MAP_METALNESS].texture = LoadTexture("resources/pbr/trooper_metalness.png");
+            maps[(int)MaterialMapType.MAP_ROUGHNESS].texture = LoadTexture("resources/pbr/trooper_roughness.png");
+            maps[(int)MaterialMapType.MAP_OCCLUSION].texture = LoadTexture("resources/pbr/trooper_ao.png");
 
             // Set environment maps
-            const string PATH_CUBEMAP_VS = "resources/shaders/cubemap.vs"; // Path to equirectangular to cubemap vertex shader
-            const string PATH_CUBEMAP_FS = "resources/shaders/cubemap.fs"; // Path to equirectangular to cubemap fragment shader
-            const string PATH_SKYBOX_VS = "resources/shaders/skybox.vs";  // Path to skybox vertex shader
-            const string PATH_IRRADIANCE_FS = "resources/shaders/irradiance.fs"; // Path to irradiance (GI) calculation fragment shader
-            const string PATH_PREFILTER_FS = "resources/shaders/prefilter.fs"; // Path to reflection prefilter calculation fragment shader
-            const string PATH_BRDF_VS = "resources/shaders/brdf.vs"; // Path to bidirectional reflectance distribution function vertex shader
-            const string PATH_BRDF_FS = "resources/shaders/brdf.fs"; // Path to bidirectional reflectance distribution function fragment shader
+            const string PATH_CUBEMAP_VS = "resources/shaders/glsl330/cubemap.vs"; // Path to equirectangular to cubemap vertex shader
+            const string PATH_CUBEMAP_FS = "resources/shaders/glsl330/cubemap.fs"; // Path to equirectangular to cubemap fragment shader
+            const string PATH_SKYBOX_VS = "resources/shaders/glsl330/skybox.vs";  // Path to skybox vertex shader
+            const string PATH_IRRADIANCE_FS = "resources/shaders/glsl330/irradiance.fs"; // Path to irradiance (GI) calculation fragment shader
+            const string PATH_PREFILTER_FS = "resources/shaders/glsl330/prefilter.fs"; // Path to reflection prefilter calculation fragment shader
+            const string PATH_BRDF_VS = "resources/shaders/glsl330/brdf.vs"; // Path to bidirectional reflectance distribution function vertex shader
+            const string PATH_BRDF_FS = "resources/shaders/glsl330/brdf.fs"; // Path to bidirectional reflectance distribution function fragment shader
 
             Shader shdrCubemap = LoadShader(PATH_CUBEMAP_VS, PATH_CUBEMAP_FS);
             Shader shdrIrradiance = LoadShader(PATH_SKYBOX_VS, PATH_IRRADIANCE_FS);
@@ -203,15 +184,15 @@ namespace Examples
             Shader shdrBRDF = LoadShader(PATH_BRDF_VS, PATH_BRDF_FS);
 
             // Setup required shader locations
-            SetShaderValue(shdrCubemap, GetShaderLocation(shdrCubemap, "equirectangularMap"), new int[] { 0 }, 1);
-            SetShaderValue(shdrIrradiance, GetShaderLocation(shdrIrradiance, "environmentMap"), new int[] { 0 }, 1);
-            SetShaderValue(shdrPrefilter, GetShaderLocation(shdrPrefilter, "environmentMap"), new int[] { 0 }, 1);
+            Utils.SetShaderValue(shdrCubemap, GetShaderLocation(shdrCubemap, "equirectangularMap"), 0);
+            Utils.SetShaderValue(shdrIrradiance, GetShaderLocation(shdrIrradiance, "environmentMap"), 0);
+            Utils.SetShaderValue(shdrPrefilter, GetShaderLocation(shdrPrefilter, "environmentMap"), 0);
 
             Texture2D texHDR = LoadTexture("resources/dresden_square.hdr");
             Texture2D cubemap = GenTextureCubemap(shdrCubemap, texHDR, CUBEMAP_SIZE);
-            mat.maps[(int)TexmapIndex.MAP_IRRADIANCE].texture = GenTextureIrradiance(shdrIrradiance, cubemap, IRRADIANCE_SIZE);
-            mat.maps[(int)TexmapIndex.MAP_PREFILTER].texture = GenTexturePrefilter(shdrPrefilter, cubemap, PREFILTERED_SIZE);
-            mat.maps[(int)TexmapIndex.MAP_BRDF].texture = GenTextureBRDF(shdrBRDF, cubemap, BRDF_SIZE);
+            maps[(int)MaterialMapType.MAP_IRRADIANCE].texture = GenTextureIrradiance(shdrIrradiance, cubemap, IRRADIANCE_SIZE);
+            maps[(int)MaterialMapType.MAP_PREFILTER].texture = GenTexturePrefilter(shdrPrefilter, cubemap, PREFILTERED_SIZE);
+            maps[(int)MaterialMapType.MAP_BRDF].texture = GenTextureBRDF(shdrBRDF, BRDF_SIZE);
             UnloadTexture(cubemap);
             UnloadTexture(texHDR);
 
@@ -222,81 +203,32 @@ namespace Examples
             UnloadShader(shdrBRDF);
 
             // Set textures filtering for better quality
-            SetTextureFilter(mat.maps[(int)TexmapIndex.MAP_ALBEDO].texture, FILTER_BILINEAR);
-            SetTextureFilter(mat.maps[(int)TexmapIndex.MAP_NORMAL].texture, FILTER_BILINEAR);
-            SetTextureFilter(mat.maps[(int)TexmapIndex.MAP_METALNESS].texture, FILTER_BILINEAR);
-            SetTextureFilter(mat.maps[(int)TexmapIndex.MAP_ROUGHNESS].texture, FILTER_BILINEAR);
-            SetTextureFilter(mat.maps[(int)TexmapIndex.MAP_OCCLUSION].texture, FILTER_BILINEAR);
+            SetTextureFilter(maps[(int)MaterialMapType.MAP_ALBEDO].texture, FILTER_BILINEAR);
+            SetTextureFilter(maps[(int)MaterialMapType.MAP_NORMAL].texture, FILTER_BILINEAR);
+            SetTextureFilter(maps[(int)MaterialMapType.MAP_METALNESS].texture, FILTER_BILINEAR);
+            SetTextureFilter(maps[(int)MaterialMapType.MAP_ROUGHNESS].texture, FILTER_BILINEAR);
+            SetTextureFilter(maps[(int)MaterialMapType.MAP_OCCLUSION].texture, FILTER_BILINEAR);
 
             // Enable sample usage in shader for assigned textures
-            SetShaderValue(mat.shader, GetShaderLocation(mat.shader, "albedo.useSampler"), new int[] { 1 }, 1);
-            SetShaderValue(mat.shader, GetShaderLocation(mat.shader, "normals.useSampler"), new int[] { 1 }, 1);
-            SetShaderValue(mat.shader, GetShaderLocation(mat.shader, "metalness.useSampler"), new int[] { 1 }, 1);
-            SetShaderValue(mat.shader, GetShaderLocation(mat.shader, "roughness.useSampler"), new int[] { 1 }, 1);
-            SetShaderValue(mat.shader, GetShaderLocation(mat.shader, "occlusion.useSampler"), new int[] { 1 }, 1);
+            Utils.SetShaderValue(mat.shader, GetShaderLocation(mat.shader, "albedo.useSampler"), 1);
+            Utils.SetShaderValue(mat.shader, GetShaderLocation(mat.shader, "normals.useSampler"), 1);
+            Utils.SetShaderValue(mat.shader, GetShaderLocation(mat.shader, "metalness.useSampler"), 1);
+            Utils.SetShaderValue(mat.shader, GetShaderLocation(mat.shader, "roughness.useSampler"), 1);
+            Utils.SetShaderValue(mat.shader, GetShaderLocation(mat.shader, "occlusion.useSampler"), 1);
 
             int renderModeLoc = GetShaderLocation(mat.shader, "renderMode");
-            SetShaderValue(mat.shader, renderModeLoc, new int[] { 0 }, 1);
+            Utils.SetShaderValue(mat.shader, renderModeLoc, 0);
 
             // Set up material properties color
-            mat.maps[(int)TexmapIndex.MAP_ALBEDO].color = albedo;
-            mat.maps[(int)TexmapIndex.MAP_NORMAL].color = new Color(128, 128, 255, 255);
-            mat.maps[(int)TexmapIndex.MAP_METALNESS].value = metalness;
-            mat.maps[(int)TexmapIndex.MAP_ROUGHNESS].value = roughness;
-            mat.maps[(int)TexmapIndex.MAP_OCCLUSION].value = 1.0f;
-            mat.maps[(int)TexmapIndex.MAP_EMISSION].value = 0.5f;
-            mat.maps[(int)TexmapIndex.MAP_HEIGHT].value = 0.5f;
+            maps[(int)MaterialMapType.MAP_ALBEDO].color = albedo;
+            maps[(int)MaterialMapType.MAP_NORMAL].color = new Color(128, 128, 255, 255);
+            maps[(int)MaterialMapType.MAP_METALNESS].value = metalness;
+            maps[(int)MaterialMapType.MAP_ROUGHNESS].value = roughness;
+            maps[(int)MaterialMapType.MAP_OCCLUSION].value = 1.0f;
+            maps[(int)MaterialMapType.MAP_EMISSION].value = 0.5f;
+            maps[(int)MaterialMapType.MAP_HEIGHT].value = 0.5f;
 
             return mat;
-        }
-
-        public static Light CreateLight(LightType type, Vector3 pos, Vector3 targ, Color color, Shader shader)
-        {
-            Light light = new Light();
-
-            if (lightsCount < MAX_LIGHTS)
-            {
-                light.enabled = true;
-                light.type = type;
-                light.position = pos;
-                light.target = targ;
-                light.color = color;
-
-                string enabledName = $"lights[{lightsCount}].enabled\0";
-                string typeName = $"lights[{lightsCount}].type\0";
-                string posName = $"lights[{lightsCount}].position\0";
-                string targetName = $"lights[{lightsCount}].target\0";
-                string colorName = $"lights[{lightsCount}].color\0";
-
-                light.enabledLoc = GetShaderLocation(shader, enabledName);
-                light.typeLoc = GetShaderLocation(shader, typeName);
-                light.posLoc = GetShaderLocation(shader, posName);
-                light.targetLoc = GetShaderLocation(shader, targetName);
-                light.colorLoc = GetShaderLocation(shader, colorName);
-
-                UpdateLightValues(shader, light);
-                lightsCount++;
-            }
-            return light;
-        }
-
-        public static void UpdateLightValues(Shader shader, Light light)
-        {
-            // Send to shader light enabled state and type
-            SetShaderValue(shader, light.enabledLoc, new int[] { light.enabled ? 1 : 0 }, 1);
-            SetShaderValue(shader, light.typeLoc, new int[] { (int)light.type }, 1);
-
-            // Send to shader light position values
-            float[] position = { light.position.x, light.position.y, light.position.z };
-            SetShaderValue(shader, light.posLoc, position, 3);
-
-            // Send to shader light target position values
-            float[] target = { light.target.x, light.target.y, light.target.z };
-            SetShaderValue(shader, light.targetLoc, target, 3);
-
-            // Send to shader light color values
-            float[] diff = { light.color.r / 255, light.color.g / 255, light.color.b / 255, light.color.a / 255 };
-            SetShaderValue(shader, light.colorLoc, diff, 4);
         }
     }
 }
