@@ -19,6 +19,7 @@
 ********************************************************************************************/
 
 using System;
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Raymath;
@@ -112,9 +113,9 @@ namespace Examples
                 // Update
                 //----------------------------------------------------------------------------------
                 framesCounter++;
-                rotation.x += 0.01f;
-                rotation.y += 0.005f;
-                rotation.z -= 0.0025f;
+                rotation.X += 0.01f;
+                rotation.Y += 0.005f;
+                rotation.Z -= 0.0025f;
 
                 // Send frames counter to shader for animation
                 SetShaderValue(shader, shaderFrame, IntPtr.Zero, UNIFORM_INT);

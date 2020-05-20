@@ -17,6 +17,7 @@
 ********************************************************************************************/
 
 using System;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
@@ -81,8 +82,8 @@ namespace Examples
                 //----------------------------------------------------------------------------------
                 Vector2 mousePosition = GetMousePosition();
 
-                swirlCenter[0] = mousePosition.x;
-                swirlCenter[1] = screenHeight - mousePosition.y;
+                swirlCenter[0] = mousePosition.X;
+                swirlCenter[1] = screenHeight - mousePosition.Y;
 
                 // Send new value to the shader to be used on drawing
                 IntPtr value = Marshal.UnsafeAddrOfPinnedArrayElement(swirlCenter, 0);

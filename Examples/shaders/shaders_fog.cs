@@ -25,6 +25,7 @@
 *
 ********************************************************************************************/
 
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Raymath;
@@ -81,7 +82,7 @@ namespace Examples
 
             float fogDensity = 0.15f;
             int fogDensityLoc = GetShaderLocation(shader, "fogDensity");
-            Utils.SetShaderValue(shader, fogDensityLoc, ref fogDensity, UNIFORM_FLOAT);
+            Utils.SetShaderValue(shader, fogDensityLoc, fogDensity);
 
             // NOTE: All models share the same shader
             Utils.SetMaterialShader(ref modelA, 0, ref shader);
@@ -115,14 +116,14 @@ namespace Examples
                     if (fogDensity < 0.0) fogDensity = 0.0f;
                 }
 
-                Utils.SetShaderValue(shader, fogDensityLoc, ref fogDensity, UNIFORM_FLOAT);
+                Utils.SetShaderValue(shader, fogDensityLoc, fogDensity);
 
                 // Rotate the torus
                 modelA.transform = MatrixMultiply(modelA.transform, MatrixRotateX(-0.025f));
                 modelA.transform = MatrixMultiply(modelA.transform, MatrixRotateZ(0.012f));
 
                 // Update the light shader with the camera view position
-                Utils.SetShaderValue(shader, locs[(int)LOC_VECTOR_VIEW], ref camera.position.x, UNIFORM_VEC3);
+                Utils.SetShaderValue(shader, locs[(int)LOC_VECTOR_VIEW], camera.position.X, ShaderUniformDataType.UNIFORM_VEC3);
                 //----------------------------------------------------------------------------------
 
                 // Draw
