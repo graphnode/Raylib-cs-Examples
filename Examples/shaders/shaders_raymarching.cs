@@ -16,6 +16,7 @@
 *
 ********************************************************************************************/
 
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.ConfigFlag;
@@ -84,8 +85,8 @@ namespace Examples
                 //----------------------------------------------------------------------------------
                 UpdateCamera(ref camera);              // Update camera
 
-                float[] cameraPos = { camera.position.x, camera.position.y, camera.position.z };
-                float[] cameraTarget = { camera.target.x, camera.target.y, camera.target.z };
+                float[] cameraPos = { camera.position.X, camera.position.Y, camera.position.Z };
+                float[] cameraTarget = { camera.target.X, camera.target.Y, camera.target.Z };
 
                 float deltaTime = GetFrameTime();
                 runTime += deltaTime;
@@ -93,7 +94,7 @@ namespace Examples
                 // Set shader required uniform values
                 Utils.SetShaderValue(shader, viewEyeLoc, cameraPos, UNIFORM_VEC3);
                 Utils.SetShaderValue(shader, viewCenterLoc, cameraTarget, UNIFORM_VEC3);
-                Utils.SetShaderValue(shader, runTimeLoc, ref runTime, UNIFORM_FLOAT);
+                Utils.SetShaderValue(shader, runTimeLoc, runTime);
                 //----------------------------------------------------------------------------------
 
                 // Draw

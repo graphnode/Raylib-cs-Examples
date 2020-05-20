@@ -18,6 +18,7 @@
 *
 ********************************************************************************************/
 
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
@@ -62,12 +63,12 @@ namespace Examples
 
             float[] screenSize = { (float)GetScreenWidth(), (float)GetScreenHeight() };
             Utils.SetShaderValue(shader, GetShaderLocation(shader, "size"), screenSize, UNIFORM_VEC2);
-            Utils.SetShaderValue(shader, freqXLoc, ref freqX, UNIFORM_FLOAT);
-            Utils.SetShaderValue(shader, freqYLoc, ref freqY, UNIFORM_FLOAT);
-            Utils.SetShaderValue(shader, ampXLoc, ref ampX, UNIFORM_FLOAT);
-            Utils.SetShaderValue(shader, ampYLoc, ref ampY, UNIFORM_FLOAT);
-            Utils.SetShaderValue(shader, speedXLoc, ref speedX, UNIFORM_FLOAT);
-            Utils.SetShaderValue(shader, speedYLoc, ref speedY, UNIFORM_FLOAT);
+            Utils.SetShaderValue(shader, freqXLoc, freqX, UNIFORM_FLOAT);
+            Utils.SetShaderValue(shader, freqYLoc, freqY, UNIFORM_FLOAT);
+            Utils.SetShaderValue(shader, ampXLoc, ampX, UNIFORM_FLOAT);
+            Utils.SetShaderValue(shader, ampYLoc, ampY, UNIFORM_FLOAT);
+            Utils.SetShaderValue(shader, speedXLoc, speedX, UNIFORM_FLOAT);
+            Utils.SetShaderValue(shader, speedYLoc, speedY, UNIFORM_FLOAT);
 
             float seconds = 0.0f;
 
@@ -81,7 +82,7 @@ namespace Examples
                 //----------------------------------------------------------------------------------
                 seconds += GetFrameTime();
 
-                Utils.SetShaderValue(shader, secondsLoc, ref seconds, UNIFORM_FLOAT);
+                Utils.SetShaderValue(shader, secondsLoc, seconds, UNIFORM_FLOAT);
                 //----------------------------------------------------------------------------------
 
                 // Draw

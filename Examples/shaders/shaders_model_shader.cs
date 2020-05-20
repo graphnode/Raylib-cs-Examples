@@ -16,6 +16,7 @@
 *
 ********************************************************************************************/
 
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
@@ -85,8 +86,8 @@ namespace Examples
 
                 DrawText("(c) Watermill 3D model by Alberto Cano", screenWidth - 210, screenHeight - 20, 10, GRAY);
 
-                DrawText(string.Format("Camera3D position: ({0:0.00}, {0:0.00}, {0:0.00})", camera.position.x, camera.position.y, camera.position.z), 600, 20, 10, BLACK);
-                DrawText(string.Format("Camera3D target: ({0:0.00}, {0:0.00}, {0:0.00})", camera.target.x, camera.target.y, camera.target.z), 600, 40, 10, GRAY);
+                DrawText(string.Format("Camera3D position: ({0:0.00}, {0:0.00}, {0:0.00})", camera.position.X, camera.position.Y, camera.position.Z), 600, 20, 10, BLACK);
+                DrawText(string.Format("Camera3D target: ({0:0.00}, {0:0.00}, {0:0.00})", camera.target.X, camera.target.Y, camera.target.Z), 600, 40, 10, GRAY);
 
                 DrawFPS(10, 10);
 

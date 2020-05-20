@@ -16,6 +16,7 @@
 *
 ********************************************************************************************/
 
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
@@ -72,7 +73,7 @@ namespace Examples
             Utils.SetShaderValue(shader, GetShaderLocation(shader, "screenDims"), screenDims, UNIFORM_VEC2);
 
             Utils.SetShaderValue(shader, cLoc, c, UNIFORM_VEC2);
-            Utils.SetShaderValue(shader, zoomLoc, ref zoomLoc, UNIFORM_FLOAT);
+            Utils.SetShaderValue(shader, zoomLoc, zoomLoc);
             Utils.SetShaderValue(shader, offsetLoc, offset, UNIFORM_VEC2);
 
             // Create a RenderTexture2D to be used for render to texture
@@ -158,19 +159,19 @@ namespace Examples
 
                         Vector2 mousePos = GetMousePosition();
 
-                        offsetSpeed.x = mousePos.x - (float)screenWidth / 2;
-                        offsetSpeed.y = mousePos.y - (float)screenHeight / 2;
+                        offsetSpeed.X = mousePos.X - (float)screenWidth / 2;
+                        offsetSpeed.Y = mousePos.Y - (float)screenHeight / 2;
 
                         // Slowly move camera to targetOffset
-                        offset[0] += GetFrameTime() * offsetSpeed.x * 0.8f;
-                        offset[1] += GetFrameTime() * offsetSpeed.y * 0.8f;
+                        offset[0] += GetFrameTime() * offsetSpeed.X * 0.8f;
+                        offset[1] += GetFrameTime() * offsetSpeed.Y * 0.8f;
                     }
                     else
                     {
                         offsetSpeed = new Vector2(0.0f, 0.0f);
                     }
 
-                    Utils.SetShaderValue(shader, zoomLoc, ref zoom, UNIFORM_FLOAT);
+                    Utils.SetShaderValue(shader, zoomLoc, zoom, UNIFORM_FLOAT);
                     Utils.SetShaderValue(shader, offsetLoc, offset, UNIFORM_VEC2);
 
                     // Increment c value with time
