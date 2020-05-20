@@ -119,38 +119,46 @@ namespace Examples
         Currently Raylib.SetShaderValue is overloaded with ref int and ref float for the value.
         Same sort of usage in raylib so I assume it is converted to void * although this might not be good idea to rely on.
         */
-        public unsafe static void SetShaderValue(Shader shader, int uniformLoc, ref int value, ShaderUniformDataType uniformType)
+        public static void SetShaderValue(Shader shader, int uniformLoc, int value, ShaderUniformDataType uniformType = ShaderUniformDataType.UNIFORM_INT)
         {
             Raylib.SetShaderValue(shader, uniformLoc, ref value, uniformType);
         }
 
-        public unsafe static void SetShaderValue(Shader shader, int uniformLoc, ref float value, ShaderUniformDataType uniformType)
+        public static void SetShaderValue(Shader shader, int uniformLoc, float value,  ShaderUniformDataType uniformType = ShaderUniformDataType.UNIFORM_FLOAT)
         {
             Raylib.SetShaderValue(shader, uniformLoc, ref value, uniformType);
         }
 
         public static void SetShaderValue(Shader shader, int uniformLoc, int[] value, ShaderUniformDataType uniformType)
         {
-            IntPtr data = Marshal.UnsafeAddrOfPinnedArrayElement(value, 0);
-            Raylib.SetShaderValue(shader, uniformLoc, data, uniformType);
+            IntPtr valuePtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(int)) * value.Length);
+            Marshal.Copy(value, 0, valuePtr, value.Length);
+            Raylib.SetShaderValue(shader, uniformLoc, valuePtr, uniformType);
+            Marshal.FreeHGlobal(valuePtr);
         }
 
         public static void SetShaderValue(Shader shader, int uniformLoc, float[] value, ShaderUniformDataType uniformType)
         {
-            IntPtr data = Marshal.UnsafeAddrOfPinnedArrayElement(value, 0);
-            Raylib.SetShaderValue(shader, uniformLoc, data, uniformType);
+            IntPtr valuePtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(float)) * value.Length);
+            Marshal.Copy(value, 0, valuePtr, value.Length);
+            Raylib.SetShaderValue(shader, uniformLoc, valuePtr, uniformType);
+            Marshal.FreeHGlobal(valuePtr);
         }
 
         public static void SetShaderValueV(Shader shader, int uniformLoc, int[] value, ShaderUniformDataType uniformType, int count)
         {
-            IntPtr data = Marshal.UnsafeAddrOfPinnedArrayElement(value, 0);
-            Raylib.SetShaderValueV(shader, uniformLoc, data, uniformType, count);
+            IntPtr valuePtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(int)) * value.Length);
+            Marshal.Copy(value, 0, valuePtr, value.Length);
+            Raylib.SetShaderValueV(shader, uniformLoc, valuePtr, uniformType, count);
+            Marshal.FreeHGlobal(valuePtr);
         }
 
         public static void SetShaderValueV(Shader shader, int uniformLoc, float[] value, ShaderUniformDataType uniformType, int count)
         {
-            IntPtr data = Marshal.UnsafeAddrOfPinnedArrayElement(value, 0);
-            Raylib.SetShaderValueV(shader, uniformLoc, data, uniformType, count);
+            IntPtr valuePtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(float)) * value.Length);
+            Marshal.Copy(value, 0, valuePtr, value.Length);
+            Raylib.SetShaderValueV(shader, uniformLoc, valuePtr, uniformType, count);
+            Marshal.FreeHGlobal(valuePtr);
         }
     }
 }
