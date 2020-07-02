@@ -35,27 +35,3 @@ If you want to [request features](https://github.com/raysan5/raylib/pulls) or [r
 ## License
 
 raylib-cs (and raylib) is licensed under an unmodified zlib/libpng license, which is an OSI-certified, BSD-like license that allows static linking with closed source software. Check [LICENSE](LICENSE.md) for further details.
-
-// Send to shader light enabled state and type
-/*IntPtr enabledPtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(Int32)));
-Marshal.WriteInt32(enabledPtr, light.enabled ? ((Int32)1) : ((Int32)0));
-SetShaderValue(shader, light.enabledLoc, enabledPtr, UNIFORM_INT);
-
-IntPtr lightPtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(Int32)));
-Marshal.WriteInt32(lightPtr, (Int32)light.type);
-SetShaderValue(shader, light.typeLoc, lightPtr, UNIFORM_INT);
-
-// Send to shader light position values
-float[] position = new[] { light.position.X, light.position.Y, light.position.Z };
-
-// Send to shader light target position values
-float[] target = new[] { light.target.X, light.target.Y, light.target.Z };
-IntPtr targetPtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(float)) * target.Length);
-Marshal.Copy(target, 0, targetPtr, target.Length);
-SetShaderValue(shader, light.targetLoc, targetPtr, UNIFORM_VEC3);
-
-// Send to shader light color values
-float[] diff = new[] { (float)light.color.r / (float)255, (float)light.color.g / (float)255, (float)light.color.b / (float)255, (float)light.color.a / (float)255 };
-IntPtr diffPtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(float)) * diff.Length);
-Marshal.Copy(diff, 0, diffPtr, diff.Length);
-SetShaderValue(shader, light.colorLoc, diffPtr, UNIFORM_VEC4);*/
