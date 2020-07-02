@@ -19,7 +19,7 @@ using static Raylib_cs.CameraMode;
 
 namespace Examples
 {
-    public class model_first_person_maze
+    public class models_first_person_maze
     {
         public unsafe static int Main()
         {
