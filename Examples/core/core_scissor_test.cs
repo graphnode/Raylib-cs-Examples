@@ -18,7 +18,7 @@ using static Raylib_cs.KeyboardKey;
 
 namespace Examples
 {
-    public class core_scissor_tests
+    public class core_scissor_test
     {
         public static int Main()
         {

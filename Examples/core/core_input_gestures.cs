@@ -17,7 +17,7 @@ using static Raylib_cs.Color;
 
 namespace Examples
 {
-    public class core_gestures_detection
+    public class core_input_gestures
     {
         public const int MAX_GESTURE_STRINGS = 20;
 
