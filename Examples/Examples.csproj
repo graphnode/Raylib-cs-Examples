@@ -8,9 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="models/models_material_pbr.cs" />
-    <Compile Remove="models/models_skybox.cs" />
-    <Compile Remove="models/models_yaw_pitch_roll.cs" />
     <Compile Remove="others/*.cs" />
     <Compile Remove="physics/*.cs" />
     <Compile Remove="core/core_loading_thread.cs" />
@@ -19,6 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Raylib-cs" Version="3.1.8-pre2" />
+    <PackageReference Include="Raylib-cs" Version="3.1.5" />
   </ItemGroup>
 </Project>

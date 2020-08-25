@@ -26,9 +26,6 @@ namespace Examples
 {
     public class models_yaw_pitch_roll
     {
-        //----------------------------------------------------------------------------------
-        // Main entry point
-        //----------------------------------------------------------------------------------
         public unsafe static int Main()
         {
             // Initialization
@@ -107,7 +104,7 @@ namespace Examples
                 while (pitchOffset < -180) pitchOffset += 360;
                 pitchOffset *= 10;
 
-                Matrix transform = MatrixIdentity();
+                Matrix4x4 transform = MatrixIdentity();
 
                 transform = MatrixMultiply(transform, MatrixRotateZ(DEG2RAD * roll));
                 transform = MatrixMultiply(transform, MatrixRotateX(DEG2RAD * pitch));

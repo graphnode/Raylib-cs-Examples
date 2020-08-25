@@ -93,14 +93,14 @@ namespace Examples
             models_geometric_shapes.Main();
             models_heightmap.Main();
             models_loading.Main();
-            // models_material_pbr.Main();
+            models_material_pbr.Main();
             models_mesh_generation.Main();
             models_mesh_picking.Main();
             models_orthographic_projection.Main();
             models_rlgl_solar_system.Main();
-            // models_skybox.Main();
+            models_skybox.Main();
             models_waving_cubes.Main();
-            // models_yaw_pitch_roll.Main();
+            models_yaw_pitch_roll.Main();
             Raylib.ChangeDirectory("../");
 
             // [shaders] module examples

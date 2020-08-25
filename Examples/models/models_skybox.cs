@@ -9,6 +9,7 @@
 *
 ********************************************************************************************/
 
+using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
@@ -74,19 +75,14 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 BeginMode3D(camera);
-
                 DrawModel(skybox, new Vector3(0, 0, 0), 1.0f, WHITE);
-
                 DrawGrid(10, 1.0f);
-
                 EndMode3D();
 
                 DrawFPS(10, 10);
-
                 EndDrawing();
                 //----------------------------------------------------------------------------------
             }
