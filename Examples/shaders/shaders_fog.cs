@@ -37,6 +37,7 @@ using static Raylib_cs.KeyboardKey;
 using static Raylib_cs.MaterialMapType;
 using static Raylib_cs.ShaderLocationIndex;
 using static Raylib_cs.ShaderUniformDataType;
+using static Examples.Rlights;
 
 namespace Examples
 {
@@ -57,7 +58,7 @@ namespace Examples
                 new Vector3(2.0f, 2.0f, 6.0f),      // position
                 new Vector3(0.0f, 0.5f, 0.0f),      // target
                 new Vector3(0.0f, 1.0f, 0.0f),      // up
-            45.0f, CAMERA_PERSPECTIVE);        // fov, type
+                45.0f, CAMERA_PERSPECTIVE);         // fov, type
 
             // Load models and texture
             Model modelA = LoadModelFromMesh(GenMeshTorus(0.4f, 1.0f, 16, 32));
@@ -71,14 +72,14 @@ namespace Examples
             Utils.SetMaterialTexture(ref modelC, 0, MAP_ALBEDO, ref texture);
 
             // Load shader and set up some uniforms
-            Shader shader = LoadShader("resources/shaders/glsl330/fog.vs", "resources/shaders/glsl330/fog.fs");
-            int * locs = (int*)shader.locs.ToPointer();
+            Shader shader = LoadShader("resources/shaders/glsl330/base_lighting.vs", "resources/shaders/glsl330/fog.fs");
+            int *locs = (int*)shader.locs.ToPointer();
             locs[(int)LOC_MATRIX_MODEL] = GetShaderLocation(shader, "matModel");
             locs[(int)LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
 
             // Ambient light level
             int ambientLoc = GetShaderLocation(shader, "ambient");
-            // SetShaderValue(shader, ambientLoc, new float[] { 0.2f, 0.2f, 0.2f, 1.0f }, UNIFORM_VEC4);
+            Utils.SetShaderValue(shader, ambientLoc, new float[] { 0.2f, 0.2f, 0.2f, 1.0f }, UNIFORM_VEC4);
 
             float fogDensity = 0.15f;
             int fogDensityLoc = GetShaderLocation(shader, "fogDensity");
@@ -90,7 +91,7 @@ namespace Examples
             Utils.SetMaterialShader(ref modelC, 0, ref shader);
 
             // Using just 1 point lights
-            // CreateLight(LIGHT_POINT, new Vector3(0, 2, 6), Vector3Zero(), WHITE, shader);
+            CreateLight(LightType.LIGHT_POINT, new Vector3(0, 2, 6), Vector3Zero(), WHITE, shader);
 
             SetCameraMode(camera, CAMERA_ORBITAL);  // Set an orbital camera mode
 
