@@ -5,6 +5,7 @@
     <StartupObject>Examples.Program</StartupObject>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <OutputType>Exe</OutputType>
+    <RunWorkingDirectory>$(MSBuildThisFileDirectory)</RunWorkingDirectory>
   </PropertyGroup>
 
   <ItemGroup>
