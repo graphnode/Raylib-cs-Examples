@@ -8,8 +8,8 @@ namespace ImGuiDemo
 {
     class Program
     {
-        static ImguiController _controller;
-        static MemoryEditor _memoryEditor;
+        static ImguiController _controller = new ImguiController();
+        static MemoryEditor _memoryEditor = new MemoryEditor();
 
         // UI state
         static float _f = 0.0f;
@@ -21,7 +21,9 @@ namespace ImGuiDemo
         static bool _showMemoryEditor = false;
         static byte[] _memoryEditorData;
         static uint s_tab_bar_flags = (uint)ImGuiTabBarFlags.Reorderable;
-        static bool[] s_opened = { true, true, true, true }; // Persistent user state
+
+        // Persistent user state
+        static bool[] s_opened = { true, true, true, true };
 
         static void SetThing(out float i, float val) { i = val; }
 
@@ -33,18 +35,16 @@ namespace ImGuiDemo
             Raylib.SetConfigFlags(ConfigFlag.FLAG_MSAA_4X_HINT | ConfigFlag.FLAG_VSYNC_HINT | ConfigFlag.FLAG_WINDOW_RESIZABLE);
             Raylib.InitWindow(screenWidth, screenHeight, "ImGui demo");
             Raylib.SetTargetFPS(60);
-    
-            _controller = new ImguiController(screenWidth, screenHeight);
-            _memoryEditor = new MemoryEditor();
+
             Random random = new Random();
             _memoryEditorData = Enumerable.Range(0, 1024).Select(i => (byte)random.Next(255)).ToArray();
-
-            _controller.Load();
+            _controller.Load(screenWidth, screenHeight);
 
             // Main application loop
             while (!Raylib.WindowShouldClose())
             {
-                _controller.Update(1f / 60f); // Feed the input events to our ImGui controller, which passes them through to ImGui.
+                // Feed the input events to our ImGui controller, which passes them through to ImGui.
+                _controller.Update(Raylib.GetFrameTime());
                 SubmitUI();
 
                 Raylib.BeginDrawing();
@@ -57,20 +57,20 @@ namespace ImGuiDemo
                 Raylib.EndDrawing();
             }
 
+            _controller.Dispose();
             Raylib.CloseWindow();
         }
 
         static unsafe void SubmitUI()
         {
             // Demo code adapted from the official Dear ImGui demo program:
-            // https://github.com/ocornut/imgui/blob/master/examples/example_win32_directx11/main.cpp#L172
 
             // 1. Show a simple window.
             // Tip: if we don't call ImGui.BeginWindow()/ImGui.EndWindow() the widgets automatically appears in a window called "Debug".
             {
                 ImGui.Text("Hello, world!");                                        // Display some text (you can use a format string too)
-                ImGui.SliderFloat("float", ref _f, 0, 1, _f.ToString("0.000"));  // Edit 1 float using a slider from 0.0f to 1.0f    
-                //ImGui.ColorEdit3("clear color", ref _clearColor);                   // Edit 3 floats representing a color
+                ImGui.SliderFloat("float", ref _f, 0, 1, _f.ToString("0.000"));     // Edit 1 float using a slider from 0.0f to 1.0f
+                // ImGui.ColorEdit3("clear color", ref _clearColor);                // Edit 3 floats representing a color
 
                 ImGui.Text($"Mouse position: {ImGui.GetMousePos()}");
 
@@ -141,12 +141,19 @@ namespace ImGuiDemo
                     ImGui.CheckboxFlags("ImGuiTabBarFlags_Reorderable", ref s_tab_bar_flags, (uint)ImGuiTabBarFlags.Reorderable);
                     ImGui.CheckboxFlags("ImGuiTabBarFlags_AutoSelectNewTabs", ref s_tab_bar_flags, (uint)ImGuiTabBarFlags.AutoSelectNewTabs);
                     ImGui.CheckboxFlags("ImGuiTabBarFlags_NoCloseWithMiddleMouseButton", ref s_tab_bar_flags, (uint)ImGuiTabBarFlags.NoCloseWithMiddleMouseButton);
+
                     if ((s_tab_bar_flags & (uint)ImGuiTabBarFlags.FittingPolicyMask) == 0)
+                    {
                         s_tab_bar_flags |= (uint)ImGuiTabBarFlags.FittingPolicyDefault;
+                    }
                     if (ImGui.CheckboxFlags("ImGuiTabBarFlags_FittingPolicyResizeDown", ref s_tab_bar_flags, (uint)ImGuiTabBarFlags.FittingPolicyResizeDown))
-                s_tab_bar_flags &= ~((uint)ImGuiTabBarFlags.FittingPolicyMask ^ (uint)ImGuiTabBarFlags.FittingPolicyResizeDown);
+                    {
+                        s_tab_bar_flags &= ~((uint)ImGuiTabBarFlags.FittingPolicyMask ^ (uint)ImGuiTabBarFlags.FittingPolicyResizeDown);
+                    }
                     if (ImGui.CheckboxFlags("ImGuiTabBarFlags_FittingPolicyScroll", ref s_tab_bar_flags, (uint)ImGuiTabBarFlags.FittingPolicyScroll))
-                s_tab_bar_flags &= ~((uint)ImGuiTabBarFlags.FittingPolicyMask ^ (uint)ImGuiTabBarFlags.FittingPolicyScroll);
+                    {
+                        s_tab_bar_flags &= ~((uint)ImGuiTabBarFlags.FittingPolicyMask ^ (uint)ImGuiTabBarFlags.FittingPolicyScroll);
+                    }
 
                     // Tab Bar
                     string[] names = { "Artichoke", "Beetroot", "Celery", "Daikon" };

@@ -1,6 +1,5 @@
 using System;
 using System.Numerics;
-using System.Diagnostics;
 using Raylib_cs;
 using ImGuiNET;
 
@@ -9,21 +8,38 @@ namespace ImGuiDemo
     /// <summary>
     /// ImGui controller for Raylib-cs.
     /// </summary>
-    public class ImguiController
+    public class ImguiController : IDisposable
     {
+        IntPtr context;
         Texture2D fontTexture;
         Vector2 size;
         Vector2 scaleFactor = Vector2.One;
-        
-        public ImguiController(int width, int height)
+
+        public ImguiController()
         {
-            size = new Vector2(width, height);
-            var context = ImGui.CreateContext();
+            context = ImGui.CreateContext();
             ImGui.SetCurrentContext(context);
             ImGui.GetIO().Fonts.AddFontDefault();
         }
 
-        unsafe void CreateFontsTexture()
+        public void Dispose()
+        {
+            ImGui.DestroyContext(context);
+            Raylib.UnloadTexture(fontTexture);
+        }
+
+        /// <summary>
+        /// Creates a texture and loads the font data from ImGui.
+        /// </summary>
+        public void Load(int width, int height)
+        {
+            size = new Vector2(width, height);
+            LoadFontTexture();
+            SetupInput();
+            ImGui.NewFrame();
+        }
+
+        unsafe void LoadFontTexture()
         {
             ImGuiIOPtr io = ImGui.GetIO();
 
@@ -44,17 +60,7 @@ namespace ImGuiDemo
             io.Fonts.ClearTexData();
         }
 
-        /// <summary>
-        /// Creates a texture and loads the font data from ImGui.
-        /// </summary>
-        public unsafe void Load()
-        {
-            CreateFontsTexture();
-            SetupInput();
-            ImGui.NewFrame();
-        }
-
-        public void SetupInput()
+        void SetupInput()
         {
             // Setup back-end capabilities flags
             ImGuiIOPtr io = ImGui.GetIO();
@@ -123,11 +129,10 @@ namespace ImGuiDemo
 
         void UpdateMousePosAndButtons()
         {
-            // Update buttons
+            // Update mouse buttons
             ImGuiIOPtr io = ImGui.GetIO();
             for (int i = 0; i < io.MouseDown.Count; i++)
             {
-                // If a mouse press event came, always pass it as "mouse held this frame", so we don't miss click-release events that are shorter than 1 frame.
                 io.MouseDown[i] = Raylib.IsMouseButtonDown((MouseButton)i);
             }
 
@@ -221,6 +226,7 @@ namespace ImGuiDemo
         // Draw the imgui triangle data
         void DrawTriangles(uint count, ImVector<ushort> idxBuffer, ImPtrVector<ImDrawVertPtr> idxVert, int idxOffset, int vtxOffset, IntPtr textureId)
         {
+            uint texId = (uint)textureId;
             ushort index;
             ImDrawVertPtr vertex;
 
@@ -231,7 +237,7 @@ namespace ImGuiDemo
 
             Rlgl.rlPushMatrix();
             Rlgl.rlBegin(Rlgl.RL_TRIANGLES);
-            Rlgl.rlEnableTexture(fontTexture.id);
+            Rlgl.rlEnableTexture(texId);
 
             for (int i = 0; i <= (count - 3); i += 3)
             {

@@ -79,7 +79,7 @@ namespace ImGuiDemo
 
             float glyph_width = ImGui.CalcTextSize("F").X;
             // "FF " we include trailing space in the width to easily catch clicks everywhere
-            float cell_width = glyph_width * 3; 
+            float cell_width = glyph_width * 3;
 
             var clipper = new ImGuiListClipper2(line_total_count, line_height);
             int visible_start_addr = clipper.DisplayStart * Rows;
