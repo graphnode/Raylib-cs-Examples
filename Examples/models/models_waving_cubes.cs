@@ -85,9 +85,9 @@ namespace Examples
 
                             // Calculate the cube position
                             Vector3 cubePos = new Vector3(
-                                (float)(x - numBlocks/2)*(scale*3.0f) + scatter,
-                                (float)(y - numBlocks/2)*(scale*2.0f) + scatter,
-                                (float)(z - numBlocks/2)*(scale*3.0f) + scatter
+                                (float)(x - numBlocks / 2) * (scale * 3.0f) + scatter,
+                                (float)(y - numBlocks / 2) * (scale * 2.0f) + scatter,
+                                (float)(z - numBlocks / 2) * (scale * 3.0f) + scatter
                             );
 
                             // Pick a color with a hue depending on cube position for the rainbow color effect

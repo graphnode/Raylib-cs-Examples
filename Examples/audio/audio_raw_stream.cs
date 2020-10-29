@@ -43,7 +43,7 @@ namespace Examples
             short[] data = new short[MAX_SAMPLES];
 
             // Frame buffer, describing the waveform when repeated over the course of a frame
-            short[] writeBuf =  new short[MAX_SAMPLES_PER_UPDATE];
+            short[] writeBuf = new short[MAX_SAMPLES_PER_UPDATE];
 
             // TODO: Review data generation, it seems data is discontinued for loop,
             // for that reason, there is a clip everytime audio stream is looped...
@@ -95,14 +95,14 @@ namespace Examples
                 {
                     // Compute wavelength. Limit size in both directions.
                     int oldWavelength = waveLength;
-                    waveLength = (int)(22050/frequency);
-                    if (waveLength > MAX_SAMPLES/2) waveLength = MAX_SAMPLES/2;
+                    waveLength = (int)(22050 / frequency);
+                    if (waveLength > MAX_SAMPLES / 2) waveLength = MAX_SAMPLES / 2;
                     if (waveLength < 1) waveLength = 1;
 
                     // Write sine wave.
-                    for (int i = 0; i < waveLength*2; i++)
+                    for (int i = 0; i < waveLength * 2; i++)
                     {
-                        data[i] = (short)(Math.Sin(((2*Math.PI*(float)i/waveLength)))*32000);
+                        data[i] = (short)(Math.Sin(((2 * Math.PI * (float)i / waveLength))) * 32000);
                     }
 
                     // Scale read cursor's position to minimize transition artifacts
@@ -119,10 +119,10 @@ namespace Examples
                     while (writeCursor < MAX_SAMPLES_PER_UPDATE)
                     {
                         // Start by trying to write the whole chunk at once
-                        int writeLength = MAX_SAMPLES_PER_UPDATE-writeCursor;
+                        int writeLength = MAX_SAMPLES_PER_UPDATE - writeCursor;
 
                         // Limit to the maximum readable size
-                        int readLength = waveLength-readCursor;
+                        int readLength = waveLength - readCursor;
 
                         if (writeLength > readLength) writeLength = readLength;
 
@@ -153,7 +153,7 @@ namespace Examples
                 for (int i = 0; i < GetScreenWidth(); i++)
                 {
                     position.X = i;
-                    position.Y = 250 + 50*data[i*MAX_SAMPLES/screenWidth]/32000;
+                    position.Y = 250 + 50 * data[i * MAX_SAMPLES / screenWidth] / 32000;
 
                     DrawPixelV(position, RED);
                 }

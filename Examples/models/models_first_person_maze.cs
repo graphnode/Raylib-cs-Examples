@@ -85,7 +85,7 @@ namespace Examples
                 {
                     for (int x = 0; x < cubicmap.width; x++)
                     {
-                        Color *mapPixels = (Color*)mapPixelsData.ToPointer();
+                        Color* mapPixels = (Color*)mapPixelsData.ToPointer();
                         if ((mapPixels[y * cubicmap.width + x].r == 255) &&       // Collision: white pixel, only check R channel
                             (CheckCollisionCircleRec(playerPos, playerRadius,
                             new Rectangle(mapPosition.X - 0.5f + x * 1.0f, mapPosition.Z - 0.5f + y * 1.0f, 1.0f, 1.0f))))

@@ -73,7 +73,7 @@ namespace Examples
 
             // Load shader and set up some uniforms
             Shader shader = LoadShader("resources/shaders/glsl330/base_lighting.vs", "resources/shaders/glsl330/fog.fs");
-            int *locs = (int*)shader.locs.ToPointer();
+            int* locs = (int*)shader.locs.ToPointer();
             locs[(int)LOC_MATRIX_MODEL] = GetShaderLocation(shader, "matModel");
             locs[(int)LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
 

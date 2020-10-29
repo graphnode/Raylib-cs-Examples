@@ -64,7 +64,7 @@ namespace Examples
                 //----------------------------------------------------------------------------------
 
                 // Player movement
-                if (IsKeyDown(KEY_RIGHT))player.x += 2;
+                if (IsKeyDown(KEY_RIGHT)) player.x += 2;
                 else if (IsKeyDown(KEY_LEFT)) player.x -= 2;
 
                 // Camera3D target follows player

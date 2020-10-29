@@ -31,9 +31,9 @@ namespace Examples
     {
         const int GLSL_VERSION = 330;
 
-        const int MAX_PALETTES =            3;
-        const int COLORS_PER_PALETTE =      8;
-        const int VALUES_PER_COLOR =        3;
+        const int MAX_PALETTES = 3;
+        const int COLORS_PER_PALETTE = 8;
+        const int VALUES_PER_COLOR = 3;
 
         static int[][] palettes = new int[][] {
             new int[] {   // 3-BIT RGB

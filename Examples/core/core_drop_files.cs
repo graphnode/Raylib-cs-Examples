@@ -28,7 +28,7 @@ namespace Examples
             InitWindow(screenWidth, screenHeight, "raylib [core] example - drop files");
 
             int count = 0;
-            string[] droppedFiles = {};
+            string[] droppedFiles = { };
 
             SetTargetFPS(60);
             //--------------------------------------------------------------------------------------

@@ -46,7 +46,7 @@ namespace Examples
             Model model = LoadModel("resources/plane.obj");      // Load OBJ model
 
             // Set map diffuse texture
-            Material *materials = (Material*)model.materials.ToPointer();
+            Material* materials = (Material*)model.materials.ToPointer();
             MaterialMap* maps = (MaterialMap*)materials[0].maps.ToPointer();
             maps[(int)MAP_ALBEDO].texture = LoadTexture("resources/plane_diffuse.png");
 

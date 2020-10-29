@@ -67,7 +67,7 @@ namespace Examples
             // Load and apply the diffuse texture (colour map)
             Texture2D texDiffuse = LoadTexture("resources/plasma.png");
 
-            Material *materials = (Material*)model1.materials.ToPointer();
+            Material* materials = (Material*)model1.materials.ToPointer();
             MaterialMap* maps = (MaterialMap*)materials[0].maps.ToPointer();
             maps[(int)MAP_ALBEDO].texture = texDiffuse;
 
@@ -88,7 +88,7 @@ namespace Examples
             maps = (MaterialMap*)materials[0].maps.ToPointer();
             maps[(int)MAP_EMISSION].texture = texMask;
 
-            int *locs = (int*)shader.locs.ToPointer();
+            int* locs = (int*)shader.locs.ToPointer();
             locs[(int)LOC_MAP_EMISSION] = GetShaderLocation(shader, "mask");
 
             // Frame is incremented each frame to animate the shader

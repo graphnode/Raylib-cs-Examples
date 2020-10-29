@@ -57,7 +57,7 @@ namespace Examples
 
             Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);                // Set model position
 
-            Mesh *meshes = (Mesh*)model.meshes.ToPointer();
+            Mesh* meshes = (Mesh*)model.meshes.ToPointer();
             BoundingBox bounds = MeshBoundingBox(meshes[0]);  // Set model bounds
 
             // NOTE: bounds are calculated from the original size of the model,

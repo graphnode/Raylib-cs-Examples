@@ -53,8 +53,8 @@ namespace Examples
             Model model = LoadModel("resources/pbr/trooper.obj");
 
             // Unsafe pointers into model arrays.
-            Material *materials = (Material *)model.materials.ToPointer();
-            Mesh* meshes = (Mesh *)model.meshes.ToPointer();
+            Material* materials = (Material*)model.materials.ToPointer();
+            Mesh* meshes = (Mesh*)model.meshes.ToPointer();
 
             // Mesh tangents are generated... and uploaded to GPU
             // NOTE: New VBO for tangents is generated at default location and also binded to mesh VAO
@@ -65,10 +65,10 @@ namespace Examples
 
             // Define lights attributes
             // NOTE: Shader is passed to every light on creation to define shader bindings internally
-            CreateLight(LightType.LIGHT_POINT, new Vector3( LIGHT_DISTANCE, LIGHT_HEIGHT, 0.0f ), new Vector3( 0.0f, 0.0f, 0.0f ), new Color( 255, 0, 0, 255 ), materials[0].shader);
-            CreateLight(LightType.LIGHT_POINT, new Vector3( 0.0f, LIGHT_HEIGHT, LIGHT_DISTANCE ), new Vector3( 0.0f, 0.0f, 0.0f ), new Color( 0, 255, 0, 255 ), materials[0].shader);
-            CreateLight(LightType.LIGHT_POINT, new Vector3( -LIGHT_DISTANCE, LIGHT_HEIGHT, 0.0f ), new Vector3( 0.0f, 0.0f, 0.0f ),new Color( 0, 0, 255, 255 ), materials[0].shader);
-            CreateLight(LightType.LIGHT_DIRECTIONAL, new Vector3(0.0f, LIGHT_HEIGHT * 2.0f, -LIGHT_DISTANCE ), new Vector3( 0.0f, 0.0f, 0.0f ), new Color(255, 0, 255, 255 ), materials[0].shader);
+            CreateLight(LightType.LIGHT_POINT, new Vector3(LIGHT_DISTANCE, LIGHT_HEIGHT, 0.0f), new Vector3(0.0f, 0.0f, 0.0f), new Color(255, 0, 0, 255), materials[0].shader);
+            CreateLight(LightType.LIGHT_POINT, new Vector3(0.0f, LIGHT_HEIGHT, LIGHT_DISTANCE), new Vector3(0.0f, 0.0f, 0.0f), new Color(0, 255, 0, 255), materials[0].shader);
+            CreateLight(LightType.LIGHT_POINT, new Vector3(-LIGHT_DISTANCE, LIGHT_HEIGHT, 0.0f), new Vector3(0.0f, 0.0f, 0.0f), new Color(0, 0, 255, 255), materials[0].shader);
+            CreateLight(LightType.LIGHT_DIRECTIONAL, new Vector3(0.0f, LIGHT_HEIGHT * 2.0f, -LIGHT_DISTANCE), new Vector3(0.0f, 0.0f, 0.0f), new Color(255, 0, 255, 255), materials[0].shader);
 
             SetCameraMode(camera, CAMERA_ORBITAL);  // Set an orbital camera mode
 
@@ -84,7 +84,7 @@ namespace Examples
 
                 // Send to material PBR shader camera view position
                 float[] cameraPos = { camera.position.X, camera.position.Y, camera.position.Z };
-                int *locs = (int *)materials[0].shader.locs.ToPointer();
+                int* locs = (int*)materials[0].shader.locs.ToPointer();
                 Utils.SetShaderValue(materials[0].shader, (int)ShaderLocationIndex.LOC_VECTOR_VIEW, cameraPos, ShaderUniformDataType.UNIFORM_VEC3);
 
                 //----------------------------------------------------------------------------------
@@ -113,7 +113,7 @@ namespace Examples
 
             // Shaders and textures must be unloaded by user,
             // they could be in use by other models
-            MaterialMap *maps = (MaterialMap *)materials[0].maps.ToPointer();
+            MaterialMap* maps = (MaterialMap*)materials[0].maps.ToPointer();
             UnloadTexture(maps[(int)MaterialMapType.MAP_ALBEDO].texture);
             UnloadTexture(maps[(int)MaterialMapType.MAP_NORMAL].texture);
             UnloadTexture(maps[(int)MaterialMapType.MAP_METALNESS].texture);
@@ -144,8 +144,8 @@ namespace Examples
             mat.shader = LoadShader(PATH_PBR_VS, PATH_PBR_FS);
 
             // Temporary unsafe pointers into material arrays.
-            MaterialMap *maps = (MaterialMap *)mat.maps.ToPointer();
-            int *locs = (int *)mat.shader.locs.ToPointer();
+            MaterialMap* maps = (MaterialMap*)mat.maps.ToPointer();
+            int* locs = (int*)mat.shader.locs.ToPointer();
 
             // Get required locations points for PBR material
             // NOTE: Those location names must be available and used in the shader code

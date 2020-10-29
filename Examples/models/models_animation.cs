@@ -58,7 +58,7 @@ namespace Examples
             int animsCount = 0;
             IntPtr animsPtr = LoadModelAnimations("resources/guy/guyanim.iqm", ref animsCount);
 
-            ModelAnimation *anims = (ModelAnimation*)animsPtr.ToPointer();
+            ModelAnimation* anims = (ModelAnimation*)animsPtr.ToPointer();
 
             int animFrameCounter = 0;
 
@@ -95,7 +95,7 @@ namespace Examples
 
                 for (int i = 0; i < model.boneCount; i++)
                 {
-                    Transform **framePoses = (Transform**)anims[0].framePoses.ToPointer();
+                    Transform** framePoses = (Transform**)anims[0].framePoses.ToPointer();
                     DrawCube(framePoses[animFrameCounter][i].translation, 0.2f, 0.2f, 0.2f, RED);
                 }
 

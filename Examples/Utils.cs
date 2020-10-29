@@ -1,7 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
 using Raylib_cs;
-using static Raylib_cs.MaterialMapType;
 
 namespace Examples
 {
@@ -90,27 +89,27 @@ namespace Examples
 
         public unsafe static Material GetMaterial(ref Model model, int materialIndex)
         {
-            Material *materials = (Material*)model.materials.ToPointer();
+            Material* materials = (Material*)model.materials.ToPointer();
             return *materials;
         }
 
         public unsafe static Texture2D GetMaterialTexture(ref Model model, int materialIndex, MaterialMapType mapIndex)
         {
-            Material *materials = (Material*)model.materials.ToPointer();
+            Material* materials = (Material*)model.materials.ToPointer();
             MaterialMap* maps = (MaterialMap*)materials[0].maps.ToPointer();
             return maps[(int)mapIndex].texture;
         }
 
         public unsafe static void SetMaterialTexture(ref Model model, int materialIndex, MaterialMapType mapIndex, ref Texture2D texture)
         {
-            Material *materials = (Material*)model.materials.ToPointer();
+            Material* materials = (Material*)model.materials.ToPointer();
             MaterialMap* maps = (MaterialMap*)materials[0].maps.ToPointer();
             maps[(int)mapIndex].texture = texture;
         }
 
         public unsafe static void SetMaterialShader(ref Model model, int materialIndex, ref Shader shader)
         {
-            Material *materials = (Material*)model.materials.ToPointer();
+            Material* materials = (Material*)model.materials.ToPointer();
             materials[0].shader = shader;
         }
 
@@ -124,7 +123,7 @@ namespace Examples
             Raylib.SetShaderValue(shader, uniformLoc, ref value, uniformType);
         }
 
-        public static void SetShaderValue(Shader shader, int uniformLoc, float value,  ShaderUniformDataType uniformType = ShaderUniformDataType.UNIFORM_FLOAT)
+        public static void SetShaderValue(Shader shader, int uniformLoc, float value, ShaderUniformDataType uniformType = ShaderUniformDataType.UNIFORM_FLOAT)
         {
             Raylib.SetShaderValue(shader, uniformLoc, ref value, uniformType);
         }

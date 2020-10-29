@@ -80,7 +80,7 @@ namespace Examples
                                        "resources/shaders/glsl330/lighting.fs");
 
             // Get some shader loactions
-            int *locs = (int*)shader.locs.ToPointer();
+            int* locs = (int*)shader.locs.ToPointer();
             locs[(int)LOC_MATRIX_MODEL] = GetShaderLocation(shader, "matModel");
             locs[(int)LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
 
