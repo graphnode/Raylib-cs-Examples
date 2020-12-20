@@ -139,7 +139,7 @@ namespace Examples
 
                 for (int i = 0; i < envItemsLength; i++) DrawRectangleRec(envItems[i].rect, envItems[i].color);
 
-                Rectangle playerRect = new Rectangle(player.position.X - 20, player.position.X - 40, 40, 40);
+                Rectangle playerRect = new Rectangle(player.position.X - 20, player.position.Y - 40, 40, 40);
                 DrawRectangleRec(playerRect, RED);
 
                 EndMode2D();
@@ -182,18 +182,18 @@ namespace Examples
                 if (ei.blocking != 0 &&
                     ei.rect.x <= p.X &&
                     ei.rect.x + ei.rect.width >= p.X &&
-                    ei.rect.y >= p.X &&
-                    ei.rect.y < p.X + player.speed * delta)
+                    ei.rect.y >= p.Y &&
+                    ei.rect.y < p.Y + player.speed * delta)
                 {
                     hitObstacle = 1;
                     player.speed = 0.0f;
-                    p.X = ei.rect.y;
+                    player.position.Y = ei.rect.y;
                 }
             }
 
             if (hitObstacle == 0)
             {
-                player.position.X += player.speed * delta;
+                player.position.Y += player.speed * delta;
                 player.speed += G * delta;
                 player.canJump = false;
             }
@@ -225,9 +225,9 @@ namespace Examples
             Vector2 min = GetWorldToScreen2D(new Vector2(minX, minY), camera);
 
             if (max.X < width) camera.offset.X = width - (max.X - width / 2);
-            if (max.X < height) camera.offset.X = height - (max.X - height / 2);
+            if (max.Y < height) camera.offset.Y = height - (max.Y- height / 2);
             if (min.X > 0) camera.offset.X = width / 2 - min.X;
-            if (min.X > 0) camera.offset.X = height / 2 - min.X;
+            if (min.Y > 0) camera.offset.Y = height / 2 - min.Y;
         }
 
         static void UpdateCameraCenterSmoothFollow(ref Camera2D camera, ref Player player, EnvItem[] envItems, int envItemsLength, float delta, int width, int height)
@@ -258,33 +258,33 @@ namespace Examples
 
             if (eveningOut != 0)
             {
-                if (evenOutTarget > camera.target.X)
+                if (evenOutTarget > camera.target.Y)
                 {
-                    camera.target.X += evenOutSpeed * delta;
+                    camera.target.Y += evenOutSpeed * delta;
 
-                    if (camera.target.X > evenOutTarget)
+                    if (camera.target.Y > evenOutTarget)
                     {
-                        camera.target.X = evenOutTarget;
+                        camera.target.Y = evenOutTarget;
                         eveningOut = 0;
                     }
                 }
                 else
                 {
-                    camera.target.X -= evenOutSpeed * delta;
+                    camera.target.Y -= evenOutSpeed * delta;
 
-                    if (camera.target.X < evenOutTarget)
+                    if (camera.target.Y < evenOutTarget)
                     {
-                        camera.target.X = evenOutTarget;
+                        camera.target.Y = evenOutTarget;
                         eveningOut = 0;
                     }
                 }
             }
             else
             {
-                if (player.canJump && (player.speed == 0) && (player.position.X != camera.target.X))
+                if (player.canJump && (player.speed == 0) && (player.position.Y != camera.target.Y))
                 {
                     eveningOut = 1;
-                    evenOutTarget = player.position.X;
+                    evenOutTarget = player.position.Y;
                 }
             }
         }
@@ -293,14 +293,14 @@ namespace Examples
         {
             Vector2 bbox = new Vector2(0.2f, 0.2f);
 
-            Vector2 bboxWorldMin = GetScreenToWorld2D(new Vector2((1 - bbox.X) * 0.5f * width, (1 - bbox.X) * 0.5f * height), camera);
-            Vector2 bboxWorldMax = GetScreenToWorld2D(new Vector2((1 + bbox.X) * 0.5f * width, (1 + bbox.X) * 0.5f * height), camera);
-            camera.offset = new Vector2((1 - bbox.X) * 0.5f * width, (1 - bbox.X) * 0.5f * height);
+            Vector2 bboxWorldMin = GetScreenToWorld2D(new Vector2((1 - bbox.X) * 0.5f * width, (1 - bbox.Y) * 0.5f * height), camera);
+            Vector2 bboxWorldMax = GetScreenToWorld2D(new Vector2((1 + bbox.X) * 0.5f * width, (1 + bbox.Y) * 0.5f * height), camera);
+            camera.offset = new Vector2((1 - bbox.X) * 0.5f * width, (1 - bbox.Y) * 0.5f * height);
 
             if (player.position.X < bboxWorldMin.X) camera.target.X = player.position.X;
-            if (player.position.X < bboxWorldMin.X) camera.target.X = player.position.X;
+            if (player.position.Y < bboxWorldMin.Y) camera.target.Y = player.position.Y;
             if (player.position.X > bboxWorldMax.X) camera.target.X = bboxWorldMin.X + (player.position.X - bboxWorldMax.X);
-            if (player.position.X > bboxWorldMax.X) camera.target.X = bboxWorldMin.X + (player.position.X - bboxWorldMax.X);
+            if (player.position.Y > bboxWorldMax.Y) camera.target.Y = bboxWorldMin.Y + (player.position.Y - bboxWorldMax.Y);
         }
     }
 }
