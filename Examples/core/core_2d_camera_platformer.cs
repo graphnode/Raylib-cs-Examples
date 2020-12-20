@@ -63,14 +63,14 @@ namespace Examples
             player.position = new Vector2(400, 280);
             player.speed = 0;
             player.canJump = false;
-            EnvItem[] envItems = new EnvItem[] {
-            new EnvItem(new Rectangle(0, 0, 1000, 400), 0, LIGHTGRAY),
-            new EnvItem(new Rectangle(0, 400, 1000, 200), 1, GRAY),
-            new EnvItem(new Rectangle(300, 200, 400, 10), 1, GRAY),
-            new EnvItem(new Rectangle(250, 300, 100, 10), 1, GRAY),
-            new EnvItem(new Rectangle(650, 300, 100, 10), 1, GRAY)
-        };
 
+            EnvItem[] envItems = new EnvItem[] {
+                new EnvItem(new Rectangle(0, 0, 1000, 400), 0, LIGHTGRAY),
+                new EnvItem(new Rectangle(0, 400, 1000, 200), 1, GRAY),
+                new EnvItem(new Rectangle(300, 200, 400, 10), 1, GRAY),
+                new EnvItem(new Rectangle(250, 300, 100, 10), 1, GRAY),
+                new EnvItem(new Rectangle(650, 300, 100, 10), 1, GRAY)
+            };
             int envItemsLength = envItems.Length;
 
             Camera2D camera = new Camera2D();
@@ -225,7 +225,7 @@ namespace Examples
             Vector2 min = GetWorldToScreen2D(new Vector2(minX, minY), camera);
 
             if (max.X < width) camera.offset.X = width - (max.X - width / 2);
-            if (max.Y < height) camera.offset.Y = height - (max.Y- height / 2);
+            if (max.Y < height) camera.offset.Y = height - (max.Y - height / 2);
             if (min.X > 0) camera.offset.X = width / 2 - min.X;
             if (min.Y > 0) camera.offset.Y = height / 2 - min.Y;
         }
