@@ -49,7 +49,7 @@ namespace Examples
             // for that reason, there is a clip everytime audio stream is looped...
             for (int i = 0; i < MAX_SAMPLES; i++)
             {
-                data[i] = (short)(Math.Sin(((2 * Math.PI * (float)i) / 2) * DEG2RAD) * 32000);
+                data[i] = (short)(MathF.Sin(((2 * MathF.PI * (float)i) / 2) * DEG2RAD) * 32000);
             }
 
             PlayAudioStream(stream);        // Start processing stream buffer (no data loaded currently)
@@ -102,7 +102,7 @@ namespace Examples
                     // Write sine wave.
                     for (int i = 0; i < waveLength * 2; i++)
                     {
-                        data[i] = (short)(Math.Sin(((2 * Math.PI * (float)i / waveLength))) * 32000);
+                        data[i] = (short)(MathF.Sin(((2 * MathF.PI * (float)i / waveLength))) * 32000);
                     }
 
                     // Scale read cursor's position to minimize transition artifacts

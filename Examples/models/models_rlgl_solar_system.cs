@@ -149,25 +149,25 @@ namespace Examples
             {
                 for (int j = 0; j < slices; j++)
                 {
-                    rlVertex3f((float)Math.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * i)) * (float)Math.Sin(DEG2RAD * (j * 360 / slices)),
-                               (float)Math.Sin(DEG2RAD * (270 + (180 / (rings + 1)) * i)),
-                               (float)Math.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * i)) * (float)Math.Cos(DEG2RAD * (j * 360 / slices)));
-                    rlVertex3f((float)Math.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))) * (float)Math.Sin(DEG2RAD * ((j + 1) * 360 / slices)),
-                               (float)Math.Sin(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))),
-                               (float)Math.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))) * (float)Math.Cos(DEG2RAD * ((j + 1) * 360 / slices)));
-                    rlVertex3f((float)Math.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))) * (float)Math.Sin(DEG2RAD * (j * 360 / slices)),
-                               (float)Math.Sin(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))),
-                               (float)Math.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))) * (float)Math.Cos(DEG2RAD * (j * 360 / slices)));
+                    rlVertex3f(MathF.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * i)) * MathF.Sin(DEG2RAD * (j * 360 / slices)),
+                               MathF.Sin(DEG2RAD * (270 + (180 / (rings + 1)) * i)),
+                               MathF.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * i)) * MathF.Cos(DEG2RAD * (j * 360 / slices)));
+                    rlVertex3f(MathF.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))) * MathF.Sin(DEG2RAD * ((j + 1) * 360 / slices)),
+                               MathF.Sin(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))),
+                               MathF.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))) * MathF.Cos(DEG2RAD * ((j + 1) * 360 / slices)));
+                    rlVertex3f(MathF.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))) * MathF.Sin(DEG2RAD * (j * 360 / slices)),
+                               MathF.Sin(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))),
+                               MathF.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))) * MathF.Cos(DEG2RAD * (j * 360 / slices)));
 
-                    rlVertex3f((float)Math.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * i)) * (float)Math.Sin(DEG2RAD * (j * 360 / slices)),
-                               (float)Math.Sin(DEG2RAD * (270 + (180 / (rings + 1)) * i)),
-                               (float)Math.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * i)) * (float)Math.Cos(DEG2RAD * (j * 360 / slices)));
-                    rlVertex3f((float)Math.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * (i))) * (float)Math.Sin(DEG2RAD * ((j + 1) * 360 / slices)),
-                               (float)Math.Sin(DEG2RAD * (270 + (180 / (rings + 1)) * (i))),
-                               (float)Math.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * (i))) * (float)Math.Cos(DEG2RAD * ((j + 1) * 360 / slices)));
-                    rlVertex3f((float)Math.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))) * (float)Math.Sin(DEG2RAD * ((j + 1) * 360 / slices)),
-                               (float)Math.Sin(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))),
-                               (float)Math.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))) * (float)Math.Cos(DEG2RAD * ((j + 1) * 360 / slices)));
+                    rlVertex3f(MathF.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * i)) * MathF.Sin(DEG2RAD * (j * 360 / slices)),
+                               MathF.Sin(DEG2RAD * (270 + (180 / (rings + 1)) * i)),
+                               MathF.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * i)) * MathF.Cos(DEG2RAD * (j * 360 / slices)));
+                    rlVertex3f(MathF.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * (i))) * MathF.Sin(DEG2RAD * ((j + 1) * 360 / slices)),
+                               MathF.Sin(DEG2RAD * (270 + (180 / (rings + 1)) * (i))),
+                               MathF.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * (i))) * MathF.Cos(DEG2RAD * ((j + 1) * 360 / slices)));
+                    rlVertex3f(MathF.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))) * MathF.Sin(DEG2RAD * ((j + 1) * 360 / slices)),
+                               MathF.Sin(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))),
+                               MathF.Cos(DEG2RAD * (270 + (180 / (rings + 1)) * (i + 1))) * MathF.Cos(DEG2RAD * ((j + 1) * 360 / slices)));
                 }
             }
             rlEnd();

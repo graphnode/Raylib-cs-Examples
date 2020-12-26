@@ -56,10 +56,10 @@ namespace Examples
                     dx = irisLeftPosition.X - scleraLeftPosition.X;
                     dy = irisLeftPosition.Y - scleraLeftPosition.Y;
 
-                    angle = (float)Math.Atan2(dy, dx);
+                    angle = MathF.Atan2(dy, dx);
 
-                    dxx = (scleraRadius - irisRadius) * (float)Math.Cos(angle);
-                    dyy = (scleraRadius - irisRadius) * (float)Math.Sin(angle);
+                    dxx = (scleraRadius - irisRadius) * MathF.Cos(angle);
+                    dyy = (scleraRadius - irisRadius) * MathF.Sin(angle);
 
                     irisLeftPosition.X = scleraLeftPosition.X + dxx;
                     irisLeftPosition.Y = scleraLeftPosition.Y + dyy;
@@ -71,10 +71,10 @@ namespace Examples
                     dx = irisRightPosition.X - scleraRightPosition.X;
                     dy = irisRightPosition.Y - scleraRightPosition.Y;
 
-                    angle = (float)Math.Atan2(dy, dx);
+                    angle = MathF.Atan2(dy, dx);
 
-                    dxx = (scleraRadius - irisRadius) * (float)Math.Cos(angle);
-                    dyy = (scleraRadius - irisRadius) * (float)Math.Sin(angle);
+                    dxx = (scleraRadius - irisRadius) * MathF.Cos(angle);
+                    dyy = (scleraRadius - irisRadius) * MathF.Sin(angle);
 
                     irisRightPosition.X = scleraRightPosition.X + dxx;
                     irisRightPosition.Y = scleraRightPosition.Y + dyy;
