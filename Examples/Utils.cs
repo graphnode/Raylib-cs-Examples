@@ -9,8 +9,14 @@ namespace Examples
     Not included in the bindings as there are multiple ways to handle these cases.
     I prefer to leave that choice to the user.
     */
-    public class Utils
+    public static class Utils
     {
+        // Extension providing SubText
+        public static string SubText(this string input, int position, int length)
+        {
+            return input.Substring(position, Math.Min(length, input.Length));
+        }
+
         /*
         Utility to convert the IntPtr from GetDroppedFiles to a string[].
 
