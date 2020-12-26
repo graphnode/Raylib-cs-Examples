@@ -212,7 +212,7 @@ int main(int argc, char** argv)
 
             if (!CheckCollisionPointRec(mouse, emojiRect))
             {
-                DrawTextEx(fontEmoji, txt, pos, fontEmoji.baseSize, 1.0, selected == i ? emoji[i].color : Fade(LIGHTGRAY, 0.4f));
+                DrawTextEx(fontEmoji, txt, pos, fontEmoji.baseSize, 1.0, selected == i ? emoji[i].color : ColorAlpha(LIGHTGRAY, 0.4f));
             }
             else
             {
@@ -319,7 +319,7 @@ static void RandomizeEmoji(void)
 
         // Generate a random color for this emoji
         Vector3 hsv = new Vector3((start * (i + 1)) % 360, 0.6f, 0.85f);
-        emoji[i].color = Fade(ColorFromHSV(hsv), 0.8f);
+        emoji[i].color = ColorAlpha(ColorFromHSV(hsv), 0.8f);
 
         // Set a random message for this emoji
         emoji[i].message = GetRandomValue(0, SIZEOF(messages) - 1);

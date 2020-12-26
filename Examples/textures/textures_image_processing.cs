@@ -111,9 +111,9 @@ namespace Examples
                         default: break;
                     }
 
-                    IntPtr pixels = GetImageData(image);        // Get pixel data from image (RGBA 32bit)
-                    UpdateTexture(texture, pixels);          // Update texture with new image data
-                    Marshal.FreeHGlobal(pixels);                               // Unload pixels data from RAM
+                    IntPtr pixels = LoadImageColors(image);     // Get pixel data from image (RGBA 32bit)
+                    UpdateTexture(texture, pixels);             // Update texture with new image data
+                    UnloadImageColors(pixels);                  // Unload pixels data from RAM
 
                     textureReload = false;
                 }

@@ -103,7 +103,7 @@ namespace Examples
                 }
 
                 // Change brush size
-                brushSize += GetMouseWheelMove() * 5;
+                brushSize += (int)(GetMouseWheelMove() * 5);
                 if (brushSize < 2) brushSize = 2;
                 if (brushSize > 50) brushSize = 50;
 
@@ -193,7 +193,7 @@ namespace Examples
 
                 DrawRectangleLines(10, 10, 30, 30, LIGHTGRAY);
 
-                if (colorMouseHover >= 0) DrawRectangleRec(colorsRecs[colorMouseHover], Fade(WHITE, 0.6f));
+                if (colorMouseHover >= 0) DrawRectangleRec(colorsRecs[colorMouseHover], ColorAlpha(WHITE, 0.6f));
 
                 DrawRectangleLinesEx(new Rectangle(colorsRecs[colorSelected].x - 2, colorsRecs[colorSelected].y - 2,
                                      colorsRecs[colorSelected].width + 4, colorsRecs[colorSelected].height + 4), 2, BLACK);
@@ -205,7 +205,7 @@ namespace Examples
                 // Draw save image message
                 if (showSaveMessage)
                 {
-                    DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(RAYWHITE, 0.8f));
+                    DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), ColorAlpha(RAYWHITE, 0.8f));
                     DrawRectangle(0, 150, GetScreenWidth(), 80, BLACK);
                     DrawText("IMAGE SAVED:  my_amazing_texture_painting.png", 150, 180, 20, RAYWHITE);
                 }

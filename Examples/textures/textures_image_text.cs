@@ -34,7 +34,7 @@ namespace Examples
             Image parrots = LoadImage("resources/parrots.png"); // Load image in CPU memory (RAM)
 
             // Draw over image using custom font
-            ImageDrawTextEx(ref parrots, new Vector2(20, 20), font, "[Parrots font drawing]", font.baseSize, 0, WHITE);
+            ImageDrawTextEx(ref parrots, font, "[Parrots font drawing]", new Vector2(20, 20), font.baseSize, 0, WHITE);
 
             Texture2D texture = LoadTextureFromImage(parrots);  // Image converted to texture, uploaded to GPU memory (VRAM)
             UnloadImage(parrots);   // Once image has been converted to texture and uploaded to VRAM, it can be unloaded from RAM

@@ -131,7 +131,7 @@ namespace Examples
 
                 ClearBackground(RAYWHITE);
 
-                DrawRectanglePro(rec, new Vector2(rec.width / 2, rec.height / 2), rotation, Fade(BLACK, alpha));
+                DrawRectanglePro(rec, new Vector2(rec.width / 2, rec.height / 2), rotation, ColorAlpha(BLACK, alpha));
 
                 DrawText("PRESS [SPACE] TO RESET BOX ANIMATION!", 10, GetScreenHeight() - 25, 20, LIGHTGRAY);
 

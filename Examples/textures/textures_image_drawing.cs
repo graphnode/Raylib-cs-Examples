@@ -39,7 +39,7 @@ namespace Examples
             Image parrots = LoadImage("resources/parrots.png");     // Load image in CPU memory (RAM)
 
             // Draw one image over the other with a scaling of 1.5f
-            ImageDraw(ref parrots, cat, new Rectangle(0, 0, cat.width, cat.height), new Rectangle(30, 40, cat.width * 1.5f, cat.height * 1.5f));
+            ImageDraw(ref parrots, cat, new Rectangle(0, 0, cat.width, cat.height), new Rectangle(30, 40, cat.width * 1.5f, cat.height * 1.5f), WHITE);
             ImageCrop(ref parrots, new Rectangle(0, 50, parrots.width, parrots.height - 100)); // Crop resulting image
 
             UnloadImage(cat);       // Unload image from RAM
@@ -48,7 +48,7 @@ namespace Examples
             Font font = LoadFont("resources/custom_jupiter_crash.png");
 
             // Draw over image using custom font
-            ImageDrawTextEx(ref parrots, new Vector2(300, 230), font, "PARROTS ref CAT", font.baseSize, -2, WHITE);
+            ImageDrawTextEx(ref parrots, font, "PARROTS ref CAT", new Vector2(300, 230), font.baseSize, -2, WHITE);
 
             UnloadFont(font); // Unload custom spritefont (already drawn used on image)
 

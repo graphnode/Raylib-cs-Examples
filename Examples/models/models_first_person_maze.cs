@@ -45,7 +45,7 @@ namespace Examples
             Utils.SetMaterialTexture(ref model, 0, MAP_ALBEDO, ref texture);
 
             // Get map image data to be used for collision detection
-            IntPtr mapPixelsData = GetImageData(imMap);
+            IntPtr mapPixels = LoadImageColors(imMap);
             UnloadImage(imMap);             // Unload image from RAM
 
             Vector3 mapPosition = new Vector3(-16.0f, 0.0f, -8.0f);  // Set model position
@@ -85,8 +85,8 @@ namespace Examples
                 {
                     for (int x = 0; x < cubicmap.width; x++)
                     {
-                        Color* mapPixels = (Color*)mapPixelsData.ToPointer();
-                        if ((mapPixels[y * cubicmap.width + x].r == 255) &&       // Collision: white pixel, only check R channel
+                        Color* mapPixelsData = (Color*)mapPixels.ToPointer();
+                        if ((mapPixelsData[y * cubicmap.width + x].r == 255) &&       // Collision: white pixel, only check R channel
                             (CheckCollisionCircleRec(playerPos, playerRadius,
                             new Rectangle(mapPosition.X - 0.5f + x * 1.0f, mapPosition.Z - 0.5f + y * 1.0f, 1.0f, 1.0f))))
                         {
@@ -100,14 +100,10 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 BeginMode3D(camera);
-
                 DrawModel(model, mapPosition, 1.0f, WHITE);                     // Draw maze map
-                // DrawCubeV(playerPosition, new Vector3( 0.2f, 0.4f, 0.2f ), RED);  // Draw player
-
                 EndMode3D();
 
                 DrawTextureEx(cubicmap, new Vector2(GetScreenWidth() - cubicmap.width * 4 - 20, 20), 0.0f, 4.0f, WHITE);
@@ -124,6 +120,8 @@ namespace Examples
 
             // De-Initialization
             //--------------------------------------------------------------------------------------
+            UnloadImageColors(mapPixels);
+
             UnloadTexture(cubicmap);    // Unload cubicmap texture
             UnloadTexture(texture);     // Unload map texture
             UnloadModel(model);         // Unload map model

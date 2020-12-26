@@ -120,7 +120,7 @@ namespace Examples
                     if (mouseTail[i].active) DrawTexturePro(smoke, new Rectangle(0, 0, smoke.width, smoke.height),
                                                            new Rectangle(mouseTail[i].position.X, mouseTail[i].position.Y, smoke.width * mouseTail[i].size, smoke.height * mouseTail[i].size),
                                                            new Vector2(smoke.width * mouseTail[i].size / 2, smoke.height * mouseTail[i].size / 2), mouseTail[i].rotation,
-                                                           Fade(mouseTail[i].color, mouseTail[i].alpha));
+                                                           ColorAlpha(mouseTail[i].color, mouseTail[i].alpha));
                 }
 
                 EndBlendMode();

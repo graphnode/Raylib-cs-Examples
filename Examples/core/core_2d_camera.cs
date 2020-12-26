@@ -118,7 +118,7 @@ namespace Examples
                 DrawRectangle((int)screenWidth - 5, 5, 5, (int)screenHeight - 10, RED);
                 DrawRectangle(0, (int)screenHeight - 5, (int)screenWidth, 5, RED);
 
-                DrawRectangle(10, 10, 250, 113, Fade(SKYBLUE, 0.5f));
+                DrawRectangle(10, 10, 250, 113, ColorAlpha(SKYBLUE, 0.5f));
                 DrawRectangleLines(10, 10, 250, 113, BLUE);
 
                 DrawText("Free 2d camera controls:", 20, 20, 10, BLACK);

@@ -142,16 +142,16 @@ namespace Examples
                 }
                 else if (state == 3)
                 {
-                    DrawRectangle(logoPositionX, logoPositionY, topSideRecWidth, 16, Fade(outline, alpha));
-                    DrawRectangle(logoPositionX, logoPositionY + 16, 16, leftSideRecHeight - 32, Fade(outline, alpha));
+                    DrawRectangle(logoPositionX, logoPositionY, topSideRecWidth, 16, ColorAlpha(outline, alpha));
+                    DrawRectangle(logoPositionX, logoPositionY + 16, 16, leftSideRecHeight - 32, ColorAlpha(outline, alpha));
 
-                    DrawRectangle(logoPositionX + 240, logoPositionY + 16, 16, rightSideRecHeight - 32, Fade(outline, alpha));
-                    DrawRectangle(logoPositionX, logoPositionY + 240, bottomSideRecWidth, 16, Fade(outline, alpha));
+                    DrawRectangle(logoPositionX + 240, logoPositionY + 16, 16, rightSideRecHeight - 32, ColorAlpha(outline, alpha));
+                    DrawRectangle(logoPositionX, logoPositionY + 240, bottomSideRecWidth, 16, ColorAlpha(outline, alpha));
 
-                    DrawRectangle(screenWidth / 2 - 112, screenHeight / 2 - 112, 224, 224, Fade(RAYWHITE, alpha));
+                    DrawRectangle(screenWidth / 2 - 112, screenHeight / 2 - 112, 224, 224, ColorAlpha(RAYWHITE, alpha));
 
-                    DrawText("raylib".SubText(0, lettersCount), screenWidth / 2 - 44, screenHeight / 2 + 28, 50, Fade(new Color(155, 79, 151, 255), alpha));
-                    DrawText("cs".SubText(0, lettersCount), screenWidth / 2 - 44, screenHeight / 2 + 58, 50, Fade(new Color(155, 79, 151, 255), alpha));
+                    DrawText("raylib".SubText(0, lettersCount), screenWidth / 2 - 44, screenHeight / 2 + 28, 50, ColorAlpha(new Color(155, 79, 151, 255), alpha));
+                    DrawText("cs".SubText(0, lettersCount), screenWidth / 2 - 44, screenHeight / 2 + 58, 50, ColorAlpha(new Color(155, 79, 151, 255), alpha));
                 }
                 else if (state == 4)
                 {

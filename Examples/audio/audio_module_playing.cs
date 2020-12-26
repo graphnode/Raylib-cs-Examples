@@ -125,7 +125,7 @@ namespace Examples
 
                 for (int i = MAX_CIRCLES - 1; i >= 0; i--)
                 {
-                    DrawCircleV(circles[i].position, circles[i].radius, Fade(circles[i].color, circles[i].alpha));
+                    DrawCircleV(circles[i].position, circles[i].radius, ColorAlpha(circles[i].color, circles[i].alpha));
                 }
 
                 // Draw time bar

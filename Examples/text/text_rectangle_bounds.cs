@@ -64,7 +64,7 @@ namespace Examples
                 Vector2 mouse = GetMousePosition();
 
                 // Check if the mouse is inside the container and toggle border color
-                if (CheckCollisionPointRec(mouse, container)) borderColor = Fade(MAROON, 0.4f);
+                if (CheckCollisionPointRec(mouse, container)) borderColor = ColorAlpha(MAROON, 0.4f);
                 else if (!resizing) borderColor = MAROON;
 
                 // Container resizing logic

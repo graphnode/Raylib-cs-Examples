@@ -59,12 +59,12 @@ namespace Examples
 
                 ClearBackground(RAYWHITE);
 
-                DrawLine(500, 0, 500, GetScreenHeight(), Fade(LIGHTGRAY, 0.6f));
-                DrawRectangle(500, 0, GetScreenWidth() - 500, GetScreenHeight(), Fade(LIGHTGRAY, 0.3f));
+                DrawLine(500, 0, 500, GetScreenHeight(), ColorAlpha(LIGHTGRAY, 0.6f));
+                DrawRectangle(500, 0, GetScreenWidth() - 500, GetScreenHeight(), ColorAlpha(LIGHTGRAY, 0.3f));
 
-                if (drawRing) DrawRing(center, innerRadius, outerRadius, startAngle, endAngle, segments, Fade(MAROON, 0.3f));
-                if (drawRingLines) DrawRingLines(center, innerRadius, outerRadius, startAngle, endAngle, segments, Fade(BLACK, 0.4f));
-                if (drawCircleLines) DrawCircleSectorLines(center, outerRadius, startAngle, endAngle, segments, Fade(BLACK, 0.4f));
+                if (drawRing) DrawRing(center, innerRadius, outerRadius, startAngle, endAngle, segments, ColorAlpha(MAROON, 0.3f));
+                if (drawRingLines) DrawRingLines(center, innerRadius, outerRadius, startAngle, endAngle, segments, ColorAlpha(BLACK, 0.4f));
+                if (drawCircleLines) DrawCircleSectorLines(center, outerRadius, startAngle, endAngle, segments, ColorAlpha(BLACK, 0.4f));
 
                 // Draw GUI controls
                 //------------------------------------------------------------------------------

@@ -94,7 +94,7 @@ namespace Examples
                 DrawTexture(nPatchTexture, 10, 93, WHITE);
                 DrawText("TEXTURE", 15, 360, 10, DARKGRAY);
 
-                DrawRectangle(10, 10, 250, 73, Fade(SKYBLUE, 0.5f));
+                DrawRectangle(10, 10, 250, 73, ColorAlpha(SKYBLUE, 0.5f));
                 DrawRectangleLines(10, 10, 250, 73, BLUE);
 
                 DrawText("9-Patch and 3-Patch example", 20, 20, 10, BLACK);

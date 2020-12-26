@@ -83,12 +83,12 @@ namespace Examples
 
                 for (int i = 0; i < MAX_COLORS_COUNT; i++)    // Draw all rectangles
                 {
-                    DrawRectangleRec(colorsRecs[i], Fade(colors[i], colorState[i] != 0 ? 0.6f : 1.0f));
+                    DrawRectangleRec(colorsRecs[i], ColorAlpha(colors[i], colorState[i] != 0 ? 0.6f : 1.0f));
 
                     if (IsKeyDown(KEY_SPACE) || colorState[i] != 0)
                     {
                         DrawRectangle((int)colorsRecs[i].x, (int)(colorsRecs[i].y + colorsRecs[i].height - 26), (int)colorsRecs[i].width, 20, BLACK);
-                        DrawRectangleLinesEx(colorsRecs[i], 6, Fade(BLACK, 0.3f));
+                        DrawRectangleLinesEx(colorsRecs[i], 6, ColorAlpha(BLACK, 0.3f));
                         DrawText(colorNames[i], (int)(colorsRecs[i].x + colorsRecs[i].width - MeasureText(colorNames[i], 10) - 12),
                                 (int)(colorsRecs[i].y + colorsRecs[i].height - 20), 10, colors[i]);
                     }
