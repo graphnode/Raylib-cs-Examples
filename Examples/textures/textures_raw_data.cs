@@ -11,6 +11,8 @@
 *
 ********************************************************************************************/
 
+using System;
+using System.Runtime.InteropServices;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
@@ -32,7 +34,7 @@ namespace Examples
             // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
 
             // Load RAW image data (512x512, 32bit RGBA, no file header)
-            Image fudesumiRaw = LoadImageRaw("resources/fudesumi.raw", 384, 512, (int)UNCOMPRESSED_R8G8B8A8, 0);
+            Image fudesumiRaw = LoadImageRaw("resources/fudesumi.raw", 384, 512, UNCOMPRESSED_R8G8B8A8, 0);
             Texture2D fudesumi = LoadTextureFromImage(fudesumiRaw);   // Upload CPU (RAM) image to GPU (VRAM)
             UnloadImage(fudesumiRaw);                              // Unload CPU (RAM) image data
 
@@ -40,8 +42,7 @@ namespace Examples
             int width = 1024;
             int height = 1024;
 
-            // Dynamic memory allocation to store pixels data (Color type)
-            // Color *pixels = (Color *)malloc(width*height*sizeof(Color));
+            // Store pixel data
             Color[] pixels = new Color[width * height];
 
             for (int y = 0; y < height; y++)
@@ -52,14 +53,20 @@ namespace Examples
                     else pixels[y * height + x] = GOLD;
                 }
             }
+            GCHandle pinnedArray = GCHandle.Alloc(pixels, GCHandleType.Pinned);
+            IntPtr pixelPointer = pinnedArray.AddrOfPinnedObject();
 
             // Load pixels data into an image structure and create texture
-            Image isCheckedIm = LoadImageEx(pixels, width, height);
-            Texture2D isChecked = LoadTextureFromImage(isCheckedIm);
-            UnloadImage(isCheckedIm);     // Unload CPU (RAM) image data
-
-            // Dynamic memory must be freed after using it
-            // free(pixels);               // Unload CPU (RAM) pixels data
+            Image checkedIm = new Image
+            {
+                data = pixelPointer,
+                width = width,
+                height = height,
+                format = UNCOMPRESSED_R8G8B8A8,
+                mipmaps = 1,
+            };
+            Texture2D isChecked = LoadTextureFromImage(checkedIm);
+            pinnedArray.Free();
             //---------------------------------------------------------------------------------------
 
             // Main game loop
@@ -76,7 +83,7 @@ namespace Examples
 
                 ClearBackground(RAYWHITE);
 
-                DrawTexture(isChecked, screenWidth / 2 - isChecked.width / 2, screenHeight / 2 - isChecked.height / 2, Fade(WHITE, 0.5f));
+                DrawTexture(isChecked, screenWidth / 2 - isChecked.width / 2, screenHeight / 2 - isChecked.height / 2, ColorAlpha(WHITE, 0.5f));
                 DrawTexture(fudesumi, 430, -30, WHITE);
 
                 DrawText("CHECKED TEXTURE ", 84, 100, 30, BROWN);

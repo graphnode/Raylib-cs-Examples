@@ -49,7 +49,8 @@ namespace ImGuiDemo
 
             // Upload texture to graphics system
             IntPtr data = new IntPtr(pixels);
-            Image image = new Image {
+            Image image = new Image
+            {
                 data = data,
                 width = width,
                 height = height,
