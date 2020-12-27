@@ -35,6 +35,7 @@ namespace Examples
             core_scissor_test.Main();
             core_storage_values.Main();
             core_vr_simulator.Main();
+            core_window_flags.Main();
             core_window_letterbox.Main();
             core_world_screen.Main();
 
