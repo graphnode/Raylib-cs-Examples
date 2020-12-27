@@ -41,7 +41,7 @@ namespace Examples
             SetTextureFilter(texPattern, FILTER_TRILINEAR); // Makes the texture smoother when upscaled
 
             // Coordinates for all patterns inside the texture
-            Rectangle[] recPattern = new [] {
+            Rectangle[] recPattern = new[] {
                 new Rectangle(3, 3, 66, 66),
                 new Rectangle(75, 3, 100, 100),
                 new Rectangle(3, 75, 66, 66),
@@ -59,15 +59,15 @@ namespace Examples
             {
                 colorRec[i].x = 2 + MARGIN_SIZE + x;
                 colorRec[i].y = 22 + 256 + MARGIN_SIZE + y;
-                colorRec[i].width = COLOR_SIZE*2;
+                colorRec[i].width = COLOR_SIZE * 2;
                 colorRec[i].height = COLOR_SIZE;
 
-                if (i == (colors.Length/2 - 1))
+                if (i == (colors.Length / 2 - 1))
                 {
                     x = 0;
                     y += COLOR_SIZE + MARGIN_SIZE;
                 }
-                else x += (COLOR_SIZE*2 + MARGIN_SIZE);
+                else x += (COLOR_SIZE * 2 + MARGIN_SIZE);
             }
 
             int activePattern = 0, activeCol = 0;
@@ -116,7 +116,7 @@ namespace Examples
                 if (IsKeyPressed(KEY_UP)) scale += 0.25f;
                 if (IsKeyPressed(KEY_DOWN)) scale -= 0.25f;
                 if (scale > 10.0f) scale = 10.0f;
-                else if ( scale <= 0.0f) scale = 0.25f;
+                else if (scale <= 0.0f) scale = 0.25f;
 
                 // Change rotation
                 if (IsKeyPressed(KEY_LEFT)) rotation -= 25.0f;
@@ -132,17 +132,17 @@ namespace Examples
                 ClearBackground(RAYWHITE);
 
                 // Draw the tiled area
-                DrawTextureTiled(texPattern, recPattern[activePattern], new Rectangle(OPT_WIDTH+MARGIN_SIZE, MARGIN_SIZE, screenWidth - OPT_WIDTH - 2*MARGIN_SIZE, screenHeight - 2*MARGIN_SIZE),
+                DrawTextureTiled(texPattern, recPattern[activePattern], new Rectangle(OPT_WIDTH + MARGIN_SIZE, MARGIN_SIZE, screenWidth - OPT_WIDTH - 2 * MARGIN_SIZE, screenHeight - 2 * MARGIN_SIZE),
                     new Vector2(0.0f, 0.0f), rotation, scale, colors[activeCol]);
 
                 // Draw options
-                DrawRectangle(MARGIN_SIZE, MARGIN_SIZE, OPT_WIDTH - MARGIN_SIZE, screenHeight - 2*MARGIN_SIZE, ColorAlpha(LIGHTGRAY, 0.5f));
+                DrawRectangle(MARGIN_SIZE, MARGIN_SIZE, OPT_WIDTH - MARGIN_SIZE, screenHeight - 2 * MARGIN_SIZE, ColorAlpha(LIGHTGRAY, 0.5f));
 
                 DrawText("Select Pattern", 2 + MARGIN_SIZE, 30 + MARGIN_SIZE, 10, BLACK);
                 DrawTexture(texPattern, 2 + MARGIN_SIZE, 40 + MARGIN_SIZE, BLACK);
                 DrawRectangle(2 + MARGIN_SIZE + (int)recPattern[activePattern].x, 40 + MARGIN_SIZE + (int)recPattern[activePattern].y, (int)recPattern[activePattern].width, (int)recPattern[activePattern].height, ColorAlpha(DARKBLUE, 0.3f));
 
-                DrawText("Select Color", 2+MARGIN_SIZE, 10+256+MARGIN_SIZE, 10, BLACK);
+                DrawText("Select Color", 2 + MARGIN_SIZE, 10 + 256 + MARGIN_SIZE, 10, BLACK);
                 for (int i = 0; i < colors.Length; i++)
                 {
                     DrawRectangleRec(colorRec[i], colors[i]);

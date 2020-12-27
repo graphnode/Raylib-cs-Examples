@@ -195,7 +195,7 @@ namespace Examples
             Texture2D panorama = LoadTexture("resources/dresden_square_1k.hdr");
             Texture2D cubemap = GenTextureCubemap(shdrCubemap, panorama, CUBEMAP_SIZE, PixelFormat.UNCOMPRESSED_R32G32B32);
             Utils.SetShaderValue(shdrCubemap, GetShaderLocation(shdrCubemap, "equirectangularMap"), 0);
-            
+
             // Generate irradiance map from cubemap texture
             //--------------------------------------------------------------------------------------------------------
             Utils.SetShaderValue(shdrIrradiance, GetShaderLocation(shdrIrradiance, "environmentMap"), 0);
@@ -205,11 +205,11 @@ namespace Examples
             //--------------------------------------------------------------------------------------------------------
             Utils.SetShaderValue(shdrPrefilter, GetShaderLocation(shdrPrefilter, "environmentMap"), 0);
             maps[(int)MaterialMapType.MAP_PREFILTER].texture = GenTexturePrefilter(shdrPrefilter, cubemap, PREFILTERED_SIZE);
-            
+
             // Generate BRDF (bidirectional reflectance distribution function) texture (using shader)
             //--------------------------------------------------------------------------------------------------------
             maps[(int)MaterialMapType.MAP_BRDF].texture = GenTextureBRDF(shdrBRDF, BRDF_SIZE);
-    
+
             // Unload temporary shaders and textures
             UnloadShader(shdrCubemap);
             UnloadShader(shdrIrradiance);

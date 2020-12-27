@@ -80,7 +80,7 @@ namespace Examples
             {
                 // Update
                 //----------------------------------------------------------------------------------
-                
+
                 // Mouse toggle group logic
                 for (int i = 0; i < NUM_PROCESSES; i++)
                 {

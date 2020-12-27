@@ -52,7 +52,7 @@ namespace Examples
                     else pixels[y * width + x] = GOLD;
                 }
             }
-  
+
             // Load pixels data into an image structure and create texture
             GCHandle pinnedArray = GCHandle.Alloc(pixels, GCHandleType.Pinned);
             IntPtr pixelPointer = pinnedArray.AddrOfPinnedObject();

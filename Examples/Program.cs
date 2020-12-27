@@ -13,7 +13,7 @@ namespace Examples
             RunShaderExamples();
             RunAudioExamples();
         }
-        
+
         static void RunCoreExamples()
         {
             core_2d_camera_platformer.Main();

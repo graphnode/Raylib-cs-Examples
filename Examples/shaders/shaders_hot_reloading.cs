@@ -45,7 +45,7 @@ namespace Examples
             int mouseLoc = GetShaderLocation(shader, "mouse");
             int timeLoc = GetShaderLocation(shader, "time");
 
-            float[] resolution = new [] { (float)screenWidth, (float)screenHeight };
+            float[] resolution = new[] { (float)screenWidth, (float)screenHeight };
             Utils.SetShaderValue(shader, resolutionLoc, resolution, UNIFORM_VEC2);
 
             float totalTime = 0.0f;
@@ -66,36 +66,36 @@ namespace Examples
                 // Set shader required uniform values
                 SetShaderValue(shader, timeLoc, ref totalTime, UNIFORM_FLOAT);
                 Utils.SetShaderValue(shader, mouseLoc, mousePos, UNIFORM_VEC2);
-                
+
                 // Hot shader reloading
                 if (shaderAutoReloading || (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)))
                 {
                     long currentFragShaderModTime = GetFileModTime(fragShaderFileName);
-                    
+
                     // Check if shader file has been modified
                     if (currentFragShaderModTime != fragShaderFileModTime)
                     {
                         // Try reloading updated shader
                         Shader updatedShader = LoadShader(null, fragShaderFileName);
-                        
+
                         if (updatedShader.id != GetShaderDefault().id)      // It was correctly loaded
                         {
                             UnloadShader(shader);
                             shader = updatedShader;
-                            
+
                             // Get shader locations for required uniforms
                             resolutionLoc = GetShaderLocation(shader, "resolution");
                             mouseLoc = GetShaderLocation(shader, "mouse");
                             timeLoc = GetShaderLocation(shader, "time");
-                            
+
                             // Reset required uniforms
                             Utils.SetShaderValue(shader, resolutionLoc, resolution, UNIFORM_VEC2);
                         }
-                        
+
                         fragShaderFileModTime = currentFragShaderModTime;
                     }
                 }
-                
+
                 if (IsKeyPressed(KEY_A)) shaderAutoReloading = !shaderAutoReloading;
                 //----------------------------------------------------------------------------------
 
@@ -106,12 +106,12 @@ namespace Examples
 
                 // We only draw a white full-screen rectangle, frame is generated in shader
                 BeginShaderMode(shader);
-                    DrawRectangle(0, 0, screenWidth, screenHeight, WHITE);
+                DrawRectangle(0, 0, screenWidth, screenHeight, WHITE);
                 EndShaderMode();
 
-                DrawText($"PRESS [A] to TOGGLE SHADER AUTOLOADING: {(shaderAutoReloading ? "AUTO" : "MANUAL")}", 10, 10, 10, shaderAutoReloading? RED : BLACK);
+                DrawText($"PRESS [A] to TOGGLE SHADER AUTOLOADING: {(shaderAutoReloading ? "AUTO" : "MANUAL")}", 10, 10, 10, shaderAutoReloading ? RED : BLACK);
                 if (!shaderAutoReloading) DrawText("MOUSE CLICK to SHADER RE-LOADING", 10, 30, 10, BLACK);
-                
+
                 // asctime(localtime(&fragShaderFileModTime)))
                 DrawText($"Shader last modification: ", 10, 430, 10, BLACK);
 

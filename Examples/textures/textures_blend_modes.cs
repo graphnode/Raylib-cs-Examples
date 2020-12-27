@@ -40,12 +40,12 @@ namespace Examples
             Texture2D fgTexture = LoadTextureFromImage(fgImage);          // Image converted to texture, GPU memory (VRAM)
 
             // Once image has been converted to texture and uploaded to VRAM, it can be unloaded from RAM
-            UnloadImage(bgImage);   
+            UnloadImage(bgImage);
             UnloadImage(fgImage);
 
             const int blendCountMax = 4;
             BlendMode blendMode = 0;
-            
+
             // Main game loop
             while (!WindowShouldClose())    // Detect window close button or ESC key
             {
@@ -57,22 +57,22 @@ namespace Examples
                     else blendMode++;
                 }
                 //----------------------------------------------------------------------------------
-                
+
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
                 ClearBackground(RAYWHITE);
 
-                DrawTexture(bgTexture, screenWidth/2 - bgTexture.width/2, screenHeight/2 - bgTexture.height/2, WHITE);
+                DrawTexture(bgTexture, screenWidth / 2 - bgTexture.width / 2, screenHeight / 2 - bgTexture.height / 2, WHITE);
 
                 // Apply the blend mode and then draw the foreground texture
                 BeginBlendMode(blendMode);
-                DrawTexture(fgTexture, screenWidth/2 - fgTexture.width/2, screenHeight/2 - fgTexture.height/2, WHITE);
+                DrawTexture(fgTexture, screenWidth / 2 - fgTexture.width / 2, screenHeight / 2 - fgTexture.height / 2, WHITE);
                 EndBlendMode();
 
                 // Draw the texts
                 DrawText("Press SPACE to change blend modes.", 310, 350, 10, GRAY);
-                
+
                 switch (blendMode)
                 {
                     case BLEND_ALPHA: DrawText("Current: BLEND_ALPHA", (screenWidth / 2) - 60, 370, 10, GRAY); break;
@@ -81,7 +81,7 @@ namespace Examples
                     case BLEND_ADD_COLORS: DrawText("Current: BLEND_ADD_COLORS", (screenWidth / 2) - 60, 370, 10, GRAY); break;
                     default: break;
                 }
-                
+
                 DrawText("(c) Cyberpunk Street Environment by Luis Zuno (@ansimuz)", screenWidth - 330, screenHeight - 20, 10, GRAY);
 
                 EndDrawing();
@@ -94,8 +94,8 @@ namespace Examples
             UnloadTexture(bgTexture); // Unload background texture
 
             CloseWindow();            // Close window and OpenGL context
-            //--------------------------------------------------------------------------------------
-            
+                                      //--------------------------------------------------------------------------------------
+
             return 0;
         }
     }
