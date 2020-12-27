@@ -19,8 +19,8 @@ namespace Examples
 {
     public class textures_sprite_explosion
     {
-        const int NUM_FRAMES = 8;
-        const int NUM_LINES = 6;
+        const int NUM_FRAMES_PER_LINE = 5;
+        const int NUM_LINES = 5;
 
         public static int Main()
         {
@@ -30,7 +30,6 @@ namespace Examples
             const int screenHeight = 450;
 
             InitWindow(screenWidth, screenHeight, "raylib [textures] example - sprite explosion");
-
             InitAudioDevice();
 
             // Load explosion sound
@@ -40,7 +39,7 @@ namespace Examples
             Texture2D explosion = LoadTexture("resources/explosion.png");
 
             // Init variables for animation
-            int frameWidth = explosion.width / NUM_FRAMES;    // Sprite one frame rectangle width
+            int frameWidth = explosion.width / NUM_FRAMES_PER_LINE;    // Sprite one frame rectangle width
             int frameHeight = explosion.height / NUM_LINES;   // Sprite one frame rectangle height
             int currentFrame = 0;
             int currentLine = 0;
@@ -81,7 +80,7 @@ namespace Examples
                     {
                         currentFrame++;
 
-                        if (currentFrame >= NUM_FRAMES)
+                        if (currentFrame >= NUM_FRAMES_PER_LINE)
                         {
                             currentFrame = 0;
                             currentLine++;
@@ -104,7 +103,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 // Draw explosion required frame rectangle

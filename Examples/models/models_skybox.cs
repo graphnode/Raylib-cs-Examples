@@ -22,7 +22,7 @@ namespace Examples
 {
     public class models_skybox
     {
-        public unsafe static int Main()
+        public static int Main()
         {
             // Initialization
             //--------------------------------------------------------------------------------------
@@ -49,15 +49,14 @@ namespace Examples
             Utils.SetShaderValue(shdrCubemap, GetShaderLocation(shdrCubemap, "equirectangularMap"), new int[] { 0 }, UNIFORM_INT);
 
             // Load HDR panorama (sphere) texture
-            Texture2D texHDR = LoadTexture("resources/dresden_square.hdr");
+            string panoFileName = "resources/dresden_square_2k.hdr";
+            Texture2D panorama = LoadTexture(panoFileName);
 
             // Generate cubemap (texture with 6 quads-cube-mapping) from panorama HDR texture
             // NOTE: New texture is generated rendering to texture, shader computes the sphre->cube coordinates mapping
-            Texture2D cubemap = GenTextureCubemap(shdrCubemap, texHDR, 512);
+            Texture2D cubemap = GenTextureCubemap(shdrCubemap, panorama, 1024);
             Utils.SetMaterialTexture(ref skybox, 0, MAP_CUBEMAP, ref cubemap);
-
-            UnloadTexture(texHDR);      // Texture not required anymore, cubemap already generated
-            UnloadShader(shdrCubemap);  // Unload cubemap generation shader, not required anymore
+            UnloadTexture(panorama);      // Texture not required anymore, cubemap already generated
 
             SetCameraMode(camera, CAMERA_FIRST_PERSON);  // Set a first person camera mode
 
@@ -70,6 +69,33 @@ namespace Examples
                 // Update
                 //----------------------------------------------------------------------------------
                 UpdateCamera(ref camera);              // Update camera
+
+                // Load new cubemap texture on drag&drop
+                if (IsFileDropped())
+                {
+                    int count = 0;
+                    string[] droppedFiles = Utils.MarshalDroppedFiles(ref count);
+
+                    // Only support one file dropped
+                    if (count == 1)
+                    {
+                        if (IsFileExtension(droppedFiles[0], ".png;.jpg;.hdr;.bmp;.tga"))
+                        {
+                            // Unload current cubemap texture and load new one
+                            UnloadTexture(Utils.GetMaterialTexture(ref skybox, 0, MAP_CUBEMAP));
+                            panorama = LoadTexture(droppedFiles[0]);
+                            panoFileName = droppedFiles[0];
+
+                            // Generate cubemap from panorama texture
+                            cubemap = GenTextureCubemap(shdrCubemap, panorama, 1024);
+                            Utils.SetMaterialTexture(ref skybox, 0, MAP_CUBEMAP, ref cubemap);
+                            UnloadTexture(panorama);
+                        }
+                    }
+
+                    // Clear internal buffers
+                    ClearDroppedFiles();
+                }
                 //----------------------------------------------------------------------------------
 
                 // Draw
