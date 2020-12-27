@@ -23,7 +23,7 @@ namespace Examples
 {
     public class models_material_pbr
     {
-        public const int CUBEMAP_SIZE = 512;
+        public const int CUBEMAP_SIZE = 1024;
         public const int IRRADIANCE_SIZE = 32;
         public const int PREFILTERED_SIZE = 256;
         public const int BRDF_SIZE = 512;
@@ -56,11 +56,6 @@ namespace Examples
             Material* materials = (Material*)model.materials.ToPointer();
             Mesh* meshes = (Mesh*)model.meshes.ToPointer();
 
-            // Mesh tangents are generated... and uploaded to GPU
-            // NOTE: New VBO for tangents is generated at default location and also binded to mesh VAO
-            MeshTangents(ref meshes[0]);
-
-            UnloadMaterial(materials[0]); // get rid of default material
             materials[0] = LoadMaterialPBR(new Color(255, 255, 255, 255), 1.0f, 1.0f);
 
             // Define lights attributes
@@ -86,18 +81,16 @@ namespace Examples
                 float[] cameraPos = { camera.position.X, camera.position.Y, camera.position.Z };
                 int* locs = (int*)materials[0].shader.locs.ToPointer();
                 Utils.SetShaderValue(materials[0].shader, (int)ShaderLocationIndex.LOC_VECTOR_VIEW, cameraPos, ShaderUniformDataType.UNIFORM_VEC3);
-
                 //----------------------------------------------------------------------------------
+
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 BeginMode3D(camera);
 
                 DrawModel(model, Vector3Zero(), 1.0f, WHITE);
-
                 DrawGrid(10, 1.0f);
 
                 EndMode3D();
@@ -110,23 +103,11 @@ namespace Examples
 
             // De-Initialization
             //--------------------------------------------------------------------------------------
+            UnloadMaterial(materials[0]); // Unload material: shader and textures
 
-            // Shaders and textures must be unloaded by user,
-            // they could be in use by other models
-            MaterialMap* maps = (MaterialMap*)materials[0].maps.ToPointer();
-            UnloadTexture(maps[(int)MaterialMapType.MAP_ALBEDO].texture);
-            UnloadTexture(maps[(int)MaterialMapType.MAP_NORMAL].texture);
-            UnloadTexture(maps[(int)MaterialMapType.MAP_METALNESS].texture);
-            UnloadTexture(maps[(int)MaterialMapType.MAP_ROUGHNESS].texture);
-            UnloadTexture(maps[(int)MaterialMapType.MAP_OCCLUSION].texture);
-            UnloadTexture(maps[(int)MaterialMapType.MAP_IRRADIANCE].texture);
-            UnloadTexture(maps[(int)MaterialMapType.MAP_PREFILTER].texture);
-            UnloadTexture(maps[(int)MaterialMapType.MAP_BRDF].texture);
-            UnloadShader(materials[0].shader);
+            UnloadModel(model);  // Unload model
 
-            UnloadModel(model);         // Unload skybox model
-
-            CloseWindow();              // Close window and OpenGL context
+            CloseWindow();       // Close window and OpenGL context
             //--------------------------------------------------------------------------------------
 
             return 0;
@@ -136,11 +117,11 @@ namespace Examples
         // NOTE: PBR shader is loaded inside this function
         unsafe public static Material LoadMaterialPBR(Color albedo, float metalness, float roughness)
         {
-            Material mat = Raylib.LoadMaterialDefault();   // NOTE: All maps textures are set to { 0 )
+            // NOTE: All maps textures are set to { 0 )
+            Material mat = Raylib.LoadMaterialDefault();
 
             string PATH_PBR_VS = "resources/shaders/glsl330/pbr.vs";
             string PATH_PBR_FS = "resources/shaders/glsl330/pbr.fs";
-
             mat.shader = LoadShader(PATH_PBR_VS, PATH_PBR_FS);
 
             // Temporary unsafe pointers into material arrays.
@@ -169,39 +150,6 @@ namespace Examples
             maps[(int)MaterialMapType.MAP_ROUGHNESS].texture = LoadTexture("resources/pbr/trooper_roughness.png");
             maps[(int)MaterialMapType.MAP_OCCLUSION].texture = LoadTexture("resources/pbr/trooper_ao.png");
 
-            // Set environment maps
-            const string PATH_CUBEMAP_VS = "resources/shaders/glsl330/cubemap.vs"; // Path to equirectangular to cubemap vertex shader
-            const string PATH_CUBEMAP_FS = "resources/shaders/glsl330/cubemap.fs"; // Path to equirectangular to cubemap fragment shader
-            const string PATH_SKYBOX_VS = "resources/shaders/glsl330/skybox.vs";  // Path to skybox vertex shader
-            const string PATH_IRRADIANCE_FS = "resources/shaders/glsl330/irradiance.fs"; // Path to irradiance (GI) calculation fragment shader
-            const string PATH_PREFILTER_FS = "resources/shaders/glsl330/prefilter.fs"; // Path to reflection prefilter calculation fragment shader
-            const string PATH_BRDF_VS = "resources/shaders/glsl330/brdf.vs"; // Path to bidirectional reflectance distribution function vertex shader
-            const string PATH_BRDF_FS = "resources/shaders/glsl330/brdf.fs"; // Path to bidirectional reflectance distribution function fragment shader
-
-            Shader shdrCubemap = LoadShader(PATH_CUBEMAP_VS, PATH_CUBEMAP_FS);
-            Shader shdrIrradiance = LoadShader(PATH_SKYBOX_VS, PATH_IRRADIANCE_FS);
-            Shader shdrPrefilter = LoadShader(PATH_SKYBOX_VS, PATH_PREFILTER_FS);
-            Shader shdrBRDF = LoadShader(PATH_BRDF_VS, PATH_BRDF_FS);
-
-            // Setup required shader locations
-            Utils.SetShaderValue(shdrCubemap, GetShaderLocation(shdrCubemap, "equirectangularMap"), 0);
-            Utils.SetShaderValue(shdrIrradiance, GetShaderLocation(shdrIrradiance, "environmentMap"), 0);
-            Utils.SetShaderValue(shdrPrefilter, GetShaderLocation(shdrPrefilter, "environmentMap"), 0);
-
-            Texture2D texHDR = LoadTexture("resources/dresden_square.hdr");
-            Texture2D cubemap = GenTextureCubemap(shdrCubemap, texHDR, CUBEMAP_SIZE);
-            maps[(int)MaterialMapType.MAP_IRRADIANCE].texture = GenTextureIrradiance(shdrIrradiance, cubemap, IRRADIANCE_SIZE);
-            maps[(int)MaterialMapType.MAP_PREFILTER].texture = GenTexturePrefilter(shdrPrefilter, cubemap, PREFILTERED_SIZE);
-            maps[(int)MaterialMapType.MAP_BRDF].texture = GenTextureBRDF(shdrBRDF, BRDF_SIZE);
-            UnloadTexture(cubemap);
-            UnloadTexture(texHDR);
-
-            // Unload already used shaders (to create specific textures)
-            UnloadShader(shdrCubemap);
-            UnloadShader(shdrIrradiance);
-            UnloadShader(shdrPrefilter);
-            UnloadShader(shdrBRDF);
-
             // Set textures filtering for better quality
             SetTextureFilter(maps[(int)MaterialMapType.MAP_ALBEDO].texture, FILTER_BILINEAR);
             SetTextureFilter(maps[(int)MaterialMapType.MAP_NORMAL].texture, FILTER_BILINEAR);
@@ -227,6 +175,49 @@ namespace Examples
             maps[(int)MaterialMapType.MAP_OCCLUSION].value = 1.0f;
             maps[(int)MaterialMapType.MAP_EMISSION].value = 0.5f;
             maps[(int)MaterialMapType.MAP_HEIGHT].value = 0.5f;
+
+            // Load shaders for material
+            const string PATH_CUBEMAP_VS = "resources/shaders/glsl330/cubemap.vs"; // Path to equirectangular to cubemap vertex shader
+            const string PATH_CUBEMAP_FS = "resources/shaders/glsl330/cubemap.fs"; // Path to equirectangular to cubemap fragment shader
+            const string PATH_SKYBOX_VS = "resources/shaders/glsl330/skybox.vs";  // Path to skybox vertex shader
+            const string PATH_IRRADIANCE_FS = "resources/shaders/glsl330/irradiance.fs"; // Path to irradiance (GI) calculation fragment shader
+            const string PATH_PREFILTER_FS = "resources/shaders/glsl330/prefilter.fs"; // Path to reflection prefilter calculation fragment shader
+            const string PATH_BRDF_VS = "resources/shaders/glsl330/brdf.vs"; // Path to bidirectional reflectance distribution function vertex shader
+            const string PATH_BRDF_FS = "resources/shaders/glsl330/brdf.fs"; // Path to bidirectional reflectance distribution function fragment shader
+
+            Shader shdrCubemap = LoadShader(PATH_CUBEMAP_VS, PATH_CUBEMAP_FS);
+            Shader shdrIrradiance = LoadShader(PATH_SKYBOX_VS, PATH_IRRADIANCE_FS);
+            Shader shdrPrefilter = LoadShader(PATH_SKYBOX_VS, PATH_PREFILTER_FS);
+            Shader shdrBRDF = LoadShader(PATH_BRDF_VS, PATH_BRDF_FS);
+
+            // Generate cubemap from panorama texture
+            //--------------------------------------------------------------------------------------------------------
+            Texture2D panorama = LoadTexture("resources/dresden_square_1k.hdr");
+            Texture2D cubemap = GenTextureCubemap(shdrCubemap, panorama, CUBEMAP_SIZE, PixelFormat.UNCOMPRESSED_R32G32B32);
+            Utils.SetShaderValue(shdrCubemap, GetShaderLocation(shdrCubemap, "equirectangularMap"), 0);
+            
+            // Generate irradiance map from cubemap texture
+            //--------------------------------------------------------------------------------------------------------
+            Utils.SetShaderValue(shdrIrradiance, GetShaderLocation(shdrIrradiance, "environmentMap"), 0);
+            maps[(int)MaterialMapType.MAP_IRRADIANCE].texture = GenTextureIrradiance(shdrIrradiance, cubemap, IRRADIANCE_SIZE);
+
+            // Generate prefilter map from cubemap texture
+            //--------------------------------------------------------------------------------------------------------
+            Utils.SetShaderValue(shdrPrefilter, GetShaderLocation(shdrPrefilter, "environmentMap"), 0);
+            maps[(int)MaterialMapType.MAP_PREFILTER].texture = GenTexturePrefilter(shdrPrefilter, cubemap, PREFILTERED_SIZE);
+            
+            // Generate BRDF (bidirectional reflectance distribution function) texture (using shader)
+            //--------------------------------------------------------------------------------------------------------
+            maps[(int)MaterialMapType.MAP_BRDF].texture = GenTextureBRDF(shdrBRDF, BRDF_SIZE);
+    
+            // Unload temporary shaders and textures
+            UnloadShader(shdrCubemap);
+            UnloadShader(shdrIrradiance);
+            UnloadShader(shdrPrefilter);
+            UnloadShader(shdrBRDF);
+
+            UnloadTexture(panorama);
+            UnloadTexture(cubemap);
 
             return mat;
         }
