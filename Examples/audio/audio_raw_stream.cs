@@ -33,7 +33,6 @@ namespace Examples
             const int screenHeight = 450;
 
             InitWindow(screenWidth, screenHeight, "raylib [audio] example - raw audio streaming");
-
             InitAudioDevice();              // Initialize audio device
 
             // Init raw audio stream (sample rate: 22050, sample size: 16bit-short, channels: 1-mono)
@@ -44,13 +43,6 @@ namespace Examples
 
             // Frame buffer, describing the waveform when repeated over the course of a frame
             short[] writeBuf = new short[MAX_SAMPLES_PER_UPDATE];
-
-            // TODO: Review data generation, it seems data is discontinued for loop,
-            // for that reason, there is a clip everytime audio stream is looped...
-            for (int i = 0; i < MAX_SAMPLES; i++)
-            {
-                data[i] = (short)(MathF.Sin(((2 * MathF.PI * (float)i) / 2) * DEG2RAD) * 32000);
-            }
 
             PlayAudioStream(stream);        // Start processing stream buffer (no data loaded currently)
 
@@ -143,10 +135,9 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
-                DrawText(string.Format("sine frequency: {0}", (int)frequency), GetScreenWidth() - 220, 10, 20, RED);
+                DrawText($"sine frequency: {frequency}", GetScreenWidth() - 220, 10, 20, RED);
                 DrawText("click mouse button to change frequency", 10, 10, 20, DARKGRAY);
 
                 // Draw the current buffer state proportionate to the screen

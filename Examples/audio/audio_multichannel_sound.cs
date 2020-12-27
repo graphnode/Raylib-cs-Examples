@@ -31,13 +31,13 @@ namespace Examples
 
             InitAudioDevice();      // Initialize audio device
 
-            Sound fxWav = LoadSound("resources/sound.wav");         // Load WAV audio file
-            Sound fxOgg = LoadSound("resources/tanatana.ogg");      // Load OGG audio file
+            Sound fxWav = LoadSound("resources/sound.wav");       // Load WAV audio file
+            Sound fxOgg = LoadSound("resources/target.ogg");      // Load OGG audio file
 
             SetSoundVolume(fxWav, 0.2f);
 
             SetTargetFPS(60);       // Set our game to run at 60 frames-per-second
-                                    //--------------------------------------------------------------------------------------
+            //--------------------------------------------------------------------------------------
 
             // Main game loop
             while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -46,19 +46,18 @@ namespace Examples
                 //----------------------------------------------------------------------------------
                 if (IsKeyPressed(KEY_ENTER)) PlaySoundMulti(fxWav);     // Play a new wav sound instance
                 if (IsKeyPressed(KEY_SPACE)) PlaySoundMulti(fxOgg);     // Play a new ogg sound instance
-                                                                        //----------------------------------------------------------------------------------
+                //----------------------------------------------------------------------------------
 
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 DrawText("MULTICHANNEL SOUND PLAYING", 20, 20, 20, GRAY);
                 DrawText("Press SPACE to play new ogg instance!", 200, 120, 20, LIGHTGRAY);
                 DrawText("Press ENTER to play new wav instance!", 200, 180, 20, LIGHTGRAY);
 
-                DrawText(string.Format("CONCURRENT SOUNDS PLAYING: {0}", GetSoundsPlaying()), 220, 280, 20, RED);
+                DrawText($"CONCURRENT SOUNDS PLAYING: {GetSoundsPlaying()}", 220, 280, 20, RED);
 
                 EndDrawing();
                 //----------------------------------------------------------------------------------
