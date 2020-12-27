@@ -76,8 +76,9 @@ namespace Examples
             Shader shader = LoadShader("resources/shaders/glsl330/base_lighting_instanced.vs", "resources/shaders/glsl330/lighting.fs");
 
             // Get some shader loactions
-            unsafe {
-                int *locs = (int *)shader.locs;
+            unsafe
+            {
+                int* locs = (int*)shader.locs;
                 locs[(int)LOC_MATRIX_MVP] = GetShaderLocation(shader, "mvp");
                 locs[(int)LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
                 locs[(int)LOC_MATRIX_MODEL] = GetShaderLocationAttrib(shader, "instance");
@@ -93,7 +94,7 @@ namespace Examples
             material.shader = shader;
             unsafe
             {
-                MaterialMap *maps = (MaterialMap *)material.maps.ToPointer();
+                MaterialMap* maps = (MaterialMap*)material.maps.ToPointer();
                 maps[(int)MAP_ALBEDO].color = RED;
             }
 
