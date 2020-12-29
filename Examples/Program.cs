@@ -61,7 +61,6 @@ namespace Examples
         {
             textures_background_scrolling.Main();
             textures_bunnymark.Main();
-            textures_image_9patch.Main();
             textures_image_drawing.Main();
             textures_image_generation.Main();
             textures_image_loading.Main();

@@ -17,7 +17,6 @@ using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
-using static Raylib_cs.NPatchType;
 
 namespace Examples
 {
@@ -86,7 +85,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 // Draw the n-patches
@@ -108,7 +106,7 @@ namespace Examples
 
             // De-Initialization
             //--------------------------------------------------------------------------------------
-            UnloadTexture(nPatchTexture);       // Texture unloading
+            UnloadTexture(nPatchTexture); // Texture unloading
 
             CloseWindow();                // Close window and OpenGL context
             //--------------------------------------------------------------------------------------
