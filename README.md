@@ -10,7 +10,7 @@
 
 [![Build](https://github.com/ChrisDill/Raylib-cs-Examples/workflows/Build/badge.svg)](https://github.com/ChrisDill/Raylib-cs-Examples/actions?query=workflow%3ABuild)
 
-C# examples for raylib-cs, a simple and easy-to-use library to learn videogames programming (www.raylib.com)
+C# examples for Raylib-cs, a simple and easy-to-use library to learn videogames programming (www.raylib.com)
 
 ## Getting Started
 
@@ -36,4 +36,4 @@ If you want to [request features](https://github.com/raysan5/raylib/pulls) or [r
 
 ## License
 
-raylib-cs (and raylib) is licensed under an unmodified zlib/libpng license, which is an OSI-certified, BSD-like license that allows static linking with closed source software. Check [LICENSE](LICENSE.md) for further details.
+See [LICENSE](LICENSE) for details.

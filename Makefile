@@ -8,5 +8,7 @@ restore:
 	dotnet restore
 watch:
 	dotnet watch -p Examples/Examples.csproj run
-start:
+run-examples:
 	dotnet run -p Examples/Examples.csproj -f net5.0
+run-imgui:
+	dotnet run -p ImGuiDemo/ImGuiDemo.csproj -f net5.0
