@@ -17,7 +17,6 @@ using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
-using static Raylib_cs.NPatchType;
 
 namespace Examples
 {
@@ -45,14 +44,14 @@ namespace Examples
             Rectangle dstRecV = new Rectangle(92.0f, 160.0f, 32.0f, 32.0f);
 
             // A 9-patch (NPT_9PATCH) changes its sizes in both axis
-            NPatchInfo ninePatchInfo1 = new NPatchInfo { sourceRec = new Rectangle(0.0f, 0.0f, 64.0f, 64.0f), left = 12, top = 40, right = 12, bottom = 12, type = (int)NPT_9PATCH };
-            NPatchInfo ninePatchInfo2 = new NPatchInfo { sourceRec = new Rectangle(0.0f, 128.0f, 64.0f, 64.0f), left = 16, top = 16, right = 16, bottom = 16, type = (int)NPT_9PATCH };
+            NPatchInfo ninePatchInfo1 = new NPatchInfo { sourceRec = new Rectangle(0.0f, 0.0f, 64.0f, 64.0f), left = 12, top = 40, right = 12, bottom = 12, type = NPatchType.NPT_9PATCH };
+            NPatchInfo ninePatchInfo2 = new NPatchInfo { sourceRec = new Rectangle(0.0f, 128.0f, 64.0f, 64.0f), left = 16, top = 16, right = 16, bottom = 16, type = NPatchType.NPT_9PATCH };
 
             // A horizontal 3-patch (NPT_3PATCH_HORIZONTAL) changes its sizes along the x axis only
-            NPatchInfo h3PatchInfo = new NPatchInfo { sourceRec = new Rectangle(0.0f, 64.0f, 64.0f, 64.0f), left = 8, top = 8, right = 8, bottom = 8, type = (int)NPT_3PATCH_HORIZONTAL };
+            NPatchInfo h3PatchInfo = new NPatchInfo { sourceRec = new Rectangle(0.0f, 64.0f, 64.0f, 64.0f), left = 8, top = 8, right = 8, bottom = 8, type = NPatchType.NPT_3PATCH_HORIZONTAL };
 
             // A vertical 3-patch (NPT_3PATCH_VERTICAL) changes its sizes along the y axis only
-            NPatchInfo v3PatchInfo = new NPatchInfo { sourceRec = new Rectangle(0.0f, 192.0f, 64.0f, 64.0f), left = 6, top = 6, right = 6, bottom = 6, type = (int)NPT_3PATCH_VERTICAL };
+            NPatchInfo v3PatchInfo = new NPatchInfo { sourceRec = new Rectangle(0.0f, 192.0f, 64.0f, 64.0f), left = 6, top = 6, right = 6, bottom = 6, type = NPatchType.NPT_3PATCH_VERTICAL };
 
             SetTargetFPS(60);
             //---------------------------------------------------------------------------------------
@@ -86,7 +85,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 // Draw the n-patches
@@ -108,7 +106,7 @@ namespace Examples
 
             // De-Initialization
             //--------------------------------------------------------------------------------------
-            UnloadTexture(nPatchTexture);       // Texture unloading
+            UnloadTexture(nPatchTexture); // Texture unloading
 
             CloseWindow();                // Close window and OpenGL context
             //--------------------------------------------------------------------------------------

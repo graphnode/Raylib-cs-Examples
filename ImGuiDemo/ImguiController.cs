@@ -49,9 +49,15 @@ namespace ImGuiDemo
 
             // Upload texture to graphics system
             IntPtr data = new IntPtr(pixels);
-            Image image = Raylib.LoadImagePro(data, width, height, (int)PixelFormat.UNCOMPRESSED_R8G8B8A8);
+            Image image = new Image
+            {
+                data = data,
+                width = width,
+                height = height,
+                mipmaps = 1,
+                format = PixelFormat.UNCOMPRESSED_R8G8B8A8,
+            };
             fontTexture = Raylib.LoadTextureFromImage(image);
-            Raylib.UnloadImage(image);
 
             // Store our identifier
             io.Fonts.SetTexID(new IntPtr(fontTexture.id));

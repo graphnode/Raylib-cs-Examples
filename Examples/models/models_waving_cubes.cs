@@ -91,7 +91,7 @@ namespace Examples
                             );
 
                             // Pick a color with a hue depending on cube position for the rainbow color effect
-                            Color cubeColor = ColorFromHSV(new Vector3((float)(((x + y + z) * 18) % 360), 0.75f, 0.9f));
+                            Color cubeColor = ColorFromHSV((float)(((x + y + z) * 18) % 360), 0.75f, 0.9f);
 
                             // Calculate cube size
                             float cubeSize = (2.4f - scale) * blockScale;

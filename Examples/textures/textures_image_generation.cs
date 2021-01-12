@@ -80,8 +80,8 @@ namespace Examples
 
                 DrawTexture(textures[currentTexture], 0, 0, WHITE);
 
-                DrawRectangle(30, 400, 325, 30, Fade(SKYBLUE, 0.5f));
-                DrawRectangleLines(30, 400, 325, 30, Fade(WHITE, 0.5f));
+                DrawRectangle(30, 400, 325, 30, ColorAlpha(SKYBLUE, 0.5f));
+                DrawRectangleLines(30, 400, 325, 30, ColorAlpha(WHITE, 0.5f));
                 DrawText("MOUSE LEFT BUTTON to CYCLE PROCEDURAL TEXTURES", 40, 410, 10, WHITE);
 
                 switch (currentTexture)

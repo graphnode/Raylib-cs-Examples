@@ -1,12 +1,21 @@
-﻿using Raylib_cs;
-
+﻿
 namespace Examples
 {
     class Program
     {
         static void Main(string[] args)
         {
-            // [core] module examples
+            RunCoreExamples();
+            RunShapesExamples();
+            RunTextureExamples();
+            RunTextExamples();
+            RunModelExamples();
+            RunShaderExamples();
+            RunAudioExamples();
+        }
+
+        static void RunCoreExamples()
+        {
             core_2d_camera_platformer.Main();
             core_2d_camera.Main();
             core_3d_camera_first_person.Main();
@@ -26,10 +35,14 @@ namespace Examples
             core_scissor_test.Main();
             core_storage_values.Main();
             core_vr_simulator.Main();
+            core_window_flags.Main();
             core_window_letterbox.Main();
             core_world_screen.Main();
 
-            // [shapes] module examples
+        }
+
+        static void RunShapesExamples()
+        {
             shapes_basic_shapes.Main();
             shapes_bouncing_ball.Main();
             shapes_collision_area.Main();
@@ -42,11 +55,12 @@ namespace Examples
             shapes_logo_raylib_anim.Main();
             shapes_logo_raylib.Main();
             shapes_rectangle_scaling.Main();
+        }
 
-            // [textures] module examples
+        static void RunTextureExamples()
+        {
             textures_background_scrolling.Main();
             textures_bunnymark.Main();
-            textures_image_9patch.Main();
             textures_image_drawing.Main();
             textures_image_generation.Main();
             textures_image_loading.Main();
@@ -62,8 +76,10 @@ namespace Examples
             textures_sprite_explosion.Main();
             textures_srcrec_dstrec.Main();
             textures_to_image.Main();
+        }
 
-            // [text] module examples
+        static void RunTextExamples()
+        {
             text_font_filters.Main();
             text_font_loading.Main();
             text_font_spritefont.Main();
@@ -72,8 +88,10 @@ namespace Examples
             text_raylib_fonts.Main();
             text_rectangle_bounds.Main();
             text_writing_anim.Main();
+        }
 
-            // [models] module examples
+        static void RunModelExamples()
+        {
             models_animation.Main();
             models_billboard.Main();
             models_box_collisions.Main();
@@ -90,8 +108,10 @@ namespace Examples
             models_skybox.Main();
             models_waving_cubes.Main();
             models_yaw_pitch_roll.Main();
+        }
 
-            // [shaders] module examples
+        static void RunShaderExamples()
+        {
             shaders_basic_lighting.Main();
             shaders_custom_uniform.Main();
             shaders_eratosthenes.Main();
@@ -105,8 +125,10 @@ namespace Examples
             shaders_simple_mask.Main();
             shaders_texture_drawing.Main();
             shaders_texture_waves.Main();
+        }
 
-            // [audio] module examples
+        static void RunAudioExamples()
+        {
             audio_module_playing.Main();
             audio_multichannel_sound.Main();
             audio_music_stream.Main();

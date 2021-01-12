@@ -17,6 +17,7 @@ using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
 using static Raylib_cs.KeyboardKey;
+using static Raylib_cs.MouseButton;
 using static Raylib_cs.PixelFormat;
 
 namespace Examples
@@ -60,15 +61,16 @@ namespace Examples
             // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
 
             Image image = LoadImage("resources/parrots.png");   // Loaded in CPU memory (RAM)
-            ImageFormat(ref image, (int)UNCOMPRESSED_R8G8B8A8);         // Format image to RGBA 32bit (required for texture update) <-- ISSUE
+            ImageFormat(ref image, (int)UNCOMPRESSED_R8G8B8A8); // Format image to RGBA 32bit (required for texture update) <-- ISSUE
             Texture2D texture = LoadTextureFromImage(image);    // Image converted to texture, GPU memory (VRAM)
 
             int currentProcess = (int)ImageProcess.NONE;
             bool textureReload = false;
 
-            Rectangle[] selectRecs = new Rectangle[NUM_PROCESSES];
+            Rectangle[] toggleRecs = new Rectangle[NUM_PROCESSES];
+            int mouseHoverRec = -1;
 
-            for (int i = 0; i < NUM_PROCESSES; i++) selectRecs[i] = new Rectangle(40, 50 + 32 * i, 150, 30);
+            for (int i = 0; i < NUM_PROCESSES; i++) toggleRecs[i] = new Rectangle(40, 50 + 32 * i, 150, 30);
 
             SetTargetFPS(60);
             //---------------------------------------------------------------------------------------
@@ -78,6 +80,24 @@ namespace Examples
             {
                 // Update
                 //----------------------------------------------------------------------------------
+
+                // Mouse toggle group logic
+                for (int i = 0; i < NUM_PROCESSES; i++)
+                {
+                    if (CheckCollisionPointRec(GetMousePosition(), toggleRecs[i]))
+                    {
+                        mouseHoverRec = i;
+
+                        if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
+                        {
+                            currentProcess = i;
+                            textureReload = true;
+                        }
+                        break;
+                    }
+                    else mouseHoverRec = -1;
+                }
+
                 if (IsKeyPressed(KEY_DOWN))
                 {
                     currentProcess++;
@@ -111,9 +131,9 @@ namespace Examples
                         default: break;
                     }
 
-                    IntPtr pixels = GetImageData(image);        // Get pixel data from image (RGBA 32bit)
-                    UpdateTexture(texture, pixels);          // Update texture with new image data
-                    Marshal.FreeHGlobal(pixels);                               // Unload pixels data from RAM
+                    IntPtr pixels = LoadImageColors(image);     // Get pixel data from image (RGBA 32bit)
+                    UpdateTexture(texture, pixels);             // Update texture with new image data
+                    UnloadImageColors(pixels);                  // Unload pixels data from RAM
 
                     textureReload = false;
                 }
@@ -122,7 +142,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 DrawText("IMAGE PROCESSING:", 40, 30, 10, DARKGRAY);
@@ -130,9 +149,9 @@ namespace Examples
                 // Draw rectangles
                 for (int i = 0; i < NUM_PROCESSES; i++)
                 {
-                    DrawRectangleRec(selectRecs[i], (i == currentProcess) ? SKYBLUE : LIGHTGRAY);
-                    DrawRectangleLines((int)selectRecs[i].x, (int)selectRecs[i].y, (int)selectRecs[i].width, (int)selectRecs[i].height, (i == currentProcess) ? BLUE : GRAY);
-                    DrawText(processText[i], (int)(selectRecs[i].x + selectRecs[i].width / 2 - MeasureText(processText[i], 10) / 2), (int)selectRecs[i].y + 11, 10, (i == currentProcess) ? DARKBLUE : DARKGRAY);
+                    DrawRectangleRec(toggleRecs[i], (i == currentProcess) ? SKYBLUE : LIGHTGRAY);
+                    DrawRectangleLines((int)toggleRecs[i].x, (int)toggleRecs[i].y, (int)toggleRecs[i].width, (int)toggleRecs[i].height, (i == currentProcess) ? BLUE : GRAY);
+                    DrawText(processText[i], (int)(toggleRecs[i].x + toggleRecs[i].width / 2 - MeasureText(processText[i], 10) / 2), (int)toggleRecs[i].y + 11, 10, (i == currentProcess) ? DARKBLUE : DARKGRAY);
                 }
 
                 DrawTexture(texture, screenWidth - texture.width - 60, screenHeight / 2 - texture.height / 2, WHITE);

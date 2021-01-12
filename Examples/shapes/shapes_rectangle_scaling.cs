@@ -79,7 +79,7 @@ namespace Examples
 
                 DrawText("Scale rectangle dragging from bottom-right corner!", 10, 10, 20, GRAY);
 
-                DrawRectangleRec(rec, Fade(GREEN, 0.5f));
+                DrawRectangleRec(rec, ColorAlpha(GREEN, 0.5f));
 
                 if (mouseScaleReady)
                 {

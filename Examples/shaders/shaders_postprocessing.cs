@@ -159,7 +159,7 @@ namespace Examples
 
                 EndShaderMode();
 
-                DrawRectangle(0, 9, 580, 30, Fade(LIGHTGRAY, 0.7f));
+                DrawRectangle(0, 9, 580, 30, ColorAlpha(LIGHTGRAY, 0.7f));
 
                 DrawText("(c) Church 3D model by Alberto Cano", screenWidth - 200, screenHeight - 20, 10, GRAY);
 

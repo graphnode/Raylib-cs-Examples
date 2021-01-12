@@ -57,10 +57,8 @@ namespace Examples
             }
 
             float gravity = 3.0f;
-
-            Texture2D smoke = LoadTexture("resources/smoke.png");
-
-            var blending = BlendMode.BLEND_ALPHA;
+            Texture2D smoke = LoadTexture("resources/spark_flame.png");
+            BlendMode blending = BlendMode.BLEND_ALPHA;
 
             SetTargetFPS(60);
             //--------------------------------------------------------------------------------------
@@ -90,12 +88,12 @@ namespace Examples
                 {
                     if (mouseTail[i].active)
                     {
-                        mouseTail[i].position.Y += gravity;
-                        mouseTail[i].alpha -= 0.01f;
+                        mouseTail[i].position.Y += gravity / 2;
+                        mouseTail[i].alpha -= 0.005f;
 
                         if (mouseTail[i].alpha <= 0.0f) mouseTail[i].active = false;
 
-                        mouseTail[i].rotation += 5.0f;
+                        mouseTail[i].rotation += 2.0f;
                     }
                 }
 
@@ -109,7 +107,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(DARKGRAY);
 
                 BeginBlendMode(blending);
@@ -120,7 +117,7 @@ namespace Examples
                     if (mouseTail[i].active) DrawTexturePro(smoke, new Rectangle(0, 0, smoke.width, smoke.height),
                                                            new Rectangle(mouseTail[i].position.X, mouseTail[i].position.Y, smoke.width * mouseTail[i].size, smoke.height * mouseTail[i].size),
                                                            new Vector2(smoke.width * mouseTail[i].size / 2, smoke.height * mouseTail[i].size / 2), mouseTail[i].rotation,
-                                                           Fade(mouseTail[i].color, mouseTail[i].alpha));
+                                                           ColorAlpha(mouseTail[i].color, mouseTail[i].alpha));
                 }
 
                 EndBlendMode();

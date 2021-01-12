@@ -86,7 +86,7 @@ namespace Examples
 
                 EndMode3D();
 
-                DrawRectangle(10, 10, 220, 70, Fade(SKYBLUE, 0.5f));
+                DrawRectangle(10, 10, 220, 70, ColorAlpha(SKYBLUE, 0.5f));
                 DrawRectangleLines(10, 10, 220, 70, BLUE);
 
                 DrawText("First person camera default controls:", 20, 20, 10, BLACK);

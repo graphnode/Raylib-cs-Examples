@@ -28,11 +28,9 @@ namespace Examples
             const int screenHeight = 450;
 
             InitWindow(screenWidth, screenHeight, "raylib [audio] example - music playing (streaming)");
-
             InitAudioDevice();              // Initialize audio device
 
-            var music = LoadMusicStream("resources/guitar_noodling.ogg");
-
+            Music music = LoadMusicStream("resources/country.mp3");
             PlayMusicStream(music);
 
             float timePlayed = 0.0f;
@@ -73,7 +71,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 DrawText("MUSIC SHOULD BE PLAYING!", 255, 150, 20, LIGHTGRAY);

@@ -94,8 +94,8 @@ namespace Examples
 
                 EndMode3D();
 
-                DrawRectangle(30, 400, 310, 30, Fade(SKYBLUE, 0.5f));
-                DrawRectangleLines(30, 400, 310, 30, Fade(DARKBLUE, 0.5f));
+                DrawRectangle(30, 400, 310, 30, ColorAlpha(SKYBLUE, 0.5f));
+                DrawRectangleLines(30, 400, 310, 30, ColorAlpha(DARKBLUE, 0.5f));
                 DrawText("MOUSE LEFT BUTTON to CYCLE PROCEDURAL MODELS", 40, 410, 10, BLUE);
 
                 switch (currentModel)

@@ -28,11 +28,10 @@ namespace Examples
             const int screenHeight = 450;
 
             InitWindow(screenWidth, screenHeight, "raylib [audio] example - sound loading and playing");
-
             InitAudioDevice();      // Initialize audio device
 
-            Sound fxWav = LoadSound("resources/sound.wav");         // Load WAV audio file
-            Sound fxOgg = LoadSound("resources/tanatana.ogg");      // Load OGG audio file
+            Sound fxWav = LoadSound("resources/sound.wav");       // Load WAV audio file
+            Sound fxOgg = LoadSound("resources/target.ogg");      // Load OGG audio file
 
             SetTargetFPS(60);
             //--------------------------------------------------------------------------------------
@@ -44,16 +43,14 @@ namespace Examples
                 //----------------------------------------------------------------------------------
                 if (IsKeyPressed(KEY_SPACE)) PlaySound(fxWav);      // Play WAV sound
                 if (IsKeyPressed(KEY_ENTER)) PlaySound(fxOgg);      // Play OGG sound
-                                                                    //----------------------------------------------------------------------------------
+                //----------------------------------------------------------------------------------
 
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 DrawText("Press SPACE to PLAY the WAV sound!", 200, 180, 20, LIGHTGRAY);
-
                 DrawText("Press ENTER to PLAY the OGG sound!", 200, 220, 20, LIGHTGRAY);
 
                 EndDrawing();

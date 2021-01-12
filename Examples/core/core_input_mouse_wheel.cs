@@ -37,7 +37,7 @@ namespace Examples
             {
                 // Update
                 //----------------------------------------------------------------------------------
-                boxPositionY -= (GetMouseWheelMove() * scrollSpeed);
+                boxPositionY -= (int)(GetMouseWheelMove() * scrollSpeed);
                 //----------------------------------------------------------------------------------
 
                 // Draw

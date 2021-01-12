@@ -55,12 +55,12 @@ namespace Examples
 
                 ClearBackground(RAYWHITE);
 
-                DrawLine(560, 0, 560, GetScreenHeight(), Fade(LIGHTGRAY, 0.6f));
-                DrawRectangle(560, 0, GetScreenWidth() - 500, GetScreenHeight(), Fade(LIGHTGRAY, 0.3f));
+                DrawLine(560, 0, 560, GetScreenHeight(), ColorAlpha(LIGHTGRAY, 0.6f));
+                DrawRectangle(560, 0, GetScreenWidth() - 500, GetScreenHeight(), ColorAlpha(LIGHTGRAY, 0.3f));
 
-                if (drawRect) DrawRectangleRec(rec, Fade(GOLD, 0.6f));
-                if (drawRoundedRect) DrawRectangleRounded(rec, roundness, segments, Fade(MAROON, 0.2f));
-                if (drawRoundedLines) DrawRectangleRoundedLines(rec, roundness, segments, lineThick, Fade(MAROON, 0.4f));
+                if (drawRect) DrawRectangleRec(rec, ColorAlpha(GOLD, 0.6f));
+                if (drawRoundedRect) DrawRectangleRounded(rec, roundness, segments, ColorAlpha(MAROON, 0.2f));
+                if (drawRoundedLines) DrawRectangleRoundedLines(rec, roundness, segments, lineThick, ColorAlpha(MAROON, 0.4f));
 
                 // Draw GUI controls
                 //------------------------------------------------------------------------------

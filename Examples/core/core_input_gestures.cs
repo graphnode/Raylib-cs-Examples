@@ -95,12 +95,12 @@ namespace Examples
                 DrawRectangleRec(touchArea, GRAY);
                 DrawRectangle(225, 15, screenWidth - 240, screenHeight - 30, RAYWHITE);
 
-                DrawText("GESTURES TEST AREA", screenWidth - 270, screenHeight - 40, 20, Fade(GRAY, 0.5f));
+                DrawText("GESTURES TEST AREA", screenWidth - 270, screenHeight - 40, 20, ColorAlpha(GRAY, 0.5f));
 
                 for (int i = 0; i < gesturesCount; i++)
                 {
-                    if (i % 2 == 0) DrawRectangle(10, 30 + 20 * i, 200, 20, Fade(LIGHTGRAY, 0.5f));
-                    else DrawRectangle(10, 30 + 20 * i, 200, 20, Fade(LIGHTGRAY, 0.3f));
+                    if (i % 2 == 0) DrawRectangle(10, 30 + 20 * i, 200, 20, ColorAlpha(LIGHTGRAY, 0.5f));
+                    else DrawRectangle(10, 30 + 20 * i, 200, 20, ColorAlpha(LIGHTGRAY, 0.3f));
 
                     if (i < gesturesCount - 1) DrawText(gestureStrings[i], 35, 36 + 20 * i, 10, DARKGRAY);
                     else DrawText(gestureStrings[i], 35, 36 + 20 * i, 10, MAROON);

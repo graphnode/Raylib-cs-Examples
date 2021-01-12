@@ -157,15 +157,15 @@ namespace Examples
                 DrawAngleGauge(texAngleGauge, 190, 70, pitch, "pitch", GREEN);
                 DrawAngleGauge(texAngleGauge, 300, 70, yaw, "yaw", SKYBLUE);
 
-                DrawRectangle(30, 360, 260, 70, Fade(SKYBLUE, 0.5f));
-                DrawRectangleLines(30, 360, 260, 70, Fade(DARKBLUE, 0.5f));
+                DrawRectangle(30, 360, 260, 70, ColorAlpha(SKYBLUE, 0.5f));
+                DrawRectangleLines(30, 360, 260, 70, ColorAlpha(DARKBLUE, 0.5f));
                 DrawText("Pitch controlled with: KEY_UP / KEY_DOWN", 40, 370, 10, DARKGRAY);
                 DrawText("Roll controlled with: KEY_LEFT / KEY_RIGHT", 40, 390, 10, DARKGRAY);
                 DrawText("Yaw controlled with: KEY_A / KEY_S", 40, 410, 10, DARKGRAY);
 
                 // Draw framebuffer texture
                 DrawTextureRec(framebuffer.texture, new Rectangle(0, 0, framebuffer.texture.width, -framebuffer.texture.height),
-                               new Vector2(screenWidth - framebuffer.texture.width - 20, 20), Fade(WHITE, 0.8f));
+                               new Vector2(screenWidth - framebuffer.texture.width - 20, 20), ColorAlpha(WHITE, 0.8f));
 
                 DrawRectangleLines(screenWidth - framebuffer.texture.width - 20, 20, framebuffer.texture.width, framebuffer.texture.height, DARKGRAY);
 

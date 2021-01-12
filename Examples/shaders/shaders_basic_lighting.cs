@@ -121,14 +121,14 @@ namespace Examples
 
                 // Make the lights do differing orbits
                 angle -= 0.02f;
-                lights[0].position.X = (float)Math.Cos(angle) * 4.0f;
-                lights[0].position.Z = (float)Math.Sin(angle) * 4.0f;
-                lights[1].position.X = (float)Math.Cos(-angle * 0.6f) * 4.0f;
-                lights[1].position.Z = (float)Math.Sin(-angle * 0.6f) * 4.0f;
-                lights[2].position.Y = (float)Math.Cos(angle * 0.2f) * 4.0f;
-                lights[2].position.Z = (float)Math.Sin(angle * 0.2f) * 4.0f;
-                lights[3].position.Y = (float)Math.Cos(-angle * 0.35f) * 4.0f;
-                lights[3].position.Z = (float)Math.Sin(-angle * 0.35f) * 4.0f;
+                lights[0].position.X = MathF.Cos(angle) * 4.0f;
+                lights[0].position.Z = MathF.Sin(angle) * 4.0f;
+                lights[1].position.X = MathF.Cos(-angle * 0.6f) * 4.0f;
+                lights[1].position.Z = MathF.Sin(-angle * 0.6f) * 4.0f;
+                lights[2].position.Y = MathF.Cos(angle * 0.2f) * 4.0f;
+                lights[2].position.Z = MathF.Sin(angle * 0.2f) * 4.0f;
+                lights[3].position.Y = MathF.Cos(-angle * 0.35f) * 4.0f;
+                lights[3].position.Z = MathF.Sin(-angle * 0.35f) * 4.0f;
 
                 UpdateLightValues(shader, lights[0]);
                 UpdateLightValues(shader, lights[1]);

@@ -70,7 +70,7 @@ namespace Examples
 
                 EndMode3D();
 
-                DrawRectangle(10, 10, 320, 133, Fade(SKYBLUE, 0.5f));
+                DrawRectangle(10, 10, 320, 133, ColorAlpha(SKYBLUE, 0.5f));
                 DrawRectangleLines(10, 10, 320, 133, BLUE);
 
                 DrawText("Free camera default controls:", 20, 20, 10, BLACK);
