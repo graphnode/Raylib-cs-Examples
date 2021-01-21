@@ -38,7 +38,6 @@ namespace Examples
             core_window_flags.Main();
             core_window_letterbox.Main();
             core_world_screen.Main();
-
         }
 
         static void RunShapesExamples()
@@ -60,7 +59,9 @@ namespace Examples
         static void RunTextureExamples()
         {
             textures_background_scrolling.Main();
+            textures_blend_modes.Main();
             textures_bunnymark.Main();
+            textures_draw_tiled.Main();
             textures_image_drawing.Main();
             textures_image_generation.Main();
             textures_image_loading.Main();
@@ -116,13 +117,17 @@ namespace Examples
             shaders_custom_uniform.Main();
             shaders_eratosthenes.Main();
             shaders_fog.Main();
+            shaders_hot_reloading.Main();
             shaders_julia_set.Main();
             shaders_model_shader.Main();
+            shaders_multi_sample2d.Main();
             shaders_palette_switch.Main();
             shaders_postprocessing.Main();
             shaders_raymarching.Main();
+            shaders_rlgl_mesh_instanced.Main();
             shaders_shapes_textures.Main();
             shaders_simple_mask.Main();
+            shaders_spotlight.Main();
             shaders_texture_drawing.Main();
             shaders_texture_waves.Main();
         }
