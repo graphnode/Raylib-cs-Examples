@@ -58,19 +58,40 @@ namespace Examples
                     if (currentGesture != lastGesture)
                     {
                         // Store gesture string
-                        switch (currentGesture)
+                        switch ((GestureType)currentGesture)
                         {
-                            case (int)GESTURE_TAP: gestureStrings[gesturesCount] = "GESTURE TAP"; break;
-                            case (int)GESTURE_DOUBLETAP: gestureStrings[gesturesCount] = "GESTURE DOUBLETAP"; break;
-                            case (int)GESTURE_HOLD: gestureStrings[gesturesCount] = "GESTURE HOLD"; break;
-                            case (int)GESTURE_DRAG: gestureStrings[gesturesCount] = "GESTURE DRAG"; break;
-                            case (int)GESTURE_SWIPE_RIGHT: gestureStrings[gesturesCount] = "GESTURE SWIPE RIGHT"; break;
-                            case (int)GESTURE_SWIPE_LEFT: gestureStrings[gesturesCount] = "GESTURE SWIPE LEFT"; break;
-                            case (int)GESTURE_SWIPE_UP: gestureStrings[gesturesCount] = "GESTURE SWIPE UP"; break;
-                            case (int)GESTURE_SWIPE_DOWN: gestureStrings[gesturesCount] = "GESTURE SWIPE DOWN"; break;
-                            case (int)GESTURE_PINCH_IN: gestureStrings[gesturesCount] = "GESTURE PINCH IN"; break;
-                            case (int)GESTURE_PINCH_OUT: gestureStrings[gesturesCount] = "GESTURE PINCH OUT"; break;
-                            default: break;
+                            case GESTURE_TAP:
+                                gestureStrings[gesturesCount] = "GESTURE TAP";
+                                break;
+                            case GESTURE_DOUBLETAP:
+                                gestureStrings[gesturesCount] = "GESTURE DOUBLETAP";
+                                break;
+                            case GESTURE_HOLD:
+                                gestureStrings[gesturesCount] = "GESTURE HOLD";
+                                break;
+                            case GESTURE_DRAG:
+                                gestureStrings[gesturesCount] = "GESTURE DRAG";
+                                break;
+                            case GESTURE_SWIPE_RIGHT:
+                                gestureStrings[gesturesCount] = "GESTURE SWIPE RIGHT";
+                                break;
+                            case GESTURE_SWIPE_LEFT:
+                                gestureStrings[gesturesCount] = "GESTURE SWIPE LEFT";
+                                break;
+                            case GESTURE_SWIPE_UP:
+                                gestureStrings[gesturesCount] = "GESTURE SWIPE UP";
+                                break;
+                            case GESTURE_SWIPE_DOWN:
+                                gestureStrings[gesturesCount] = "GESTURE SWIPE DOWN";
+                                break;
+                            case GESTURE_PINCH_IN:
+                                gestureStrings[gesturesCount] = "GESTURE PINCH IN";
+                                break;
+                            case GESTURE_PINCH_OUT:
+                                gestureStrings[gesturesCount] = "GESTURE PINCH OUT";
+                                break;
+                            default:
+                                break;
                         }
 
                         gesturesCount++;

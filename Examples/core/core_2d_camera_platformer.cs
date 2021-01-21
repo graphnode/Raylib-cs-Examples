@@ -48,7 +48,7 @@ namespace Examples
             }
         }
 
-        delegate void CameraUpdaterCallback(ref Camera2D camera, ref Player player, EnvItem[] envItems, int envItemsLength, float delta, int width, int height);
+        delegate void CameraUpdaterCallback(ref Camera2D camera, ref Player player, EnvItem[] envItems, float delta, int width, int height);
 
         public static int Main()
         {
@@ -71,7 +71,6 @@ namespace Examples
                 new EnvItem(new Rectangle(250, 300, 100, 10), 1, GRAY),
                 new EnvItem(new Rectangle(650, 300, 100, 10), 1, GRAY)
             };
-            int envItemsLength = envItems.Length;
 
             Camera2D camera = new Camera2D();
             camera.target = player.position;
@@ -79,26 +78,25 @@ namespace Examples
             camera.rotation = 0.0f;
             camera.zoom = 1.0f;
 
-            // Store pointers to the multiple update camera functions
-
+            // Store callbacks to the multiple update camera functions
             CameraUpdaterCallback[] cameraUpdaters = new CameraUpdaterCallback[] {
-            UpdateCameraCenter,
-            UpdateCameraCenterInsideMap,
-            UpdateCameraCenterSmoothFollow,
-            UpdateCameraEvenOutOnLanding,
-            UpdateCameraPlayerBoundsPush
-        };
+                UpdateCameraCenter,
+                UpdateCameraCenterInsideMap,
+                UpdateCameraCenterSmoothFollow,
+                UpdateCameraEvenOutOnLanding,
+                UpdateCameraPlayerBoundsPush
+            };
 
             int cameraOption = 0;
             int cameraUpdatersLength = cameraUpdaters.Length;
 
             string[] cameraDescriptions = new string[]{
-            "Follow player center",
-            "Follow player center, but clamp to map edges",
-            "Follow player center; smoothed",
-            "Follow player center horizontally; updateplayer center vertically after landing",
-            "Player push camera on getting too close to screen edge"
-        };
+                "Follow player center",
+                "Follow player center, but clamp to map edges",
+                "Follow player center; smoothed",
+                "Follow player center horizontally; updateplayer center vertically after landing",
+                "Player push camera on getting too close to screen edge"
+            };
 
             SetTargetFPS(60);
             //--------------------------------------------------------------------------------------
@@ -110,7 +108,7 @@ namespace Examples
                 //----------------------------------------------------------------------------------
                 float deltaTime = GetFrameTime();
 
-                UpdatePlayer(ref player, envItems, envItemsLength, deltaTime);
+                UpdatePlayer(ref player, envItems, deltaTime);
 
                 camera.zoom += ((float)GetMouseWheelMove() * 0.05f);
 
@@ -126,18 +124,18 @@ namespace Examples
                 if (IsKeyPressed(KEY_C)) cameraOption = (cameraOption + 1) % cameraUpdatersLength;
 
                 // Call update camera function by its pointer
-                cameraUpdaters[cameraOption](ref camera, ref player, envItems, envItemsLength, deltaTime, screenWidth, screenHeight);
+                cameraUpdaters[cameraOption](ref camera, ref player, envItems, deltaTime, screenWidth, screenHeight);
                 //----------------------------------------------------------------------------------
 
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(LIGHTGRAY);
 
                 BeginMode2D(camera);
 
-                for (int i = 0; i < envItemsLength; i++) DrawRectangleRec(envItems[i].rect, envItems[i].color);
+                for (int i = 0; i < envItems.Length; i++)
+                    DrawRectangleRec(envItems[i].rect, envItems[i].color);
 
                 Rectangle playerRect = new Rectangle(player.position.X - 20, player.position.Y - 40, 40, 40);
                 DrawRectangleRec(playerRect, RED);
@@ -164,7 +162,7 @@ namespace Examples
             return 0;
         }
 
-        static void UpdatePlayer(ref Player player, EnvItem[] envItems, int envItemsLength, float delta)
+        static void UpdatePlayer(ref Player player, EnvItem[] envItems, float delta)
         {
             if (IsKeyDown(KEY_LEFT)) player.position.X -= PLAYER_HOR_SPD * delta;
             if (IsKeyDown(KEY_RIGHT)) player.position.X += PLAYER_HOR_SPD * delta;
@@ -175,7 +173,7 @@ namespace Examples
             }
 
             int hitObstacle = 0;
-            for (int i = 0; i < envItemsLength; i++)
+            for (int i = 0; i < envItems.Length; i++)
             {
                 EnvItem ei = envItems[i];
                 Vector2 p = player.position;
@@ -200,19 +198,19 @@ namespace Examples
             else player.canJump = true;
         }
 
-        static void UpdateCameraCenter(ref Camera2D camera, ref Player player, EnvItem[] envItems, int envItemsLength, float delta, int width, int height)
+        static void UpdateCameraCenter(ref Camera2D camera, ref Player player, EnvItem[] envItems, float delta, int width, int height)
         {
             camera.offset = new Vector2(width / 2, height / 2);
             camera.target = player.position;
         }
 
-        static void UpdateCameraCenterInsideMap(ref Camera2D camera, ref Player player, EnvItem[] envItems, int envItemsLength, float delta, int width, int height)
+        static void UpdateCameraCenterInsideMap(ref Camera2D camera, ref Player player, EnvItem[] envItems, float delta, int width, int height)
         {
             camera.target = player.position;
             camera.offset = new Vector2(width / 2, height / 2);
             float minX = 1000, minY = 1000, maxX = -1000, maxY = -1000;
 
-            for (int i = 0; i < envItemsLength; i++)
+            for (int i = 0; i < envItems.Length; i++)
             {
                 EnvItem ei = envItems[i];
                 minX = Math.Min(ei.rect.x, minX);
@@ -230,7 +228,7 @@ namespace Examples
             if (min.Y > 0) camera.offset.Y = height / 2 - min.Y;
         }
 
-        static void UpdateCameraCenterSmoothFollow(ref Camera2D camera, ref Player player, EnvItem[] envItems, int envItemsLength, float delta, int width, int height)
+        static void UpdateCameraCenterSmoothFollow(ref Camera2D camera, ref Player player, EnvItem[] envItems, float delta, int width, int height)
         {
             const float minSpeed = 30;
             const float minEffectLength = 10;
@@ -247,7 +245,7 @@ namespace Examples
             }
         }
 
-        static void UpdateCameraEvenOutOnLanding(ref Camera2D camera, ref Player player, EnvItem[] envItems, int envItemsLength, float delta, int width, int height)
+        static void UpdateCameraEvenOutOnLanding(ref Camera2D camera, ref Player player, EnvItem[] envItems, float delta, int width, int height)
         {
             float evenOutSpeed = 700;
             int eveningOut = 0;
@@ -289,7 +287,7 @@ namespace Examples
             }
         }
 
-        static void UpdateCameraPlayerBoundsPush(ref Camera2D camera, ref Player player, EnvItem[] envItems, int envItemsLength, float delta, int width, int height)
+        static void UpdateCameraPlayerBoundsPush(ref Camera2D camera, ref Player player, EnvItem[] envItems, float delta, int width, int height)
         {
             Vector2 bbox = new Vector2(0.2f, 0.2f);
 

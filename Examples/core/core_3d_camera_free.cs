@@ -36,17 +36,17 @@ namespace Examples
             camera.target = new Vector3(0.0f, 0.0f, 0.0f);      // Camera3D looking at point
             camera.up = new Vector3(0.0f, 1.0f, 0.0f);          // Camera3D up vector (rotation towards target)
             camera.fovy = 45.0f;                                // Camera3D field-of-view Y
-            camera.type = (int)CAMERA_PERSPECTIVE;                   // Camera3D mode type
+            camera.type = CAMERA_PERSPECTIVE;                   // Camera3D mode type
 
             Vector3 cubePosition = new Vector3(0.0f, 0.0f, 0.0f);
 
             SetCameraMode(camera, CAMERA_FREE); // Set a free camera mode
 
             SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
-                                                //--------------------------------------------------------------------------------------
+            //--------------------------------------------------------------------------------------
 
             // Main game loop
-            while (!WindowShouldClose())        // Detect window close button or ESC key
+            while (!WindowShouldClose()) // Detect window close button or ESC key
             {
                 // Update
                 //----------------------------------------------------------------------------------
@@ -58,7 +58,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 BeginMode3D(camera);

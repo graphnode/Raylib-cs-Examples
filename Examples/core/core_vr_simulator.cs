@@ -72,15 +72,15 @@ namespace Examples
             camera.position = new Vector3(5.0f, 2.0f, 5.0f);    // Camera3D position
             camera.target = new Vector3(0.0f, 2.0f, 0.0f);      // Camera3D looking at point
             camera.up = new Vector3(0.0f, 1.0f, 0.0f);          // Camera3D up vector (rotation towards target)
-            camera.fovy = 60.0f;                                  // Camera3D field-of-view Y
-            camera.type = (int)CAMERA_PERSPECTIVE;                // Camera3D type
+            camera.fovy = 60.0f;                                // Camera3D field-of-view Y
+            camera.type = CAMERA_PERSPECTIVE;                   // Camera3D type
 
             Vector3 cubePosition = new Vector3(0.0f, 0.0f, 0.0f);
 
             SetCameraMode(camera, CAMERA_FIRST_PERSON);         // Set first person camera mode
 
             SetTargetFPS(90);                   // Set our game to run at 90 frames-per-second
-                                                //--------------------------------------------------------------------------------------
+            //--------------------------------------------------------------------------------------
 
             // Main game loop
             while (!WindowShouldClose())        // Detect window close button or ESC key
@@ -89,17 +89,18 @@ namespace Examples
                 //----------------------------------------------------------------------------------
                 UpdateCamera(ref camera);          // Update camera (simulator mode)
 
-                if (IsKeyPressed(KEY_SPACE)) ToggleVrMode();    // Toggle VR mode
-                                                                //----------------------------------------------------------------------------------
+                if (IsKeyPressed(KEY_SPACE))
+                {
+                    ToggleVrMode();
+                }
+                //----------------------------------------------------------------------------------
 
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 BeginVrDrawing();
-
                 BeginMode3D(camera);
 
                 DrawCube(cubePosition, 2.0f, 2.0f, 2.0f, RED);
@@ -108,7 +109,6 @@ namespace Examples
                 DrawGrid(40, 1.0f);
 
                 EndMode3D();
-
                 EndVrDrawing();
 
                 DrawFPS(10, 10);

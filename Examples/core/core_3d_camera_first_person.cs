@@ -37,7 +37,7 @@ namespace Examples
             camera.target = new Vector3(0.0f, 1.8f, 0.0f);
             camera.up = new Vector3(0.0f, 1.0f, 0.0f);
             camera.fovy = 60.0f;
-            camera.type = (int)CAMERA_PERSPECTIVE;
+            camera.type = CAMERA_PERSPECTIVE;
 
             // Generates some random columns
             float[] heights = new float[MAX_COLUMNS];
@@ -54,7 +54,7 @@ namespace Examples
             SetCameraMode(camera, CAMERA_FIRST_PERSON); // Set a first person camera mode
 
             SetTargetFPS(60);                           // Set our game to run at 60 frames-per-second
-                                                        //--------------------------------------------------------------------------------------
+            //--------------------------------------------------------------------------------------
 
             // Main game loop
             while (!WindowShouldClose())                // Detect window close button or ESC key
@@ -62,12 +62,11 @@ namespace Examples
                 // Update
                 //----------------------------------------------------------------------------------
                 UpdateCamera(ref camera);                  // Update camera
-                                                           //----------------------------------------------------------------------------------
+                //----------------------------------------------------------------------------------
 
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 BeginMode3D(camera);
