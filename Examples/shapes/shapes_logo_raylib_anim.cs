@@ -9,7 +9,6 @@
 *
 ********************************************************************************************/
 
-using System;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
@@ -53,41 +52,51 @@ namespace Examples
             {
                 // Update
                 //----------------------------------------------------------------------------------
-                if (state == 0)                 // State 0: Small box blinking
+                // State 0: Small box blinking
+                if (state == 0)
                 {
                     framesCounter++;
 
+                    // Reset counter... will be used later...
                     if (framesCounter == 120)
                     {
                         state = 1;
-                        framesCounter = 0;      // Reset counter... will be used later...
+                        framesCounter = 0;
                     }
                 }
-                else if (state == 1)            // State 1: Top and left bars growing
+                // State 1: Top and left bars growing
+                else if (state == 1)
                 {
                     topSideRecWidth += 4;
                     leftSideRecHeight += 4;
 
-                    if (topSideRecWidth == 256) state = 2;
+                    if (topSideRecWidth == 256)
+                    {
+                        state = 2;
+                    }
                 }
-                else if (state == 2)            // State 2: Bottom and right bars growing
+                // State 2: Bottom and right bars growing
+                else if (state == 2)
                 {
                     bottomSideRecWidth += 4;
                     rightSideRecHeight += 4;
 
                     if (bottomSideRecWidth == 256) state = 3;
                 }
-                else if (state == 3)            // State 3: Letters appearing (one by one)
+                // State 3: Letters appearing (one by one)
+                else if (state == 3)
                 {
                     framesCounter++;
 
-                    if (framesCounter / 12 != 0)       // Every 12 frames, one more letter!
+                    // Every 12 frames, one more letter!
+                    if (framesCounter / 12 != 0)
                     {
                         lettersCount++;
                         framesCounter = 0;
                     }
 
-                    if (lettersCount >= 10)     // When all letters have appeared, just fade out everything
+                    // When all letters have appeared, just fade out everything
+                    if (lettersCount >= 10)
                     {
                         alpha -= 0.02f;
 
@@ -98,7 +107,8 @@ namespace Examples
                         }
                     }
                 }
-                else if (state == 4)            // State 4: Reset and Replay
+                // State 4: Reset and Replay
+                else if (state == 4)
                 {
                     if (IsKeyPressed(KEY_R))
                     {
@@ -111,8 +121,9 @@ namespace Examples
                         bottomSideRecWidth = 16;
                         rightSideRecHeight = 16;
 
+                        // Return to State 0
                         alpha = 1.0f;
-                        state = 0;          // Return to State 0
+                        state = 0;
                     }
                 }
                 //----------------------------------------------------------------------------------
@@ -120,12 +131,14 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 if (state == 0)
                 {
-                    if ((framesCounter / 15) % 2 != 0) DrawRectangle(logoPositionX, logoPositionY, 16, 16, outline);
+                    if ((framesCounter / 15) % 2 != 0)
+                    {
+                        DrawRectangle(logoPositionX, logoPositionY, 16, 16, outline);
+                    }
                 }
                 else if (state == 1)
                 {

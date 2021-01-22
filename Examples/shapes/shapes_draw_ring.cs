@@ -62,9 +62,18 @@ namespace Examples
                 DrawLine(500, 0, 500, GetScreenHeight(), ColorAlpha(LIGHTGRAY, 0.6f));
                 DrawRectangle(500, 0, GetScreenWidth() - 500, GetScreenHeight(), ColorAlpha(LIGHTGRAY, 0.3f));
 
-                if (drawRing) DrawRing(center, innerRadius, outerRadius, startAngle, endAngle, segments, ColorAlpha(MAROON, 0.3f));
-                if (drawRingLines) DrawRingLines(center, innerRadius, outerRadius, startAngle, endAngle, segments, ColorAlpha(BLACK, 0.4f));
-                if (drawCircleLines) DrawCircleSectorLines(center, outerRadius, startAngle, endAngle, segments, ColorAlpha(BLACK, 0.4f));
+                if (drawRing)
+                {
+                    DrawRing(center, innerRadius, outerRadius, startAngle, endAngle, segments, ColorAlpha(MAROON, 0.3f));
+                }
+                if (drawRingLines)
+                {
+                    DrawRingLines(center, innerRadius, outerRadius, startAngle, endAngle, segments, ColorAlpha(BLACK, 0.4f));
+                }
+                if (drawCircleLines)
+                {
+                    DrawCircleSectorLines(center, outerRadius, startAngle, endAngle, segments, ColorAlpha(BLACK, 0.4f));
+                }
 
                 // Draw GUI controls
                 //------------------------------------------------------------------------------
@@ -81,8 +90,7 @@ namespace Examples
                 drawCircleLines = GuiCheckBox(new Rectangle( 600, 380, 20, 20 ), "Draw CircleLines", drawCircleLines);*/
                 //------------------------------------------------------------------------------
 
-                DrawText(string.Format("MODE: {0}", (segments >= 4) ? "MANUAL" : "AUTO"), 600, 270, 10, (segments >= 4) ? MAROON : DARKGRAY);
-
+                DrawText($"MODE: {((segments >= 4) ? "MANUAL" : "AUTO")}", 600, 270, 10, (segments >= 4) ? MAROON : DARKGRAY);
                 DrawFPS(10, 10);
 
                 EndDrawing();

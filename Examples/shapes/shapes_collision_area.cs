@@ -33,7 +33,6 @@ namespace Examples
 
             // Box B: Mouse moved box
             Rectangle boxB = new Rectangle(GetScreenWidth() / 2 - 30, GetScreenHeight() / 2 - 30, 60, 60);
-
             Rectangle boxCollision = new Rectangle(); // Collision rectangle
 
             int screenUpperLimit = 40;      // Top menu limits
@@ -42,7 +41,7 @@ namespace Examples
             bool collision = false;         // Collision detection
 
             SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
-                                            //----------------------------------------------------------
+            //----------------------------------------------------------
 
             // Main game loop
             while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -50,36 +49,59 @@ namespace Examples
                 // Update
                 //-----------------------------------------------------
                 // Move box if not paused
-                if (!pause) boxA.x += boxASpeedX;
+                if (!pause)
+                {
+                    boxA.x += boxASpeedX;
+                }
 
                 // Bounce box on x screen limits
-                if (((boxA.x + boxA.width) >= GetScreenWidth()) || (boxA.x <= 0)) boxASpeedX *= -1;
+                if (((boxA.x + boxA.width) >= GetScreenWidth()) || (boxA.x <= 0))
+                {
+                    boxASpeedX *= -1;
+                }
 
                 // Update player-controlled-box (box02)
                 boxB.x = GetMouseX() - boxB.width / 2;
                 boxB.y = GetMouseY() - boxB.height / 2;
 
                 // Make sure Box B does not go out of move area limits
-                if ((boxB.x + boxB.width) >= GetScreenWidth()) boxB.x = GetScreenWidth() - boxB.width;
-                else if (boxB.x <= 0) boxB.x = 0;
+                if ((boxB.x + boxB.width) >= GetScreenWidth())
+                {
+                    boxB.x = GetScreenWidth() - boxB.width;
+                }
+                else if (boxB.x <= 0)
+                {
+                    boxB.x = 0;
+                }
 
-                if ((boxB.y + boxB.height) >= GetScreenHeight()) boxB.y = GetScreenHeight() - boxB.height;
-                else if (boxB.y <= screenUpperLimit) boxB.y = screenUpperLimit;
+                if ((boxB.y + boxB.height) >= GetScreenHeight())
+                {
+                    boxB.y = GetScreenHeight() - boxB.height;
+                }
+                else if (boxB.y <= screenUpperLimit)
+                {
+                    boxB.y = screenUpperLimit;
+                }
 
                 // Check boxes collision
                 collision = CheckCollisionRecs(boxA, boxB);
 
                 // Get collision rectangle (only on collision)
-                if (collision) boxCollision = GetCollisionRec(boxA, boxB);
+                if (collision)
+                {
+                    boxCollision = GetCollisionRec(boxA, boxB);
+                }
 
                 // Pause Box A movement
-                if (IsKeyPressed(KEY_SPACE)) pause = !pause;
+                if (IsKeyPressed(KEY_SPACE))
+                {
+                    pause = !pause;
+                }
                 //-----------------------------------------------------
 
                 // Draw
                 //-----------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 DrawRectangle(0, 0, screenWidth, screenUpperLimit, collision ? RED : BLACK);

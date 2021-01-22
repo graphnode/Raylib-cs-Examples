@@ -41,7 +41,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 DrawText("some basic shapes available on raylib", 20, 20, 20, DARKGRAY);

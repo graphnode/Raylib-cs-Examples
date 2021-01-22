@@ -17,7 +17,7 @@ using static Raylib_cs.Color;
 
 namespace Examples
 {
-    public class shapes_draw_rectangle_rounder
+    public class shapes_draw_rectangle_rounded
     {
         public static int Main()
         {
@@ -52,7 +52,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 DrawLine(560, 0, 560, GetScreenHeight(), ColorAlpha(LIGHTGRAY, 0.6f));
@@ -75,8 +74,7 @@ namespace Examples
                 drawRect = GuiCheckBox(new Rectangle( 640, 380, 20, 20), "DrawRect", drawRect);*/
                 //------------------------------------------------------------------------------
 
-                DrawText(string.Format("MODE: {0}", (segments >= 4) ? "MANUAL" : "AUTO"), 640, 280, 10, (segments >= 4) ? MAROON : DARKGRAY);
-
+                DrawText($"MODE: {((segments >= 4) ? "MANUAL" : "AUTO")}", 640, 280, 10, (segments >= 4) ? MAROON : DARKGRAY);
                 DrawFPS(10, 10);
 
                 EndDrawing();
@@ -90,7 +88,5 @@ namespace Examples
 
             return 0;
         }
-
     }
-
 }

@@ -29,7 +29,8 @@ namespace Examples
         public const int MAX_RECS_X = 800 / RECS_WIDTH;
         public const int MAX_RECS_Y = 450 / RECS_HEIGHT;
 
-        public const int PLAY_TIME_IN_FRAMES = 240;                 // At 60 fps = 4 seconds
+        // At 60 fps = 4 seconds
+        public const int PLAY_TIME_IN_FRAMES = 240;
 
         public static int Main()
         {
@@ -74,11 +75,20 @@ namespace Examples
                         recs[i].height = EaseCircOut(framesCounter, RECS_HEIGHT, -RECS_HEIGHT, PLAY_TIME_IN_FRAMES);
                         recs[i].width = EaseCircOut(framesCounter, RECS_WIDTH, -RECS_WIDTH, PLAY_TIME_IN_FRAMES);
 
-                        if (recs[i].height < 0) recs[i].height = 0;
-                        if (recs[i].width < 0) recs[i].width = 0;
+                        if (recs[i].height < 0)
+                        {
+                            recs[i].height = 0;
+                        }
+                        if (recs[i].width < 0)
+                        {
+                            recs[i].width = 0;
+                        }
 
-                        if ((recs[i].height == 0) && (recs[i].width == 0)) state = 1;   // Finish playing
-
+                        // Finish playing
+                        if ((recs[i].height == 0) && (recs[i].width == 0))
+                        {
+                            state = 1;
+                        }
                         rotation = EaseLinearIn(framesCounter, 0.0f, 360.0f, PLAY_TIME_IN_FRAMES);
                     }
                 }
@@ -100,7 +110,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 if (state == 0)
@@ -110,7 +119,10 @@ namespace Examples
                         DrawRectanglePro(recs[i], new Vector2(recs[i].width / 2, recs[i].height / 2), rotation, RED);
                     }
                 }
-                else if (state == 1) DrawText("PRESS [SPACE] TO PLAY AGAIN!", 240, 200, 20, GRAY);
+                else if (state == 1)
+                {
+                    DrawText("PRESS [SPACE] TO PLAY AGAIN!", 240, 200, 20, GRAY);
+                }
 
                 EndDrawing();
                 //----------------------------------------------------------------------------------

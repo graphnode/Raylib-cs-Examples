@@ -36,14 +36,17 @@ namespace Examples
             int framesCounter = 0;
 
             SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
-                                            //----------------------------------------------------------
+            //----------------------------------------------------------
 
             // Main game loop
             while (!WindowShouldClose())    // Detect window close button or ESC key
             {
                 // Update
                 //-----------------------------------------------------
-                if (IsKeyPressed(KEY_SPACE)) pause = !pause;
+                if (IsKeyPressed(KEY_SPACE))
+                {
+                    pause = !pause;
+                }
 
                 if (!pause)
                 {
@@ -51,24 +54,34 @@ namespace Examples
                     ballPosition.Y += ballSpeed.Y;
 
                     // Check walls collision for bouncing
-                    if ((ballPosition.X >= (GetScreenWidth() - ballRadius)) || (ballPosition.X <= ballRadius)) ballSpeed.X *= -1.0f;
-                    if ((ballPosition.Y >= (GetScreenHeight() - ballRadius)) || (ballPosition.Y <= ballRadius)) ballSpeed.Y *= -1.0f;
+                    if ((ballPosition.X >= (GetScreenWidth() - ballRadius)) || (ballPosition.X <= ballRadius))
+                    {
+                        ballSpeed.X *= -1.0f;
+                    }
+                    if ((ballPosition.Y >= (GetScreenHeight() - ballRadius)) || (ballPosition.Y <= ballRadius))
+                    {
+                        ballSpeed.Y *= -1.0f;
+                    }
                 }
-                else framesCounter++;
+                else
+                {
+                    framesCounter += 1;
+                }
                 //-----------------------------------------------------
 
                 // Draw
                 //-----------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 DrawCircleV(ballPosition, ballRadius, MAROON);
                 DrawText("PRESS SPACE to PAUSE BALL MOVEMENT", 10, GetScreenHeight() - 25, 20, LIGHTGRAY);
 
                 // On pause, we draw a blinking message
-                if (pause && ((framesCounter / 30) % 2) == 0) DrawText("PAUSED", 350, 200, 30, GRAY);
-
+                if (pause && ((framesCounter / 30) % 2) == 0)
+                {
+                    DrawText("PAUSED", 350, 200, 30, GRAY);
+                }
                 DrawFPS(10, 10);
 
                 EndDrawing();

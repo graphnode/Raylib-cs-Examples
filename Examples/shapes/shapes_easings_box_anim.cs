@@ -47,71 +47,67 @@ namespace Examples
                 //----------------------------------------------------------------------------------
                 switch (state)
                 {
-                    case 0:     // Move box down to center of screen
+                    // Move box down to center of screen
+                    case 0:
+                        framesCounter += 1;
+
+                        // NOTE: Remember that 3rd parameter of easing function refers to
+                        // desired value variation, do not confuse it with expected final value!
+                        rec.y = EaseElasticOut(framesCounter, -100, GetScreenHeight() / 2 + 100, 120);
+
+                        if (framesCounter >= 120)
                         {
-                            framesCounter++;
-
-                            // NOTE: Remember that 3rd parameter of easing function refers to
-                            // desired value variation, do not confuse it with expected final value!
-                            rec.y = EaseElasticOut(framesCounter, -100, GetScreenHeight() / 2 + 100, 120);
-
-                            if (framesCounter >= 120)
-                            {
-                                framesCounter = 0;
-                                state = 1;
-                            }
+                            framesCounter = 0;
+                            state = 1;
                         }
                         break;
-                    case 1:     // Scale box to an horizontal bar
-                        {
-                            framesCounter++;
-                            rec.height = EaseBounceOut(framesCounter, 100, -90, 120);
-                            rec.width = EaseBounceOut(framesCounter, 100, GetScreenWidth(), 120);
+                    // Scale box to an horizontal bar
+                    case 1:
+                        framesCounter += 1;
+                        rec.height = EaseBounceOut(framesCounter, 100, -90, 120);
+                        rec.width = EaseBounceOut(framesCounter, 100, GetScreenWidth(), 120);
 
-                            if (framesCounter >= 120)
-                            {
-                                framesCounter = 0;
-                                state = 2;
-                            }
+                        if (framesCounter >= 120)
+                        {
+                            framesCounter = 0;
+                            state = 2;
                         }
                         break;
-                    case 2:     // Rotate horizontal bar rectangle
-                        {
-                            framesCounter++;
-                            rotation = EaseQuadOut(framesCounter, 0.0f, 270.0f, 240);
+                    // Rotate horizontal bar rectangle
+                    case 2:
+                        framesCounter += 1;
+                        rotation = EaseQuadOut(framesCounter, 0.0f, 270.0f, 240);
 
-                            if (framesCounter >= 240)
-                            {
-                                framesCounter = 0;
-                                state = 3;
-                            }
+                        if (framesCounter >= 240)
+                        {
+                            framesCounter = 0;
+                            state = 3;
                         }
                         break;
-                    case 3:     // Increase bar size to fill all screen
-                        {
-                            framesCounter++;
-                            rec.height = EaseCircOut(framesCounter, 10, GetScreenWidth(), 120);
+                    // Increase bar size to fill all screen
+                    case 3:
+                        framesCounter += 1;
+                        rec.height = EaseCircOut(framesCounter, 10, GetScreenWidth(), 120);
 
-                            if (framesCounter >= 120)
-                            {
-                                framesCounter = 0;
-                                state = 4;
-                            }
+                        if (framesCounter >= 120)
+                        {
+                            framesCounter = 0;
+                            state = 4;
                         }
                         break;
-                    case 4:     // Fade out animation
-                        {
-                            framesCounter++;
-                            alpha = EaseSineOut(framesCounter, 1.0f, -1.0f, 160);
+                    // Fade out animation
+                    case 4:
+                        framesCounter++;
+                        alpha = EaseSineOut(framesCounter, 1.0f, -1.0f, 160);
 
-                            if (framesCounter >= 160)
-                            {
-                                framesCounter = 0;
-                                state = 5;
-                            }
+                        if (framesCounter >= 160)
+                        {
+                            framesCounter = 0;
+                            state = 5;
                         }
                         break;
-                    default: break;
+                    default:
+                        break;
                 }
 
                 // Reset animation at any moment
@@ -128,11 +124,9 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 DrawRectanglePro(rec, new Vector2(rec.width / 2, rec.height / 2), rotation, ColorAlpha(BLACK, alpha));
-
                 DrawText("PRESS [SPACE] TO RESET BOX ANIMATION!", 10, GetScreenHeight() - 25, 20, LIGHTGRAY);
 
                 EndDrawing();

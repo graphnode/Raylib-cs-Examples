@@ -30,17 +30,19 @@ namespace Examples
 
             InitWindow(screenWidth, screenHeight, "raylib [shapes] example - colors palette");
 
-            Color[] colors = new Color[] {
+            Color[] colors = new[] {
             DARKGRAY, MAROON, ORANGE, DARKGREEN, DARKBLUE, DARKPURPLE, DARKBROWN,
             GRAY, RED, GOLD, LIME, BLUE, VIOLET, BROWN, LIGHTGRAY, PINK, YELLOW,
             GREEN, SKYBLUE, PURPLE, BEIGE };
 
-            string[] colorNames = new string[] {
-            "DARKGRAY", "MAROON", "ORANGE", "DARKGREEN", "DARKBLUE", "DARKPURPLE",
-            "DARKBROWN", "GRAY", "RED", "GOLD", "LIME", "BLUE", "VIOLET", "BROWN",
-            "LIGHTGRAY", "PINK", "YELLOW", "GREEN", "SKYBLUE", "PURPLE", "BEIGE" };
+            string[] colorNames = new[] {
+                "DARKGRAY", "MAROON", "ORANGE", "DARKGREEN", "DARKBLUE", "DARKPURPLE",
+                "DARKBROWN", "GRAY", "RED", "GOLD", "LIME", "BLUE", "VIOLET", "BROWN",
+                "LIGHTGRAY", "PINK", "YELLOW", "GREEN", "SKYBLUE", "PURPLE", "BEIGE"
+            };
 
-            Rectangle[] colorsRecs = new Rectangle[MAX_COLORS_COUNT];     // Rectangles array
+            // Rectangles array
+            Rectangle[] colorsRecs = new Rectangle[MAX_COLORS_COUNT];
 
             // Fills colorsRecs data (for every rectangle)
             for (int i = 0; i < MAX_COLORS_COUNT; i++)
@@ -67,15 +69,20 @@ namespace Examples
 
                 for (int i = 0; i < MAX_COLORS_COUNT; i++)
                 {
-                    if (CheckCollisionPointRec(mousePoint, colorsRecs[i])) colorState[i] = 1;
-                    else colorState[i] = 0;
+                    if (CheckCollisionPointRec(mousePoint, colorsRecs[i]))
+                    {
+                        colorState[i] = 1;
+                    }
+                    else
+                    {
+                        colorState[i] = 0;
+                    }
                 }
                 //----------------------------------------------------------------------------------
 
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 DrawText("raylib colors palette", 28, 42, 20, BLACK);

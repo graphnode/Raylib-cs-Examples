@@ -33,7 +33,6 @@ namespace Examples
             InitWindow(screenWidth, screenHeight, "raylib [shapes] example - rectangle scaling mouse");
 
             Rectangle rec = new Rectangle(100, 100, 200, 80);
-
             Vector2 mousePosition = new Vector2(0, 0);
 
             bool mouseScaleReady = false;
@@ -53,9 +52,15 @@ namespace Examples
                     CheckCollisionPointRec(mousePosition, new Rectangle(rec.x + rec.width - MOUSE_SCALE_MARK_SIZE, rec.y + rec.height - MOUSE_SCALE_MARK_SIZE, MOUSE_SCALE_MARK_SIZE, MOUSE_SCALE_MARK_SIZE)))
                 {
                     mouseScaleReady = true;
-                    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) mouseScaleMode = true;
+                    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+                    {
+                        mouseScaleMode = true;
+                    }
                 }
-                else mouseScaleReady = false;
+                else
+                {
+                    mouseScaleReady = false;
+                }
 
                 if (mouseScaleMode)
                 {
@@ -64,21 +69,28 @@ namespace Examples
                     rec.width = (mousePosition.X - rec.x);
                     rec.height = (mousePosition.Y - rec.y);
 
-                    if (rec.width < MOUSE_SCALE_MARK_SIZE) rec.width = MOUSE_SCALE_MARK_SIZE;
-                    if (rec.height < MOUSE_SCALE_MARK_SIZE) rec.height = MOUSE_SCALE_MARK_SIZE;
+                    if (rec.width < MOUSE_SCALE_MARK_SIZE)
+                    {
+                        rec.width = MOUSE_SCALE_MARK_SIZE;
+                    }
+                    if (rec.height < MOUSE_SCALE_MARK_SIZE)
+                    {
+                        rec.height = MOUSE_SCALE_MARK_SIZE;
+                    }
 
-                    if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) mouseScaleMode = false;
+                    if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
+                    {
+                        mouseScaleMode = false;
+                    }
                 }
                 //----------------------------------------------------------------------------------
 
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 DrawText("Scale rectangle dragging from bottom-right corner!", 10, 10, 20, GRAY);
-
                 DrawRectangleRec(rec, ColorAlpha(GREEN, 0.5f));
 
                 if (mouseScaleReady)

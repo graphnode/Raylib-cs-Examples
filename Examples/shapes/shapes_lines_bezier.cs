@@ -40,18 +40,22 @@ namespace Examples
             {
                 // Update
                 //----------------------------------------------------------------------------------
-                if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) start = GetMousePosition();
-                else if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) end = GetMousePosition();
+                if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
+                {
+                    start = GetMousePosition();
+                }
+                else if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON))
+                {
+                    end = GetMousePosition();
+                }
                 //----------------------------------------------------------------------------------
 
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 DrawText("USE MOUSE LEFT-RIGHT CLICK to DEFINE LINE START and END POINTS", 15, 20, 20, GRAY);
-
                 DrawLineBezier(start, end, 2.0f, RED);
 
                 EndDrawing();

@@ -84,7 +84,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 DrawCircleV(scleraLeftPosition, scleraRadius, LIGHTGRAY);
