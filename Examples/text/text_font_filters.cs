@@ -50,7 +50,7 @@ namespace Examples
 
             // Setup texture scaling filter
             SetTextureFilter(font.texture, FILTER_POINT);
-            TextureFilterMode currentFontFilter = FILTER_POINT;      // FILTER_POINT
+            TextureFilterMode currentFontFilter = FILTER_POINT;
 
             SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
             //--------------------------------------------------------------------------------------
@@ -82,8 +82,14 @@ namespace Examples
 
                 textSize = MeasureTextEx(font, msg, fontSize, 0);
 
-                if (IsKeyDown(KEY_LEFT)) fontPosition.X -= 10;
-                else if (IsKeyDown(KEY_RIGHT)) fontPosition.X += 10;
+                if (IsKeyDown(KEY_LEFT))
+                {
+                    fontPosition.X -= 10;
+                }
+                else if (IsKeyDown(KEY_RIGHT))
+                {
+                    fontPosition.X += 10;
+                }
 
                 // Load a dropped TTF file dynamically (at current fontSize)
                 if (IsFileDropped())
@@ -96,15 +102,14 @@ namespace Examples
                     {
                         UnloadFont(font);
                         font = LoadFontEx(droppedFiles[0], (int)fontSize, null, 0);
-                        ClearDroppedFiles();
                     }
+                    ClearDroppedFiles();
                 }
                 //----------------------------------------------------------------------------------
 
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 DrawText("Use mouse wheel to change font size", 20, 20, 10, GRAY);
@@ -117,9 +122,18 @@ namespace Examples
                 DrawRectangle(0, screenHeight - 80, screenWidth, 80, LIGHTGRAY);
                 DrawText("CURRENT TEXTURE FILTER:", 250, 400, 20, GRAY);
 
-                if (currentFontFilter == FILTER_POINT) DrawText("POINT", 570, 400, 20, BLACK);
-                else if (currentFontFilter == FILTER_POINT) DrawText("BILINEAR", 570, 400, 20, BLACK);
-                else if (currentFontFilter == FILTER_TRILINEAR) DrawText("TRILINEAR", 570, 400, 20, BLACK);
+                if (currentFontFilter == FILTER_POINT)
+                {
+                    DrawText("POINT", 570, 400, 20, BLACK);
+                }
+                else if (currentFontFilter == FILTER_POINT)
+                {
+                    DrawText("BILINEAR", 570, 400, 20, BLACK);
+                }
+                else if (currentFontFilter == FILTER_TRILINEAR)
+                {
+                    DrawText("TRILINEAR", 570, 400, 20, BLACK);
+                }
 
                 EndDrawing();
                 //----------------------------------------------------------------------------------
@@ -127,10 +141,7 @@ namespace Examples
 
             // De-Initialization
             //--------------------------------------------------------------------------------------
-            ClearDroppedFiles();        // Clear internal buffers
-
             UnloadFont(font);           // Font unloading
-
             CloseWindow();              // Close window and OpenGL context
             //--------------------------------------------------------------------------------------
 

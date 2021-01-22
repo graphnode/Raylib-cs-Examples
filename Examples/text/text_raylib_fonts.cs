@@ -44,17 +44,18 @@ namespace Examples
             fonts[6] = LoadFont("resources/fonts/alpha_beta.png");
             fonts[7] = LoadFont("resources/fonts/jupiter_crash.png");
 
-            string[] messages = new string[MAX_FONTS] { "ALAGARD FONT designed by Hewett Tsoi",
-                                    "PIXELPLAY FONT designed by Aleksander Shevchuk",
-                                    "MECHA FONT designed by Captain Falcon",
-                                    "SETBACK FONT designed by Brian Kent (AEnigma)",
-                                    "ROMULUS FONT designed by Hewett Tsoi",
-                                    "PIXANTIQUA FONT designed by Gerhard Grossmann",
-                                    "ALPHA_BETA FONT designed by Brian Kent (AEnigma)",
-                                    "JUPITER_CRASH FONT designed by Brian Kent (AEnigma)" };
+            string[] messages = new string[MAX_FONTS] {
+                "ALAGARD FONT designed by Hewett Tsoi",
+                "PIXELPLAY FONT designed by Aleksander Shevchuk",
+                "MECHA FONT designed by Captain Falcon",
+                "SETBACK FONT designed by Brian Kent (AEnigma)",
+                "ROMULUS FONT designed by Hewett Tsoi",
+                "PIXANTIQUA FONT designed by Gerhard Grossmann",
+                "ALPHA_BETA FONT designed by Brian Kent (AEnigma)",
+                "JUPITER_CRASH FONT designed by Brian Kent (AEnigma)"
+            };
 
             int[] spacings = new int[MAX_FONTS] { 2, 4, 8, 4, 3, 4, 4, 1 };
-
             Vector2[] positions = new Vector2[MAX_FONTS];
 
             for (int i = 0; i < MAX_FONTS; i++)
@@ -82,7 +83,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 DrawText("free fonts included with raylib", 250, 20, 20, DARKGRAY);
@@ -101,10 +101,13 @@ namespace Examples
             //--------------------------------------------------------------------------------------
 
             // Fonts unloading
-            for (int i = 0; i < MAX_FONTS; i++) UnloadFont(fonts[i]);
+            for (int i = 0; i < MAX_FONTS; i++)
+            {
+                UnloadFont(fonts[i]);
+            }
 
             CloseWindow();                 // Close window and OpenGL context
-                                           //--------------------------------------------------------------------------------------
+            //--------------------------------------------------------------------------------------
 
             return 0;
         }

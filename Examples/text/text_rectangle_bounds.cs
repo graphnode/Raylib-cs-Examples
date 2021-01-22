@@ -31,9 +31,10 @@ namespace Examples
 
             InitWindow(screenWidth, screenHeight, "raylib [text] example - draw text inside a rectangle");
 
-            string text = @"Text cannot escape\tthis container\t...word wrap also works when active so here's
-    a long text for testing.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua. Nec ullamcorper sit amet risus nullam eget felis eget.";
+            string text = "";
+            text += "Text cannot escape this container ...word wrap also works when active so here's a long text for testing.";
+            text += "\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ";
+            text += "incididunt ut labore et dolore magna aliqua. Nec ullamcorper sit amet risus nullam eget felis eget.";
 
             bool resizing = false;
             bool wordWrap = true;
@@ -52,25 +53,37 @@ namespace Examples
             Font font = GetFontDefault();       // Get default system font
 
             SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
-                                                //--------------------------------------------------------------------------------------
+            //--------------------------------------------------------------------------------------
 
             // Main game loop
             while (!WindowShouldClose())        // Detect window close button or ESC key
             {
                 // Update
                 //----------------------------------------------------------------------------------
-                if (IsKeyPressed(KEY_SPACE)) wordWrap = !wordWrap;
+                if (IsKeyPressed(KEY_SPACE))
+                {
+                    wordWrap = !wordWrap;
+                }
 
                 Vector2 mouse = GetMousePosition();
 
                 // Check if the mouse is inside the container and toggle border color
-                if (CheckCollisionPointRec(mouse, container)) borderColor = ColorAlpha(MAROON, 0.4f);
-                else if (!resizing) borderColor = MAROON;
+                if (CheckCollisionPointRec(mouse, container))
+                {
+                    borderColor = ColorAlpha(MAROON, 0.4f);
+                }
+                else if (!resizing)
+                {
+                    borderColor = MAROON;
+                }
 
                 // Container resizing logic
                 if (resizing)
                 {
-                    if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) resizing = false;
+                    if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
+                    {
+                        resizing = false;
+                    }
 
                     int width = (int)(container.width + (mouse.X - lastMouse.X));
                     container.width = (width > minWidth) ? ((width < maxWidth) ? width : maxWidth) : minWidth;
@@ -81,7 +94,10 @@ namespace Examples
                 else
                 {
                     // Check if we're resizing
-                    if (IsMouseButtonDown(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(mouse, resizer)) resizing = true;
+                    if (IsMouseButtonDown(MOUSE_LEFT_BUTTON) && CheckCollisionPointRec(mouse, resizer))
+                    {
+                        resizing = true;
+                    }
                 }
 
                 // Move resizer rectangle properly
@@ -89,12 +105,11 @@ namespace Examples
                 resizer.y = container.y + container.height - 17;
 
                 lastMouse = mouse; // Update mouse
-                                   //----------------------------------------------------------------------------------
+                //----------------------------------------------------------------------------------
 
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 DrawRectangleLinesEx(container, 3, borderColor); // Draw container border
@@ -111,11 +126,17 @@ namespace Examples
                 DrawRectangleRec(new Rectangle(382, screenHeight - 34, 12, 12), MAROON);
 
                 DrawText("Word Wrap: ", 313, screenHeight - 115, 20, BLACK);
-                if (wordWrap) DrawText("ON", 447, screenHeight - 115, 20, RED);
-                else DrawText("OFF", 447, screenHeight - 115, 20, BLACK);
+
+                if (wordWrap)
+                {
+                    DrawText("ON", 447, screenHeight - 115, 20, RED);
+                }
+                else
+                {
+                    DrawText("OFF", 447, screenHeight - 115, 20, BLACK);
+                }
 
                 DrawText("Press [SPACE] to toggle word wrap", 218, screenHeight - 86, 20, GRAY);
-
                 DrawText("Click hold & drag the    to resize the container", 155, screenHeight - 38, 20, RAYWHITE);
 
                 EndDrawing();

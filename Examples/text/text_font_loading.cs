@@ -60,14 +60,19 @@ namespace Examples
             {
                 // Update
                 //----------------------------------------------------------------------------------
-                if (IsKeyDown(KEY_SPACE)) useTtf = true;
-                else useTtf = false;
+                if (IsKeyDown(KEY_SPACE))
+                {
+                    useTtf = true;
+                }
+                else
+                {
+                    useTtf = false;
+                }
                 //----------------------------------------------------------------------------------
 
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 DrawText("Hold SPACE to use TTF generated font", 20, 20, 20, LIGHTGRAY);

@@ -44,16 +44,12 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
-                DrawText(string.Format("Score: {0:00000000}", score), 200, 80, 20, RED);
-
-                DrawText(string.Format("HiScore: {0:00000000}", hiscore), 200, 120, 20, GREEN);
-
-                DrawText(string.Format("Lives: {0:00}", lives), 200, 160, 40, BLUE);
-
-                DrawText(string.Format("Elapsed Time: {0:00.00} ms", GetFrameTime() * 1000), 200, 220, 20, BLACK);
+                DrawText($"Score: {score}", 200, 80, 20, RED);
+                DrawText($"HiScore: {hiscore}", 200, 120, 20, GREEN);
+                DrawText($"Lives: {lives}", 200, 160, 40, BLUE);
+                DrawText($"Elapsed Time: {GetFrameTime() * 1000} ms", 200, 220, 20, BLACK);
 
                 EndDrawing();
                 //----------------------------------------------------------------------------------

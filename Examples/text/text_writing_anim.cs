@@ -28,7 +28,6 @@ namespace Examples
             InitWindow(screenWidth, screenHeight, "raylib [text] example - text writing anim");
 
             string message = "This sample illustrates a text writing\nanimation effect! Check it out! ;)";
-
             int framesCounter = 0;
 
             SetTargetFPS(60);
@@ -39,16 +38,24 @@ namespace Examples
             {
                 // Update
                 //----------------------------------------------------------------------------------
-                if (IsKeyDown(KEY_SPACE)) framesCounter += 8;
-                else framesCounter++;
+                if (IsKeyDown(KEY_SPACE))
+                {
+                    framesCounter += 8;
+                }
+                else
+                {
+                    framesCounter += 1;
+                }
 
-                if (IsKeyPressed(KEY_ENTER)) framesCounter = 0;
+                if (IsKeyPressed(KEY_ENTER))
+                {
+                    framesCounter = 0;
+                }
                 //----------------------------------------------------------------------------------
 
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 DrawText(message.SubText(0, framesCounter / 10), 210, 160, 20, MAROON);
