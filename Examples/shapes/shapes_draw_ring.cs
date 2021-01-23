@@ -56,7 +56,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 DrawLine(500, 0, 500, GetScreenHeight(), ColorAlpha(LIGHTGRAY, 0.6f));

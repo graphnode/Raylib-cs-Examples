@@ -116,7 +116,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 // Draw framebuffer texture (Ahrs Display)

@@ -75,7 +75,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 DrawTexture(textures[currentTexture], 0, 0, WHITE);

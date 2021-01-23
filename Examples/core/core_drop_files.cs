@@ -47,7 +47,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 if (count == 0) DrawText("Drop your files to this window!", 100, 40, 20, DARKGRAY);

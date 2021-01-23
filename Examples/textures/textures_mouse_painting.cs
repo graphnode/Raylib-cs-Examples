@@ -168,7 +168,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 // NOTE: Render texture must be y-flipped due to default OpenGL coordinates (left-bottom)

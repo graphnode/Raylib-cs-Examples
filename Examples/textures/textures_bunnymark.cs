@@ -91,7 +91,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 for (int i = 0; i < bunniesCount; i++)

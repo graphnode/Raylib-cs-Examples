@@ -66,7 +66,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 DrawText(string.Format("SCORE: {0}", score), 280, 130, 40, MAROON);

@@ -186,7 +186,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(BLACK);         // Clear the screen of the previous frame.
 
                 // Using a render texture to draw Julia set

@@ -77,7 +77,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(BLACK);
 
                 // Draw created physics bodies

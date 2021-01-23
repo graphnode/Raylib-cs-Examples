@@ -89,8 +89,7 @@ namespace Examples
 
                 // Draw
                 //----------------------------------------------------------------------------------
-                BeginDrawing();
-
+                BeginDrawing();                
                 ClearBackground(RAYWHITE);
 
                 if (currentFont == 1)

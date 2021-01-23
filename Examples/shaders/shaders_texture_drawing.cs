@@ -60,7 +60,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 BeginShaderMode(shader);    // Enable our custom shader for next shapes/textures drawings

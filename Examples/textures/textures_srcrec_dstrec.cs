@@ -58,7 +58,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 // NOTE: Using DrawTexturePro() we can easily rotate and scale the part of the texture we draw

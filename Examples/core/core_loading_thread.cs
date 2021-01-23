@@ -97,8 +97,7 @@ namespace Examples
 
                 // Draw
                 //----------------------------------------------------------------------------------
-                BeginDrawing();
-
+                BeginDrawing();                
                 ClearBackground(RAYWHITE);
 
                 switch (state)

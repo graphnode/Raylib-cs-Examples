@@ -61,7 +61,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 if (IsGamepadAvailable(GAMEPAD_PLAYER1))

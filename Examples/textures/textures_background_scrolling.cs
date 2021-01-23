@@ -58,7 +58,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(GetColor(0x052c46ff));
 
                 // Draw background image twice

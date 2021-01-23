@@ -69,7 +69,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 DrawText("Check out the console output to see the custom logger in action!", 60, 200, 20, LIGHTGRAY);

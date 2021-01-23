@@ -129,7 +129,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(DARKBLUE);
 
                 BeginMode3D(camera);

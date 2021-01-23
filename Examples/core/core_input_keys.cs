@@ -47,7 +47,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 DrawText("move the ball with arrow keys", 10, 10, 20, DARKGRAY);

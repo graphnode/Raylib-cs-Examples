@@ -74,7 +74,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(BLACK);
 
                 DrawFPS(screenWidth - 90, screenHeight - 30);

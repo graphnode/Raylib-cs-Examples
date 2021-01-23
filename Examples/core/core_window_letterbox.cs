@@ -68,7 +68,6 @@ namespace Examples
 
                 // Draw everything in the render texture, note this will not be rendered on screen, yet
                 BeginTextureMode(target);
-
                 ClearBackground(RAYWHITE);         // Clear render texture background color
 
                 for (int i = 0; i < 10; i++) DrawRectangle(0, (gameScreenHeight / 10) * i, gameScreenWidth, gameScreenHeight / 10, colors[i]);

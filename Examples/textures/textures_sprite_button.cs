@@ -82,7 +82,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 DrawTextureRec(button, sourceRec, new Vector2(btnBounds.x, btnBounds.y), WHITE); // Draw button frame

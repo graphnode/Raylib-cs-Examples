@@ -43,7 +43,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 DrawRectangle(screenWidth / 2 - 40, boxPositionY, 80, 80, MAROON);

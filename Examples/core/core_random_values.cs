@@ -51,7 +51,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 DrawText("Every 2 seconds a new random value is generated:", 130, 100, 20, MAROON);

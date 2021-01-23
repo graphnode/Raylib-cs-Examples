@@ -1,4 +1,4 @@
-﻿
+
 namespace Examples
 {
     class Program

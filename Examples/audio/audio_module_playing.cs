@@ -120,7 +120,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 for (int i = MAX_CIRCLES - 1; i >= 0; i--)

@@ -68,7 +68,6 @@ namespace Examples
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
-
                 ClearBackground(RAYWHITE);
 
                 DrawTextEx(font1, msg1, fontPosition1, font1.baseSize, -3, WHITE);
