@@ -28,6 +28,11 @@ namespace Examples
         [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr LoadFontData(IntPtr fileData, int dataSize, int fontSize, int[] fontChars, int charsCount, FontType type);
 
+        // Unload file data allocated by LoadFileData()
+        // data refers to a unsigned char *
+        [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void UnloadFileData(IntPtr data);
+
         // Load file data as byte array (read)
         // IntPtr refers to unsigned char *
         [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
@@ -45,6 +50,7 @@ namespace Examples
             // NOTE: Textures/Fonts MUST be loaded after Window initialization (OpenGL context is required)
             string msg = "Signed Distance Fields";
 
+            // Loading file to memory
             int fileSize = 0;
             IntPtr fileData = LoadFileData("resources/anonymous_pro_bold.ttf", ref fileSize);
 
@@ -71,6 +77,9 @@ namespace Examples
             atlas = GenImageFontAtlas(fontSDF.chars, ref fontSDF.recs, 95, 16, 0, 1);
             fontSDF.texture = LoadTextureFromImage(atlas);
             UnloadImage(atlas);
+
+            // Free memory from loaded file
+            UnloadFileData(fileData);
 
             // Load SDF required shader (we use default vertex shader)
             Shader shader = LoadShader(null, "resources/shaders/glsl330/sdf.fs");
@@ -142,7 +151,6 @@ namespace Examples
             //--------------------------------------------------------------------------------------
             UnloadFont(fontDefault);    // Default font unloading
             UnloadFont(fontSDF);        // SDF font unloading
-
             UnloadShader(shader);       // Unload SDF shader
 
             CloseWindow();              // Close window and OpenGL context
