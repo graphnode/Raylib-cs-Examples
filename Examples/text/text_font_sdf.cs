@@ -9,6 +9,9 @@
 *
 ********************************************************************************************/
 
+using System;
+using System.Numerics;
+using System.Runtime.InteropServices;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
@@ -19,6 +22,17 @@ namespace Examples
 {
     public class text_font_sdf
     {
+        // Load font data for further use
+        // fileData refers to const unsigned char *
+        // IntPtr refers to CharInfo *
+        [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+        public static extern IntPtr LoadFontData(IntPtr fileData, int dataSize, int fontSize, int[] fontChars, int charsCount, FontType type);
+
+        // Load file data as byte array (read)
+        // IntPtr refers to unsigned char *
+        [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+        public static extern IntPtr LoadFileData(string fileName, ref int bytesRead);
+
         public static int Main()
         {
             // Initialization
@@ -29,41 +43,45 @@ namespace Examples
             InitWindow(screenWidth, screenHeight, "raylib [text] example - SDF fonts");
 
             // NOTE: Textures/Fonts MUST be loaded after Window initialization (OpenGL context is required)
-
             string msg = "Signed Distance Fields";
+
+            int fileSize = 0;
+            IntPtr fileData = LoadFileData("resources/anonymous_pro_bold.ttf", ref fileSize);
 
             // Default font generation from TTF font
             Font fontDefault = new Font();
             fontDefault.baseSize = 16;
             fontDefault.charsCount = 95;
+
+            // Loading font data from memory data
             // Parameters > font size: 16, no chars array provided (0), chars count: 95 (autogenerate chars array)
-            // TODO: fix conversion
-            fontDefault.chars = LoadFontData("resources/AnonymousPro-Bold.ttf", 16, null, 95, FontType.FONT_DEFAULT);
+            fontDefault.chars = LoadFontData(fileData, fileSize, 16, null, 95, FontType.FONT_DEFAULT);
             // Parameters > chars count: 95, font size: 16, chars padding in image: 4 px, pack method: 0 (default)
             Image atlas = GenImageFontAtlas(fontDefault.chars, ref fontDefault.recs, 95, 16, 4, 0);
             fontDefault.texture = LoadTextureFromImage(atlas);
             UnloadImage(atlas);
 
             // SDF font generation from TTF font
-            // NOTE: SDF chars data is generated with LoadFontData(), it's just a bool option
             Font fontSDF = new Font();
             fontSDF.baseSize = 16;
             fontSDF.charsCount = 95;
             // Parameters > font size: 16, no chars array provided (0), chars count: 0 (defaults to 95)
-            fontSDF.chars = LoadFontData("resources/AnonymousPro-Bold.ttf", 16, null, 0, (int)FontType.FONT_DEFAULT);
+            fontSDF.chars = LoadFontData(fileData, fileSize, 16, null, 0, FontType.FONT_SDF);
             // Parameters > chars count: 95, font size: 16, chars padding in image: 0 px, pack method: 1 (Skyline algorythm)
             atlas = GenImageFontAtlas(fontSDF.chars, ref fontSDF.recs, 95, 16, 0, 1);
             fontSDF.texture = LoadTextureFromImage(atlas);
             UnloadImage(atlas);
 
             // Load SDF required shader (we use default vertex shader)
-            Shader shader = LoadShader(null, "resources/shaders/sdf.fs");
-            SetTextureFilter(fontSDF.texture, FILTER_BILINEAR);    // Required for SDF font
+            Shader shader = LoadShader(null, "resources/shaders/glsl330/sdf.fs");
+            // Required for SDF font
+            SetTextureFilter(fontSDF.texture, FILTER_BILINEAR);
 
             Vector2 fontPosition = new Vector2(40, screenHeight / 2 - 50);
             Vector2 textSize = new Vector2(0.0f);
             float fontSize = 16.0f;
-            int currentFont = 0;    // 0 - fontDefault, 1 - fontSDF
+            // 0 - fontDefault, 1 - fontSDF
+            int currentFont = 0;
 
             SetTargetFPS(60);
             //--------------------------------------------------------------------------------------
@@ -83,13 +101,13 @@ namespace Examples
                 if (currentFont == 0) textSize = MeasureTextEx(fontDefault, msg, fontSize, 0);
                 else textSize = MeasureTextEx(fontSDF, msg, fontSize, 0);
 
-                fontPosition.x = GetScreenWidth() / 2 - textSize.x / 2;
-                fontPosition.y = GetScreenHeight() / 2 - textSize.y / 2 + 80;
+                fontPosition.X = GetScreenWidth() / 2 - textSize.X / 2;
+                fontPosition.Y = GetScreenHeight() / 2 - textSize.Y / 2 + 80;
                 //----------------------------------------------------------------------------------
 
                 // Draw
                 //----------------------------------------------------------------------------------
-                BeginDrawing();                
+                BeginDrawing();
                 ClearBackground(RAYWHITE);
 
                 if (currentFont == 1)

@@ -83,6 +83,7 @@ namespace Examples
         {
             text_font_filters.Main();
             text_font_loading.Main();
+            text_font_sdf.Main();
             text_font_spritefont.Main();
             text_format_text.Main();
             text_input_box.Main();

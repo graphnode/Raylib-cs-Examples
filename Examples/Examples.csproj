@@ -12,7 +12,6 @@
     <Compile Remove="physics/*.cs" />
     <Compile Remove="core/core_loading_thread.cs" />
     <Compile Remove="text/text_unicode.cs" />
-    <Compile Remove="text/text_font_sdf.cs" />
   </ItemGroup>
 
   <ItemGroup>
