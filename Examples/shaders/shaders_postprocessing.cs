@@ -74,7 +74,6 @@ namespace Examples
             const int screenHeight = 450;
 
             SetConfigFlags(ConfigFlag.FLAG_MSAA_4X_HINT);      // Enable Multi Sampling Anti Aliasing 4x (if available)
-
             InitWindow(screenWidth, screenHeight, "raylib [shaders] example - postprocessing shader");
 
             // Define the camera to look into our 3d world
@@ -94,18 +93,19 @@ namespace Examples
             Shader[] shaders = new Shader[MAX_POSTPRO_SHADERS];
 
             // NOTE: Defining null (NULL) for vertex shader forces usage of internal default vertex shader
-            shaders[(int)PostproShader.FX_GRAYSCALE] = LoadShader(null, string.Format("resources/shaders/glsl{0}/grayscale.fs", GLSL_VERSION));
-            shaders[(int)PostproShader.FX_POSTERIZATION] = LoadShader(null, string.Format("resources/shaders/glsl{0}/posterization.fs", GLSL_VERSION));
-            shaders[(int)PostproShader.FX_DREAM_VISION] = LoadShader(null, string.Format("resources/shaders/glsl{0}/dream_vision.fs", GLSL_VERSION));
-            shaders[(int)PostproShader.FX_PIXELIZER] = LoadShader(null, string.Format("resources/shaders/glsl{0}/pixelizer.fs", GLSL_VERSION));
-            shaders[(int)PostproShader.FX_CROSS_HATCHING] = LoadShader(null, string.Format("resources/shaders/glsl{0}/cross_hatching.fs", GLSL_VERSION));
-            shaders[(int)PostproShader.FX_CROSS_STITCHING] = LoadShader(null, string.Format("resources/shaders/glsl{0}/cross_stitching.fs", GLSL_VERSION));
-            shaders[(int)PostproShader.FX_PREDATOR_VIEW] = LoadShader(null, string.Format("resources/shaders/glsl{0}/predator.fs", GLSL_VERSION));
-            shaders[(int)PostproShader.FX_SCANLINES] = LoadShader(null, string.Format("resources/shaders/glsl{0}/scanlines.fs", GLSL_VERSION));
-            shaders[(int)PostproShader.FX_FISHEYE] = LoadShader(null, string.Format("resources/shaders/glsl{0}/fisheye.fs", GLSL_VERSION));
-            shaders[(int)PostproShader.FX_SOBEL] = LoadShader(null, string.Format("resources/shaders/glsl{0}/sobel.fs", GLSL_VERSION));
-            shaders[(int)PostproShader.FX_BLOOM] = LoadShader(null, string.Format("resources/shaders/glsl{0}/bloom.fs", GLSL_VERSION));
-            shaders[(int)PostproShader.FX_BLUR] = LoadShader(null, string.Format("resources/shaders/glsl{0}/blur.fs", GLSL_VERSION));
+            string shaderPath = "resources/shaders/glsl330";
+            shaders[(int)PostproShader.FX_GRAYSCALE] = LoadShader(null, $"{shaderPath}/grayscale.fs");
+            shaders[(int)PostproShader.FX_POSTERIZATION] = LoadShader(null, $"{shaderPath}/posterization.fs");
+            shaders[(int)PostproShader.FX_DREAM_VISION] = LoadShader(null, $"{shaderPath}/dream_vision.fs");
+            shaders[(int)PostproShader.FX_PIXELIZER] = LoadShader(null, $"{shaderPath}/pixelizer.fs");
+            shaders[(int)PostproShader.FX_CROSS_HATCHING] = LoadShader(null, $"{shaderPath}/cross_hatching.fs");
+            shaders[(int)PostproShader.FX_CROSS_STITCHING] = LoadShader(null, $"{shaderPath}/cross_stitching.fs");
+            shaders[(int)PostproShader.FX_PREDATOR_VIEW] = LoadShader(null, $"{shaderPath}/predator.fs");
+            shaders[(int)PostproShader.FX_SCANLINES] = LoadShader(null, $"{shaderPath}/scanlines.fs");
+            shaders[(int)PostproShader.FX_FISHEYE] = LoadShader(null, $"{shaderPath}/fisheye.fs");
+            shaders[(int)PostproShader.FX_SOBEL] = LoadShader(null, $"{shaderPath}/sobel.fs");
+            shaders[(int)PostproShader.FX_BLOOM] = LoadShader(null, $"{shaderPath}/bloom.fs");
+            shaders[(int)PostproShader.FX_BLUR] = LoadShader(null, $"{shaderPath}/blur.fs");
 
             int currentShader = (int)PostproShader.FX_GRAYSCALE;
 

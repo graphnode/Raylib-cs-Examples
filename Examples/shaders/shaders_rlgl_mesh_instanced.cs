@@ -88,7 +88,7 @@ namespace Examples
             int ambientLoc = GetShaderLocation(shader, "ambient");
             Utils.SetShaderValueV(shader, ambientLoc, new float[] { 0.2f, 0.2f, 0.2f, 1.0f }, UNIFORM_VEC4, 4);
 
-            Rlights.CreateLight(LightType.LIGHT_DIRECTIONAL, new Vector3(50, 50, 0), Vector3.Zero, WHITE, shader);
+            Rlights.CreateLight(0, LightType.LIGHT_DIRECTIONAL, new Vector3(50, 50, 0), Vector3.Zero, WHITE, shader);
 
             Material material = LoadMaterialDefault();
             material.shader = shader;

@@ -86,7 +86,8 @@ namespace Examples
 
             // ambient light level
             int ambientLoc = GetShaderLocation(shader, "ambient");
-            Utils.SetShaderValue(shader, ambientLoc, new float[] { 0.2f, 0.2f, 0.2f, 1.0f }, ShaderUniformDataType.UNIFORM_VEC4);
+            float[] ambient = new float[] { 0.2f, 0.2f, 0.2f, 1.0f };
+            Utils.SetShaderValue(shader, ambientLoc, ambient, ShaderUniformDataType.UNIFORM_VEC4);
 
             float angle = 6.282f;
 
@@ -96,11 +97,11 @@ namespace Examples
             Utils.SetMaterialShader(ref modelC, 0, ref shader);
 
             // Using 4 point lights, white, red, green and blue
-            Light[] lights = new Light[MAX_LIGHTS];
-            lights[0] = CreateLight(LightType.LIGHT_POINT, new Vector3(4, 2, 4), Vector3Zero(), WHITE, shader);
-            lights[1] = CreateLight(LightType.LIGHT_POINT, new Vector3(4, 2, 4), Vector3Zero(), RED, shader);
-            lights[2] = CreateLight(LightType.LIGHT_POINT, new Vector3(0, 4, 2), Vector3Zero(), GREEN, shader);
-            lights[3] = CreateLight(LightType.LIGHT_POINT, new Vector3(0, 4, 2), Vector3Zero(), BLUE, shader);
+            Light[] lights = new Light[4];
+            lights[0] = CreateLight(0, LightType.LIGHT_POINT, new Vector3(4, 2, 4), Vector3.Zero, WHITE, shader);
+            lights[1] = CreateLight(1, LightType.LIGHT_POINT, new Vector3(4, 2, 4), Vector3.Zero, RED, shader);
+            lights[2] = CreateLight(2, LightType.LIGHT_POINT, new Vector3(0, 4, 2), Vector3.Zero, GREEN, shader);
+            lights[3] = CreateLight(3, LightType.LIGHT_POINT, new Vector3(0, 4, 2), Vector3.Zero, BLUE, shader);
 
             SetCameraMode(camera, CAMERA_ORBITAL);  // Set an orbital camera mode
 

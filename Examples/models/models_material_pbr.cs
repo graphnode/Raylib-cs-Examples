@@ -60,10 +60,10 @@ namespace Examples
 
             // Define lights attributes
             // NOTE: Shader is passed to every light on creation to define shader bindings internally
-            CreateLight(LightType.LIGHT_POINT, new Vector3(LIGHT_DISTANCE, LIGHT_HEIGHT, 0.0f), new Vector3(0.0f, 0.0f, 0.0f), new Color(255, 0, 0, 255), materials[0].shader);
-            CreateLight(LightType.LIGHT_POINT, new Vector3(0.0f, LIGHT_HEIGHT, LIGHT_DISTANCE), new Vector3(0.0f, 0.0f, 0.0f), new Color(0, 255, 0, 255), materials[0].shader);
-            CreateLight(LightType.LIGHT_POINT, new Vector3(-LIGHT_DISTANCE, LIGHT_HEIGHT, 0.0f), new Vector3(0.0f, 0.0f, 0.0f), new Color(0, 0, 255, 255), materials[0].shader);
-            CreateLight(LightType.LIGHT_DIRECTIONAL, new Vector3(0.0f, LIGHT_HEIGHT * 2.0f, -LIGHT_DISTANCE), new Vector3(0.0f, 0.0f, 0.0f), new Color(255, 0, 255, 255), materials[0].shader);
+            CreateLight(0, LightType.LIGHT_POINT, new Vector3(LIGHT_DISTANCE, LIGHT_HEIGHT, 0.0f), new Vector3(0.0f, 0.0f, 0.0f), new Color(255, 0, 0, 255), materials[0].shader);
+            CreateLight(1, LightType.LIGHT_POINT, new Vector3(0.0f, LIGHT_HEIGHT, LIGHT_DISTANCE), new Vector3(0.0f, 0.0f, 0.0f), new Color(0, 255, 0, 255), materials[0].shader);
+            CreateLight(2, LightType.LIGHT_POINT, new Vector3(-LIGHT_DISTANCE, LIGHT_HEIGHT, 0.0f), new Vector3(0.0f, 0.0f, 0.0f), new Color(0, 0, 255, 255), materials[0].shader);
+            CreateLight(3, LightType.LIGHT_DIRECTIONAL, new Vector3(0.0f, LIGHT_HEIGHT * 2.0f, -LIGHT_DISTANCE), new Vector3(0.0f, 0.0f, 0.0f), new Color(255, 0, 255, 255), materials[0].shader);
 
             SetCameraMode(camera, CAMERA_ORBITAL);  // Set an orbital camera mode
 
@@ -90,7 +90,7 @@ namespace Examples
 
                 BeginMode3D(camera);
 
-                DrawModel(model, Vector3Zero(), 1.0f, WHITE);
+                DrawModel(model, Vector3.Zero, 1.0f, WHITE);
                 DrawGrid(10, 1.0f);
 
                 EndMode3D();
@@ -120,8 +120,9 @@ namespace Examples
             // NOTE: All maps textures are set to { 0 )
             Material mat = Raylib.LoadMaterialDefault();
 
-            string PATH_PBR_VS = "resources/shaders/glsl330/pbr.vs";
-            string PATH_PBR_FS = "resources/shaders/glsl330/pbr.fs";
+            string shaderPath = "resources/shaders/glsl330";
+            string PATH_PBR_VS = $"{shaderPath}/pbr.vs";
+            string PATH_PBR_FS = $"{shaderPath}/pbr.fs";
             mat.shader = LoadShader(PATH_PBR_VS, PATH_PBR_FS);
 
             // Temporary unsafe pointers into material arrays.
@@ -158,14 +159,15 @@ namespace Examples
             SetTextureFilter(maps[(int)MaterialMapType.MAP_OCCLUSION].texture, FILTER_BILINEAR);
 
             // Enable sample usage in shader for assigned textures
-            Utils.SetShaderValue(mat.shader, GetShaderLocation(mat.shader, "albedo.useSampler"), 1);
-            Utils.SetShaderValue(mat.shader, GetShaderLocation(mat.shader, "normals.useSampler"), 1);
-            Utils.SetShaderValue(mat.shader, GetShaderLocation(mat.shader, "metalness.useSampler"), 1);
-            Utils.SetShaderValue(mat.shader, GetShaderLocation(mat.shader, "roughness.useSampler"), 1);
-            Utils.SetShaderValue(mat.shader, GetShaderLocation(mat.shader, "occlusion.useSampler"), 1);
+            ShaderUniformDataType uniformType = ShaderUniformDataType.UNIFORM_INT;
+            Utils.SetShaderValue(mat.shader, GetShaderLocation(mat.shader, "albedo.useSampler"), 1, uniformType);
+            Utils.SetShaderValue(mat.shader, GetShaderLocation(mat.shader, "normals.useSampler"), 1, uniformType);
+            Utils.SetShaderValue(mat.shader, GetShaderLocation(mat.shader, "metalness.useSampler"), 1, uniformType);
+            Utils.SetShaderValue(mat.shader, GetShaderLocation(mat.shader, "roughness.useSampler"), 1, uniformType);
+            Utils.SetShaderValue(mat.shader, GetShaderLocation(mat.shader, "occlusion.useSampler"), 1, uniformType);
 
             int renderModeLoc = GetShaderLocation(mat.shader, "renderMode");
-            Utils.SetShaderValue(mat.shader, renderModeLoc, 0);
+            Utils.SetShaderValue(mat.shader, renderModeLoc, 0, uniformType);
 
             // Set up material properties color
             maps[(int)MaterialMapType.MAP_ALBEDO].color = albedo;
@@ -177,13 +179,13 @@ namespace Examples
             maps[(int)MaterialMapType.MAP_HEIGHT].value = 0.5f;
 
             // Load shaders for material
-            const string PATH_CUBEMAP_VS = "resources/shaders/glsl330/cubemap.vs"; // Path to equirectangular to cubemap vertex shader
-            const string PATH_CUBEMAP_FS = "resources/shaders/glsl330/cubemap.fs"; // Path to equirectangular to cubemap fragment shader
-            const string PATH_SKYBOX_VS = "resources/shaders/glsl330/skybox.vs";  // Path to skybox vertex shader
-            const string PATH_IRRADIANCE_FS = "resources/shaders/glsl330/irradiance.fs"; // Path to irradiance (GI) calculation fragment shader
-            const string PATH_PREFILTER_FS = "resources/shaders/glsl330/prefilter.fs"; // Path to reflection prefilter calculation fragment shader
-            const string PATH_BRDF_VS = "resources/shaders/glsl330/brdf.vs"; // Path to bidirectional reflectance distribution function vertex shader
-            const string PATH_BRDF_FS = "resources/shaders/glsl330/brdf.fs"; // Path to bidirectional reflectance distribution function fragment shader
+            string PATH_CUBEMAP_VS = $"{shaderPath}/cubemap.vs"; // Path to equirectangular to cubemap vertex shader
+            string PATH_CUBEMAP_FS = $"{shaderPath}/cubemap.fs"; // Path to equirectangular to cubemap fragment shader
+            string PATH_SKYBOX_VS = $"{shaderPath}/skybox.vs";  // Path to skybox vertex shader
+            string PATH_IRRADIANCE_FS = $"{shaderPath}/irradiance.fs"; // Path to irradiance (GI) calculation fragment shader
+            string PATH_PREFILTER_FS = $"{shaderPath}/prefilter.fs"; // Path to reflection prefilter calculation fragment shader
+            string PATH_BRDF_VS = $"{shaderPath}/brdf.vs"; // Path to bidirectional reflectance distribution function vertex shader
+            string PATH_BRDF_FS = $"{shaderPath}/brdf.fs"; // Path to bidirectional reflectance distribution function fragment shader
 
             Shader shdrCubemap = LoadShader(PATH_CUBEMAP_VS, PATH_CUBEMAP_FS);
             Shader shdrIrradiance = LoadShader(PATH_SKYBOX_VS, PATH_IRRADIANCE_FS);
@@ -194,16 +196,16 @@ namespace Examples
             //--------------------------------------------------------------------------------------------------------
             Texture2D panorama = LoadTexture("resources/dresden_square_1k.hdr");
             Texture2D cubemap = GenTextureCubemap(shdrCubemap, panorama, CUBEMAP_SIZE, PixelFormat.UNCOMPRESSED_R32G32B32);
-            Utils.SetShaderValue(shdrCubemap, GetShaderLocation(shdrCubemap, "equirectangularMap"), 0);
+            Utils.SetShaderValue(shdrCubemap, GetShaderLocation(shdrCubemap, "equirectangularMap"), 0, uniformType);
 
             // Generate irradiance map from cubemap texture
             //--------------------------------------------------------------------------------------------------------
-            Utils.SetShaderValue(shdrIrradiance, GetShaderLocation(shdrIrradiance, "environmentMap"), 0);
+            Utils.SetShaderValue(shdrIrradiance, GetShaderLocation(shdrIrradiance, "environmentMap"), 0, uniformType);
             maps[(int)MaterialMapType.MAP_IRRADIANCE].texture = GenTextureIrradiance(shdrIrradiance, cubemap, IRRADIANCE_SIZE);
 
             // Generate prefilter map from cubemap texture
             //--------------------------------------------------------------------------------------------------------
-            Utils.SetShaderValue(shdrPrefilter, GetShaderLocation(shdrPrefilter, "environmentMap"), 0);
+            Utils.SetShaderValue(shdrPrefilter, GetShaderLocation(shdrPrefilter, "environmentMap"), 0, uniformType);
             maps[(int)MaterialMapType.MAP_PREFILTER].texture = GenTexturePrefilter(shdrPrefilter, cubemap, PREFILTERED_SIZE);
 
             // Generate BRDF (bidirectional reflectance distribution function) texture (using shader)

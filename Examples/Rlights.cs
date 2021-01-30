@@ -28,37 +28,29 @@ namespace Examples
 
     public static class Rlights
     {
-        public static int MAX_LIGHTS = 4;
-        private static int lightsCount = 0;
-
-        public static Light CreateLight(LightType type, Vector3 pos, Vector3 targ, Color color, Shader shader)
+        public static Light CreateLight(int lightsCount, LightType type, Vector3 pos, Vector3 targ, Color color, Shader shader)
         {
             Light light = new Light();
 
-            if (lightsCount < MAX_LIGHTS)
-            {
-                light.enabled = true;
-                light.type = type;
-                light.position = pos;
-                light.target = targ;
-                light.color = color;
+            light.enabled = true;
+            light.type = type;
+            light.position = pos;
+            light.target = targ;
+            light.color = color;
 
-                string enabledName = "lights[" + lightsCount + "].enabled";
-                string typeName = "lights[" + lightsCount + "].type";
-                string posName = "lights[" + lightsCount + "].position";
-                string targetName = "lights[" + lightsCount + "].target";
-                string colorName = "lights[" + lightsCount + "].color";
+            string enabledName = "lights[" + lightsCount + "].enabled";
+            string typeName = "lights[" + lightsCount + "].type";
+            string posName = "lights[" + lightsCount + "].position";
+            string targetName = "lights[" + lightsCount + "].target";
+            string colorName = "lights[" + lightsCount + "].color";
 
-                light.enabledLoc = GetShaderLocation(shader, enabledName);
-                light.typeLoc = GetShaderLocation(shader, typeName);
-                light.posLoc = GetShaderLocation(shader, posName);
-                light.targetLoc = GetShaderLocation(shader, targetName);
-                light.colorLoc = GetShaderLocation(shader, colorName);
+            light.enabledLoc = GetShaderLocation(shader, enabledName);
+            light.typeLoc = GetShaderLocation(shader, typeName);
+            light.posLoc = GetShaderLocation(shader, posName);
+            light.targetLoc = GetShaderLocation(shader, targetName);
+            light.colorLoc = GetShaderLocation(shader, colorName);
 
-                UpdateLightValues(shader, light);
-
-                lightsCount++;
-            }
+            UpdateLightValues(shader, light);
 
             return light;
         }
@@ -66,8 +58,8 @@ namespace Examples
         public static void UpdateLightValues(Shader shader, Light light)
         {
             // Send to shader light enabled state and type
-            Utils.SetShaderValue(shader, light.enabledLoc, light.enabled ? 1 : 0);
-            Utils.SetShaderValue(shader, light.typeLoc, (int)light.type);
+            Utils.SetShaderValue(shader, light.enabledLoc, light.enabled ? 1 : 0, UNIFORM_INT);
+            Utils.SetShaderValue(shader, light.typeLoc, (int)light.type, UNIFORM_INT);
 
             // Send to shader light target position values
             float[] position = new[] { light.position.X, light.position.Y, light.position.Z };

@@ -109,11 +109,11 @@ namespace Examples
                 DrawRectangle(0, 0, screenWidth, screenHeight, WHITE);
                 EndShaderMode();
 
-                DrawText($"PRESS [A] to TOGGLE SHADER AUTOLOADING: {(shaderAutoReloading ? "AUTO" : "MANUAL")}", 10, 10, 10, shaderAutoReloading ? RED : BLACK);
+                string info = $"PRESS [A] to TOGGLE SHADER AUTOLOADING: {(shaderAutoReloading ? "AUTO" : "MANUAL")}";
+                DrawText(info, 10, 10, 10, shaderAutoReloading ? RED : BLACK);
                 if (!shaderAutoReloading) DrawText("MOUSE CLICK to SHADER RE-LOADING", 10, 30, 10, BLACK);
 
-                // asctime(localtime(&fragShaderFileModTime)))
-                DrawText($"Shader last modification: ", 10, 430, 10, BLACK);
+                // DrawText($"Shader last modification: ", 10, 430, 10, BLACK);
 
                 EndDrawing();
                 //----------------------------------------------------------------------------------

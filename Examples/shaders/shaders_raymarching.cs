@@ -94,7 +94,7 @@ namespace Examples
                 // Set shader required uniform values
                 Utils.SetShaderValue(shader, viewEyeLoc, cameraPos, UNIFORM_VEC3);
                 Utils.SetShaderValue(shader, viewCenterLoc, cameraTarget, UNIFORM_VEC3);
-                Utils.SetShaderValue(shader, runTimeLoc, runTime);
+                Utils.SetShaderValue(shader, runTimeLoc, runTime, UNIFORM_FLOAT);
                 //----------------------------------------------------------------------------------
 
                 // Draw

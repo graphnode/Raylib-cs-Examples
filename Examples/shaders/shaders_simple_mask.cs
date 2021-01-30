@@ -118,7 +118,7 @@ namespace Examples
                 rotation.Z -= 0.0025f;
 
                 // Send frames counter to shader for animation
-                SetShaderValue(shader, shaderFrame, IntPtr.Zero, UNIFORM_INT);
+                Utils.SetShaderValue(shader, shaderFrame, framesCounter, UNIFORM_INT);
 
                 // Rotate one of the models
                 model1.transform = MatrixRotateXYZ(rotation);
@@ -136,12 +136,13 @@ namespace Examples
                 DrawModel(model1, new Vector3(0.5f, 0, 0), 1, WHITE);
                 DrawModelEx(model2, new Vector3(-.5f, 0, 0), new Vector3(1, 1, 0), 50, new Vector3(1, 1, 1), WHITE);
                 DrawModel(model3, new Vector3(0, 0, -1.5f), 1, WHITE);
-                DrawGrid(10, 1.0f);        // Draw a grid
+                DrawGrid(10, 1.0f);
 
                 EndMode3D();
 
-                DrawRectangle(16, 698, MeasureText(string.Format("Frame: {0}", framesCounter), 20) + 8, 42, BLUE);
-                DrawText(string.Format("Frame: {0}", framesCounter), 20, 700, 20, WHITE);
+                string frameText = $"Frame: {framesCounter}";
+                DrawRectangle(16, 698, MeasureText(frameText, 20) + 8, 42, BLUE);
+                DrawText(frameText, 20, 700, 20, WHITE);
 
                 DrawFPS(10, 10);
 

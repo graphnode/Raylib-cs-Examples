@@ -83,7 +83,7 @@ namespace Examples
 
             float fogDensity = 0.15f;
             int fogDensityLoc = GetShaderLocation(shader, "fogDensity");
-            Utils.SetShaderValue(shader, fogDensityLoc, fogDensity);
+            Utils.SetShaderValue(shader, fogDensityLoc, fogDensity, UNIFORM_FLOAT);
 
             // NOTE: All models share the same shader
             Utils.SetMaterialShader(ref modelA, 0, ref shader);
@@ -91,7 +91,7 @@ namespace Examples
             Utils.SetMaterialShader(ref modelC, 0, ref shader);
 
             // Using just 1 point lights
-            CreateLight(LightType.LIGHT_POINT, new Vector3(0, 2, 6), Vector3Zero(), WHITE, shader);
+            CreateLight(0, LightType.LIGHT_POINT, new Vector3(0, 2, 6), Vector3.Zero, WHITE, shader);
 
             SetCameraMode(camera, CAMERA_ORBITAL);  // Set an orbital camera mode
 
@@ -117,7 +117,7 @@ namespace Examples
                     if (fogDensity < 0.0) fogDensity = 0.0f;
                 }
 
-                Utils.SetShaderValue(shader, fogDensityLoc, fogDensity);
+                Utils.SetShaderValue(shader, fogDensityLoc, fogDensity, UNIFORM_FLOAT);
 
                 // Rotate the torus
                 modelA.transform = MatrixMultiply(modelA.transform, MatrixRotateX(-0.025f));
@@ -135,7 +135,7 @@ namespace Examples
                 BeginMode3D(camera);
 
                 // Draw the three models
-                DrawModel(modelA, Vector3Zero(), 1.0f, WHITE);
+                DrawModel(modelA, Vector3.Zero, 1.0f, WHITE);
                 DrawModel(modelB, new Vector3(-2.6f, 0, 0), 1.0f, WHITE);
                 DrawModel(modelC, new Vector3(2.6f, 0, 0), 1.0f, WHITE);
 

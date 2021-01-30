@@ -73,7 +73,7 @@ namespace Examples
             Utils.SetShaderValue(shader, GetShaderLocation(shader, "screenDims"), screenDims, UNIFORM_VEC2);
 
             Utils.SetShaderValue(shader, cLoc, c, UNIFORM_VEC2);
-            Utils.SetShaderValue(shader, zoomLoc, zoomLoc);
+            Utils.SetShaderValue(shader, zoomLoc, zoomLoc, UNIFORM_FLOAT);
             Utils.SetShaderValue(shader, offsetLoc, offset, UNIFORM_VEC2);
 
             // Create a RenderTexture2D to be used for render to texture

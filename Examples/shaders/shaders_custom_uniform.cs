@@ -16,9 +16,7 @@
 *
 ********************************************************************************************/
 
-using System;
 using System.Numerics;
-using System.Runtime.InteropServices;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
@@ -55,10 +53,12 @@ namespace Examples
             // Set model diffuse texture
             Utils.SetMaterialTexture(ref model, 0, MAP_ALBEDO, ref texture);
 
-            Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);                                // Set model position
+            // Set model position
+            Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);
 
+            // Load postpro shader
             Shader shader = LoadShader("resources/shaders/glsl330/base.vs",
-                                       "resources/shaders/glsl330/swirl.fs");       // Load postpro shader
+                                       "resources/shaders/glsl330/swirl.fs");
 
             // Get variable (uniform) location on the shader to connect with the program
             // NOTE: If uniform variable could not be found in the shader, function returns -1
@@ -86,8 +86,7 @@ namespace Examples
                 swirlCenter[1] = screenHeight - mousePosition.Y;
 
                 // Send new value to the shader to be used on drawing
-                IntPtr value = Marshal.UnsafeAddrOfPinnedArrayElement(swirlCenter, 0);
-                SetShaderValue(shader, swirlCenterLoc, value, ShaderUniformDataType.UNIFORM_VEC2);
+                Utils.SetShaderValue(shader, swirlCenterLoc, swirlCenter, ShaderUniformDataType.UNIFORM_VEC2);
 
                 UpdateCamera(ref camera);              // Update camera
                 //----------------------------------------------------------------------------------
@@ -103,7 +102,6 @@ namespace Examples
                 BeginMode3D(camera);
 
                 DrawModel(model, position, 0.5f, WHITE);   // Draw 3d model with texture
-
                 DrawGrid(10, 1.0f);     // Draw a grid
 
                 EndMode3D();
