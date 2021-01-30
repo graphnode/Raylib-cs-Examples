@@ -20,11 +20,11 @@ C# examples for Raylib-cs, a simple and easy-to-use library to learn videogames 
 
 2. `cd Raylib-cs-Examples`
 
-3. `dotnet build -c Release`
+3. `dotnet build`
 
 ### Running
 
-1. `dotnet run -p Examples/Examples.csproj -c Release`
+1. `dotnet run -p Examples/Examples.csproj`
 
 ## Contributing
 
