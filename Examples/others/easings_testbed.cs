@@ -11,7 +11,7 @@
 *
 ********************************************************************************************/
 
-using Raylib_cs;
+using System.Numerics;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Easings;
 using static Raylib_cs.Color;
@@ -175,8 +175,8 @@ namespace Examples
                     (IsKeyPressed(KEY_ENTER) && (boundedT == true) && (t >= d)))
                 {
                     t = 0.0f;
-                    ballPosition.x = 100.0f;
-                    ballPosition.y = 100.0f;
+                    ballPosition.X = 100.0f;
+                    ballPosition.Y = 100.0f;
                     paused = true;
                 }
 
@@ -185,8 +185,8 @@ namespace Examples
                 // Movement computation
                 if (!paused && ((boundedT && t < d) || !boundedT))
                 {
-                    ballPosition.x = easings[(int)easingX].func(t, 100.0f, 700.0f - 100.0f, d);
-                    ballPosition.y = easings[(int)easingY].func(t, 100.0f, 400.0f - 100.0f, d);
+                    ballPosition.X = easings[(int)easingX].func(t, 100.0f, 700.0f - 100.0f, d);
+                    ballPosition.Y = easings[(int)easingY].func(t, 100.0f, 400.0f - 100.0f, d);
                     t += 1.0f;
                 }
                 //----------------------------------------------------------------------------------

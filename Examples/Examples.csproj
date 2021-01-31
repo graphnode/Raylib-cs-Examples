@@ -8,8 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="others/*.cs" />
-    <Compile Remove="physics/*.cs" />
     <Compile Remove="core/core_loading_thread.cs" />
     <Compile Remove="text/text_unicode.cs" />
   </ItemGroup>
