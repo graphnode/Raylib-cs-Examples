@@ -25,6 +25,7 @@ using static Raylib_cs.Raylib;
 using static Raylib_cs.Raymath;
 using static Raylib_cs.Color;
 using static Raylib_cs.CameraType;
+using static Raylib_cs.CameraMode;
 using static Raylib_cs.MaterialMapType;
 using static Raylib_cs.ShaderUniformDataType;
 using static Raylib_cs.ShaderLocationIndex;
@@ -49,6 +50,8 @@ namespace Examples
             camera.up = new Vector3(0.0f, 1.0f, 0.0f);
             camera.fovy = 45.0f;
             camera.type = CAMERA_PERSPECTIVE;
+
+            SetCameraMode(camera, CAMERA_CUSTOM);
 
             // Define our three models to show the shader on
             Mesh torus = GenMeshTorus(.3f, 1, 16, 32);
