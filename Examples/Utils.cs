@@ -109,8 +109,7 @@ namespace Examples
         public unsafe static void SetMaterialTexture(ref Model model, int materialIndex, MaterialMapType mapIndex, ref Texture2D texture)
         {
             Material* materials = (Material*)model.materials.ToPointer();
-            MaterialMap* maps = (MaterialMap*)materials[0].maps.ToPointer();
-            maps[(int)mapIndex].texture = texture;
+            Raylib.SetMaterialTexture(ref materials[materialIndex], (int)mapIndex, texture);
         }
 
         public unsafe static void SetMaterialShader(ref Model model, int materialIndex, ref Shader shader)

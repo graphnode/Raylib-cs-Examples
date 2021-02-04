@@ -21,8 +21,6 @@ namespace Examples
 {
     public class core_vr_simulator
     {
-        public const int GLSL_VERSION = 330;
-
         public static int Main()
         {
             // Initialization
@@ -63,7 +61,7 @@ namespace Examples
             hmd.chromaAbCorrection[3] = 0.0f;       // HMD chromatic aberration correction parameter 3
 
             // Distortion shader (uses device lens distortion and chroma)
-            Shader distortion = LoadShader(null, string.Format("resources/distortion%i.fs", GLSL_VERSION));
+            Shader distortion = LoadShader(null, "resources/distortion330.fs");
 
             SetVrConfiguration(hmd, distortion);    // Set Vr device parameters for stereo rendering
 
