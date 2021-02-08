@@ -115,7 +115,7 @@ namespace Examples
         public unsafe static void SetMaterialShader(ref Model model, int materialIndex, ref Shader shader)
         {
             Material* materials = (Material*)model.materials.ToPointer();
-            materials[0].shader = shader;
+            materials[materialIndex].shader = shader;
         }
 
         // Helper functions to pass data into raylib. Pins the data so we can pass in a stable IntPtr to raylib.
