@@ -61,7 +61,8 @@ namespace Examples
                     SetMouseCursor(MOUSE_CURSOR_IBEAM);
 
                     // Check if more characters have been pressed on the same frame
-                    int key = GetKeyPressed();
+                    int key = GetCharPressed();
+
                     while (key > 0)
                     {
                         // NOTE: Only allow keys in range [32..125]
