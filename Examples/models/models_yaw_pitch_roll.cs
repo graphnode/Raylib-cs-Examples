@@ -72,36 +72,50 @@ namespace Examples
                 //----------------------------------------------------------------------------------
 
                 // Plane roll (x-axis) controls
-                if (IsKeyDown(KEY_LEFT)) roll += 1.0f;
-                else if (IsKeyDown(KEY_RIGHT)) roll -= 1.0f;
+                if (IsKeyDown(KEY_LEFT))
+                    roll += 1.0f;
+                else if (IsKeyDown(KEY_RIGHT))
+                    roll -= 1.0f;
                 else
                 {
-                    if (roll > 0.0f) roll -= 0.5f;
-                    else if (roll < 0.0f) roll += 0.5f;
+                    if (roll > 0.0f)
+                        roll -= 0.5f;
+                    else if (roll < 0.0f)
+                        roll += 0.5f;
                 }
 
                 // Plane yaw (y-axis) controls
-                if (IsKeyDown(KEY_S)) yaw += 1.0f;
-                else if (IsKeyDown(KEY_A)) yaw -= 1.0f;
+                if (IsKeyDown(KEY_S))
+                    yaw += 1.0f;
+                else if (IsKeyDown(KEY_A))
+                    yaw -= 1.0f;
                 else
                 {
-                    if (yaw > 0.0f) yaw -= 0.5f;
-                    else if (yaw < 0.0f) yaw += 0.5f;
+                    if (yaw > 0.0f)
+                        yaw -= 0.5f;
+                    else if (yaw < 0.0f)
+                        yaw += 0.5f;
                 }
 
                 // Plane pitch (z-axis) controls
-                if (IsKeyDown(KEY_DOWN)) pitch += 0.6f;
-                else if (IsKeyDown(KEY_UP)) pitch -= 0.6f;
+                if (IsKeyDown(KEY_DOWN))
+                    pitch += 0.6f;
+                else if (IsKeyDown(KEY_UP))
+                    pitch -= 0.6f;
                 else
                 {
-                    if (pitch > 0.3f) pitch -= 0.3f;
-                    else if (pitch < -0.3f) pitch += 0.3f;
+                    if (pitch > 0.3f)
+                        pitch -= 0.3f;
+                    else if (pitch < -0.3f)
+                        pitch += 0.3f;
                 }
 
                 // Wraps the phase of an angle to fit between -180 and +180 degrees
                 int pitchOffset = (int)pitch;
-                while (pitchOffset > 180) pitchOffset -= 360;
-                while (pitchOffset < -180) pitchOffset += 360;
+                while (pitchOffset > 180)
+                    pitchOffset -= 360;
+                while (pitchOffset < -180)
+                    pitchOffset += 360;
                 pitchOffset *= 10;
 
                 Matrix4x4 transform = MatrixIdentity();

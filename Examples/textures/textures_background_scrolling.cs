@@ -50,9 +50,12 @@ namespace Examples
                 scrollingFore -= 1.0f;
 
                 // NOTE: Texture is scaled twice its size, so it sould be considered on scrolling
-                if (scrollingBack <= -background.width * 2) scrollingBack = 0;
-                if (scrollingMid <= -midground.width * 2) scrollingMid = 0;
-                if (scrollingFore <= -foreground.width * 2) scrollingFore = 0;
+                if (scrollingBack <= -background.width * 2)
+                    scrollingBack = 0;
+                if (scrollingMid <= -midground.width * 2)
+                    scrollingMid = 0;
+                if (scrollingFore <= -foreground.width * 2)
+                    scrollingFore = 0;
                 //----------------------------------------------------------------------------------
 
                 // Draw

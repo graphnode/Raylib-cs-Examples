@@ -91,7 +91,8 @@ namespace Examples
                         mouseTail[i].position.Y += gravity / 2;
                         mouseTail[i].alpha -= 0.005f;
 
-                        if (mouseTail[i].alpha <= 0.0f) mouseTail[i].active = false;
+                        if (mouseTail[i].alpha <= 0.0f)
+                            mouseTail[i].active = false;
 
                         mouseTail[i].rotation += 2.0f;
                     }
@@ -99,8 +100,10 @@ namespace Examples
 
                 if (IsKeyPressed(KEY_SPACE))
                 {
-                    if (blending == BlendMode.BLEND_ALPHA) blending = BlendMode.BLEND_ADDITIVE;
-                    else blending = BlendMode.BLEND_ALPHA;
+                    if (blending == BlendMode.BLEND_ALPHA)
+                        blending = BlendMode.BLEND_ADDITIVE;
+                    else
+                        blending = BlendMode.BLEND_ALPHA;
                 }
                 //----------------------------------------------------------------------------------
 
@@ -114,18 +117,21 @@ namespace Examples
                 // Draw active particles
                 for (int i = 0; i < MAX_PARTICLES; i++)
                 {
-                    if (mouseTail[i].active) DrawTexturePro(smoke, new Rectangle(0, 0, smoke.width, smoke.height),
-                                                           new Rectangle(mouseTail[i].position.X, mouseTail[i].position.Y, smoke.width * mouseTail[i].size, smoke.height * mouseTail[i].size),
-                                                           new Vector2(smoke.width * mouseTail[i].size / 2, smoke.height * mouseTail[i].size / 2), mouseTail[i].rotation,
-                                                           ColorAlpha(mouseTail[i].color, mouseTail[i].alpha));
+                    if (mouseTail[i].active)
+                        DrawTexturePro(smoke, new Rectangle(0, 0, smoke.width, smoke.height),
+                                      new Rectangle(mouseTail[i].position.X, mouseTail[i].position.Y, smoke.width * mouseTail[i].size, smoke.height * mouseTail[i].size),
+                                      new Vector2(smoke.width * mouseTail[i].size / 2, smoke.height * mouseTail[i].size / 2), mouseTail[i].rotation,
+                                      ColorAlpha(mouseTail[i].color, mouseTail[i].alpha));
                 }
 
                 EndBlendMode();
 
                 DrawText("PRESS SPACE to CHANGE BLENDING MODE", 180, 20, 20, BLACK);
 
-                if (blending == (int)BLEND_ALPHA) DrawText("ALPHA BLENDING", 290, screenHeight - 40, 20, BLACK);
-                else DrawText("ADDITIVE BLENDING", 280, screenHeight - 40, 20, RAYWHITE);
+                if (blending == (int)BLEND_ALPHA)
+                    DrawText("ALPHA BLENDING", 290, screenHeight - 40, 20, BLACK);
+                else
+                    DrawText("ADDITIVE BLENDING", 280, screenHeight - 40, 20, RAYWHITE);
 
                 EndDrawing();
                 //----------------------------------------------------------------------------------

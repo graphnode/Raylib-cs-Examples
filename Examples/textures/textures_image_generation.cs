@@ -85,14 +85,29 @@ namespace Examples
 
                 switch (currentTexture)
                 {
-                    case 0: DrawText("VERTICAL GRADIENT", 560, 10, 20, RAYWHITE); break;
-                    case 1: DrawText("HORIZONTAL GRADIENT", 540, 10, 20, RAYWHITE); break;
-                    case 2: DrawText("RADIAL GRADIENT", 580, 10, 20, LIGHTGRAY); break;
-                    case 3: DrawText("CHECKED", 680, 10, 20, RAYWHITE); break;
-                    case 4: DrawText("WHITE NOISE", 640, 10, 20, RED); break;
-                    case 5: DrawText("PERLIN NOISE", 630, 10, 20, RAYWHITE); break;
-                    case 6: DrawText("CELLULAR", 670, 10, 20, RAYWHITE); break;
-                    default: break;
+                    case 0:
+                        DrawText("VERTICAL GRADIENT", 560, 10, 20, RAYWHITE);
+                        break;
+                    case 1:
+                        DrawText("HORIZONTAL GRADIENT", 540, 10, 20, RAYWHITE);
+                        break;
+                    case 2:
+                        DrawText("RADIAL GRADIENT", 580, 10, 20, LIGHTGRAY);
+                        break;
+                    case 3:
+                        DrawText("CHECKED", 680, 10, 20, RAYWHITE);
+                        break;
+                    case 4:
+                        DrawText("WHITE NOISE", 640, 10, 20, RED);
+                        break;
+                    case 5:
+                        DrawText("PERLIN NOISE", 630, 10, 20, RAYWHITE);
+                        break;
+                    case 6:
+                        DrawText("CELLULAR", 670, 10, 20, RAYWHITE);
+                        break;
+                    default:
+                        break;
                 }
 
                 EndDrawing();
@@ -103,7 +118,8 @@ namespace Examples
             //--------------------------------------------------------------------------------------
 
             // Unload textures data (GPU VRAM)
-            for (int i = 0; i < NUM_TEXTURES; i++) UnloadTexture(textures[i]);
+            for (int i = 0; i < NUM_TEXTURES; i++)
+                UnloadTexture(textures[i]);
 
             CloseWindow();                // Close window and OpenGL context
             //--------------------------------------------------------------------------------------

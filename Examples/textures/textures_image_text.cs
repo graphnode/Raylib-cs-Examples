@@ -51,8 +51,10 @@ namespace Examples
             {
                 // Update
                 //----------------------------------------------------------------------------------
-                if (IsKeyDown(KEY_SPACE)) showFont = true;
-                else showFont = false;
+                if (IsKeyDown(KEY_SPACE))
+                    showFont = true;
+                else
+                    showFont = false;
                 //----------------------------------------------------------------------------------
 
                 // Draw
@@ -69,7 +71,8 @@ namespace Examples
                     DrawTextEx(font, "[Parrots font drawing]", new Vector2(position.X + 20,
                                position.Y + 20 + 280), font.baseSize, 0, WHITE);
                 }
-                else DrawTexture(font.texture, screenWidth / 2 - font.texture.width / 2, 50, BLACK);
+                else
+                    DrawTexture(font.texture, screenWidth / 2 - font.texture.width / 2, 50, BLACK);
 
                 DrawText("PRESS SPACE to SEE USED SPRITEFONT ", 290, 420, 10, DARKGRAY);
 

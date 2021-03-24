@@ -9,17 +9,32 @@
 *
 ********************************************************************************************/
 
+using System;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
 using static Raylib_cs.KeyboardKey;
+using System.Runtime.InteropServices;
 
 namespace Examples
 {
     public class core_storage_values
     {
         // NOTE: Storage positions must start with 0, directly related to file memory layout
-        enum StorageData { STORAGE_SCORE = 0, STORAGE_HISCORE };
+        enum StorageData
+        {
+            STORAGE_SCORE = 0,
+            STORAGE_HISCORE
+        }
+
+        // Load integer value from storage file (from defined position), returns true on success
+        [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.I1)]
+        public static extern bool SaveStorageValue(uint position, int value);
+
+        // Load integer value from storage file (from defined position)
+        [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int LoadStorageValue(uint position);
 
         public static int Main()
         {
@@ -50,14 +65,14 @@ namespace Examples
 
                 if (IsKeyPressed(KEY_ENTER))
                 {
-                    StorageSaveValue((int)StorageData.STORAGE_SCORE, score);
-                    StorageSaveValue((int)StorageData.STORAGE_HISCORE, hiscore);
+                    SaveStorageValue((int)StorageData.STORAGE_SCORE, score);
+                    SaveStorageValue((int)StorageData.STORAGE_HISCORE, hiscore);
                 }
                 else if (IsKeyPressed(KEY_SPACE))
                 {
                     // NOTE: If requested position could not be found, value 0 is returned
-                    score = StorageLoadValue((int)StorageData.STORAGE_SCORE);
-                    hiscore = StorageLoadValue((int)StorageData.STORAGE_HISCORE);
+                    score = LoadStorageValue((int)StorageData.STORAGE_SCORE);
+                    hiscore = LoadStorageValue((int)StorageData.STORAGE_HISCORE);
                 }
 
                 framesCounter++;
@@ -68,10 +83,10 @@ namespace Examples
                 BeginDrawing();
                 ClearBackground(RAYWHITE);
 
-                DrawText(string.Format("SCORE: {0}", score), 280, 130, 40, MAROON);
-                DrawText(string.Format("HI-SCORE: {0}", hiscore), 210, 200, 50, BLACK);
+                DrawText($"SCORE: {score}", 280, 130, 40, MAROON);
+                DrawText($"HI-SCORE: {hiscore}", 210, 200, 50, BLACK);
 
-                DrawText(string.Format("frames: {0}", framesCounter), 10, 10, 20, LIME);
+                DrawText($"frames: {framesCounter}", 10, 10, 20, LIME);
 
                 DrawText("Press R to generate random numbers", 220, 40, 20, LIGHTGRAY);
                 DrawText("Press ENTER to SAVE values", 250, 310, 20, LIGHTGRAY);

@@ -7,7 +7,7 @@ C# examples for Raylib-cs, a simple and easy-to-use library to learn videogames 
 [![GitHub contributors](https://img.shields.io/github/contributors/ChrisDill/Raylib-cs-Examples)](https://github.com/ChrisDill/Raylib-cs-Examples/graphs/contributors)
 [![License](https://img.shields.io/badge/license-zlib%2Flibpng-blue.svg)](LICENSE)
 
-[![Chat on Discord](https://img.shields.io/discord/426912293134270465.svg?logo=discord)](https://discord.gg/VkzNHUE)
+[![Chat on Discord](https://img.shields.io/discord/426912293134270465.svg?logo=discord)](https://discord.gg/raylib)
 [![GitHub stars](https://img.shields.io/github/stars/ChrisDill/Raylib-cs-Examples?style=social)](https://github.com/ChrisDill/Raylib-cs-Examples/stargazers)
 
 [![Build](https://github.com/ChrisDill/Raylib-cs-Examples/workflows/Build/badge.svg)](https://github.com/ChrisDill/Raylib-cs-Examples/actions?query=workflow%3ABuild)

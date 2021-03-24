@@ -48,7 +48,7 @@ namespace Examples
                 DrawRectangle(screenWidth / 2 - 40, boxPositionY, 80, 80, MAROON);
 
                 DrawText("Use mouse wheel to move the cube up and down!", 10, 10, 20, GRAY);
-                DrawText(string.Format("Box position Y: {0:000}", boxPositionY), 10, 40, 20, LIGHTGRAY);
+                DrawText($"Box position Y: {boxPositionY}", 10, 40, 20, LIGHTGRAY);
 
                 EndDrawing();
                 //----------------------------------------------------------------------------------

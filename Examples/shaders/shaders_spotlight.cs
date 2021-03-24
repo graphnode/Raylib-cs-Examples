@@ -76,12 +76,14 @@ namespace Examples
 
             Star[] stars = new Star[MAX_STARS];
 
-            for (int n = 0; n < MAX_STARS; n++) ResetStar(ref stars[n]);
+            for (int n = 0; n < MAX_STARS; n++)
+                ResetStar(ref stars[n]);
 
             // Progress all the stars on, so they don't all start in the centre
             for (int m = 0; m < screenWidth / 2.0; m++)
             {
-                for (int n = 0; n < MAX_STARS; n++) UpdateStar(ref stars[n]);
+                for (int n = 0; n < MAX_STARS; n++)
+                    UpdateStar(ref stars[n]);
             }
 
             int frameCounter = 0;
@@ -142,7 +144,8 @@ namespace Examples
                 frameCounter++;
 
                 // Move the stars, resetting them if the go offscreen
-                for (int n = 0; n < MAX_STARS; n++) UpdateStar(ref stars[n]);
+                for (int n = 0; n < MAX_STARS; n++)
+                    UpdateStar(ref stars[n]);
 
                 // Update the spots, send them to the shader
                 for (int i = 0; i < MAX_SPOTS; i++)
@@ -158,10 +161,14 @@ namespace Examples
                         spots[i].pos.X += spots[i].vel.X;
                         spots[i].pos.Y += spots[i].vel.Y;
 
-                        if (spots[i].pos.X < 64) spots[i].vel.X = -spots[i].vel.X;
-                        if (spots[i].pos.X > (screenWidth - 64)) spots[i].vel.X = -spots[i].vel.X;
-                        if (spots[i].pos.Y < 64) spots[i].vel.Y = -spots[i].vel.Y;
-                        if (spots[i].pos.Y > (screenHeight - 64)) spots[i].vel.Y = -spots[i].vel.Y;
+                        if (spots[i].pos.X < 64)
+                            spots[i].vel.X = -spots[i].vel.X;
+                        if (spots[i].pos.X > (screenWidth - 64))
+                            spots[i].vel.X = -spots[i].vel.X;
+                        if (spots[i].pos.Y < 64)
+                            spots[i].vel.Y = -spots[i].vel.Y;
+                        if (spots[i].pos.Y > (screenHeight - 64))
+                            spots[i].vel.Y = -spots[i].vel.Y;
                     }
 
                     SetShaderValue(shdrSpot, spots[i].posLoc, ref spots[i].pos.X, UNIFORM_VEC2);

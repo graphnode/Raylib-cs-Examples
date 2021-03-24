@@ -41,7 +41,10 @@ namespace Examples
             SetTextureFilter(target.texture, FILTER_BILINEAR);  // Texture scale filter to use
 
             Color[] colors = new Color[10];
-            for (int i = 0; i < 10; i++) colors[i] = new Color(GetRandomValue(100, 250), GetRandomValue(50, 150), GetRandomValue(10, 100), 255);
+            for (int i = 0; i < 10; i++)
+            {
+                colors[i] = new Color(GetRandomValue(100, 250), GetRandomValue(50, 150), GetRandomValue(10, 100), 255);
+            }
 
             SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
             //--------------------------------------------------------------------------------------
@@ -57,7 +60,10 @@ namespace Examples
                 if (IsKeyPressed(KEY_SPACE))
                 {
                     // Recalculate random colors for the bars
-                    for (int i = 0; i < 10; i++) colors[i] = new Color(GetRandomValue(100, 250), GetRandomValue(50, 150), GetRandomValue(10, 100), 255);
+                    for (int i = 0; i < 10; i++)
+                    {
+                        colors[i] = new Color(GetRandomValue(100, 250), GetRandomValue(50, 150), GetRandomValue(10, 100), 255);
+                    }
                 }
                 //----------------------------------------------------------------------------------
 
@@ -70,16 +76,29 @@ namespace Examples
                 BeginTextureMode(target);
                 ClearBackground(RAYWHITE);         // Clear render texture background color
 
-                for (int i = 0; i < 10; i++) DrawRectangle(0, (gameScreenHeight / 10) * i, gameScreenWidth, gameScreenHeight / 10, colors[i]);
+                for (int i = 0; i < 10; i++)
+                {
+                    DrawRectangle(0, (gameScreenHeight / 10) * i, gameScreenWidth, gameScreenHeight / 10, colors[i]);
+                }
 
                 DrawText("If executed inside a window,\nyou can resize the window,\nand see the screen scaling!", 10, 25, 20, WHITE);
 
                 EndTextureMode();
 
                 // Draw RenderTexture2D to window, properly scaled
-                DrawTexturePro(target.texture, new Rectangle(0.0f, 0.0f, (float)target.texture.width, (float)-target.texture.height),
-                               new Rectangle((GetScreenWidth() - ((float)gameScreenWidth * scale)) * 0.5f, (GetScreenHeight() - ((float)gameScreenHeight * scale)) * 0.5f,
-                               (float)gameScreenWidth * scale, (float)gameScreenHeight * scale), new Vector2(0, 0), 0.0f, WHITE);
+                Rectangle sourceRec = new Rectangle(
+                    0.0f,
+                    0.0f,
+                    (float)target.texture.width,
+                    (float)-target.texture.height
+                );
+                Rectangle destRec = new Rectangle(
+                    (GetScreenWidth() - ((float)gameScreenWidth * scale)) * 0.5f,
+                    (GetScreenHeight() - ((float)gameScreenHeight * scale)) * 0.5f,
+                    (float)gameScreenWidth * scale,
+                    (float)gameScreenHeight * scale
+                );
+                DrawTexturePro(target.texture, sourceRec, destRec, new Vector2(0, 0), 0.0f, WHITE);
 
                 EndDrawing();
                 //--------------------------------------------------------------------------------------

@@ -38,10 +38,14 @@ namespace Examples
             {
                 // Update
                 //----------------------------------------------------------------------------------
-                if (IsKeyDown(KEY_RIGHT)) ballPosition.X += 2.0f;
-                if (IsKeyDown(KEY_LEFT)) ballPosition.X -= 2.0f;
-                if (IsKeyDown(KEY_UP)) ballPosition.Y -= 2.0f;
-                if (IsKeyDown(KEY_DOWN)) ballPosition.Y += 2.0f;
+                if (IsKeyDown(KEY_RIGHT))
+                    ballPosition.X += 2.0f;
+                if (IsKeyDown(KEY_LEFT))
+                    ballPosition.X -= 2.0f;
+                if (IsKeyDown(KEY_UP))
+                    ballPosition.Y -= 2.0f;
+                if (IsKeyDown(KEY_DOWN))
+                    ballPosition.Y += 2.0f;
                 //----------------------------------------------------------------------------------
 
                 // Draw

@@ -79,11 +79,15 @@ namespace Examples
                 Vector2 mousePos = GetMousePosition();
 
                 // Move between colors with keys
-                if (IsKeyPressed(KEY_RIGHT)) colorSelected++;
-                else if (IsKeyPressed(KEY_LEFT)) colorSelected--;
+                if (IsKeyPressed(KEY_RIGHT))
+                    colorSelected++;
+                else if (IsKeyPressed(KEY_LEFT))
+                    colorSelected--;
 
-                if (colorSelected >= MAX_COLORS_COUNT) colorSelected = MAX_COLORS_COUNT - 1;
-                else if (colorSelected < 0) colorSelected = 0;
+                if (colorSelected >= MAX_COLORS_COUNT)
+                    colorSelected = MAX_COLORS_COUNT - 1;
+                else if (colorSelected < 0)
+                    colorSelected = 0;
 
                 // Choose color with mouse
                 for (int i = 0; i < MAX_COLORS_COUNT; i++)
@@ -93,7 +97,8 @@ namespace Examples
                         colorMouseHover = i;
                         break;
                     }
-                    else colorMouseHover = -1;
+                    else
+                        colorMouseHover = -1;
                 }
 
                 if ((colorMouseHover >= 0) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
@@ -104,8 +109,10 @@ namespace Examples
 
                 // Change brush size
                 brushSize += (int)(GetMouseWheelMove() * 5);
-                if (brushSize < 2) brushSize = 2;
-                if (brushSize > 50) brushSize = 50;
+                if (brushSize < 2)
+                    brushSize = 2;
+                if (brushSize > 50)
+                    brushSize = 50;
 
                 if (IsKeyPressed(KEY_C))
                 {
@@ -121,7 +128,8 @@ namespace Examples
                     // NOTE: To avoid discontinuous circles, we could store
                     // previous-next mouse points and just draw a line using brush size
                     BeginTextureMode(target);
-                    if (mousePos.Y > 50) DrawCircle((int)mousePos.X, (int)mousePos.Y, brushSize, colors[colorSelected]);
+                    if (mousePos.Y > 50)
+                        DrawCircle((int)mousePos.X, (int)mousePos.Y, brushSize, colors[colorSelected]);
                     EndTextureMode();
                 }
                 else if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON))
@@ -130,7 +138,8 @@ namespace Examples
 
                     // Erase circle from render texture
                     BeginTextureMode(target);
-                    if (mousePos.Y > 50) DrawCircle((int)mousePos.X, (int)mousePos.Y, brushSize, colors[0]);
+                    if (mousePos.Y > 50)
+                        DrawCircle((int)mousePos.X, (int)mousePos.Y, brushSize, colors[0]);
                     EndTextureMode();
                 }
                 else
@@ -139,8 +148,10 @@ namespace Examples
                 }
 
                 // Check mouse hover save button
-                if (CheckCollisionPointRec(mousePos, btnSaveRec)) btnSaveMouseHover = true;
-                else btnSaveMouseHover = false;
+                if (CheckCollisionPointRec(mousePos, btnSaveRec))
+                    btnSaveMouseHover = true;
+                else
+                    btnSaveMouseHover = false;
 
                 // Image saving logic
                 // NOTE: Saving painted texture to a default named image
@@ -176,8 +187,10 @@ namespace Examples
                 // Draw drawing circle for reference
                 if (mousePos.Y > 50)
                 {
-                    if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) DrawCircleLines((int)mousePos.X, (int)mousePos.Y, brushSize, colors[colorSelected]);
-                    else DrawCircle(GetMouseX(), GetMouseY(), brushSize, colors[colorSelected]);
+                    if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON))
+                        DrawCircleLines((int)mousePos.X, (int)mousePos.Y, brushSize, colors[colorSelected]);
+                    else
+                        DrawCircle(GetMouseX(), GetMouseY(), brushSize, colors[colorSelected]);
                 }
 
                 // Draw top panel
@@ -192,7 +205,8 @@ namespace Examples
 
                 DrawRectangleLines(10, 10, 30, 30, LIGHTGRAY);
 
-                if (colorMouseHover >= 0) DrawRectangleRec(colorsRecs[colorMouseHover], ColorAlpha(WHITE, 0.6f));
+                if (colorMouseHover >= 0)
+                    DrawRectangleRec(colorsRecs[colorMouseHover], ColorAlpha(WHITE, 0.6f));
 
                 DrawRectangleLinesEx(new Rectangle(colorsRecs[colorSelected].x - 2, colorsRecs[colorSelected].y - 2,
                                      colorsRecs[colorSelected].width + 4, colorsRecs[colorSelected].height + 4), 2, BLACK);

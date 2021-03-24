@@ -106,7 +106,8 @@ namespace Examples
                 ClearBackground(RAYWHITE);
 
                 // Draw explosion required frame rectangle
-                if (active) DrawTextureRec(explosion, frameRec, position, WHITE);
+                if (active)
+                    DrawTextureRec(explosion, frameRec, position, WHITE);
 
                 EndDrawing();
                 //----------------------------------------------------------------------------------

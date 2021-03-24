@@ -99,14 +99,29 @@ namespace Examples
 
                 switch (currentModel)
                 {
-                    case 0: DrawText("PLANE", 680, 10, 20, DARKBLUE); break;
-                    case 1: DrawText("CUBE", 680, 10, 20, DARKBLUE); break;
-                    case 2: DrawText("SPHERE", 680, 10, 20, DARKBLUE); break;
-                    case 3: DrawText("HEMISPHERE", 640, 10, 20, DARKBLUE); break;
-                    case 4: DrawText("CYLINDER", 680, 10, 20, DARKBLUE); break;
-                    case 5: DrawText("TORUS", 680, 10, 20, DARKBLUE); break;
-                    case 6: DrawText("KNOT", 680, 10, 20, DARKBLUE); break;
-                    default: break;
+                    case 0:
+                        DrawText("PLANE", 680, 10, 20, DARKBLUE);
+                        break;
+                    case 1:
+                        DrawText("CUBE", 680, 10, 20, DARKBLUE);
+                        break;
+                    case 2:
+                        DrawText("SPHERE", 680, 10, 20, DARKBLUE);
+                        break;
+                    case 3:
+                        DrawText("HEMISPHERE", 640, 10, 20, DARKBLUE);
+                        break;
+                    case 4:
+                        DrawText("CYLINDER", 680, 10, 20, DARKBLUE);
+                        break;
+                    case 5:
+                        DrawText("TORUS", 680, 10, 20, DARKBLUE);
+                        break;
+                    case 6:
+                        DrawText("KNOT", 680, 10, 20, DARKBLUE);
+                        break;
+                    default:
+                        break;
                 }
 
                 EndDrawing();
@@ -117,7 +132,8 @@ namespace Examples
             //--------------------------------------------------------------------------------------
 
             // Unload models data (GPU VRAM)
-            for (int i = 0; i < NUM_MODELS; i++) UnloadModel(models[i]);
+            for (int i = 0; i < NUM_MODELS; i++)
+                UnloadModel(models[i]);
 
             CloseWindow();        // Close window and OpenGL context
             //--------------------------------------------------------------------------------------

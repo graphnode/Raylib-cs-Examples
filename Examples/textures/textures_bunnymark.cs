@@ -82,9 +82,11 @@ namespace Examples
                     bunnies[i].position.Y += bunnies[i].speed.Y;
 
                     if (((bunnies[i].position.X + texBunny.width / 2) > GetScreenWidth()) ||
-                        ((bunnies[i].position.X + texBunny.width / 2) < 0)) bunnies[i].speed.X *= -1;
+                        ((bunnies[i].position.X + texBunny.width / 2) < 0))
+                        bunnies[i].speed.X *= -1;
                     if (((bunnies[i].position.Y + texBunny.height / 2) > GetScreenHeight()) ||
-                        ((bunnies[i].position.Y + texBunny.height / 2 - 40) < 0)) bunnies[i].speed.Y *= -1;
+                        ((bunnies[i].position.Y + texBunny.height / 2 - 40) < 0))
+                        bunnies[i].speed.Y *= -1;
                 }
                 //----------------------------------------------------------------------------------
 

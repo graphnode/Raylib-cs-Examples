@@ -107,7 +107,8 @@ namespace Examples
                     bary = Vector3Barycenter(nearestHit.position, ta, tb, tc);
                     hitTriangle = true;
                 }
-                else hitTriangle = false;
+                else
+                    hitTriangle = false;
 
                 RayHitInfo meshHitInfo = new RayHitInfo();
 
@@ -149,7 +150,8 @@ namespace Examples
                 DrawLine3D(tc, ta, PURPLE);
 
                 // Draw the mesh bbox if we hit it
-                if (hitMeshBBox) DrawBoundingBox(towerBBox, LIME);
+                if (hitMeshBBox)
+                    DrawBoundingBox(towerBBox, LIME);
 
                 // If we hit something, draw the cursor at the hit point
                 if (nearestHit.hit)
@@ -191,7 +193,8 @@ namespace Examples
                                         nearestHit.normal.Y,
                                         nearestHit.normal.Z), 10, ypos + 30, 10, BLACK);
 
-                    if (hitTriangle) DrawText(string.Format("Barycenter:{0:000.00} {1:000.00} {2:000.00}", bary.X, bary.Y, bary.Z), 10, ypos + 45, 10, BLACK);
+                    if (hitTriangle)
+                        DrawText(string.Format("Barycenter:{0:000.00} {1:000.00} {2:000.00}", bary.X, bary.Y, bary.Z), 10, ypos + 45, 10, BLACK);
                 }
 
                 DrawText("Use Mouse to Move Camera", 10, 430, 10, GRAY);

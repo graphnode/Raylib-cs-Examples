@@ -147,15 +147,19 @@ namespace Examples
 
                 if (!pause)
                 {
-                    if (IsKeyPressed(KEY_RIGHT)) incrementSpeed++;
-                    else if (IsKeyPressed(KEY_LEFT)) incrementSpeed--;
+                    if (IsKeyPressed(KEY_RIGHT))
+                        incrementSpeed++;
+                    else if (IsKeyPressed(KEY_LEFT))
+                        incrementSpeed--;
 
                     // TODO: The idea is to zoom and move around with mouse
                     // Probably offset movement should be proportional to zoom level
                     if (IsMouseButtonDown(MOUSE_LEFT_BUTTON) || IsMouseButtonDown(MOUSE_RIGHT_BUTTON))
                     {
-                        if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) zoom += zoom * 0.003f;
-                        if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) zoom -= zoom * 0.003f;
+                        if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
+                            zoom += zoom * 0.003f;
+                        if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON))
+                            zoom -= zoom * 0.003f;
 
                         Vector2 mousePos = GetMousePosition();
 

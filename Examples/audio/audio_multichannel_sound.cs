@@ -44,8 +44,10 @@ namespace Examples
             {
                 // Update
                 //----------------------------------------------------------------------------------
-                if (IsKeyPressed(KEY_ENTER)) PlaySoundMulti(fxWav);     // Play a new wav sound instance
-                if (IsKeyPressed(KEY_SPACE)) PlaySoundMulti(fxOgg);     // Play a new ogg sound instance
+                if (IsKeyPressed(KEY_ENTER))
+                    PlaySoundMulti(fxWav);     // Play a new wav sound instance
+                if (IsKeyPressed(KEY_SPACE))
+                    PlaySoundMulti(fxOgg);     // Play a new ogg sound instance
                 //----------------------------------------------------------------------------------
 
                 // Draw

@@ -31,7 +31,13 @@ namespace Examples
             InitWindow(screenWidth, screenHeight, "raylib [models] example - first person maze");
 
             // Define the camera to look into our 3d world
-            Camera3D camera = new Camera3D(new Vector3(0.2f, 0.4f, 0.2f), new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.0f, 1.0f, 0.0f), 45.0f, CameraType.CAMERA_PERSPECTIVE);
+            Camera3D camera = new Camera3D(
+                new Vector3(0.2f, 0.4f, 0.2f),
+                new Vector3(0.0f, 0.0f, 0.0f),
+                new Vector3(0.0f, 1.0f, 0.0f),
+                45.0f,
+                CameraType.CAMERA_PERSPECTIVE
+            );
 
             Image imMap = LoadImage("resources/cubicmap.png");      // Load cubicmap image (RAM)
             Texture2D cubicmap = LoadTextureFromImage(imMap);       // Convert image to texture to display (VRAM)
@@ -73,11 +79,15 @@ namespace Examples
                 int playerCellY = (int)(playerPos.Y - mapPosition.Z + 0.5f);
 
                 // Out-of-limits security check
-                if (playerCellX < 0) playerCellX = 0;
-                else if (playerCellX >= cubicmap.width) playerCellX = cubicmap.width - 1;
+                if (playerCellX < 0)
+                    playerCellX = 0;
+                else if (playerCellX >= cubicmap.width)
+                    playerCellX = cubicmap.width - 1;
 
-                if (playerCellY < 0) playerCellY = 0;
-                else if (playerCellY >= cubicmap.height) playerCellY = cubicmap.height - 1;
+                if (playerCellY < 0)
+                    playerCellY = 0;
+                else if (playerCellY >= cubicmap.height)
+                    playerCellY = cubicmap.height - 1;
 
                 // Check map collisions using image data and player position
                 // TODO: Improvement: Just check player surrounding cells for collision
@@ -86,9 +96,17 @@ namespace Examples
                     for (int x = 0; x < cubicmap.width; x++)
                     {
                         Color* mapPixelsData = (Color*)mapPixels.ToPointer();
-                        if ((mapPixelsData[y * cubicmap.width + x].r == 255) &&       // Collision: white pixel, only check R channel
-                            (CheckCollisionCircleRec(playerPos, playerRadius,
-                            new Rectangle(mapPosition.X - 0.5f + x * 1.0f, mapPosition.Z - 0.5f + y * 1.0f, 1.0f, 1.0f))))
+
+                        // Collision: white pixel, only check R channel
+                        Rectangle rec = new Rectangle(
+                            mapPosition.X - 0.5f + x * 1.0f,
+                            mapPosition.Z - 0.5f + y * 1.0f,
+                            1.0f,
+                            1.0f
+                        );
+
+                        bool collision = CheckCollisionCircleRec(playerPos, playerRadius, rec);
+                        if ((mapPixelsData[y * cubicmap.width + x].r == 255) && collision)
                         {
                             // Collision detected, reset camera position
                             camera.position = oldCamPos;
@@ -102,8 +120,9 @@ namespace Examples
                 BeginDrawing();
                 ClearBackground(RAYWHITE);
 
+                // Draw maze map
                 BeginMode3D(camera);
-                DrawModel(model, mapPosition, 1.0f, WHITE);                     // Draw maze map
+                DrawModel(model, mapPosition, 1.0f, WHITE);
                 EndMode3D();
 
                 DrawTextureEx(cubicmap, new Vector2(GetScreenWidth() - cubicmap.width * 4 - 20, 20), 0.0f, 4.0f, WHITE);

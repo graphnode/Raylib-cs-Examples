@@ -48,8 +48,10 @@ namespace Examples
             {
                 for (int x = 0; x < width; x++)
                 {
-                    if (((x / 32 + y / 32) / 1) % 2 == 0) pixels[y * width + x] = ORANGE;
-                    else pixels[y * width + x] = GOLD;
+                    if (((x / 32 + y / 32) / 1) % 2 == 0)
+                        pixels[y * width + x] = ORANGE;
+                    else
+                        pixels[y * width + x] = GOLD;
                 }
             }
 

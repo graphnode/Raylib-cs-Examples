@@ -29,7 +29,13 @@ namespace Examples
             InitWindow(screenWidth, screenHeight, "raylib [models] example - box collisions");
 
             // Define the camera to look into our 3d world
-            Camera3D camera = new Camera3D(new Vector3(0.0f, 10.0f, 10.0f), new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.0f, 1.0f, 0.0f), 45.0f, 0);
+            Camera3D camera = new Camera3D(
+                new Vector3(0.0f, 10.0f, 10.0f),
+                new Vector3(0.0f, 0.0f, 0.0f),
+                new Vector3(0.0f, 1.0f, 0.0f),
+                45.0f,
+                CameraType.CAMERA_PERSPECTIVE
+            );
 
             Vector3 playerPosition = new Vector3(0.0f, 1.0f, 2.0f);
             Vector3 playerSize = new Vector3(1.0f, 2.0f, 1.0f);
@@ -53,40 +59,42 @@ namespace Examples
                 //----------------------------------------------------------------------------------
 
                 // Move player
-                if (IsKeyDown(KEY_RIGHT)) playerPosition.X += 0.2f;
-                else if (IsKeyDown(KEY_LEFT)) playerPosition.X -= 0.2f;
-                else if (IsKeyDown(KEY_DOWN)) playerPosition.Z += 0.2f;
-                else if (IsKeyDown(KEY_UP)) playerPosition.Z -= 0.2f;
+                if (IsKeyDown(KEY_RIGHT))
+                    playerPosition.X += 0.2f;
+                else if (IsKeyDown(KEY_LEFT))
+                    playerPosition.X -= 0.2f;
+                else if (IsKeyDown(KEY_DOWN))
+                    playerPosition.Z += 0.2f;
+                else if (IsKeyDown(KEY_UP))
+                    playerPosition.Z -= 0.2f;
 
                 collision = false;
 
                 // Check collisions player vs enemy-box
-                if (CheckCollisionBoxes(
-                    new BoundingBox(new Vector3(playerPosition.X - playerSize.X / 2,
-                                             playerPosition.Y - playerSize.Y / 2,
-                                             playerPosition.Z - playerSize.Z / 2),
-                                  new Vector3(playerPosition.X + playerSize.X / 2,
-                                             playerPosition.Y + playerSize.Y / 2,
-                                             playerPosition.Z + playerSize.Z / 2)),
-                    new BoundingBox(new Vector3(enemyBoxPos.X - enemyBoxSize.X / 2,
-                                             enemyBoxPos.Y - enemyBoxSize.Y / 2,
-                                             enemyBoxPos.Z - enemyBoxSize.Z / 2),
-                                  new Vector3(enemyBoxPos.X + enemyBoxSize.X / 2,
-                                             enemyBoxPos.Y + enemyBoxSize.Y / 2,
-                                             enemyBoxPos.Z + enemyBoxSize.Z / 2)))) collision = true;
+                BoundingBox box1 = new BoundingBox(
+                    playerPosition - (playerSize / 2),
+                    playerPosition + (playerSize / 2)
+                );
+                BoundingBox box2 = new BoundingBox(
+                    enemyBoxPos - (enemyBoxSize / 2),
+                    enemyBoxPos + (enemyBoxSize / 2)
+                );
+
+                if (CheckCollisionBoxes(box1, box2))
+                    collision = true;
 
                 // Check collisions player vs enemy-sphere
-                if (CheckCollisionBoxSphere(
-                    new BoundingBox(new Vector3(playerPosition.X - playerSize.X / 2,
-                                             playerPosition.Y - playerSize.Y / 2,
-                                             playerPosition.Z - playerSize.Z / 2),
-                                  new Vector3(playerPosition.X + playerSize.X / 2,
-                                             playerPosition.Y + playerSize.Y / 2,
-                                             playerPosition.Z + playerSize.Z / 2)),
-                    enemySpherePos, enemySphereSize)) collision = true;
+                if (CheckCollisionBoxSphere(box1, enemySpherePos, enemySphereSize))
+                    collision = true;
 
-                if (collision) playerColor = RED;
-                else playerColor = GREEN;
+                if (collision)
+                {
+                    playerColor = RED;
+                }
+                else
+                {
+                    playerColor = GREEN;
+                }
                 //----------------------------------------------------------------------------------
 
                 // Draw
@@ -112,7 +120,6 @@ namespace Examples
                 EndMode3D();
 
                 DrawText("Move player with cursors to collide", 220, 40, 20, GRAY);
-
                 DrawFPS(10, 10);
 
                 EndDrawing();

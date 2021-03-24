@@ -26,12 +26,14 @@ namespace Examples
 
             InitWindow(screenWidth, screenHeight, "raylib [core] example - generate random values");
 
-            int framesCounter = 0;  // Variable used to count frames
+            // Variable used to count frames
+            int framesCounter = 0;
 
-            int randValue = GetRandomValue(-8, 5);   // Get a random integer number between -8 and 5 (both included)
+            // Get a random integer number between -8 and 5 (both included)
+            int randValue = GetRandomValue(-8, 5);
 
             SetTargetFPS(60);       // Set our game to run at 60 frames-per-second
-                                    //--------------------------------------------------------------------------------------
+            //--------------------------------------------------------------------------------------
 
             // Main game loop
             while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -55,7 +57,7 @@ namespace Examples
 
                 DrawText("Every 2 seconds a new random value is generated:", 130, 100, 20, MAROON);
 
-                DrawText(string.Format("{0}", randValue), 360, 180, 80, LIGHTGRAY);
+                DrawText($"{randValue}", 360, 180, 80, LIGHTGRAY);
 
                 EndDrawing();
                 //----------------------------------------------------------------------------------

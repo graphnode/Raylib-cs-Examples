@@ -67,7 +67,8 @@ namespace Examples
                     x = 0;
                     y += COLOR_SIZE + MARGIN_SIZE;
                 }
-                else x += (COLOR_SIZE * 2 + MARGIN_SIZE);
+                else
+                    x += (COLOR_SIZE * 2 + MARGIN_SIZE);
             }
 
             int activePattern = 0, activeCol = 0;
@@ -113,17 +114,27 @@ namespace Examples
                 // Handle keys
 
                 // Change scale
-                if (IsKeyPressed(KEY_UP)) scale += 0.25f;
-                if (IsKeyPressed(KEY_DOWN)) scale -= 0.25f;
-                if (scale > 10.0f) scale = 10.0f;
-                else if (scale <= 0.0f) scale = 0.25f;
+                if (IsKeyPressed(KEY_UP))
+                    scale += 0.25f;
+                if (IsKeyPressed(KEY_DOWN))
+                    scale -= 0.25f;
+                if (scale > 10.0f)
+                    scale = 10.0f;
+                else if (scale <= 0.0f)
+                    scale = 0.25f;
 
                 // Change rotation
-                if (IsKeyPressed(KEY_LEFT)) rotation -= 25.0f;
-                if (IsKeyPressed(KEY_RIGHT)) rotation += 25.0f;
+                if (IsKeyPressed(KEY_LEFT))
+                    rotation -= 25.0f;
+                if (IsKeyPressed(KEY_RIGHT))
+                    rotation += 25.0f;
 
                 // Reset
-                if (IsKeyPressed(KEY_SPACE)) { rotation = 0.0f; scale = 1.0f; }
+                if (IsKeyPressed(KEY_SPACE))
+                {
+                    rotation = 0.0f;
+                    scale = 1.0f;
+                }
                 //----------------------------------------------------------------------------------
 
                 // Draw
@@ -146,7 +157,8 @@ namespace Examples
                 for (int i = 0; i < colors.Length; i++)
                 {
                     DrawRectangleRec(colorRec[i], colors[i]);
-                    if (activeCol == i) DrawRectangleLinesEx(colorRec[i], 3, ColorAlpha(WHITE, 0.5f));
+                    if (activeCol == i)
+                        DrawRectangleLinesEx(colorRec[i], 3, ColorAlpha(WHITE, 0.5f));
                 }
 
                 DrawText("Scale (UP/DOWN to change)", 2 + MARGIN_SIZE, 80 + 256 + MARGIN_SIZE, 10, BLACK);

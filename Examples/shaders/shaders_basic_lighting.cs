@@ -113,10 +113,22 @@ namespace Examples
             {
                 // Update
                 //----------------------------------------------------------------------------------
-                if (IsKeyPressed(KEY_W)) { lights[0].enabled = !lights[0].enabled; }
-                if (IsKeyPressed(KEY_R)) { lights[1].enabled = !lights[1].enabled; }
-                if (IsKeyPressed(KEY_G)) { lights[2].enabled = !lights[2].enabled; }
-                if (IsKeyPressed(KEY_B)) { lights[3].enabled = !lights[3].enabled; }
+                if (IsKeyPressed(KEY_W))
+                {
+                    lights[0].enabled = !lights[0].enabled;
+                }
+                if (IsKeyPressed(KEY_R))
+                {
+                    lights[1].enabled = !lights[1].enabled;
+                }
+                if (IsKeyPressed(KEY_G))
+                {
+                    lights[2].enabled = !lights[2].enabled;
+                }
+                if (IsKeyPressed(KEY_B))
+                {
+                    lights[3].enabled = !lights[3].enabled;
+                }
 
                 UpdateCamera(ref camera);              // Update camera
 
@@ -158,10 +170,22 @@ namespace Examples
                 DrawModel(modelC, new Vector3(1.6f, 0, 0), 1.0f, WHITE);
 
                 // Draw markers to show where the lights are
-                if (lights[0].enabled) { DrawSphereEx(lights[0].position, 0.2f, 8, 8, WHITE); }
-                if (lights[1].enabled) { DrawSphereEx(lights[1].position, 0.2f, 8, 8, RED); }
-                if (lights[2].enabled) { DrawSphereEx(lights[2].position, 0.2f, 8, 8, GREEN); }
-                if (lights[3].enabled) { DrawSphereEx(lights[3].position, 0.2f, 8, 8, BLUE); }
+                if (lights[0].enabled)
+                {
+                    DrawSphereEx(lights[0].position, 0.2f, 8, 8, WHITE);
+                }
+                if (lights[1].enabled)
+                {
+                    DrawSphereEx(lights[1].position, 0.2f, 8, 8, RED);
+                }
+                if (lights[2].enabled)
+                {
+                    DrawSphereEx(lights[2].position, 0.2f, 8, 8, GREEN);
+                }
+                if (lights[3].enabled)
+                {
+                    DrawSphereEx(lights[3].position, 0.2f, 8, 8, BLUE);
+                }
 
                 DrawGrid(10, 1.0f);
 

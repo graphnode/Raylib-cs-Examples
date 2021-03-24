@@ -13,7 +13,6 @@ using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
-using static Raylib_cs.KeyboardKey;
 using static Raylib_cs.MouseButton;
 
 namespace Examples
@@ -42,9 +41,12 @@ namespace Examples
                 //----------------------------------------------------------------------------------
                 ballPosition = GetMousePosition();
 
-                if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) ballColor = MAROON;
-                else if (IsMouseButtonPressed(MOUSE_MIDDLE_BUTTON)) ballColor = LIME;
-                else if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON)) ballColor = DARKBLUE;
+                if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+                    ballColor = MAROON;
+                else if (IsMouseButtonPressed(MOUSE_MIDDLE_BUTTON))
+                    ballColor = LIME;
+                else if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
+                    ballColor = DARKBLUE;
                 //----------------------------------------------------------------------------------
 
                 // Draw

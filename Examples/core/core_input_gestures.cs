@@ -39,7 +39,7 @@ namespace Examples
             int currentGesture = (int)GESTURE_NONE;
             int lastGesture = (int)GESTURE_NONE;
 
-            //SetGesturesEnabled(0b0000000000001001);   // Enable only some gestures to be detected
+            // SetGesturesEnabled(0b0000000000001001);   // Enable only some gestures to be detected
 
             SetTargetFPS(60);
             //--------------------------------------------------------------------------------------
@@ -99,8 +99,10 @@ namespace Examples
                         // Reset gestures strings
                         if (gesturesCount >= MAX_GESTURE_STRINGS)
                         {
-                            for (int i = 0; i < MAX_GESTURE_STRINGS; i++) gestureStrings[i] = " ";
-
+                            for (int i = 0; i < MAX_GESTURE_STRINGS; i++)
+                            {
+                                gestureStrings[i] = " ";
+                            }
                             gesturesCount = 0;
                         }
                     }
@@ -119,17 +121,32 @@ namespace Examples
 
                 for (int i = 0; i < gesturesCount; i++)
                 {
-                    if (i % 2 == 0) DrawRectangle(10, 30 + 20 * i, 200, 20, ColorAlpha(LIGHTGRAY, 0.5f));
-                    else DrawRectangle(10, 30 + 20 * i, 200, 20, ColorAlpha(LIGHTGRAY, 0.3f));
+                    if (i % 2 == 0)
+                    {
+                        DrawRectangle(10, 30 + 20 * i, 200, 20, ColorAlpha(LIGHTGRAY, 0.5f));
+                    }
+                    else
+                    {
+                        DrawRectangle(10, 30 + 20 * i, 200, 20, ColorAlpha(LIGHTGRAY, 0.3f));
+                    }
 
-                    if (i < gesturesCount - 1) DrawText(gestureStrings[i], 35, 36 + 20 * i, 10, DARKGRAY);
-                    else DrawText(gestureStrings[i], 35, 36 + 20 * i, 10, MAROON);
+                    if (i < gesturesCount - 1)
+                    {
+                        DrawText(gestureStrings[i], 35, 36 + 20 * i, 10, DARKGRAY);
+                    }
+                    else
+                    {
+                        DrawText(gestureStrings[i], 35, 36 + 20 * i, 10, MAROON);
+                    }
                 }
 
                 DrawRectangleLines(10, 29, 200, screenHeight - 50, GRAY);
                 DrawText("DETECTED GESTURES", 50, 15, 10, GRAY);
 
-                if (currentGesture != (int)GESTURE_NONE) DrawCircleV(touchPosition, 30, MAROON);
+                if (currentGesture != (int)GESTURE_NONE)
+                {
+                    DrawCircleV(touchPosition, 30, MAROON);
+                }
 
                 EndDrawing();
                 //----------------------------------------------------------------------------------

@@ -61,12 +61,16 @@ namespace Examples
                 // Check button state
                 if (CheckCollisionPointRec(mousePoint, btnBounds))
                 {
-                    if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) btnState = 2;
-                    else btnState = 1;
+                    if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
+                        btnState = 2;
+                    else
+                        btnState = 1;
 
-                    if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) btnAction = true;
+                    if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
+                        btnAction = true;
                 }
-                else btnState = 0;
+                else
+                    btnState = 0;
 
                 if (btnAction)
                 {

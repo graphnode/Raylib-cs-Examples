@@ -40,7 +40,8 @@ namespace Examples
             {
                 // Update
                 //----------------------------------------------------------------------------------
-                if (IsKeyPressed(KEY_S)) scissorMode = !scissorMode;
+                if (IsKeyPressed(KEY_S))
+                    scissorMode = !scissorMode;
 
                 // Centre the scissor area around the mouse position
                 scissorArea.x = GetMouseX() - scissorArea.width / 2;
@@ -52,14 +53,20 @@ namespace Examples
                 BeginDrawing();
                 ClearBackground(RAYWHITE);
 
-                if (scissorMode) BeginScissorMode((int)scissorArea.x, (int)scissorArea.y, (int)scissorArea.width, (int)scissorArea.height);
+                if (scissorMode)
+                {
+                    BeginScissorMode((int)scissorArea.x, (int)scissorArea.y, (int)scissorArea.width, (int)scissorArea.height);
+                }
 
                 // Draw full screen rectangle and some text
                 // NOTE: Only part defined by scissor area will be rendered
                 DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), RED);
                 DrawText("Move the mouse around to reveal this text!", 190, 200, 20, LIGHTGRAY);
 
-                if (scissorMode) EndScissorMode();
+                if (scissorMode)
+                {
+                    EndScissorMode();
+                }
 
                 DrawRectangleLinesEx(scissorArea, 1, BLACK);
                 DrawText("Press S to toggle scissor test", 10, 10, 20, BLACK);
@@ -75,7 +82,5 @@ namespace Examples
 
             return 0;
         }
-
     }
-
 }

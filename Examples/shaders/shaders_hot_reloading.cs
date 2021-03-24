@@ -96,7 +96,8 @@ namespace Examples
                     }
                 }
 
-                if (IsKeyPressed(KEY_A)) shaderAutoReloading = !shaderAutoReloading;
+                if (IsKeyPressed(KEY_A))
+                    shaderAutoReloading = !shaderAutoReloading;
                 //----------------------------------------------------------------------------------
 
                 // Draw
@@ -111,7 +112,8 @@ namespace Examples
 
                 string info = $"PRESS [A] to TOGGLE SHADER AUTOLOADING: {(shaderAutoReloading ? "AUTO" : "MANUAL")}";
                 DrawText(info, 10, 10, 10, shaderAutoReloading ? RED : BLACK);
-                if (!shaderAutoReloading) DrawText("MOUSE CLICK to SHADER RE-LOADING", 10, 30, 10, BLACK);
+                if (!shaderAutoReloading)
+                    DrawText("MOUSE CLICK to SHADER RE-LOADING", 10, 30, 10, BLACK);
 
                 // DrawText($"Shader last modification: ", 10, 430, 10, BLACK);
 

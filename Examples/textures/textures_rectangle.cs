@@ -56,16 +56,21 @@ namespace Examples
                     framesCounter = 0;
                     currentFrame++;
 
-                    if (currentFrame > 5) currentFrame = 0;
+                    if (currentFrame > 5)
+                        currentFrame = 0;
 
                     frameRec.x = (float)currentFrame * (float)scarfy.width / 6;
                 }
 
-                if (IsKeyPressed(KEY_RIGHT)) framesSpeed++;
-                else if (IsKeyPressed(KEY_LEFT)) framesSpeed--;
+                if (IsKeyPressed(KEY_RIGHT))
+                    framesSpeed++;
+                else if (IsKeyPressed(KEY_LEFT))
+                    framesSpeed--;
 
-                if (framesSpeed > MAX_FRAME_SPEED) framesSpeed = MAX_FRAME_SPEED;
-                else if (framesSpeed < MIN_FRAME_SPEED) framesSpeed = MIN_FRAME_SPEED;
+                if (framesSpeed > MAX_FRAME_SPEED)
+                    framesSpeed = MAX_FRAME_SPEED;
+                else if (framesSpeed < MIN_FRAME_SPEED)
+                    framesSpeed = MIN_FRAME_SPEED;
                 //----------------------------------------------------------------------------------
 
                 // Draw
@@ -83,7 +88,8 @@ namespace Examples
 
                 for (int i = 0; i < MAX_FRAME_SPEED; i++)
                 {
-                    if (i < framesSpeed) DrawRectangle(250 + 21 * i, 205, 20, 20, RED);
+                    if (i < framesSpeed)
+                        DrawRectangle(250 + 21 * i, 205, 20, 20, RED);
                     DrawRectangleLines(250 + 21 * i, 205, 20, 20, MAROON);
                 }
 

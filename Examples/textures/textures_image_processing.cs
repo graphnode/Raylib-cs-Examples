@@ -70,7 +70,8 @@ namespace Examples
             Rectangle[] toggleRecs = new Rectangle[NUM_PROCESSES];
             int mouseHoverRec = -1;
 
-            for (int i = 0; i < NUM_PROCESSES; i++) toggleRecs[i] = new Rectangle(40, 50 + 32 * i, 150, 30);
+            for (int i = 0; i < NUM_PROCESSES; i++)
+                toggleRecs[i] = new Rectangle(40, 50 + 32 * i, 150, 30);
 
             SetTargetFPS(60);
             //---------------------------------------------------------------------------------------
@@ -95,19 +96,22 @@ namespace Examples
                         }
                         break;
                     }
-                    else mouseHoverRec = -1;
+                    else
+                        mouseHoverRec = -1;
                 }
 
                 if (IsKeyPressed(KEY_DOWN))
                 {
                     currentProcess++;
-                    if (currentProcess > 7) currentProcess = 0;
+                    if (currentProcess > 7)
+                        currentProcess = 0;
                     textureReload = true;
                 }
                 else if (IsKeyPressed(KEY_UP))
                 {
                     currentProcess--;
-                    if (currentProcess < 0) currentProcess = 7;
+                    if (currentProcess < 0)
+                        currentProcess = 7;
                     textureReload = true;
                 }
 
@@ -121,14 +125,29 @@ namespace Examples
                     // with a texture and by shaders
                     switch (currentProcess)
                     {
-                        case (int)ImageProcess.COLOR_GRAYSCALE: ImageColorGrayscale(ref image); break;
-                        case (int)ImageProcess.COLOR_TINT: ImageColorTint(ref image, GREEN); break;
-                        case (int)ImageProcess.COLOR_INVERT: ImageColorInvert(ref image); break;
-                        case (int)ImageProcess.COLOR_CONTRAST: ImageColorContrast(ref image, -40); break;
-                        case (int)ImageProcess.COLOR_BRIGHTNESS: ImageColorBrightness(ref image, -80); break;
-                        case (int)ImageProcess.FLIP_VERTICAL: ImageFlipVertical(ref image); break;
-                        case (int)ImageProcess.FLIP_HORIZONTAL: ImageFlipHorizontal(ref image); break;
-                        default: break;
+                        case (int)ImageProcess.COLOR_GRAYSCALE:
+                            ImageColorGrayscale(ref image);
+                            break;
+                        case (int)ImageProcess.COLOR_TINT:
+                            ImageColorTint(ref image, GREEN);
+                            break;
+                        case (int)ImageProcess.COLOR_INVERT:
+                            ImageColorInvert(ref image);
+                            break;
+                        case (int)ImageProcess.COLOR_CONTRAST:
+                            ImageColorContrast(ref image, -40);
+                            break;
+                        case (int)ImageProcess.COLOR_BRIGHTNESS:
+                            ImageColorBrightness(ref image, -80);
+                            break;
+                        case (int)ImageProcess.FLIP_VERTICAL:
+                            ImageFlipVertical(ref image);
+                            break;
+                        case (int)ImageProcess.FLIP_HORIZONTAL:
+                            ImageFlipHorizontal(ref image);
+                            break;
+                        default:
+                            break;
                     }
 
                     IntPtr pixels = LoadImageColors(image);     // Get pixel data from image (RGBA 32bit)

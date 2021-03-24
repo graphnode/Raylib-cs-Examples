@@ -58,14 +58,17 @@ namespace Examples
                 {
                     pause = !pause;
 
-                    if (pause) PauseMusicStream(music);
-                    else ResumeMusicStream(music);
+                    if (pause)
+                        PauseMusicStream(music);
+                    else
+                        ResumeMusicStream(music);
                 }
 
                 // Get timePlayed scaled to bar dimensions (400 pixels)
                 timePlayed = GetMusicTimePlayed(music) / GetMusicTimeLength(music) * 400;
 
-                if (timePlayed > 400) StopMusicStream(music);
+                if (timePlayed > 400)
+                    StopMusicStream(music);
                 //----------------------------------------------------------------------------------
 
                 // Draw

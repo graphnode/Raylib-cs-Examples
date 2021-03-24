@@ -131,19 +131,23 @@ namespace Examples
             {
                 // Update
                 //----------------------------------------------------------------------------------
-                if (IsKeyPressed(KEY_T)) boundedT = !boundedT;
+                if (IsKeyPressed(KEY_T))
+                    boundedT = !boundedT;
 
                 // Choose easing for the X axis
                 if (IsKeyPressed(KEY_RIGHT))
                 {
                     easingX++;
 
-                    if (easingX > EasingTypes.EASING_NONE) easingX = 0;
+                    if (easingX > EasingTypes.EASING_NONE)
+                        easingX = 0;
                 }
                 else if (IsKeyPressed(KEY_LEFT))
                 {
-                    if (easingX == 0) easingX = EasingTypes.EASING_NONE;
-                    else easingX--;
+                    if (easingX == 0)
+                        easingX = EasingTypes.EASING_NONE;
+                    else
+                        easingX--;
                 }
 
                 // Choose easing for the Y axis
@@ -151,20 +155,27 @@ namespace Examples
                 {
                     easingY++;
 
-                    if (easingY > EasingTypes.EASING_NONE) easingY = 0;
+                    if (easingY > EasingTypes.EASING_NONE)
+                        easingY = 0;
                 }
                 else if (IsKeyPressed(KEY_UP))
                 {
-                    if (easingY == 0) easingY = EasingTypes.EASING_NONE;
-                    else easingY--;
+                    if (easingY == 0)
+                        easingY = EasingTypes.EASING_NONE;
+                    else
+                        easingY--;
                 }
 
                 // Change d (duration) value
-                if (IsKeyPressed(KEY_W) && d < D_MAX - D_STEP) d += D_STEP;
-                else if (IsKeyPressed(KEY_Q) && d > D_MIN + D_STEP) d -= D_STEP;
+                if (IsKeyPressed(KEY_W) && d < D_MAX - D_STEP)
+                    d += D_STEP;
+                else if (IsKeyPressed(KEY_Q) && d > D_MIN + D_STEP)
+                    d -= D_STEP;
 
-                if (IsKeyDown(KEY_S) && d < D_MAX - D_STEP_FINE) d += D_STEP_FINE;
-                else if (IsKeyDown(KEY_A) && d > D_MIN + D_STEP_FINE) d -= D_STEP_FINE;
+                if (IsKeyDown(KEY_S) && d < D_MAX - D_STEP_FINE)
+                    d += D_STEP_FINE;
+                else if (IsKeyDown(KEY_A) && d > D_MIN + D_STEP_FINE)
+                    d -= D_STEP_FINE;
 
                 // Play, pause and restart controls
                 if (IsKeyPressed(KEY_SPACE) || IsKeyPressed(KEY_T) ||
@@ -180,7 +191,8 @@ namespace Examples
                     paused = true;
                 }
 
-                if (IsKeyPressed(KEY_ENTER)) paused = !paused;
+                if (IsKeyPressed(KEY_ENTER))
+                    paused = !paused;
 
                 // Movement computation
                 if (!paused && ((boundedT && t < d) || !boundedT))

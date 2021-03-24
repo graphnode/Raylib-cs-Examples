@@ -72,14 +72,22 @@ namespace Examples
                 dstRecV.height = mousePosition.Y - dstRecV.y;
 
                 // Set a minimum width and/or height
-                if (dstRec1.width < 1.0f) dstRec1.width = 1.0f;
-                if (dstRec1.width > 300.0f) dstRec1.width = 300.0f;
-                if (dstRec1.height < 1.0f) dstRec1.height = 1.0f;
-                if (dstRec2.width < 1.0f) dstRec2.width = 1.0f;
-                if (dstRec2.width > 300.0f) dstRec2.width = 300.0f;
-                if (dstRec2.height < 1.0f) dstRec2.height = 1.0f;
-                if (dstRecH.width < 1.0f) dstRecH.width = 1.0f;
-                if (dstRecV.height < 1.0f) dstRecV.height = 1.0f;
+                if (dstRec1.width < 1.0f)
+                    dstRec1.width = 1.0f;
+                if (dstRec1.width > 300.0f)
+                    dstRec1.width = 300.0f;
+                if (dstRec1.height < 1.0f)
+                    dstRec1.height = 1.0f;
+                if (dstRec2.width < 1.0f)
+                    dstRec2.width = 1.0f;
+                if (dstRec2.width > 300.0f)
+                    dstRec2.width = 300.0f;
+                if (dstRec2.height < 1.0f)
+                    dstRec2.height = 1.0f;
+                if (dstRecH.width < 1.0f)
+                    dstRecH.width = 1.0f;
+                if (dstRecV.height < 1.0f)
+                    dstRecV.height = 1.0f;
                 //----------------------------------------------------------------------------------
 
                 // Draw

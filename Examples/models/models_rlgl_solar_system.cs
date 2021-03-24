@@ -109,8 +109,7 @@ namespace Examples
                 rlPopMatrix();
 
                 // Some reference elements (not affected by previous matrix transformations)
-                DrawCircle3D(new Vector3(0.0f, 0.0f, 0.0f), earthOrbitRadius, new Vector3(
-                1, 0, 0), 90.0f, ColorAlpha(RED, 0.5f));
+                DrawCircle3D(new Vector3(0.0f, 0.0f, 0.0f), earthOrbitRadius, new Vector3(1, 0, 0), 90.0f, ColorAlpha(RED, 0.5f));
                 DrawGrid(20, 1.0f);
 
                 EndMode3D();

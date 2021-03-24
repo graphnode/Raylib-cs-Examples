@@ -25,7 +25,10 @@ namespace ImGuiDemo
         // Persistent user state
         static bool[] s_opened = { true, true, true, true };
 
-        static void SetThing(out float i, float val) { i = val; }
+        static void SetThing(out float i, float val)
+        {
+            i = val;
+        }
 
         static void Main(string[] args)
         {
@@ -160,7 +163,10 @@ namespace ImGuiDemo
 
                     for (int n = 0; n < s_opened.Length; n++)
                     {
-                        if (n > 0) { ImGui.SameLine(); }
+                        if (n > 0)
+                        {
+                            ImGui.SameLine();
+                        }
                         ImGui.Checkbox(names[n], ref s_opened[n]);
                     }
 

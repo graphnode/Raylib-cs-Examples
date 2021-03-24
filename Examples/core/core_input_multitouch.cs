@@ -48,15 +48,22 @@ namespace Examples
 
                 ballColor = BEIGE;
 
-                if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) ballColor = MAROON;
-                if (IsMouseButtonDown(MOUSE_MIDDLE_BUTTON)) ballColor = LIME;
-                if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) ballColor = DARKBLUE;
+                if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
+                    ballColor = MAROON;
+                if (IsMouseButtonDown(MOUSE_MIDDLE_BUTTON))
+                    ballColor = LIME;
+                if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON))
+                    ballColor = DARKBLUE;
 
-                if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) touchCounter = 10;
-                if (IsMouseButtonPressed(MOUSE_MIDDLE_BUTTON)) touchCounter = 10;
-                if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON)) touchCounter = 10;
+                if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+                    touchCounter = 10;
+                if (IsMouseButtonPressed(MOUSE_MIDDLE_BUTTON))
+                    touchCounter = 10;
+                if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
+                    touchCounter = 10;
 
-                if (touchCounter > 0) touchCounter--;
+                if (touchCounter > 0)
+                    touchCounter--;
                 //----------------------------------------------------------------------------------
 
                 // Draw
@@ -73,7 +80,7 @@ namespace Examples
                     {
                         // Draw circle and touch index number
                         DrawCircleV(touchPosition, 34, ORANGE);
-                        DrawText(string.Format("{0}", i), (int)(touchPosition.X - 10), (int)(touchPosition.Y - 70), 40, BLACK);
+                        DrawText($"{i}", (int)(touchPosition.X - 10), (int)(touchPosition.Y - 70), 40, BLACK);
                     }
                 }
 

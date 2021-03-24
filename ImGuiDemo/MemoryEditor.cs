@@ -94,10 +94,26 @@ namespace ImGuiDemo
 
             if (DataEditingAddr != -1)
             {
-                if (ImGui.IsKeyPressed(ImGui.GetKeyIndex(ImGuiKey.UpArrow)) && DataEditingAddr >= Rows) { DataEditingAddr -= Rows; DataEditingTakeFocus = true; }
-                else if (ImGui.IsKeyPressed(ImGui.GetKeyIndex(ImGuiKey.DownArrow)) && DataEditingAddr < mem_size - Rows) { DataEditingAddr += Rows; DataEditingTakeFocus = true; }
-                else if (ImGui.IsKeyPressed(ImGui.GetKeyIndex(ImGuiKey.LeftArrow)) && DataEditingAddr > 0) { DataEditingAddr -= 1; DataEditingTakeFocus = true; }
-                else if (ImGui.IsKeyPressed(ImGui.GetKeyIndex(ImGuiKey.RightArrow)) && DataEditingAddr < mem_size - 1) { DataEditingAddr += 1; DataEditingTakeFocus = true; }
+                if (ImGui.IsKeyPressed(ImGui.GetKeyIndex(ImGuiKey.UpArrow)) && DataEditingAddr >= Rows)
+                {
+                    DataEditingAddr -= Rows;
+                    DataEditingTakeFocus = true;
+                }
+                else if (ImGui.IsKeyPressed(ImGui.GetKeyIndex(ImGuiKey.DownArrow)) && DataEditingAddr < mem_size - Rows)
+                {
+                    DataEditingAddr += Rows;
+                    DataEditingTakeFocus = true;
+                }
+                else if (ImGui.IsKeyPressed(ImGui.GetKeyIndex(ImGuiKey.LeftArrow)) && DataEditingAddr > 0)
+                {
+                    DataEditingAddr -= 1;
+                    DataEditingTakeFocus = true;
+                }
+                else if (ImGui.IsKeyPressed(ImGui.GetKeyIndex(ImGuiKey.RightArrow)) && DataEditingAddr < mem_size - 1)
+                {
+                    DataEditingAddr += 1;
+                    DataEditingTakeFocus = true;
+                }
             }
             if ((DataEditingAddr / Rows) != (data_editing_addr_backup / Rows))
             {
@@ -208,7 +224,8 @@ namespace ImGuiDemo
             int rows_backup = Rows;
             if (ImGui.DragInt("##rows", ref Rows, 0.2f, 4, 32, "%.0f rows"))
             {
-                if (Rows <= 0) Rows = 4;
+                if (Rows <= 0)
+                    Rows = 4;
                 Vector2 new_window_size = ImGui.GetWindowSize();
                 new_window_size.X += (Rows - rows_backup) * (cell_width + glyph_width);
                 ImGui.SetWindowSize(new_window_size);

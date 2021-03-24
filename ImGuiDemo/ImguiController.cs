@@ -205,7 +205,10 @@ namespace ImGuiDemo
         public void Draw()
         {
             ImGui.Render();
-            unsafe { RenderCommandLists(ImGui.GetDrawData()); }
+            unsafe
+            {
+                RenderCommandLists(ImGui.GetDrawData());
+            }
         }
 
         // Returns a Color struct from hexadecimal value

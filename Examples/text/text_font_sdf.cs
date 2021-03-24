@@ -102,13 +102,18 @@ namespace Examples
                 //----------------------------------------------------------------------------------
                 fontSize += GetMouseWheelMove() * 8.0f;
 
-                if (fontSize < 6) fontSize = 6;
+                if (fontSize < 6)
+                    fontSize = 6;
 
-                if (IsKeyDown(KEY_SPACE)) currentFont = 1;
-                else currentFont = 0;
+                if (IsKeyDown(KEY_SPACE))
+                    currentFont = 1;
+                else
+                    currentFont = 0;
 
-                if (currentFont == 0) textSize = MeasureTextEx(fontDefault, msg, fontSize, 0);
-                else textSize = MeasureTextEx(fontSDF, msg, fontSize, 0);
+                if (currentFont == 0)
+                    textSize = MeasureTextEx(fontDefault, msg, fontSize, 0);
+                else
+                    textSize = MeasureTextEx(fontSDF, msg, fontSize, 0);
 
                 fontPosition.X = GetScreenWidth() / 2 - textSize.X / 2;
                 fontPosition.Y = GetScreenHeight() / 2 - textSize.Y / 2 + 80;
@@ -134,8 +139,10 @@ namespace Examples
                     DrawTexture(fontDefault.texture, 10, 10, BLACK);
                 }
 
-                if (currentFont == 1) DrawText("SDF!", 320, 20, 80, RED);
-                else DrawText("default font", 315, 40, 30, GRAY);
+                if (currentFont == 1)
+                    DrawText("SDF!", 320, 20, 80, RED);
+                else
+                    DrawText("default font", 315, 40, 30, GRAY);
 
                 DrawText("FONT SIZE: 16.0", GetScreenWidth() - 240, 20, 20, DARKGRAY);
                 DrawText(string.Format("RENDER SIZE: {0:00.00}", fontSize), GetScreenWidth() - 240, 50, 20, DARKGRAY);

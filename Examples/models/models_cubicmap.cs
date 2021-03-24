@@ -30,7 +30,13 @@ namespace Examples
             InitWindow(screenWidth, screenHeight, "raylib [models] example - cubesmap loading and drawing");
 
             // Define the camera to look into our 3d world
-            Camera3D camera = new Camera3D(new Vector3(16.0f, 14.0f, 16.0f), new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.0f, 1.0f, 0.0f), 45.0f, 0);
+            Camera3D camera = new Camera3D(
+                new Vector3(16.0f, 14.0f, 16.0f),
+                new Vector3(0.0f, 0.0f, 0.0f),
+                new Vector3(0.0f, 1.0f, 0.0f),
+                45.0f,
+                CameraType.CAMERA_PERSPECTIVE
+            );
 
             Image image = LoadImage("resources/cubicmap.png");      // Load cubicmap image (RAM)
             Texture2D cubicmap = LoadTextureFromImage(image);       // Convert image to texture to display (VRAM)

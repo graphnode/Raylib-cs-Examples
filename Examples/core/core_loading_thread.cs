@@ -22,14 +22,17 @@ namespace Examples
         STATE_WAITING,
         STATE_LOADING,
         STATE_FINISHED
-    };
+    }
 
     public class core_loading_thread
     {
         // C# bool is atomic. Used for synchronization
         // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/language-specification/variables#atomicity-of-variable-references
-        static bool dataLoaded = false; // Data Loaded completion indicator
-        static int dataProgress = 0;                // Data progress accumulator
+        // Data Loaded completion indicator
+        static bool dataLoaded = false;
+
+        // Data progress accumulator
+        static int dataProgress = 0;
 
         public static int Main()
         {
@@ -97,7 +100,7 @@ namespace Examples
 
                 // Draw
                 //----------------------------------------------------------------------------------
-                BeginDrawing();                
+                BeginDrawing();
                 ClearBackground(RAYWHITE);
 
                 switch (state)
@@ -146,7 +149,7 @@ namespace Examples
                 //clock_t currentTime = clock() - prevTime;
                 //timeCounter = currentTime*1000/CLOCKS_PER_SEC;
                 timeCounter += 1;
-                
+
                 // We accumulate time over a global variable to be used in
                 // main thread as a progress bar
                 dataProgress = timeCounter/10;

@@ -62,9 +62,11 @@ namespace Examples
                     ray = GetMouseRay(GetMousePosition(), camera);
 
                     // Check collision between ray and box
-                    collision = CheckCollisionRayBox(ray,
-                                new BoundingBox(new Vector3(cubePosition.X - cubeSize.X / 2, cubePosition.Y - cubeSize.Y / 2, cubePosition.Z - cubeSize.Z / 2),
-                                              new Vector3(cubePosition.X + cubeSize.X / 2, cubePosition.Y + cubeSize.Y / 2, cubePosition.Z + cubeSize.Z / 2)));
+                    BoundingBox box = new BoundingBox(
+                        cubePosition - cubeSize / 2,
+                        cubePosition + cubeSize / 2
+                    );
+                    collision = CheckCollisionRayBox(ray, box);
                 }
                 //----------------------------------------------------------------------------------
 
@@ -95,7 +97,11 @@ namespace Examples
 
                 DrawText("Try selecting the box with mouse!", 240, 10, 20, DARKGRAY);
 
-                if (collision) DrawText("BOX SELECTED", (screenWidth - MeasureText("BOX SELECTED", 30)) / 2, (int)(screenHeight * 0.1f), 30, GREEN);
+                if (collision)
+                {
+                    int posX = (screenWidth - MeasureText("BOX SELECTED", 30)) / 2;
+                    DrawText("BOX SELECTED", posX, (int)(screenHeight * 0.1f), 30, GREEN);
+                }
 
                 DrawFPS(10, 10);
 

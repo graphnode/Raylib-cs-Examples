@@ -53,8 +53,10 @@ namespace Examples
                 //----------------------------------------------------------------------------------
                 if (IsKeyPressed(KEY_SPACE))
                 {
-                    if ((int)blendMode >= (blendCountMax - 1)) blendMode = 0;
-                    else blendMode++;
+                    if ((int)blendMode >= (blendCountMax - 1))
+                        blendMode = 0;
+                    else
+                        blendMode++;
                 }
                 //----------------------------------------------------------------------------------
 
@@ -75,11 +77,20 @@ namespace Examples
 
                 switch (blendMode)
                 {
-                    case BLEND_ALPHA: DrawText("Current: BLEND_ALPHA", (screenWidth / 2) - 60, 370, 10, GRAY); break;
-                    case BLEND_ADDITIVE: DrawText("Current: BLEND_ADDITIVE", (screenWidth / 2) - 60, 370, 10, GRAY); break;
-                    case BLEND_MULTIPLIED: DrawText("Current: BLEND_MULTIPLIED", (screenWidth / 2) - 60, 370, 10, GRAY); break;
-                    case BLEND_ADD_COLORS: DrawText("Current: BLEND_ADD_COLORS", (screenWidth / 2) - 60, 370, 10, GRAY); break;
-                    default: break;
+                    case BLEND_ALPHA:
+                        DrawText("Current: BLEND_ALPHA", (screenWidth / 2) - 60, 370, 10, GRAY);
+                        break;
+                    case BLEND_ADDITIVE:
+                        DrawText("Current: BLEND_ADDITIVE", (screenWidth / 2) - 60, 370, 10, GRAY);
+                        break;
+                    case BLEND_MULTIPLIED:
+                        DrawText("Current: BLEND_MULTIPLIED", (screenWidth / 2) - 60, 370, 10, GRAY);
+                        break;
+                    case BLEND_ADD_COLORS:
+                        DrawText("Current: BLEND_ADD_COLORS", (screenWidth / 2) - 60, 370, 10, GRAY);
+                        break;
+                    default:
+                        break;
                 }
 
                 DrawText("(c) Cyberpunk Street Environment by Luis Zuno (@ansimuz)", screenWidth - 330, screenHeight - 20, 10, GRAY);

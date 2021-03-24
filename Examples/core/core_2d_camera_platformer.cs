@@ -112,8 +112,10 @@ namespace Examples
 
                 camera.zoom += ((float)GetMouseWheelMove() * 0.05f);
 
-                if (camera.zoom > 3.0f) camera.zoom = 3.0f;
-                else if (camera.zoom < 0.25f) camera.zoom = 0.25f;
+                if (camera.zoom > 3.0f)
+                    camera.zoom = 3.0f;
+                else if (camera.zoom < 0.25f)
+                    camera.zoom = 0.25f;
 
                 if (IsKeyPressed(KEY_R))
                 {
@@ -121,7 +123,8 @@ namespace Examples
                     player.position = new Vector2(400, 280);
                 }
 
-                if (IsKeyPressed(KEY_C)) cameraOption = (cameraOption + 1) % cameraUpdatersLength;
+                if (IsKeyPressed(KEY_C))
+                    cameraOption = (cameraOption + 1) % cameraUpdatersLength;
 
                 // Call update camera function by its pointer
                 cameraUpdaters[cameraOption](ref camera, ref player, envItems, deltaTime, screenWidth, screenHeight);
@@ -164,8 +167,10 @@ namespace Examples
 
         static void UpdatePlayer(ref Player player, EnvItem[] envItems, float delta)
         {
-            if (IsKeyDown(KEY_LEFT)) player.position.X -= PLAYER_HOR_SPD * delta;
-            if (IsKeyDown(KEY_RIGHT)) player.position.X += PLAYER_HOR_SPD * delta;
+            if (IsKeyDown(KEY_LEFT))
+                player.position.X -= PLAYER_HOR_SPD * delta;
+            if (IsKeyDown(KEY_RIGHT))
+                player.position.X += PLAYER_HOR_SPD * delta;
             if (IsKeyDown(KEY_SPACE) && player.canJump)
             {
                 player.speed = -PLAYER_JUMP_SPD;
@@ -195,7 +200,8 @@ namespace Examples
                 player.speed += G * delta;
                 player.canJump = false;
             }
-            else player.canJump = true;
+            else
+                player.canJump = true;
         }
 
         static void UpdateCameraCenter(ref Camera2D camera, ref Player player, EnvItem[] envItems, float delta, int width, int height)
@@ -222,10 +228,14 @@ namespace Examples
             Vector2 max = GetWorldToScreen2D(new Vector2(maxX, maxY), camera);
             Vector2 min = GetWorldToScreen2D(new Vector2(minX, minY), camera);
 
-            if (max.X < width) camera.offset.X = width - (max.X - width / 2);
-            if (max.Y < height) camera.offset.Y = height - (max.Y - height / 2);
-            if (min.X > 0) camera.offset.X = width / 2 - min.X;
-            if (min.Y > 0) camera.offset.Y = height / 2 - min.Y;
+            if (max.X < width)
+                camera.offset.X = width - (max.X - width / 2);
+            if (max.Y < height)
+                camera.offset.Y = height - (max.Y - height / 2);
+            if (min.X > 0)
+                camera.offset.X = width / 2 - min.X;
+            if (min.Y > 0)
+                camera.offset.Y = height / 2 - min.Y;
         }
 
         static void UpdateCameraCenterSmoothFollow(ref Camera2D camera, ref Player player, EnvItem[] envItems, float delta, int width, int height)
@@ -295,10 +305,14 @@ namespace Examples
             Vector2 bboxWorldMax = GetScreenToWorld2D(new Vector2((1 + bbox.X) * 0.5f * width, (1 + bbox.Y) * 0.5f * height), camera);
             camera.offset = new Vector2((1 - bbox.X) * 0.5f * width, (1 - bbox.Y) * 0.5f * height);
 
-            if (player.position.X < bboxWorldMin.X) camera.target.X = player.position.X;
-            if (player.position.Y < bboxWorldMin.Y) camera.target.Y = player.position.Y;
-            if (player.position.X > bboxWorldMax.X) camera.target.X = bboxWorldMin.X + (player.position.X - bboxWorldMax.X);
-            if (player.position.Y > bboxWorldMax.Y) camera.target.Y = bboxWorldMin.Y + (player.position.Y - bboxWorldMax.Y);
+            if (player.position.X < bboxWorldMin.X)
+                camera.target.X = player.position.X;
+            if (player.position.Y < bboxWorldMin.Y)
+                camera.target.Y = player.position.Y;
+            if (player.position.X > bboxWorldMax.X)
+                camera.target.X = bboxWorldMin.X + (player.position.X - bboxWorldMax.X);
+            if (player.position.Y > bboxWorldMax.Y)
+                camera.target.Y = bboxWorldMin.Y + (player.position.Y - bboxWorldMax.Y);
         }
     }
 }
