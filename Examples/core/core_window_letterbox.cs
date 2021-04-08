@@ -17,7 +17,7 @@ using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
 using static Raylib_cs.KeyboardKey;
-using static Raylib_cs.TextureFilterMode;
+using static Raylib_cs.TextureFilter;
 
 namespace Examples
 {
@@ -29,7 +29,7 @@ namespace Examples
             const int windowHeight = 450;
 
             // Enable config flags for resizable window and vertical synchro
-            SetConfigFlags(ConfigFlag.FLAG_WINDOW_RESIZABLE | ConfigFlag.FLAG_VSYNC_HINT);
+            SetConfigFlags(ConfigFlags.FLAG_WINDOW_RESIZABLE | ConfigFlags.FLAG_VSYNC_HINT);
             InitWindow(windowWidth, windowHeight, "raylib [core] example - window scale letterbox");
             SetWindowMinSize(320, 240);
 

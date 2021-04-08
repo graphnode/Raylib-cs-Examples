@@ -14,8 +14,8 @@ using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
 using static Raylib_cs.KeyboardKey;
-using static Raylib_cs.ConfigFlag;
-using static Raylib_cs.TextureFilterMode;
+using static Raylib_cs.ConfigFlags;
+using static Raylib_cs.TextureFilter;
 using static Raylib_cs.MouseButton;
 
 namespace Examples

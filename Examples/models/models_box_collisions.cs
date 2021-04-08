@@ -34,7 +34,7 @@ namespace Examples
                 new Vector3(0.0f, 0.0f, 0.0f),
                 new Vector3(0.0f, 1.0f, 0.0f),
                 45.0f,
-                CameraType.CAMERA_PERSPECTIVE
+                CameraProjection.CAMERA_PERSPECTIVE
             );
 
             Vector3 playerPosition = new Vector3(0.0f, 1.0f, 2.0f);

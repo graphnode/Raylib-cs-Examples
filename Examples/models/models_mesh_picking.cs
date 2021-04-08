@@ -15,9 +15,9 @@ using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Raymath;
 using static Raylib_cs.Color;
-using static Raylib_cs.CameraType;
+using static Raylib_cs.CameraProjection;
 using static Raylib_cs.CameraMode;
-using static Raylib_cs.MaterialMapType;
+using static Raylib_cs.MaterialMapIndex;
 
 namespace Examples
 {
@@ -36,13 +36,14 @@ namespace Examples
 
             // Define the camera to look into our 3d world
             Camera3D camera;
-            camera.position = new Vector3(20.0f, 20.0f, 20.0f); // Camera3D position
-            camera.target = new Vector3(0.0f, 8.0f, 0.0f);      // Camera3D looking at point
-            camera.up = new Vector3(0.0f, 1.6f, 0.0f);          // Camera3D up vector (rotation towards target)
-            camera.fovy = 45.0f;                                // Camera3D field-of-view Y
-            camera.type = CAMERA_PERSPECTIVE;                   // Camera3D mode type
+            camera.position = new Vector3(20.0f, 20.0f, 20.0f);
+            camera.target = new Vector3(0.0f, 8.0f, 0.0f);
+            camera.up = new Vector3(0.0f, 1.6f, 0.0f);
+            camera.fovy = 45.0f;
+            camera.projection = CAMERA_PERSPECTIVE;
 
-            Ray ray = new Ray();        // Picking ray
+            // Picking ray
+            Ray ray = new Ray();
 
             Model tower = LoadModel("resources/models/turret.obj");                     // Load OBJ model
             Texture2D texture = LoadTexture("resources/models/turret_diffuse.png");     // Load model texture
@@ -73,13 +74,13 @@ namespace Examples
                 //----------------------------------------------------------------------------------
                 // Update
                 //----------------------------------------------------------------------------------
-                UpdateCamera(ref camera);          // Update camera
+                UpdateCamera(ref camera);       // Update camera
 
                 // Display information about closest hit
                 RayHitInfo nearestHit = new RayHitInfo();
                 string hitObjectName = "None";
                 nearestHit.distance = FLT_MAX;
-                nearestHit.hit = false;
+                nearestHit.hit = 0;
                 Color cursorColor = WHITE;
 
                 // Get ray and test against ground, triangle, and mesh
@@ -88,7 +89,7 @@ namespace Examples
                 // Check ray collision aginst ground plane
                 RayHitInfo groundHitInfo = GetCollisionRayGround(ray, 0.0f);
 
-                if ((groundHitInfo.hit) && (groundHitInfo.distance < nearestHit.distance))
+                if ((groundHitInfo.hit == 1) && (groundHitInfo.distance < nearestHit.distance))
                 {
                     nearestHit = groundHitInfo;
                     cursorColor = GREEN;
@@ -98,7 +99,7 @@ namespace Examples
                 // Check ray collision against test triangle
                 RayHitInfo triHitInfo = GetCollisionRayTriangle(ray, ta, tb, tc);
 
-                if ((triHitInfo.hit) && (triHitInfo.distance < nearestHit.distance))
+                if ((triHitInfo.hit == 1) && (triHitInfo.distance < nearestHit.distance))
                 {
                     nearestHit = triHitInfo;
                     cursorColor = PURPLE;
@@ -121,7 +122,7 @@ namespace Examples
                     // NOTE: It considers model.transform matrix!
                     meshHitInfo = GetCollisionRayModel(ray, tower);
 
-                    if ((meshHitInfo.hit) && (meshHitInfo.distance < nearestHit.distance))
+                    if ((meshHitInfo.hit == 1) && (meshHitInfo.distance < nearestHit.distance))
                     {
                         nearestHit = meshHitInfo;
                         cursorColor = ORANGE;
@@ -154,7 +155,7 @@ namespace Examples
                     DrawBoundingBox(towerBBox, LIME);
 
                 // If we hit something, draw the cursor at the hit point
-                if (nearestHit.hit)
+                if (nearestHit.hit == 1)
                 {
                     DrawCube(nearestHit.position, 0.3f, 0.3f, 0.3f, cursorColor);
                     DrawCubeWires(nearestHit.position, 0.3f, 0.3f, 0.3f, RED);
@@ -176,7 +177,7 @@ namespace Examples
                 // Draw some debug GUI text
                 DrawText(string.Format("Hit Object: {0}", hitObjectName), 10, 50, 10, BLACK);
 
-                if (nearestHit.hit)
+                if (nearestHit.hit == 1)
                 {
                     int ypos = 70;
 

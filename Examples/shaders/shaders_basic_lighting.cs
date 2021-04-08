@@ -31,12 +31,12 @@ using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Raymath;
 using static Raylib_cs.Color;
-using static Raylib_cs.ConfigFlag;
+using static Raylib_cs.ConfigFlags;
 using static Raylib_cs.CameraMode;
-using static Raylib_cs.CameraType;
+using static Raylib_cs.CameraProjection;
 using static Raylib_cs.KeyboardKey;
 using static Raylib_cs.ShaderLocationIndex;
-using static Raylib_cs.MaterialMapType;
+using static Raylib_cs.MaterialMapIndex;
 using static Examples.Rlights;
 
 namespace Examples
@@ -61,7 +61,7 @@ namespace Examples
             camera.target = new Vector3(0.0f, 0.5f, 0.0f);      // Camera looking at point
             camera.up = new Vector3(0.0f, 1.0f, 0.0f);          // Camera up vector (rotation towards target)
             camera.fovy = 45.0f;                                // Camera field-of-view Y
-            camera.type = CAMERA_PERSPECTIVE;                   // Camera mode type
+            camera.projection = CAMERA_PERSPECTIVE;                   // Camera mode type
 
             // Load models
             Model modelA = LoadModelFromMesh(GenMeshTorus(0.4f, 1.0f, 16, 32));

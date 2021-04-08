@@ -1,13 +1,13 @@
 /*******************************************************************************************
 *
-*   raylib [models] example - Load 3d model with animations and play them
+*   raylib [models] example - Load 3d gltf model with animations and play them
 *
-*   This example has been created using raylib 2.5 (www.raylib.com)
+*   This example has been created using raylib 3.5 (www.raylib.com)
 *   raylib is licensed under an unmodified zlib/libpng license (View raylib.h for details)
 *
-*   Example contributed by Culacant (@culacant) and reviewed by Ramon Santamaria (@raysan5)
+*   Example contributed by Hristo Stamenov (@object71) and reviewed by Ramon Santamaria (@raysan5)
 *
-*   Copyright (c) 2019 Culacant (@culacant) and Ramon Santamaria (@raysan5)
+*   Copyright (c) 2021 Hristo Stamenov (@object71) and Ramon Santamaria (@raysan5)
 *
 ********************************************************************************************
 *
@@ -17,21 +17,19 @@
 *
 ********************************************************************************************/
 
-using System;
 using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
-using static Raylib_cs.Color;
 using static Raylib_cs.CameraProjection;
-using static Raylib_cs.CameraMode;
+using static Raylib_cs.Color;
 using static Raylib_cs.KeyboardKey;
-using static Raylib_cs.MaterialMapIndex;
+using static Raylib_cs.CameraMode;
 
 namespace Examples
 {
-    public class models_animation
+    public class modesl_gltf_animation
     {
-        public unsafe static int Main()
+        public unsafe static void Main()
         {
             // Initialization
             //--------------------------------------------------------------------------------------
@@ -41,30 +39,28 @@ namespace Examples
             InitWindow(screenWidth, screenHeight, "raylib [models] example - model animation");
 
             // Define the camera to look into our 3d world
-            Camera3D camera = new Camera3D();
+            Camera3D camera;
             camera.position = new Vector3(10.0f, 10.0f, 10.0f); // Camera position
             camera.target = new Vector3(0.0f, 0.0f, 0.0f);      // Camera looking at point
             camera.up = new Vector3(0.0f, 1.0f, 0.0f);          // Camera up vector (rotation towards target)
             camera.fovy = 45.0f;                                // Camera field-of-view Y
-            camera.projection = CAMERA_PERSPECTIVE;                   // Camera mode type
+            camera.projection = CAMERA_PERSPECTIVE;             // Camera mode type
 
-            Model model = LoadModel("resources/guy/guy.iqm");                // Load the animated model mesh and basic data
-            Texture2D texture = LoadTexture("resources/guy/guytex.png");     // Load model texture and set material
-            Utils.SetMaterialTexture(ref model, 0, MAP_ALBEDO, ref texture); // Set model material map texture
+            // Load the animated model mesh and basic data
+            Model model = LoadModel("resources/gltf/rigged_figure.glb");
 
-            Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);            // Set model position
+            // Set model position
+            Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);
 
             // Load animation data
             int animsCount = 0;
-            IntPtr animsPtr = LoadModelAnimations("resources/guy/guyanim.iqm", ref animsCount);
-
-            ModelAnimation* anims = (ModelAnimation*)animsPtr.ToPointer();
-
+            ModelAnimation* anims = (ModelAnimation*)LoadModelAnimations("resources/gltf/rigged_figure.glb", ref animsCount).ToPointer();
             int animFrameCounter = 0;
+            int animationDirection = 1;
 
             SetCameraMode(camera, CAMERA_FREE); // Set free camera mode
 
-            SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
+            SetTargetFPS(30);                   // Set our game to run at 60 frames-per-second
             //--------------------------------------------------------------------------------------
 
             // Main game loop
@@ -77,10 +73,15 @@ namespace Examples
                 // Play animation when spacebar is held down
                 if (IsKeyDown(KEY_SPACE))
                 {
-                    animFrameCounter++;
+                    animFrameCounter += animationDirection;
+
+                    if (animFrameCounter >= anims[0].frameCount || animFrameCounter <= 0)
+                    {
+                        animationDirection *= -1;
+                        animFrameCounter += animationDirection;
+                    }
+
                     UpdateModelAnimation(model, anims[0], animFrameCounter);
-                    if (animFrameCounter >= anims[0].frameCount)
-                        animFrameCounter = 0;
                 }
                 //----------------------------------------------------------------------------------
 
@@ -95,16 +96,16 @@ namespace Examples
 
                 for (int i = 0; i < model.boneCount; i++)
                 {
-                    Transform** framePoses = (Transform**)anims[0].framePoses.ToPointer();
-                    DrawCube(framePoses[animFrameCounter][i].translation, 0.2f, 0.2f, 0.2f, RED);
+                    Transform** t = (Transform**)anims[0].framePoses;
+                    DrawSphere(t[animFrameCounter][i].translation, 0.01f, RED);
                 }
 
-                DrawGrid(10, 1.0f);         // Draw a grid
+                DrawGrid(10, 1.0f);
 
                 EndMode3D();
 
                 DrawText("PRESS SPACE to PLAY MODEL ANIMATION", 10, 10, 20, MAROON);
-                DrawText("(c) Guy IQM 3D model by @culacant", screenWidth - 200, screenHeight - 20, 10, GRAY);
+                DrawText("(cc4) Rigged Figure by @Cesium", screenWidth - 200, screenHeight - 20, 10, GRAY);
 
                 EndDrawing();
                 //----------------------------------------------------------------------------------
@@ -112,18 +113,19 @@ namespace Examples
 
             // De-Initialization
             //--------------------------------------------------------------------------------------
-            UnloadTexture(texture);     // Unload texture
 
             // Unload model animations data
             for (int i = 0; i < animsCount; i++)
+            {
                 UnloadModelAnimation(anims[i]);
+            }
 
             UnloadModel(model);         // Unload model
 
             CloseWindow();              // Close window and OpenGL context
             //--------------------------------------------------------------------------------------
 
-            return 0;
+            return;
         }
     }
 }

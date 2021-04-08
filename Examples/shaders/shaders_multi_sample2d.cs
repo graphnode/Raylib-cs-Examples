@@ -19,6 +19,8 @@
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
+using static Raylib_cs.KeyboardKey;
+using static Raylib_cs.ShaderUniformDataType;
 
 namespace Examples
 {
@@ -46,6 +48,10 @@ namespace Examples
             // Get an additional sampler2D location to be enabled on drawing
             int texBlueLoc = GetShaderLocation(shader, "texture1");
 
+            // Get shader uniform for divider
+            int dividerLoc = GetShaderLocation(shader, "divider");
+            float dividerValue = 0.5f;
+
             SetTargetFPS(60);                           // Set our game to run at 60 frames-per-second
             //--------------------------------------------------------------------------------------
 
@@ -54,7 +60,17 @@ namespace Examples
             {
                 // Update
                 //----------------------------------------------------------------------------------
-                // ...
+                if (IsKeyDown(KEY_RIGHT))
+                    dividerValue += 0.01f;
+                else if (IsKeyDown(KEY_LEFT))
+                    dividerValue -= 0.01f;
+
+                if (dividerValue < 0.0f)
+                    dividerValue = 0.0f;
+                else if (dividerValue > 1.0f)
+                    dividerValue = 1.0f;
+
+                SetShaderValue(shader, dividerLoc, ref dividerValue, UNIFORM_FLOAT);
                 //----------------------------------------------------------------------------------
 
                 // Draw
@@ -74,6 +90,9 @@ namespace Examples
                 DrawTexture(texRed, 0, 0, WHITE);
 
                 EndShaderMode();
+
+                int y = GetScreenHeight() - 40;
+                DrawText("Use KEY_LEFT/KEY_RIGHT to move texture mixing in shader!", 80, y, 20, RAYWHITE);
 
                 EndDrawing();
                 //----------------------------------------------------------------------------------

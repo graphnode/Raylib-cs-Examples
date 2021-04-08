@@ -15,6 +15,7 @@
 using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
+using static Raylib_cs.Rlgl;
 using static Raylib_cs.Color;
 using static Raylib_cs.KeyboardKey;
 using static Raylib_cs.MouseButton;
@@ -78,7 +79,8 @@ namespace Examples
                         // Try reloading updated shader
                         Shader updatedShader = LoadShader(null, fragShaderFileName);
 
-                        if (updatedShader.id != GetShaderDefault().id)      // It was correctly loaded
+                        // It was correctly loaded
+                        if (updatedShader.id != rlGetShaderDefault().id)
                         {
                             UnloadShader(shader);
                             shader = updatedShader;

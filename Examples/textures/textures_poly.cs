@@ -1,11 +1,12 @@
 /*******************************************************************************************
 *
-*   raylib [core] example - Initialize 3d camera mode
+*   raylib [shapes] example - Draw Textured Polygon
 *
-*   This example has been created using raylib 1.0 (www.raylib.com)
+*   This example has been created using raylib 99.98 (www.raylib.com)
 *   raylib is licensed under an unmodified zlib/libpng license (View raylib.h for details)
 *
 *   Copyright (c) 2014 Ramon Santamaria (@raysan5)
+*   Copyright (c) 2021 Chris Camacho (codifies - bedroomcoders.co.uk)
 *
 ********************************************************************************************/
 
@@ -13,11 +14,10 @@ using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
-using static Raylib_cs.CameraProjection;
 
 namespace Examples
 {
-    public class core_3d_camera_mode
+    public class textures_poly
     {
         public static int Main()
         {
@@ -26,17 +26,38 @@ namespace Examples
             const int screenWidth = 800;
             const int screenHeight = 450;
 
-            InitWindow(screenWidth, screenHeight, "raylib [core] example - 3d camera mode");
+            int numPnts = 11;  // 10 points and back to the start
 
-            // Define the camera to look into our 3d world
-            Camera3D camera = new Camera3D();
-            camera.position = new Vector3(0.0f, 10.0f, 10.0f);  // Camera position
-            camera.target = new Vector3(0.0f, 0.0f, 0.0f);      // Camera looking at point
-            camera.up = new Vector3(0.0f, 1.0f, 0.0f);          // Camera up vector (rotation towards target)
-            camera.fovy = 45.0f;                                // Camera field-of-view Y
-            camera.projection = CAMERA_PERSPECTIVE;                   // Camera mode type
+            Vector2[] tPnts = new[] {
+                new Vector2(0.75f, 0),
+                new Vector2(0.25f, 0),
+                new Vector2(0, 0.5f),
+                new Vector2(0, 0.75f),
+                new Vector2(0.25f, 1),
+                new Vector2(0.375f, 0.875f),
+                new Vector2(0.625f, 0.875f),
+                new Vector2(0.75f, 1),
+                new Vector2(1, 0.75f),
+                new Vector2(1, 0.5f),
+                // Close the poly
+                new Vector2(0.75f, 0)
+            };
 
-            Vector3 cubePosition = new Vector3(0.0f, 0.0f, 0.0f);
+            Vector2[] pnts = new Vector2[numPnts];
+
+            // create the poly coords from the UV's
+            // you don't have to do this you can specify
+            // them however you want
+            for (int i = 0; i < numPnts; i++)
+            {
+                pnts[i].X = (tPnts[i].X - 0.5f) * 256.0f;
+                pnts[i].Y = (tPnts[i].Y - 0.5f) * 256.0f;
+            }
+
+            InitWindow(screenWidth, screenHeight, "raylib [textures] example - Textured Polygon");
+
+            Texture2D tex = LoadTexture("resources/cat.png");
+            float ang = 0;
 
             SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
             //--------------------------------------------------------------------------------------
@@ -46,30 +67,29 @@ namespace Examples
             {
                 // Update
                 //----------------------------------------------------------------------------------
-                // TODO: Update your variables here
+                // Update your variables here
                 //----------------------------------------------------------------------------------
+                ang += 1;
+
+                Vector2[] dPnts = new Vector2[numPnts];
+                for (int i = 0; i < numPnts; i++)
+                {
+                    dPnts[i] = Raymath.Vector2Rotate(pnts[i], ang);
+                }
 
                 // Draw
                 //----------------------------------------------------------------------------------
                 BeginDrawing();
                 ClearBackground(RAYWHITE);
 
-                BeginMode3D(camera);
-
-                DrawCube(cubePosition, 2.0f, 2.0f, 2.0f, RED);
-                DrawCubeWires(cubePosition, 2.0f, 2.0f, 2.0f, MAROON);
-
-                DrawGrid(10, 1.0f);
-
-                EndMode3D();
-
-                DrawText("Welcome to the third dimension!", 10, 40, 20, DARKGRAY);
-
-                DrawFPS(10, 10);
+                DrawText("Textured Polygon", 20, 20, 20, DARKGRAY);
+                DrawTexturePoly(tex, new Vector2(screenWidth / 2, screenHeight / 2), dPnts, tPnts, numPnts, WHITE);
 
                 EndDrawing();
                 //----------------------------------------------------------------------------------
             }
+
+            UnloadTexture(tex);
 
             // De-Initialization
             //--------------------------------------------------------------------------------------

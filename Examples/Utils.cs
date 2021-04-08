@@ -99,14 +99,14 @@ namespace Examples
             return *materials;
         }
 
-        public unsafe static Texture2D GetMaterialTexture(ref Model model, int materialIndex, MaterialMapType mapIndex)
+        public unsafe static Texture2D GetMaterialTexture(ref Model model, int materialIndex, MaterialMapIndex mapIndex)
         {
             Material* materials = (Material*)model.materials.ToPointer();
             MaterialMap* maps = (MaterialMap*)materials[0].maps.ToPointer();
             return maps[(int)mapIndex].texture;
         }
 
-        public unsafe static void SetMaterialTexture(ref Model model, int materialIndex, MaterialMapType mapIndex, ref Texture2D texture)
+        public unsafe static void SetMaterialTexture(ref Model model, int materialIndex, MaterialMapIndex mapIndex, ref Texture2D texture)
         {
             Material* materials = (Material*)model.materials.ToPointer();
             Raylib.SetMaterialTexture(ref materials[materialIndex], (int)mapIndex, texture);

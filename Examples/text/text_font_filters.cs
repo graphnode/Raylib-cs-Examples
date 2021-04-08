@@ -18,7 +18,7 @@ using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
 using static Raylib_cs.KeyboardKey;
-using static Raylib_cs.TextureFilterMode;
+using static Raylib_cs.TextureFilter;
 
 namespace Examples
 {
@@ -50,7 +50,7 @@ namespace Examples
 
             // Setup texture scaling filter
             SetTextureFilter(font.texture, FILTER_POINT);
-            TextureFilterMode currentFontFilter = FILTER_POINT;
+            TextureFilter currentFontFilter = FILTER_POINT;
 
             SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
             //--------------------------------------------------------------------------------------

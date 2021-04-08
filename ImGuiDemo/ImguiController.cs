@@ -239,14 +239,14 @@ namespace ImGuiDemo
             ushort index;
             ImDrawVertPtr vertex;
 
-            if (Rlgl.rlCheckBufferLimit((int)count * 3))
+            if (Rlgl.rlCheckRenderBatchLimit((int)count * 3))
             {
-                Rlgl.rlglDraw();
+                Rlgl.rlDrawRenderBatchActive();
             }
 
             Rlgl.rlPushMatrix();
             Rlgl.rlBegin(Rlgl.RL_TRIANGLES);
-            Rlgl.rlEnableTexture(texId);
+            Rlgl.rlSetTexture(texId);
 
             for (int i = 0; i <= (count - 3); i += 3)
             {

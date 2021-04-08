@@ -12,7 +12,7 @@
 using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
-using static Raylib_cs.CameraType;
+using static Raylib_cs.CameraProjection;
 using static Raylib_cs.CameraMode;
 using static Raylib_cs.Color;
 
@@ -37,7 +37,7 @@ namespace Examples
             camera.target = new Vector3(0.0f, 1.8f, 0.0f);
             camera.up = new Vector3(0.0f, 1.0f, 0.0f);
             camera.fovy = 60.0f;
-            camera.type = CAMERA_PERSPECTIVE;
+            camera.projection = CAMERA_PERSPECTIVE;
 
             // Generates some random columns
             float[] heights = new float[MAX_COLUMNS];

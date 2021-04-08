@@ -14,8 +14,8 @@ using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
 using static Raylib_cs.CameraMode;
-using static Raylib_cs.CameraType;
-using static Raylib_cs.MaterialMapType;
+using static Raylib_cs.CameraProjection;
+using static Raylib_cs.MaterialMapIndex;
 using static Raylib_cs.ShaderUniformDataType;
 
 namespace Examples
@@ -55,7 +55,7 @@ namespace Examples
 
             // Generate cubemap (texture with 6 quads-cube-mapping) from panorama HDR texture
             // NOTE: New texture is generated rendering to texture, shader computes the sphre->cube coordinates mapping
-            Texture2D cubemap = GenTextureCubemap(shdrCubemap, panorama, 1024, PixelFormat.UNCOMPRESSED_R8G8B8A8);
+            Texture2D cubemap = PBR.GenTextureCubemap(shdrCubemap, panorama, 1024, PixelFormat.UNCOMPRESSED_R8G8B8A8);
             Utils.SetMaterialTexture(ref skybox, 0, MAP_CUBEMAP, ref cubemap);
             UnloadTexture(panorama);      // Texture not required anymore, cubemap already generated
 
@@ -88,7 +88,7 @@ namespace Examples
                             panoFileName = droppedFiles[0];
 
                             // Generate cubemap from panorama texture
-                            cubemap = GenTextureCubemap(shdrCubemap, panorama, 1024, PixelFormat.UNCOMPRESSED_R8G8B8A8);
+                            cubemap = PBR.GenTextureCubemap(shdrCubemap, panorama, 1024, PixelFormat.UNCOMPRESSED_R8G8B8A8);
                             Utils.SetMaterialTexture(ref skybox, 0, MAP_CUBEMAP, ref cubemap);
                             UnloadTexture(panorama);
                         }

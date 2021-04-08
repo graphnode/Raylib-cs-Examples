@@ -71,6 +71,7 @@ namespace Examples
             textures_mouse_painting.Main();
             textures_npatch_drawing.Main();
             textures_particles_blending.Main();
+            textures_poly.Main();
             textures_raw_data.Main();
             textures_rectangle.Main();
             textures_sprite_button.Main();
@@ -81,6 +82,7 @@ namespace Examples
 
         static void RunTextExamples()
         {
+            text_draw_3d.Main();
             text_font_filters.Main();
             text_font_loading.Main();
             text_font_sdf.Main();
@@ -100,9 +102,11 @@ namespace Examples
             models_cubicmap.Main();
             models_first_person_maze.Main();
             models_geometric_shapes.Main();
+            modesl_gltf_animation.Main();
+            modesl_gltf_model.Main();
             models_heightmap.Main();
             models_loading.Main();
-            models_material_pbr.Main();
+            // models_material_pbr.Main();
             models_mesh_generation.Main();
             models_mesh_picking.Main();
             models_orthographic_projection.Main();
@@ -125,7 +129,7 @@ namespace Examples
             shaders_palette_switch.Main();
             shaders_postprocessing.Main();
             shaders_raymarching.Main();
-            shaders_rlgl_mesh_instanced.Main();
+            shaders_mesh_instanced.Main();
             shaders_shapes_textures.Main();
             shaders_simple_mask.Main();
             shaders_spotlight.Main();

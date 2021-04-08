@@ -40,7 +40,7 @@ namespace Examples
             const int screenHeight = 450;
 
             // Set MSAA 4X hint before windows creation
-            SetConfigFlags(ConfigFlag.FLAG_MSAA_4X_HINT);
+            SetConfigFlags(ConfigFlags.FLAG_MSAA_4X_HINT);
             InitWindow(screenWidth, screenHeight, "raylib [core] example - gamepad input");
 
             Texture2D texPs3Pad = LoadTexture("resources/ps3.png");
