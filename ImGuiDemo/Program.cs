@@ -35,7 +35,7 @@ namespace ImGuiDemo
             const int screenWidth = 1280;
             const int screenHeight = 720;
 
-            Raylib.SetConfigFlags(ConfigFlag.FLAG_MSAA_4X_HINT | ConfigFlag.FLAG_VSYNC_HINT | ConfigFlag.FLAG_WINDOW_RESIZABLE);
+            Raylib.SetConfigFlags(ConfigFlags.FLAG_MSAA_4X_HINT | ConfigFlags.FLAG_VSYNC_HINT | ConfigFlags.FLAG_WINDOW_RESIZABLE);
             Raylib.InitWindow(screenWidth, screenHeight, "ImGui demo");
             Raylib.SetTargetFPS(60);
 
