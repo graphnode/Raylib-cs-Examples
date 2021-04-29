@@ -129,7 +129,7 @@ namespace Examples
             shaders_palette_switch.Main();
             shaders_postprocessing.Main();
             shaders_raymarching.Main();
-            shaders_mesh_instanced.Main();
+            shaders_mesh_instancing.Main();
             shaders_shapes_textures.Main();
             shaders_simple_mask.Main();
             shaders_spotlight.Main();

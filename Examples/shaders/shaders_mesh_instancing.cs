@@ -28,7 +28,7 @@ using static Raylib_cs.KeyboardKey;
 
 namespace Examples
 {
-    public class shaders_mesh_instanced
+    public class shaders_mesh_instancing
     {
         public static int Main()
         {

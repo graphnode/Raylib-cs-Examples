@@ -60,9 +60,8 @@ namespace Examples
 
                 BeginMode3D(camera);
 
+                DrawGrid(10, 1.0f);
                 DrawBillboard(camera, bill, billPosition, 2.0f, WHITE);
-
-                DrawGrid(10, 1.0f);        // Draw a grid
 
                 EndMode3D();
 
