@@ -13,14 +13,14 @@ using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
-using static Raylib_cs.KeyboardKey;
 using static Raylib_cs.MouseButton;
 
 namespace Examples
 {
     public class textures_bunnymark
     {
-        public const int MAX_BUNNIES = 50000;    // 50K bunnies limit
+        // 50K bunnies limit
+        public const int MAX_BUNNIES = 50000;
 
         // This is the maximum amount of elements (quads) per batch
         // NOTE: This value is defined in [rlgl] module and can be changed there

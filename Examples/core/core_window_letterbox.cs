@@ -65,6 +65,15 @@ namespace Examples
                         colors[i] = new Color(GetRandomValue(100, 250), GetRandomValue(50, 150), GetRandomValue(10, 100), 255);
                     }
                 }
+
+                // Update virtual mouse (clamped mouse value behind game screen)
+                Vector2 mouse = GetMousePosition();
+                Vector2 virtualMouse = Vector2.Zero;
+                virtualMouse.X = (mouse.X - (GetScreenWidth() - (gameScreenWidth * scale)) * 0.5f) / scale;
+                virtualMouse.Y = (mouse.Y - (GetScreenHeight() - (gameScreenHeight * scale)) * 0.5f) / scale;
+
+                Vector2 max = new Vector2((float)gameScreenWidth, (float)gameScreenHeight);
+                virtualMouse = Vector2.Clamp(virtualMouse, Vector2.Zero, max);
                 //----------------------------------------------------------------------------------
 
                 // Draw
@@ -82,6 +91,9 @@ namespace Examples
                 }
 
                 DrawText("If executed inside a window,\nyou can resize the window,\nand see the screen scaling!", 10, 25, 20, WHITE);
+
+                DrawText($"Default Mouse: [{(int)mouse.X} {(int)mouse.Y}]", 350, 25, 20, GREEN);
+                DrawText($"Virtual Mouse: [{(int)virtualMouse.X}, {(int)virtualMouse.Y}]", 350, 55, 20, YELLOW);
 
                 EndTextureMode();
 
