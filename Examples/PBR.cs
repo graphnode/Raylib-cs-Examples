@@ -17,6 +17,7 @@ using static Raylib_cs.Rlgl;
 using static Raylib_cs.TextureFilter;
 using static Raylib_cs.ShaderLocationIndex;
 using static Raylib_cs.ShaderUniformDataType;
+using static Raylib_cs.PixelFormat;
 
 namespace Examples
 {
@@ -45,35 +46,35 @@ namespace Examples
 
             // Get required locations points for PBR material
             // NOTE: Those location names must be available and used in the shader code
-            locs[(int)ShaderLocationIndex.LOC_MAP_ALBEDO] = GetShaderLocation(mat.shader, "albedo.sampler");
-            locs[(int)ShaderLocationIndex.LOC_MAP_METALNESS] = GetShaderLocation(mat.shader, "metalness.sampler");
-            locs[(int)ShaderLocationIndex.LOC_MAP_NORMAL] = GetShaderLocation(mat.shader, "normals.sampler");
-            locs[(int)ShaderLocationIndex.LOC_MAP_ROUGHNESS] = GetShaderLocation(mat.shader, "roughness.sampler");
-            locs[(int)ShaderLocationIndex.LOC_MAP_OCCLUSION] = GetShaderLocation(mat.shader, "occlusion.sampler");
-            locs[(int)ShaderLocationIndex.LOC_MAP_IRRADIANCE] = GetShaderLocation(mat.shader, "irradianceMap");
-            locs[(int)ShaderLocationIndex.LOC_MAP_PREFILTER] = GetShaderLocation(mat.shader, "prefilterMap");
-            locs[(int)ShaderLocationIndex.LOC_MAP_BRDF] = GetShaderLocation(mat.shader, "brdfLUT");
+            locs[(int)ShaderLocationIndex.SHADER_LOC_MAP_ALBEDO] = GetShaderLocation(mat.shader, "albedo.sampler");
+            locs[(int)ShaderLocationIndex.SHADER_LOC_MAP_METALNESS] = GetShaderLocation(mat.shader, "metalness.sampler");
+            locs[(int)ShaderLocationIndex.SHADER_LOC_MAP_NORMAL] = GetShaderLocation(mat.shader, "normals.sampler");
+            locs[(int)ShaderLocationIndex.SHADER_LOC_MAP_ROUGHNESS] = GetShaderLocation(mat.shader, "roughness.sampler");
+            locs[(int)ShaderLocationIndex.SHADER_LOC_MAP_OCCLUSION] = GetShaderLocation(mat.shader, "occlusion.sampler");
+            locs[(int)ShaderLocationIndex.SHADER_LOC_MAP_IRRADIANCE] = GetShaderLocation(mat.shader, "irradianceMap");
+            locs[(int)ShaderLocationIndex.SHADER_LOC_MAP_PREFILTER] = GetShaderLocation(mat.shader, "prefilterMap");
+            locs[(int)ShaderLocationIndex.SHADER_LOC_MAP_BRDF] = GetShaderLocation(mat.shader, "brdfLUT");
 
             // Set view matrix location
-            locs[(int)ShaderLocationIndex.LOC_MATRIX_MODEL] = GetShaderLocation(mat.shader, "matModel");
-            locs[(int)ShaderLocationIndex.LOC_VECTOR_VIEW] = GetShaderLocation(mat.shader, "viewPos");
+            locs[(int)ShaderLocationIndex.SHADER_LOC_MATRIX_MODEL] = GetShaderLocation(mat.shader, "matModel");
+            locs[(int)ShaderLocationIndex.SHADER_LOC_VECTOR_VIEW] = GetShaderLocation(mat.shader, "viewPos");
 
             // Set PBR standard maps
-            maps[(int)MaterialMapIndex.MAP_ALBEDO].texture = LoadTexture("resources/pbr/trooper_albedo.png");
-            maps[(int)MaterialMapIndex.MAP_NORMAL].texture = LoadTexture("resources/pbr/trooper_normals.png");
-            maps[(int)MaterialMapIndex.MAP_METALNESS].texture = LoadTexture("resources/pbr/trooper_metalness.png");
-            maps[(int)MaterialMapIndex.MAP_ROUGHNESS].texture = LoadTexture("resources/pbr/trooper_roughness.png");
-            maps[(int)MaterialMapIndex.MAP_OCCLUSION].texture = LoadTexture("resources/pbr/trooper_ao.png");
+            maps[(int)MaterialMapIndex.MATERIAL_MAP_ALBEDO].texture = LoadTexture("resources/pbr/trooper_albedo.png");
+            maps[(int)MaterialMapIndex.MATERIAL_MAP_NORMAL].texture = LoadTexture("resources/pbr/trooper_normals.png");
+            maps[(int)MaterialMapIndex.MATERIAL_MAP_METALNESS].texture = LoadTexture("resources/pbr/trooper_metalness.png");
+            maps[(int)MaterialMapIndex.MATERIAL_MAP_ROUGHNESS].texture = LoadTexture("resources/pbr/trooper_roughness.png");
+            maps[(int)MaterialMapIndex.MATERIAL_MAP_OCCLUSION].texture = LoadTexture("resources/pbr/trooper_ao.png");
 
             // Set textures filtering for better quality
-            SetTextureFilter(maps[(int)MaterialMapIndex.MAP_ALBEDO].texture, FILTER_BILINEAR);
-            SetTextureFilter(maps[(int)MaterialMapIndex.MAP_NORMAL].texture, FILTER_BILINEAR);
-            SetTextureFilter(maps[(int)MaterialMapIndex.MAP_METALNESS].texture, FILTER_BILINEAR);
-            SetTextureFilter(maps[(int)MaterialMapIndex.MAP_ROUGHNESS].texture, FILTER_BILINEAR);
-            SetTextureFilter(maps[(int)MaterialMapIndex.MAP_OCCLUSION].texture, FILTER_BILINEAR);
+            SetTextureFilter(maps[(int)MaterialMapIndex.MATERIAL_MAP_ALBEDO].texture, TEXTURE_FILTER_BILINEAR);
+            SetTextureFilter(maps[(int)MaterialMapIndex.MATERIAL_MAP_NORMAL].texture, TEXTURE_FILTER_BILINEAR);
+            SetTextureFilter(maps[(int)MaterialMapIndex.MATERIAL_MAP_METALNESS].texture, TEXTURE_FILTER_BILINEAR);
+            SetTextureFilter(maps[(int)MaterialMapIndex.MATERIAL_MAP_ROUGHNESS].texture, TEXTURE_FILTER_BILINEAR);
+            SetTextureFilter(maps[(int)MaterialMapIndex.MATERIAL_MAP_OCCLUSION].texture, TEXTURE_FILTER_BILINEAR);
 
             // Enable sample usage in shader for assigned textures
-            ShaderUniformDataType uniformType = ShaderUniformDataType.UNIFORM_INT;
+            ShaderUniformDataType uniformType = ShaderUniformDataType.SHADER_UNIFORM_INT;
             Utils.SetShaderValue(mat.shader, GetShaderLocation(mat.shader, "albedo.useSampler"), 1, uniformType);
             Utils.SetShaderValue(mat.shader, GetShaderLocation(mat.shader, "normals.useSampler"), 1, uniformType);
             Utils.SetShaderValue(mat.shader, GetShaderLocation(mat.shader, "metalness.useSampler"), 1, uniformType);
@@ -84,13 +85,13 @@ namespace Examples
             Utils.SetShaderValue(mat.shader, renderModeLoc, 0, uniformType);
 
             // Set up material properties color
-            maps[(int)MaterialMapIndex.MAP_ALBEDO].color = albedo;
-            maps[(int)MaterialMapIndex.MAP_NORMAL].color = new Color(128, 128, 255, 255);
-            maps[(int)MaterialMapIndex.MAP_METALNESS].value = metalness;
-            maps[(int)MaterialMapIndex.MAP_ROUGHNESS].value = roughness;
-            maps[(int)MaterialMapIndex.MAP_OCCLUSION].value = 1.0f;
-            maps[(int)MaterialMapIndex.MAP_EMISSION].value = 0.5f;
-            maps[(int)MaterialMapIndex.MAP_HEIGHT].value = 0.5f;
+            maps[(int)MaterialMapIndex.MATERIAL_MAP_ALBEDO].color = albedo;
+            maps[(int)MaterialMapIndex.MATERIAL_MAP_NORMAL].color = new Color(128, 128, 255, 255);
+            maps[(int)MaterialMapIndex.MATERIAL_MAP_METALNESS].value = metalness;
+            maps[(int)MaterialMapIndex.MATERIAL_MAP_ROUGHNESS].value = roughness;
+            maps[(int)MaterialMapIndex.MATERIAL_MAP_OCCLUSION].value = 1.0f;
+            maps[(int)MaterialMapIndex.MATERIAL_MAP_EMISSION].value = 0.5f;
+            maps[(int)MaterialMapIndex.MATERIAL_MAP_HEIGHT].value = 0.5f;
 
             // Load shaders for material
             string PATH_CUBEMAP_VS = $"{shaderPath}/cubemap.vs"; // Path to equirectangular to cubemap vertex shader
@@ -109,22 +110,22 @@ namespace Examples
             // Generate cubemap from panorama texture
             //--------------------------------------------------------------------------------------------------------
             Texture2D panorama = LoadTexture("resources/dresden_square_1k.hdr");
-            Texture2D cubemap = GenTextureCubemap(shdrCubemap, panorama, CUBEMAP_SIZE, PixelFormat.UNCOMPRESSED_R32G32B32);
+            Texture2D cubemap = GenTextureCubemap(shdrCubemap, panorama, CUBEMAP_SIZE, PIXELFORMAT_UNCOMPRESSED_R32G32B32);
             Utils.SetShaderValue(shdrCubemap, GetShaderLocation(shdrCubemap, "equirectangularMap"), 0, uniformType);
 
             // Generate irradiance map from cubemap texture
             //--------------------------------------------------------------------------------------------------------
             Utils.SetShaderValue(shdrIrradiance, GetShaderLocation(shdrIrradiance, "environmentMap"), 0, uniformType);
-            maps[(int)MaterialMapIndex.MAP_IRRADIANCE].texture = GenTextureIrradiance(shdrIrradiance, cubemap, IRRADIANCE_SIZE);
+            maps[(int)MaterialMapIndex.MATERIAL_MAP_IRRADIANCE].texture = GenTextureIrradiance(shdrIrradiance, cubemap, IRRADIANCE_SIZE);
 
             // Generate prefilter map from cubemap texture
             //--------------------------------------------------------------------------------------------------------
             Utils.SetShaderValue(shdrPrefilter, GetShaderLocation(shdrPrefilter, "environmentMap"), 0, uniformType);
-            maps[(int)MaterialMapIndex.MAP_PREFILTER].texture = GenTexturePrefilter(shdrPrefilter, cubemap, PREFILTERED_SIZE);
+            maps[(int)MaterialMapIndex.MATERIAL_MAP_PREFILTER].texture = GenTexturePrefilter(shdrPrefilter, cubemap, PREFILTERED_SIZE);
 
             // Generate BRDF (bidirectional reflectance distribution function) texture (using shader)
             //--------------------------------------------------------------------------------------------------------
-            maps[(int)MaterialMapIndex.MAP_BRDF].texture = GenTextureBRDF(shdrBRDF, BRDF_SIZE);
+            maps[(int)MaterialMapIndex.MATERIAL_MAP_BRDF].texture = GenTextureBRDF(shdrBRDF, BRDF_SIZE);
 
             // Unload temporary shaders and textures
             UnloadShader(shdrCubemap);
@@ -168,7 +169,7 @@ namespace Examples
 
             // Define projection matrix and send it to shader
             Matrix4x4 matFboProjection = Matrix4x4.CreatePerspective(90.0f * DEG2RAD, 1.0f, RL_CULL_DISTANCE_NEAR, RL_CULL_DISTANCE_FAR);
-            // rlSetUniformMatrix(shader.locs[LOC_MATRIX_PROJECTION], matFboProjection);
+            // rlSetUniformMatrix(shader.locs[SHADER_LOC_MATRIX_PROJECTION], matFboProjection);
 
             // Define view matrix for every side of the cubemap
             Matrix4x4[] fboViews = new[] {
@@ -184,7 +185,7 @@ namespace Examples
 
             for (int i = 0; i < 6; i++)
             {
-                // rlSetUniformMatrix(shader.locs[SHADER_LOC_MATRIX_VIEW], fboViews[i]);
+                // rlSetUniformMatrix(shader.locs[SHADER_SHADER_LOC_MATRIX_VIEW], fboViews[i]);
                 // rlFramebufferAttach(fbo, cubemap.id, RL_ATTACHMENT_COLOR_CHANNEL0, RL_ATTACHMENT_CUBEMAP_POSITIVE_X + i, 0);
 
                 rlEnableFramebuffer(fbo);
@@ -211,7 +212,7 @@ namespace Examples
             cubemap.width = size;
             cubemap.height = size;
             cubemap.mipmaps = 1;
-            cubemap.format = PixelFormat.UNCOMPRESSED_R32G32B32;
+            cubemap.format = PIXELFORMAT_UNCOMPRESSED_R32G32B32;
 
             return cubemap;
         }
@@ -226,7 +227,7 @@ namespace Examples
             // STEP 1: Setup framebuffer
             //------------------------------------------------------------------------------------------
             uint rbo = rlLoadTextureDepth(size, size, true);
-            irradiance.id = rlLoadTextureCubemap(IntPtr.Zero, size, PixelFormat.UNCOMPRESSED_R32G32B32);
+            irradiance.id = rlLoadTextureCubemap(IntPtr.Zero, size, PIXELFORMAT_UNCOMPRESSED_R32G32B32);
 
             uint fbo = rlLoadFramebuffer(size, size);
             rlFramebufferAttach(fbo, rbo, FramebufferAttachType.RL_ATTACHMENT_DEPTH, FramebufferAttachTextureType.RL_ATTACHMENT_RENDERBUFFER, 0);
@@ -240,7 +241,7 @@ namespace Examples
 
             // Define projection matrix and send it to shader
             Matrix4x4 matFboProjection = Matrix4x4.CreatePerspective(90.0f * DEG2RAD, 1.0f, RL_CULL_DISTANCE_NEAR, RL_CULL_DISTANCE_FAR);
-            // rlSetUniformMatrix(shader.locs[SHADER_LOC_MATRIX_PROJECTION], matFboProjection);
+            // rlSetUniformMatrix(shader.locs[SHADER_SHADER_LOC_MATRIX_PROJECTION], matFboProjection);
 
             // Define view matrix for every side of the cubemap
             Matrix4x4[] fboViews = new[] {
@@ -259,7 +260,7 @@ namespace Examples
 
             for (int i = 0; i < 6; i++)
             {
-                // rlSetUniformMatrix(shader.locs[(int)LOC_MATRIX_VIEW], fboViews[i]);
+                // rlSetUniformMatrix(shader.locs[(int)SHADER_LOC_MATRIX_VIEW], fboViews[i]);
                 rlFramebufferAttach(fbo, irradiance.id, FramebufferAttachType.RL_ATTACHMENT_COLOR_CHANNEL0, FramebufferAttachTextureType.RL_ATTACHMENT_CUBEMAP_POSITIVE_X + i, 0);
 
                 rlEnableFramebuffer(fbo);
@@ -283,7 +284,7 @@ namespace Examples
             irradiance.width = size;
             irradiance.height = size;
             irradiance.mipmaps = 1;
-            irradiance.format = PixelFormat.UNCOMPRESSED_R32G32B32;
+            irradiance.format = PIXELFORMAT_UNCOMPRESSED_R32G32B32;
 
             return irradiance;
         }
@@ -298,7 +299,7 @@ namespace Examples
             // STEP 1: Setup framebuffer
             //------------------------------------------------------------------------------------------
             uint rbo = rlLoadTextureDepth(size, size, true);
-            prefilter.id = rlLoadTextureCubemap(IntPtr.Zero, size, PixelFormat.UNCOMPRESSED_R32G32B32);
+            prefilter.id = rlLoadTextureCubemap(IntPtr.Zero, size, PIXELFORMAT_UNCOMPRESSED_R32G32B32);
             rlTextureParameters(prefilter.id, RL_TEXTURE_MIN_FILTER, RL_TEXTURE_FILTER_MIP_LINEAR);
 
             uint fbo = rlLoadFramebuffer(size, size);
@@ -316,7 +317,7 @@ namespace Examples
             // Define projection matrix and send it to shader
             Matrix4x4 fboProjection = Matrix4x4.CreatePerspective(90.0f * DEG2RAD, 1.0f, RL_CULL_DISTANCE_NEAR, RL_CULL_DISTANCE_FAR);
             rlEnableShader(shader.id);
-            // rlSetUniformMatrix(shader.locs[SHADER_LOC_MATRIX_PROJECTION], fboProjection);
+            // rlSetUniformMatrix(shader.locs[SHADER_SHADER_LOC_MATRIX_PROJECTION], fboProjection);
 
             // Define view matrix for every side of the cubemap
             Matrix4x4[] fboViews = new[] {
@@ -347,11 +348,11 @@ namespace Examples
                 rlViewport(0, 0, mipWidth, mipHeight);
 
                 float roughness = (float)mip / (float)(MAX_MIPMAP_LEVELS - 1);
-                Utils.SetShaderValue(shader, roughnessLoc, roughness, UNIFORM_FLOAT);
+                Utils.SetShaderValue(shader, roughnessLoc, roughness, SHADER_UNIFORM_FLOAT);
 
                 for (int i = 0; i < 6; i++)
                 {
-                    // rlSetUniformMatrix(shader.locs[(int)LOC_MATRIX_VIEW], fboViews[i]);
+                    // rlSetUniformMatrix(shader.locs[(int)SHADER_LOC_MATRIX_VIEW], fboViews[i]);
                     // rlFramebufferAttach(fbo, prefilter.id, RL_ATTACHMENT_COLOR_CHANNEL0, RL_ATTACHMENT_CUBEMAP_POSITIVE_X + i, mip);
 
                     rlClearScreenBuffers();
@@ -375,7 +376,7 @@ namespace Examples
             prefilter.width = size;
             prefilter.height = size;
             prefilter.mipmaps = MAX_MIPMAP_LEVELS;
-            prefilter.format = PixelFormat.UNCOMPRESSED_R32G32B32;
+            prefilter.format = PIXELFORMAT_UNCOMPRESSED_R32G32B32;
 
             return prefilter;
         }
@@ -389,7 +390,7 @@ namespace Examples
             // STEP 1: Setup framebuffer
             //------------------------------------------------------------------------------------------
             uint rbo = rlLoadTextureDepth(size, size, true);
-            brdf.id = rlLoadTexture(IntPtr.Zero, size, size, PixelFormat.UNCOMPRESSED_R32G32B32, 1);
+            brdf.id = rlLoadTexture(IntPtr.Zero, size, size, PIXELFORMAT_UNCOMPRESSED_R32G32B32, 1);
 
             uint fbo = rlLoadFramebuffer(size, size);
             // rlFramebufferAttach(fbo, rbo, RL_ATTACHMENT_DEPTH, RL_ATTACHMENT_RENDERBUFFER, 0);
@@ -423,7 +424,7 @@ namespace Examples
             brdf.width = size;
             brdf.height = size;
             brdf.mipmaps = 1;
-            brdf.format = PixelFormat.UNCOMPRESSED_R32G32B32;
+            brdf.format = PIXELFORMAT_UNCOMPRESSED_R32G32B32;
 
             return brdf;
         }

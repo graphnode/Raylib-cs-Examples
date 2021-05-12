@@ -50,7 +50,7 @@ namespace Examples
 
             Model model = LoadModel("resources/guy/guy.iqm");                // Load the animated model mesh and basic data
             Texture2D texture = LoadTexture("resources/guy/guytex.png");     // Load model texture and set material
-            Utils.SetMaterialTexture(ref model, 0, MAP_ALBEDO, ref texture); // Set model material map texture
+            Utils.SetMaterialTexture(ref model, 0, MATERIAL_MAP_ALBEDO, ref texture); // Set model material map texture
 
             Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);            // Set model position
 

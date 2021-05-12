@@ -38,7 +38,7 @@ namespace Examples
 
             // Render texture initialization, used to hold the rendering result so we can easily resize it
             RenderTexture2D target = LoadRenderTexture(gameScreenWidth, gameScreenHeight);
-            SetTextureFilter(target.texture, FILTER_BILINEAR);  // Texture scale filter to use
+            SetTextureFilter(target.texture, TEXTURE_FILTER_BILINEAR);  // Texture scale filter to use
 
             Color[] colors = new Color[10];
             for (int i = 0; i < 10; i++)

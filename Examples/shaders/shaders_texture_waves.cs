@@ -61,13 +61,13 @@ namespace Examples
             float speedY = 8.0f;
 
             float[] screenSize = { (float)GetScreenWidth(), (float)GetScreenHeight() };
-            Utils.SetShaderValue(shader, GetShaderLocation(shader, "size"), screenSize, UNIFORM_VEC2);
-            Utils.SetShaderValue(shader, freqXLoc, freqX, UNIFORM_FLOAT);
-            Utils.SetShaderValue(shader, freqYLoc, freqY, UNIFORM_FLOAT);
-            Utils.SetShaderValue(shader, ampXLoc, ampX, UNIFORM_FLOAT);
-            Utils.SetShaderValue(shader, ampYLoc, ampY, UNIFORM_FLOAT);
-            Utils.SetShaderValue(shader, speedXLoc, speedX, UNIFORM_FLOAT);
-            Utils.SetShaderValue(shader, speedYLoc, speedY, UNIFORM_FLOAT);
+            Utils.SetShaderValue(shader, GetShaderLocation(shader, "size"), screenSize, SHADER_UNIFORM_VEC2);
+            Utils.SetShaderValue(shader, freqXLoc, freqX, SHADER_UNIFORM_FLOAT);
+            Utils.SetShaderValue(shader, freqYLoc, freqY, SHADER_UNIFORM_FLOAT);
+            Utils.SetShaderValue(shader, ampXLoc, ampX, SHADER_UNIFORM_FLOAT);
+            Utils.SetShaderValue(shader, ampYLoc, ampY, SHADER_UNIFORM_FLOAT);
+            Utils.SetShaderValue(shader, speedXLoc, speedX, SHADER_UNIFORM_FLOAT);
+            Utils.SetShaderValue(shader, speedYLoc, speedY, SHADER_UNIFORM_FLOAT);
 
             float seconds = 0.0f;
 
@@ -81,7 +81,7 @@ namespace Examples
                 //----------------------------------------------------------------------------------
                 seconds += GetFrameTime();
 
-                Utils.SetShaderValue(shader, secondsLoc, seconds, UNIFORM_FLOAT);
+                Utils.SetShaderValue(shader, secondsLoc, seconds, SHADER_UNIFORM_FLOAT);
                 //----------------------------------------------------------------------------------
 
                 // Draw

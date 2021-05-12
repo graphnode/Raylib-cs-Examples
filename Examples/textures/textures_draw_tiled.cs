@@ -38,7 +38,7 @@ namespace Examples
 
             // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
             Texture2D texPattern = LoadTexture("resources/patterns.png");
-            SetTextureFilter(texPattern, FILTER_TRILINEAR); // Makes the texture smoother when upscaled
+            SetTextureFilter(texPattern, TEXTURE_FILTER_TRILINEAR); // Makes the texture smoother when upscaled
 
             // Coordinates for all patterns inside the texture
             Rectangle[] recPattern = new[] {

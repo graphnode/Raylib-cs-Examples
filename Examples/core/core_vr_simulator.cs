@@ -68,25 +68,25 @@ namespace Examples
 
             // Update distortion shader with lens and distortion-scale parameters
             Utils.SetShaderValue(distortion, GetShaderLocation(distortion, "leftLensCenter"),
-                        config.leftLensCenter, UNIFORM_VEC2);
+                        config.leftLensCenter, SHADER_UNIFORM_VEC2);
             Utils.SetShaderValue(distortion, GetShaderLocation(distortion, "rightLensCenter"),
-                        config.rightLensCenter, UNIFORM_VEC2);
+                        config.rightLensCenter, SHADER_UNIFORM_VEC2);
             Utils.SetShaderValue(distortion, GetShaderLocation(distortion, "leftScreenCenter"),
-                        config.leftScreenCenter, UNIFORM_VEC2);
+                        config.leftScreenCenter, SHADER_UNIFORM_VEC2);
             Utils.SetShaderValue(distortion, GetShaderLocation(distortion, "rightScreenCenter"),
-                        config.rightScreenCenter, UNIFORM_VEC2);
+                        config.rightScreenCenter, SHADER_UNIFORM_VEC2);
 
             Utils.SetShaderValue(distortion, GetShaderLocation(distortion, "scale"),
-                        config.scale, UNIFORM_VEC2);
+                        config.scale, SHADER_UNIFORM_VEC2);
             Utils.SetShaderValue(distortion, GetShaderLocation(distortion, "scaleIn"),
-                        config.scaleIn, UNIFORM_VEC2);
+                        config.scaleIn, SHADER_UNIFORM_VEC2);
 
             unsafe
             {
                 SetShaderValue(distortion, GetShaderLocation(distortion, "deviceWarpParam"),
-                            new IntPtr(device.lensDistortionValues), UNIFORM_VEC4);
+                            new IntPtr(device.lensDistortionValues), SHADER_UNIFORM_VEC4);
                 SetShaderValue(distortion, GetShaderLocation(distortion, "chromaAbParam"),
-                            new IntPtr(device.chromaAbCorrection), UNIFORM_VEC4);
+                            new IntPtr(device.chromaAbCorrection), SHADER_UNIFORM_VEC4);
             }
 
             // Initialize framebuffer for stereo rendering

@@ -77,7 +77,7 @@ namespace Examples
 
                 // Send to material PBR shader camera view position
                 float[] cameraPos = { camera.position.X, camera.position.Y, camera.position.Z };
-                Utils.SetShaderValue(materials[0].shader, (int)ShaderLocationIndex.LOC_VECTOR_VIEW, cameraPos, ShaderUniformDataType.UNIFORM_VEC3);
+                Utils.SetShaderValue(materials[0].shader, (int)ShaderLocationIndex.SHADER_LOC_VECTOR_VIEW, cameraPos, ShaderUniformDataType.SHADER_UNIFORM_VEC3);
                 //----------------------------------------------------------------------------------
 
                 // Draw

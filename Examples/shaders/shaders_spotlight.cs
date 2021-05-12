@@ -5,7 +5,7 @@
 *   This example has been created using raylib 2.5 (www.raylib.com)
 *   raylib is licensed under an unmodified zlib/libpng license (View raylib.h for details)
 *
-*   Example contributed by Chris Camacho (@chriscamacho -  http://bedroomcoders.co.uk/) 
+*   Example contributed by Chris Camacho (@chriscamacho -  http://bedroomcoders.co.uk/)
 *   and reviewed by Ramon Santamaria (@raysan5)
 *
 *   Copyright (c) 2019 Chris Camacho (@chriscamacho) and Ramon Santamaria (@raysan5)
@@ -14,13 +14,13 @@
 *
 *   The shader makes alpha holes in the forground to give the apearance of a top
 *   down look at a spotlight casting a pool of light...
-* 
+*
 *   The right hand side of the screen there is just enough light to see whats
 *   going on without the spot light, great for a stealth type game where you
 *   have to avoid the spotlights.
-* 
+*
 *   The left hand side of the screen is in pitch dark except for where the spotlights are.
-* 
+*
 *   Although this example doesn't scale like the letterbox example, you could integrate
 *   the two techniques, but by scaling the actual colour of the render texture rather
 *   than using alpha as a mask.
@@ -109,7 +109,7 @@ namespace Examples
             // a pitch black half and a dimly lit half.
             int wLoc = GetShaderLocation(shdrSpot, "screenWidth");
             float sw = (float)GetScreenWidth();
-            SetShaderValue(shdrSpot, wLoc, ref sw, UNIFORM_FLOAT);
+            SetShaderValue(shdrSpot, wLoc, ref sw, SHADER_UNIFORM_FLOAT);
 
             // Randomise the locations and velocities of the spotlights
             // and initialise the shader locations
@@ -128,9 +128,9 @@ namespace Examples
                 spots[i].inner = 28 * (i + 1);
                 spots[i].radius = 48 * (i + 1);
 
-                SetShaderValue(shdrSpot, spots[i].posLoc, ref spots[i].pos.X, UNIFORM_VEC2);
-                SetShaderValue(shdrSpot, spots[i].innerLoc, ref spots[i].inner, UNIFORM_FLOAT);
-                SetShaderValue(shdrSpot, spots[i].radiusLoc, ref spots[i].radius, UNIFORM_FLOAT);
+                SetShaderValue(shdrSpot, spots[i].posLoc, ref spots[i].pos.X, SHADER_UNIFORM_VEC2);
+                SetShaderValue(shdrSpot, spots[i].innerLoc, ref spots[i].inner, SHADER_UNIFORM_FLOAT);
+                SetShaderValue(shdrSpot, spots[i].radiusLoc, ref spots[i].radius, SHADER_UNIFORM_FLOAT);
             }
 
             SetTargetFPS(60);               // Set  to run at 60 frames-per-second
@@ -171,7 +171,7 @@ namespace Examples
                             spots[i].vel.Y = -spots[i].vel.Y;
                     }
 
-                    SetShaderValue(shdrSpot, spots[i].posLoc, ref spots[i].pos.X, UNIFORM_VEC2);
+                    SetShaderValue(shdrSpot, spots[i].posLoc, ref spots[i].pos.X, SHADER_UNIFORM_VEC2);
                 }
 
                 // Draw

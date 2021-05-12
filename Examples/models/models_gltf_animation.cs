@@ -27,7 +27,7 @@ using static Raylib_cs.CameraMode;
 
 namespace Examples
 {
-    public class modesl_gltf_animation
+    public class models_gltf_animation
     {
         public unsafe static void Main()
         {

@@ -53,7 +53,7 @@ namespace Examples
                                        "resources/shaders/glsl330/grayscale.fs");   // Load model shader
 
             Utils.SetMaterialShader(ref model, 0, ref shader);  // Set shader effect to 3d model
-            Utils.SetMaterialTexture(ref model, 0, MAP_ALBEDO, ref texture);    // Bind texture to model
+            Utils.SetMaterialTexture(ref model, 0, MATERIAL_MAP_ALBEDO, ref texture);    // Bind texture to model
 
             Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);    // Set model position
 

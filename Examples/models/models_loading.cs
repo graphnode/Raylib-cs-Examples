@@ -53,7 +53,7 @@ namespace Examples
             Texture2D texture = LoadTexture("resources/models/castle_diffuse.png"); // Load model texture
 
             // Set map diffuse texture
-            Utils.SetMaterialTexture(ref model, 0, MAP_ALBEDO, ref texture);
+            Utils.SetMaterialTexture(ref model, 0, MATERIAL_MAP_ALBEDO, ref texture);
 
             Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);                // Set model position
 
@@ -93,7 +93,7 @@ namespace Examples
                             model = LoadModel(droppedFiles[0]);     // Load new model
 
                             // Set current map diffuse texture
-                            Utils.SetMaterialTexture(ref model, 0, MAP_ALBEDO, ref texture);
+                            Utils.SetMaterialTexture(ref model, 0, MATERIAL_MAP_ALBEDO, ref texture);
 
                             meshes = (Mesh*)model.meshes.ToPointer();
                             bounds = MeshBoundingBox(meshes[0]);
@@ -105,7 +105,7 @@ namespace Examples
                             // Unload current model texture and load new one
                             UnloadTexture(texture);
                             texture = LoadTexture(droppedFiles[0]);
-                            Utils.SetMaterialTexture(ref model, 0, MAP_ALBEDO, ref texture);
+                            Utils.SetMaterialTexture(ref model, 0, MATERIAL_MAP_ALBEDO, ref texture);
                         }
                     }
 

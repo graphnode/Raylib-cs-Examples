@@ -56,7 +56,7 @@ namespace ImGuiDemo
                 width = width,
                 height = height,
                 mipmaps = 1,
-                format = PixelFormat.UNCOMPRESSED_R8G8B8A8,
+                format = PixelFormat.PIXELFORMAT_UNCOMPRESSED_R8G8B8A8,
             };
             fontTexture = Raylib.LoadTextureFromImage(image);
 

@@ -102,8 +102,8 @@ namespace Examples
             models_cubicmap.Main();
             models_first_person_maze.Main();
             models_geometric_shapes.Main();
-            modesl_gltf_animation.Main();
-            modesl_gltf_model.Main();
+            models_gltf_animation.Main();
+            models_gltf_model.Main();
             models_heightmap.Main();
             models_loading.Main();
             // models_material_pbr.Main();

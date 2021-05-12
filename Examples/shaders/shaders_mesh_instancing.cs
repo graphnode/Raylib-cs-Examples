@@ -93,14 +93,14 @@ namespace Examples
             unsafe
             {
                 int* locs = (int*)shader.locs;
-                locs[(int)LOC_MATRIX_MVP] = GetShaderLocation(shader, "mvp");
-                locs[(int)LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
-                locs[(int)LOC_MATRIX_MODEL] = GetShaderLocationAttrib(shader, "instanceTransform");
+                locs[(int)SHADER_LOC_MATRIX_MVP] = GetShaderLocation(shader, "mvp");
+                locs[(int)SHADER_LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
+                locs[(int)SHADER_LOC_MATRIX_MODEL] = GetShaderLocationAttrib(shader, "instanceTransform");
             }
 
             // Ambient light level
             int ambientLoc = GetShaderLocation(shader, "ambient");
-            Utils.SetShaderValueV(shader, ambientLoc, new float[] { 0.2f, 0.2f, 0.2f, 1.0f }, UNIFORM_VEC4, 4);
+            Utils.SetShaderValueV(shader, ambientLoc, new float[] { 0.2f, 0.2f, 0.2f, 1.0f }, SHADER_UNIFORM_VEC4, 4);
 
             Rlights.CreateLight(0, LightType.LIGHT_DIRECTIONAL, new Vector3(50, 50, 0), Vector3.Zero, WHITE, shader);
 
@@ -109,7 +109,7 @@ namespace Examples
             unsafe
             {
                 MaterialMap* maps = (MaterialMap*)material.maps.ToPointer();
-                maps[(int)MAP_ALBEDO].color = RED;
+                maps[(int)MATERIAL_MAP_ALBEDO].color = RED;
             }
 
             SetCameraMode(camera, CAMERA_FREE); // Set a free camera mode
@@ -175,7 +175,7 @@ namespace Examples
 
                 // Update the light shader with the camera view position
                 // float cameraPos[3] = { camera.position.x, camera.position.y, camera.position.z };
-                // SetShaderValue(shader, shader.locs[LOC_VECTOR_VIEW], cameraPos, UNIFORM_VEC3);
+                // SetShaderValue(shader, shader.locs[SHADER_LOC_VECTOR_VIEW], cameraPos, SHADER_UNIFORM_VEC3);
 
                 // Apply per-instance transformations
                 for (int i = 0; i < instances; i++)

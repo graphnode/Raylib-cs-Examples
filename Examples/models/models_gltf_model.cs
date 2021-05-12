@@ -27,7 +27,7 @@ using static Raylib_cs.CameraMode;
 
 namespace Examples
 {
-    public class modesl_gltf_model
+    public class models_gltf_model
     {
         public unsafe static void Main()
         {
@@ -46,18 +46,17 @@ namespace Examples
             camera.fovy = 45.0f;
             camera.projection = CAMERA_PERSPECTIVE;
 
-            Model[] model = new Model[7];
+            const int modelCount = 6;
+            Model[] model = new Model[modelCount];
 
             model[0] = LoadModel("resources/gltf/raylib_32x32.glb");
             model[1] = LoadModel("resources/gltf/rigged_figure.glb");
-            model[2] = LoadModel("resources/gltf/Avocado.glb");
-            model[3] = LoadModel("resources/gltf/GearboxAssy.glb");
-            model[4] = LoadModel("resources/gltf/BoxAnimated.glb");
-            model[5] = LoadModel("resources/gltf/AnimatedTriangle.gltf");
-            model[6] = LoadModel("resources/gltf/AnimatedMorphCube.glb");
+            model[2] = LoadModel("resources/gltf/GearboxAssy.glb");
+            model[3] = LoadModel("resources/gltf/BoxAnimated.glb");
+            model[4] = LoadModel("resources/gltf/AnimatedTriangle.gltf");
+            model[5] = LoadModel("resources/gltf/AnimatedMorphCube.glb");
 
             int currentModel = 0;
-            int modelCount = 7;
 
             // Set model position
             Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);

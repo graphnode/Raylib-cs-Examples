@@ -61,7 +61,7 @@ namespace Examples
             // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
 
             Image image = LoadImage("resources/parrots.png");   // Loaded in CPU memory (RAM)
-            ImageFormat(ref image, (int)UNCOMPRESSED_R8G8B8A8); // Format image to RGBA 32bit (required for texture update) <-- ISSUE
+            ImageFormat(ref image, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8); // Format image to RGBA 32bit (required for texture update) <-- ISSUE
             Texture2D texture = LoadTextureFromImage(image);    // Image converted to texture, GPU memory (VRAM)
 
             int currentProcess = (int)ImageProcess.NONE;

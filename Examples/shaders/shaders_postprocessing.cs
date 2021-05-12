@@ -83,7 +83,7 @@ namespace Examples
             Texture2D texture = LoadTexture("resources/models/church_diffuse.png"); // Load model texture (diffuse map)
 
             // Set model diffuse texture
-            Utils.SetMaterialTexture(ref model, 0, MAP_ALBEDO, ref texture);
+            Utils.SetMaterialTexture(ref model, 0, MATERIAL_MAP_ALBEDO, ref texture);
 
             Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);                             // Set model position
 

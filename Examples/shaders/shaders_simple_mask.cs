@@ -72,11 +72,11 @@ namespace Examples
 
             Material* materials = (Material*)model1.materials.ToPointer();
             MaterialMap* maps = (MaterialMap*)materials[0].maps.ToPointer();
-            maps[(int)MAP_ALBEDO].texture = texDiffuse;
+            maps[(int)MATERIAL_MAP_ALBEDO].texture = texDiffuse;
 
             materials = (Material*)model2.materials.ToPointer();
             maps = (MaterialMap*)materials[0].maps.ToPointer();
-            maps[(int)MAP_ALBEDO].texture = texDiffuse;
+            maps[(int)MATERIAL_MAP_ALBEDO].texture = texDiffuse;
 
             // Using MAP_EMISSION as a spare slot to use for 2nd texture
             // NOTE: Don't use MAP_IRRADIANCE, MAP_PREFILTER or  MAP_CUBEMAP
@@ -85,14 +85,14 @@ namespace Examples
 
             materials = (Material*)model1.materials.ToPointer();
             maps = (MaterialMap*)materials[0].maps.ToPointer();
-            maps[(int)MAP_EMISSION].texture = texMask;
+            maps[(int)MATERIAL_MAP_EMISSION].texture = texMask;
 
             materials = (Material*)model2.materials.ToPointer();
             maps = (MaterialMap*)materials[0].maps.ToPointer();
-            maps[(int)MAP_EMISSION].texture = texMask;
+            maps[(int)MATERIAL_MAP_EMISSION].texture = texMask;
 
             int* locs = (int*)shader.locs.ToPointer();
-            locs[(int)LOC_MAP_EMISSION] = GetShaderLocation(shader, "mask");
+            locs[(int)SHADER_LOC_MAP_EMISSION] = GetShaderLocation(shader, "mask");
 
             // Frame is incremented each frame to animate the shader
             int shaderFrame = GetShaderLocation(shader, "framesCounter");
@@ -121,7 +121,7 @@ namespace Examples
                 rotation.Z -= 0.0025f;
 
                 // Send frames counter to shader for animation
-                Utils.SetShaderValue(shader, shaderFrame, framesCounter, UNIFORM_INT);
+                Utils.SetShaderValue(shader, shaderFrame, framesCounter, SHADER_UNIFORM_INT);
 
                 // Rotate one of the models
                 model1.transform = MatrixRotateXYZ(rotation);

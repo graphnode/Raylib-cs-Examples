@@ -48,7 +48,7 @@ namespace Examples
             Texture2D texture = LoadTexture("resources/cubicmap_atlas.png");    // Load map texture
 
             // Set map diffuse texture
-            Utils.SetMaterialTexture(ref model, 0, MAP_ALBEDO, ref texture);
+            Utils.SetMaterialTexture(ref model, 0, MATERIAL_MAP_ALBEDO, ref texture);
 
             Vector3 mapPosition = new Vector3(-16.0f, 0.0f, -8.0f);          // Set model position
 

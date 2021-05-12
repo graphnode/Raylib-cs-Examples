@@ -48,7 +48,7 @@ namespace Examples
             Texture2D texture = LoadTexture("resources/cubicmap_atlas.png");    // Load map texture
 
             // Set map diffuse texture
-            Utils.SetMaterialTexture(ref model, 0, MAP_ALBEDO, ref texture);
+            Utils.SetMaterialTexture(ref model, 0, MATERIAL_MAP_ALBEDO, ref texture);
 
             // Get map image data to be used for collision detection
             IntPtr mapPixels = LoadImageColors(imMap);
