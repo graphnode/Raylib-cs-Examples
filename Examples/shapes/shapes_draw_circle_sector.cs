@@ -11,6 +11,7 @@
 *
 ********************************************************************************************/
 
+using System;
 using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
@@ -35,6 +36,7 @@ namespace Examples
             int startAngle = 0;
             int endAngle = 180;
             int segments = 0;
+            int minSegments = 4;
 
             SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
             //--------------------------------------------------------------------------------------
@@ -67,7 +69,9 @@ namespace Examples
                 segments = GuiSliderBar(new Rectangle( 600, 170, 120, 20), "Segments", segments, 0, 100, true);*/
                 //------------------------------------------------------------------------------
 
-                // DrawText(string.Format("MODE: %s", (segments >= 4)? "MANUAL" : "AUTO"), 600, 200, 10, (segments >= 4)? MAROON : DARKGRAY);
+                minSegments = (int)MathF.Ceiling((endAngle - startAngle) / 90);
+                Color color = (segments >= minSegments) ? MAROON : DARKGRAY;
+                DrawText($"MODE: {((segments >= minSegments) ? "MANUAL" : "AUTO")}", 600, 270, 10, color);
 
                 DrawFPS(10, 10);
 

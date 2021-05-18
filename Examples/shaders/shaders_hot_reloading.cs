@@ -15,6 +15,7 @@
 using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
+using static Raylib_cs.Rlgl;
 using static Raylib_cs.Color;
 using static Raylib_cs.KeyboardKey;
 using static Raylib_cs.MouseButton;
@@ -46,7 +47,7 @@ namespace Examples
             int timeLoc = GetShaderLocation(shader, "time");
 
             float[] resolution = new[] { (float)screenWidth, (float)screenHeight };
-            Utils.SetShaderValue(shader, resolutionLoc, resolution, UNIFORM_VEC2);
+            Utils.SetShaderValue(shader, resolutionLoc, resolution, SHADER_UNIFORM_VEC2);
 
             float totalTime = 0.0f;
             bool shaderAutoReloading = false;
@@ -64,8 +65,8 @@ namespace Examples
                 float[] mousePos = new[] { mouse.X, mouse.Y };
 
                 // Set shader required uniform values
-                SetShaderValue(shader, timeLoc, ref totalTime, UNIFORM_FLOAT);
-                Utils.SetShaderValue(shader, mouseLoc, mousePos, UNIFORM_VEC2);
+                SetShaderValue(shader, timeLoc, ref totalTime, SHADER_UNIFORM_FLOAT);
+                Utils.SetShaderValue(shader, mouseLoc, mousePos, SHADER_UNIFORM_VEC2);
 
                 // Hot shader reloading
                 if (shaderAutoReloading || (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)))
@@ -78,7 +79,8 @@ namespace Examples
                         // Try reloading updated shader
                         Shader updatedShader = LoadShader(null, fragShaderFileName);
 
-                        if (updatedShader.id != GetShaderDefault().id)      // It was correctly loaded
+                        // It was correctly loaded
+                        if (updatedShader.id != rlGetShaderDefault().id)
                         {
                             UnloadShader(shader);
                             shader = updatedShader;
@@ -89,7 +91,7 @@ namespace Examples
                             timeLoc = GetShaderLocation(shader, "time");
 
                             // Reset required uniforms
-                            Utils.SetShaderValue(shader, resolutionLoc, resolution, UNIFORM_VEC2);
+                            Utils.SetShaderValue(shader, resolutionLoc, resolution, SHADER_UNIFORM_VEC2);
                         }
 
                         fragShaderFileModTime = currentFragShaderModTime;

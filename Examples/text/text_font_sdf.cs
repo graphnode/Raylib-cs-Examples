@@ -16,7 +16,7 @@ using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
 using static Raylib_cs.KeyboardKey;
-using static Raylib_cs.TextureFilterMode;
+using static Raylib_cs.TextureFilter;
 
 namespace Examples
 {
@@ -84,7 +84,7 @@ namespace Examples
             // Load SDF required shader (we use default vertex shader)
             Shader shader = LoadShader(null, "resources/shaders/glsl330/sdf.fs");
             // Required for SDF font
-            SetTextureFilter(fontSDF.texture, FILTER_BILINEAR);
+            SetTextureFilter(fontSDF.texture, TEXTURE_FILTER_BILINEAR);
 
             Vector2 fontPosition = new Vector2(40, screenHeight / 2 - 50);
             Vector2 textSize = new Vector2(0.0f);

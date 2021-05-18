@@ -65,8 +65,8 @@ namespace Examples
                         {
                             thread.Start();
                             //int error = pthread_create(ref, NULL, ref, NULL);
-                            //if (error != 0) TraceLog(TraceLogType.LOG_ERROR, "Error creating loading thread");
-                            //else TraceLog(TraceLogType.LOG_INFO, "Loading thread initialized successfully");
+                            //if (error != 0) TraceLog(TraceLogLevel.LOG_ERROR, "Error creating loading thread");
+                            //else TraceLog(TraceLogLevel.LOG_INFO, "Loading thread initialized successfully");
 
                             state = State.STATE_LOADING;
                         }

@@ -26,7 +26,7 @@ namespace Examples
             const int screenWidth = 800;
             const int screenHeight = 450;
 
-            SetConfigFlags(ConfigFlag.FLAG_MSAA_4X_HINT);
+            SetConfigFlags(ConfigFlags.FLAG_MSAA_4X_HINT);
             InitWindow(screenWidth, screenHeight, "raylib [shapes] example - cubic-bezier lines");
 
             Vector2 start = new Vector2(0, 0);

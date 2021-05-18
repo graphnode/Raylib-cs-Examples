@@ -24,9 +24,9 @@ using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
 using static Raylib_cs.CameraMode;
-using static Raylib_cs.CameraType;
+using static Raylib_cs.CameraProjection;
 using static Raylib_cs.MouseButton;
-using static Raylib_cs.MaterialMapType;
+using static Raylib_cs.MaterialMapIndex;
 
 namespace Examples
 {
@@ -47,13 +47,13 @@ namespace Examples
             camera.target = new Vector3(0.0f, 10.0f, 0.0f);     // Camera looking at point
             camera.up = new Vector3(0.0f, 1.0f, 0.0f);          // Camera up vector (rotation towards target)
             camera.fovy = 45.0f;                                // Camera field-of-view Y
-            camera.type = CAMERA_PERSPECTIVE;                   // Camera mode type
+            camera.projection = CAMERA_PERSPECTIVE;                   // Camera mode type
 
             Model model = LoadModel("resources/models/castle.obj");                 // Load model
             Texture2D texture = LoadTexture("resources/models/castle_diffuse.png"); // Load model texture
 
             // Set map diffuse texture
-            Utils.SetMaterialTexture(ref model, 0, MAP_ALBEDO, ref texture);
+            Utils.SetMaterialTexture(ref model, 0, MATERIAL_MAP_ALBEDO, ref texture);
 
             Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);                // Set model position
 
@@ -93,7 +93,7 @@ namespace Examples
                             model = LoadModel(droppedFiles[0]);     // Load new model
 
                             // Set current map diffuse texture
-                            Utils.SetMaterialTexture(ref model, 0, MAP_ALBEDO, ref texture);
+                            Utils.SetMaterialTexture(ref model, 0, MATERIAL_MAP_ALBEDO, ref texture);
 
                             meshes = (Mesh*)model.meshes.ToPointer();
                             bounds = MeshBoundingBox(meshes[0]);
@@ -105,7 +105,7 @@ namespace Examples
                             // Unload current model texture and load new one
                             UnloadTexture(texture);
                             texture = LoadTexture(droppedFiles[0]);
-                            Utils.SetMaterialTexture(ref model, 0, MAP_ALBEDO, ref texture);
+                            Utils.SetMaterialTexture(ref model, 0, MATERIAL_MAP_ALBEDO, ref texture);
                         }
                     }
 

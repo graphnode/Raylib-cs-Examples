@@ -58,20 +58,20 @@ namespace Examples
         public static void UpdateLightValues(Shader shader, Light light)
         {
             // Send to shader light enabled state and type
-            Utils.SetShaderValue(shader, light.enabledLoc, light.enabled ? 1 : 0, UNIFORM_INT);
-            Utils.SetShaderValue(shader, light.typeLoc, (int)light.type, UNIFORM_INT);
+            Utils.SetShaderValue(shader, light.enabledLoc, light.enabled ? 1 : 0, SHADER_UNIFORM_INT);
+            Utils.SetShaderValue(shader, light.typeLoc, (int)light.type, SHADER_UNIFORM_INT);
 
             // Send to shader light target position values
             float[] position = new[] { light.position.X, light.position.Y, light.position.Z };
-            Utils.SetShaderValue(shader, light.posLoc, position, UNIFORM_VEC3);
+            Utils.SetShaderValue(shader, light.posLoc, position, SHADER_UNIFORM_VEC3);
 
             // Send to shader light target position values
             float[] target = { light.target.X, light.target.Y, light.target.Z };
-            Utils.SetShaderValue(shader, light.targetLoc, target, UNIFORM_VEC3);
+            Utils.SetShaderValue(shader, light.targetLoc, target, SHADER_UNIFORM_VEC3);
 
             // Send to shader light color values
             float[] color = new[] { (float)light.color.r / (float)255, (float)light.color.g / (float)255, (float)light.color.b / (float)255, (float)light.color.a / (float)255 };
-            Utils.SetShaderValue(shader, light.colorLoc, color, UNIFORM_VEC4);
+            Utils.SetShaderValue(shader, light.colorLoc, color, SHADER_UNIFORM_VEC4);
         }
     }
 }

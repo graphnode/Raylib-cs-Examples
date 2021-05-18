@@ -18,7 +18,7 @@ using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
 using static Raylib_cs.KeyboardKey;
-using static Raylib_cs.TextureFilterMode;
+using static Raylib_cs.TextureFilter;
 
 namespace Examples
 {
@@ -41,7 +41,7 @@ namespace Examples
             Font font = LoadFontEx("resources/KAISG.ttf", 96, null, 0);
 
             // Generate mipmap levels to use trilinear filtering
-            // NOTE: On 2D drawing it won't be noticeable, it looks like FILTER_BILINEAR
+            // NOTE: On 2D drawing it won't be noticeable, it looks like TEXTURE_FILTER_BILINEAR
             GenTextureMipmaps(ref font.texture);
 
             float fontSize = font.baseSize;
@@ -49,8 +49,8 @@ namespace Examples
             Vector2 textSize = new Vector2(0.0f, 0.0f);
 
             // Setup texture scaling filter
-            SetTextureFilter(font.texture, FILTER_POINT);
-            TextureFilterMode currentFontFilter = FILTER_POINT;
+            SetTextureFilter(font.texture, TEXTURE_FILTER_POINT);
+            TextureFilter currentFontFilter = TEXTURE_FILTER_POINT;
 
             SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
             //--------------------------------------------------------------------------------------
@@ -65,19 +65,19 @@ namespace Examples
                 // Choose font texture filter method
                 if (IsKeyPressed(KEY_ONE))
                 {
-                    SetTextureFilter(font.texture, FILTER_POINT);
-                    currentFontFilter = FILTER_POINT;
+                    SetTextureFilter(font.texture, TEXTURE_FILTER_POINT);
+                    currentFontFilter = TEXTURE_FILTER_POINT;
                 }
                 else if (IsKeyPressed(KEY_TWO))
                 {
-                    SetTextureFilter(font.texture, FILTER_BILINEAR);
-                    currentFontFilter = FILTER_BILINEAR;
+                    SetTextureFilter(font.texture, TEXTURE_FILTER_BILINEAR);
+                    currentFontFilter = TEXTURE_FILTER_BILINEAR;
                 }
                 else if (IsKeyPressed(KEY_THREE))
                 {
                     // NOTE: Trilinear filter won't be noticed on 2D drawing
-                    SetTextureFilter(font.texture, FILTER_TRILINEAR);
-                    currentFontFilter = FILTER_TRILINEAR;
+                    SetTextureFilter(font.texture, TEXTURE_FILTER_TRILINEAR);
+                    currentFontFilter = TEXTURE_FILTER_TRILINEAR;
                 }
 
                 textSize = MeasureTextEx(font, msg, fontSize, 0);
@@ -122,15 +122,15 @@ namespace Examples
                 DrawRectangle(0, screenHeight - 80, screenWidth, 80, LIGHTGRAY);
                 DrawText("CURRENT TEXTURE FILTER:", 250, 400, 20, GRAY);
 
-                if (currentFontFilter == FILTER_POINT)
+                if (currentFontFilter == TEXTURE_FILTER_POINT)
                 {
                     DrawText("POINT", 570, 400, 20, BLACK);
                 }
-                else if (currentFontFilter == FILTER_POINT)
+                else if (currentFontFilter == TEXTURE_FILTER_POINT)
                 {
                     DrawText("BILINEAR", 570, 400, 20, BLACK);
                 }
-                else if (currentFontFilter == FILTER_TRILINEAR)
+                else if (currentFontFilter == TEXTURE_FILTER_TRILINEAR)
                 {
                     DrawText("TRILINEAR", 570, 400, 20, BLACK);
                 }

@@ -6,20 +6,18 @@ using ImGuiNET;
 namespace ImGuiDemo
 {
     /// <summary>
-    /// ImGui controller for Raylib-cs.
+    /// ImGui controller using Raylib-cs
     /// </summary>
     public class ImguiController : IDisposable
     {
         IntPtr context;
         Texture2D fontTexture;
-        Vector2 size;
         Vector2 scaleFactor = Vector2.One;
 
         public ImguiController()
         {
             context = ImGui.CreateContext();
             ImGui.SetCurrentContext(context);
-            ImGui.GetIO().Fonts.AddFontDefault();
         }
 
         public void Dispose()
@@ -33,7 +31,10 @@ namespace ImGuiDemo
         /// </summary>
         public void Load(int width, int height)
         {
-            size = new Vector2(width, height);
+            ImGuiIOPtr io = ImGui.GetIO();
+            io.Fonts.AddFontDefault();
+
+            Resize(width, height);
             LoadFontTexture();
             SetupInput();
             ImGui.NewFrame();
@@ -55,11 +56,11 @@ namespace ImGuiDemo
                 width = width,
                 height = height,
                 mipmaps = 1,
-                format = PixelFormat.UNCOMPRESSED_R8G8B8A8,
+                format = PixelFormat.PIXELFORMAT_UNCOMPRESSED_R8G8B8A8,
             };
             fontTexture = Raylib.LoadTextureFromImage(image);
 
-            // Store our identifier
+            // Store texture id in imgui font
             io.Fonts.SetTexID(new IntPtr(fontTexture.id));
 
             // Clears font data on the CPU side
@@ -68,8 +69,12 @@ namespace ImGuiDemo
 
         void SetupInput()
         {
-            // Setup back-end capabilities flags
             ImGuiIOPtr io = ImGui.GetIO();
+
+            // Setup config flags
+            io.ConfigFlags |= ImGuiConfigFlags.NavEnableKeyboard;
+
+            // Setup back-end capabilities flags
             io.BackendFlags |= ImGuiBackendFlags.HasMouseCursors;
             io.BackendFlags |= ImGuiBackendFlags.HasSetMousePos;
 
@@ -97,50 +102,41 @@ namespace ImGuiDemo
             io.KeyMap[(int)ImGuiKey.Z] = (int)KeyboardKey.KEY_Z;
         }
 
+        /// <summary>
+        /// Update imgui internals(input, frameData)
+        /// </summary>
+        /// <param name="dt"></param>
         public void Update(float dt)
         {
             ImGuiIOPtr io = ImGui.GetIO();
 
             SetPerFrameData(dt);
-            UpdateInput();
+            UpdateKeyboard();
+            UpdateMouse();
+            UpdateGamepad();
 
             ImGui.NewFrame();
         }
 
-        /// <summary>
-        /// Sets per-frame data based on the associated window.
-        /// This is called by Update(float).
-        /// </summary>
         void SetPerFrameData(float dt)
         {
             ImGuiIOPtr io = ImGui.GetIO();
-            io.DisplaySize = size / scaleFactor;
             io.DisplayFramebufferScale = Vector2.One;
             io.DeltaTime = dt;
         }
 
-        void UpdateInput()
+        /// <summary>
+        /// Resize imgui display
+        /// </summary>
+        public void Resize(int width, int height)
         {
-            UpdateMousePosAndButtons();
-            UpdateMouseCursor();
-            UpdateGamepads();
-
-            int keyPressed = Raylib.GetKeyPressed();
-            if (keyPressed > 0)
-            {
-                ImGuiIOPtr io = ImGui.GetIO();
-                io.AddInputCharacter((uint)keyPressed);
-            }
+            ImGuiIOPtr io = ImGui.GetIO();
+            io.DisplaySize = new Vector2(width, height) / scaleFactor;
         }
 
-        void UpdateMousePosAndButtons()
+        void UpdateKeyboard()
         {
-            // Update mouse buttons
             ImGuiIOPtr io = ImGui.GetIO();
-            for (int i = 0; i < io.MouseDown.Count; i++)
-            {
-                io.MouseDown[i] = Raylib.IsMouseButtonDown((MouseButton)i);
-            }
 
             // Modifiers are not reliable across systems
             io.KeyCtrl = io.KeysDown[(int)KeyboardKey.KEY_LEFT_CONTROL] || io.KeysDown[(int)KeyboardKey.KEY_RIGHT_CONTROL];
@@ -148,53 +144,65 @@ namespace ImGuiDemo
             io.KeyAlt = io.KeysDown[(int)KeyboardKey.KEY_LEFT_ALT] || io.KeysDown[(int)KeyboardKey.KEY_RIGHT_ALT];
             io.KeySuper = io.KeysDown[(int)KeyboardKey.KEY_LEFT_SUPER] || io.KeysDown[(int)KeyboardKey.KEY_RIGHT_SUPER];
 
-            // Mouse scroll
-            io.MouseWheel += (float)Raylib.GetMouseWheelMove();
-
             // Key states
             for (int i = (int)KeyboardKey.KEY_SPACE; i < (int)KeyboardKey.KEY_KB_MENU + 1; i++)
             {
                 io.KeysDown[i] = Raylib.IsKeyDown((KeyboardKey)i);
             }
 
-            // Update mouse position
-            Vector2 mousePositionBackup = io.MousePos;
-            io.MousePos = new Vector2(-float.MaxValue, -float.MaxValue);
-            const bool focused = true;
+            // Key input
+            int keyPressed = Raylib.GetCharPressed();
+            if (keyPressed != 0)
+            {
+                io.AddInputCharacter((uint)keyPressed);
+            }
+        }
+
+        void UpdateMouse()
+        {
+            ImGuiIOPtr io = ImGui.GetIO();
+
+            // Store button states
+            for (int i = 0; i < io.MouseDown.Count; i++)
+            {
+                io.MouseDown[i] = Raylib.IsMouseButtonDown((MouseButton)i);
+            }
+
+            // Mouse scroll
+            io.MouseWheel += Raylib.GetMouseWheelMove();
+
+            // Mouse position
+            Vector2 mousePosition = io.MousePos;
+            bool focused = Raylib.IsWindowFocused();
 
             if (focused)
             {
                 if (io.WantSetMousePos)
                 {
-                    Raylib.SetMousePosition((int)mousePositionBackup.X, (int)mousePositionBackup.Y);
+                    Raylib.SetMousePosition((int)mousePosition.X, (int)mousePosition.Y);
                 }
                 else
                 {
                     io.MousePos = Raylib.GetMousePosition();
                 }
             }
-        }
 
-        void UpdateMouseCursor()
-        {
-            ImGuiIOPtr io = ImGui.GetIO();
+            // Mouse cursor state
             if ((io.ConfigFlags & ImGuiConfigFlags.NoMouseCursorChange) == 0 || Raylib.IsCursorHidden())
             {
-                return;
-            }
-
-            ImGuiMouseCursor imgui_cursor = ImGui.GetMouseCursor();
-            if (imgui_cursor == ImGuiMouseCursor.None || io.MouseDrawCursor)
-            {
-                Raylib.HideCursor();
-            }
-            else
-            {
-                Raylib.ShowCursor();
+                ImGuiMouseCursor cursor = ImGui.GetMouseCursor();
+                if (cursor == ImGuiMouseCursor.None || io.MouseDrawCursor)
+                {
+                    Raylib.HideCursor();
+                }
+                else
+                {
+                    Raylib.ShowCursor();
+                }
             }
         }
 
-        void UpdateGamepads()
+        void UpdateGamepad()
         {
             ImGuiIOPtr io = ImGui.GetIO();
         }
@@ -205,10 +213,7 @@ namespace ImGuiDemo
         public void Draw()
         {
             ImGui.Render();
-            unsafe
-            {
-                RenderCommandLists(ImGui.GetDrawData());
-            }
+            RenderCommandLists(ImGui.GetDrawData());
         }
 
         // Returns a Color struct from hexadecimal value
@@ -235,18 +240,16 @@ namespace ImGuiDemo
         // Draw the imgui triangle data
         void DrawTriangles(uint count, ImVector<ushort> idxBuffer, ImPtrVector<ImDrawVertPtr> idxVert, int idxOffset, int vtxOffset, IntPtr textureId)
         {
-            uint texId = (uint)textureId;
-            ushort index;
+            ushort index = 0;
             ImDrawVertPtr vertex;
 
-            if (Rlgl.rlCheckBufferLimit((int)count * 3))
+            if (Rlgl.rlCheckRenderBatchLimit((int)count * 3))
             {
-                Rlgl.rlglDraw();
+                Rlgl.rlDrawRenderBatchActive();
             }
 
-            Rlgl.rlPushMatrix();
             Rlgl.rlBegin(Rlgl.RL_TRIANGLES);
-            Rlgl.rlEnableTexture(texId);
+            Rlgl.rlSetTexture((uint)textureId);
 
             for (int i = 0; i <= (count - 3); i += 3)
             {
@@ -263,12 +266,11 @@ namespace ImGuiDemo
                 DrawTriangleVertex(vertex);
             }
 
-            Rlgl.rlDisableTexture();
+            Rlgl.rlSetTexture(0);
             Rlgl.rlEnd();
-            Rlgl.rlPopMatrix();
         }
 
-        unsafe void RenderCommandLists(ImDrawDataPtr drawData)
+        void RenderCommandLists(ImDrawDataPtr drawData)
         {
             // Scale coordinates for retina displays (screen coordinates != framebuffer coordinates)
             int fbWidth = (int)(drawData.DisplaySize.X * drawData.FramebufferScale.X);
@@ -297,6 +299,7 @@ namespace ImGuiDemo
                     if (pcmd.UserCallback != IntPtr.Zero)
                     {
                         // pcmd.UserCallback(cmdList, pcmd);
+                        // idxOffset += cmd.ElemCount;
                     }
                     else
                     {
@@ -310,12 +313,12 @@ namespace ImGuiDemo
                         {
                             Raylib.BeginScissorMode(rectX, rectY, rectW, rectH);
                             DrawTriangles(pcmd.ElemCount, idxBuffer, vtxBuffer, (int)pcmd.IdxOffset, (int)pcmd.VtxOffset, pcmd.TextureId);
+                            Raylib.EndScissorMode();
                         }
                     }
                 }
             }
 
-            Raylib.EndScissorMode();
             Rlgl.rlEnableBackfaceCulling();
         }
     }

@@ -14,7 +14,7 @@ using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
-using static Raylib_cs.MaterialMapType;
+using static Raylib_cs.MaterialMapIndex;
 using static Raylib_cs.CameraMode;
 
 namespace Examples
@@ -36,7 +36,7 @@ namespace Examples
                 new Vector3(0.0f, 0.0f, 0.0f),
                 new Vector3(0.0f, 1.0f, 0.0f),
                 45.0f,
-                CameraType.CAMERA_PERSPECTIVE
+                CameraProjection.CAMERA_PERSPECTIVE
             );
 
             Image imMap = LoadImage("resources/cubicmap.png");      // Load cubicmap image (RAM)
@@ -48,7 +48,7 @@ namespace Examples
             Texture2D texture = LoadTexture("resources/cubicmap_atlas.png");    // Load map texture
 
             // Set map diffuse texture
-            Utils.SetMaterialTexture(ref model, 0, MAP_ALBEDO, ref texture);
+            Utils.SetMaterialTexture(ref model, 0, MATERIAL_MAP_ALBEDO, ref texture);
 
             // Get map image data to be used for collision detection
             IntPtr mapPixels = LoadImageColors(imMap);

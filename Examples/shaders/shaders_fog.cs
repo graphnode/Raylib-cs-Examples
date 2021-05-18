@@ -30,11 +30,11 @@ using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Raymath;
 using static Raylib_cs.Color;
-using static Raylib_cs.ConfigFlag;
+using static Raylib_cs.ConfigFlags;
 using static Raylib_cs.CameraMode;
-using static Raylib_cs.CameraType;
+using static Raylib_cs.CameraProjection;
 using static Raylib_cs.KeyboardKey;
-using static Raylib_cs.MaterialMapType;
+using static Raylib_cs.MaterialMapIndex;
 using static Raylib_cs.ShaderLocationIndex;
 using static Raylib_cs.ShaderUniformDataType;
 using static Examples.Rlights;
@@ -67,23 +67,23 @@ namespace Examples
             Texture2D texture = LoadTexture("resources/texel_checker.png");
 
             // Assign texture to default model material
-            Utils.SetMaterialTexture(ref modelA, 0, MAP_ALBEDO, ref texture);
-            Utils.SetMaterialTexture(ref modelB, 0, MAP_ALBEDO, ref texture);
-            Utils.SetMaterialTexture(ref modelC, 0, MAP_ALBEDO, ref texture);
+            Utils.SetMaterialTexture(ref modelA, 0, MATERIAL_MAP_ALBEDO, ref texture);
+            Utils.SetMaterialTexture(ref modelB, 0, MATERIAL_MAP_ALBEDO, ref texture);
+            Utils.SetMaterialTexture(ref modelC, 0, MATERIAL_MAP_ALBEDO, ref texture);
 
             // Load shader and set up some uniforms
             Shader shader = LoadShader("resources/shaders/glsl330/base_lighting.vs", "resources/shaders/glsl330/fog.fs");
             int* locs = (int*)shader.locs.ToPointer();
-            locs[(int)LOC_MATRIX_MODEL] = GetShaderLocation(shader, "matModel");
-            locs[(int)LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
+            locs[(int)SHADER_LOC_MATRIX_MODEL] = GetShaderLocation(shader, "matModel");
+            locs[(int)SHADER_LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
 
             // Ambient light level
             int ambientLoc = GetShaderLocation(shader, "ambient");
-            Utils.SetShaderValue(shader, ambientLoc, new float[] { 0.2f, 0.2f, 0.2f, 1.0f }, UNIFORM_VEC4);
+            Utils.SetShaderValue(shader, ambientLoc, new float[] { 0.2f, 0.2f, 0.2f, 1.0f }, SHADER_UNIFORM_VEC4);
 
             float fogDensity = 0.15f;
             int fogDensityLoc = GetShaderLocation(shader, "fogDensity");
-            Utils.SetShaderValue(shader, fogDensityLoc, fogDensity, UNIFORM_FLOAT);
+            Utils.SetShaderValue(shader, fogDensityLoc, fogDensity, SHADER_UNIFORM_FLOAT);
 
             // NOTE: All models share the same shader
             Utils.SetMaterialShader(ref modelA, 0, ref shader);
@@ -119,14 +119,14 @@ namespace Examples
                         fogDensity = 0.0f;
                 }
 
-                Utils.SetShaderValue(shader, fogDensityLoc, fogDensity, UNIFORM_FLOAT);
+                Utils.SetShaderValue(shader, fogDensityLoc, fogDensity, SHADER_UNIFORM_FLOAT);
 
                 // Rotate the torus
                 modelA.transform = MatrixMultiply(modelA.transform, MatrixRotateX(-0.025f));
                 modelA.transform = MatrixMultiply(modelA.transform, MatrixRotateZ(0.012f));
 
                 // Update the light shader with the camera view position
-                Utils.SetShaderValue(shader, locs[(int)LOC_VECTOR_VIEW], camera.position.X, ShaderUniformDataType.UNIFORM_VEC3);
+                Utils.SetShaderValue(shader, locs[(int)SHADER_LOC_VECTOR_VIEW], camera.position.X, ShaderUniformDataType.SHADER_UNIFORM_VEC3);
                 //----------------------------------------------------------------------------------
 
                 // Draw

@@ -13,7 +13,7 @@ using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
-using static Raylib_cs.ConfigFlag;
+using static Raylib_cs.ConfigFlags;
 using static Raylib_cs.KeyboardKey;
 
 namespace Examples
@@ -215,7 +215,7 @@ namespace Examples
             return 0;
         }
 
-        static void DrawWindowState(ConfigFlag flag, string text, int posX, int posY, int fontSize)
+        static void DrawWindowState(ConfigFlags flag, string text, int posX, int posY, int fontSize)
         {
             Color onColor = Color.LIME;
             Color offColor = Color.MAROON;

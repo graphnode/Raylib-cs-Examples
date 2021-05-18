@@ -42,13 +42,18 @@ namespace Examples
             ImageDraw(ref parrots, cat, new Rectangle(0, 0, cat.width, cat.height), new Rectangle(30, 40, cat.width * 1.5f, cat.height * 1.5f), WHITE);
             ImageCrop(ref parrots, new Rectangle(0, 50, parrots.width, parrots.height - 100)); // Crop resulting image
 
+            // Draw on the image with a few image draw methods
+            ImageDrawPixel(ref parrots, 10, 10, RAYWHITE);
+            ImageDrawCircle(ref parrots, 10, 10, 5, RAYWHITE);
+            ImageDrawRectangle(ref parrots, 5, 20, 10, 10, RAYWHITE);
+
             UnloadImage(cat);       // Unload image from RAM
 
             // Load custom font for frawing on image
             Font font = LoadFont("resources/custom_jupiter_crash.png");
 
             // Draw over image using custom font
-            ImageDrawTextEx(ref parrots, font, "PARROTS ref CAT", new Vector2(300, 230), font.baseSize, -2, WHITE);
+            ImageDrawTextEx(ref parrots, font, "PARROTS & CAT", new Vector2(300, 230), font.baseSize, -2, WHITE);
 
             UnloadFont(font); // Unload custom spritefont (already drawn used on image)
 

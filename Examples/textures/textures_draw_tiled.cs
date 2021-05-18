@@ -14,8 +14,8 @@ using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
 using static Raylib_cs.KeyboardKey;
-using static Raylib_cs.ConfigFlag;
-using static Raylib_cs.TextureFilterMode;
+using static Raylib_cs.ConfigFlags;
+using static Raylib_cs.TextureFilter;
 using static Raylib_cs.MouseButton;
 
 namespace Examples
@@ -38,7 +38,7 @@ namespace Examples
 
             // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
             Texture2D texPattern = LoadTexture("resources/patterns.png");
-            SetTextureFilter(texPattern, FILTER_TRILINEAR); // Makes the texture smoother when upscaled
+            SetTextureFilter(texPattern, TEXTURE_FILTER_TRILINEAR); // Makes the texture smoother when upscaled
 
             // Coordinates for all patterns inside the texture
             Rectangle[] recPattern = new[] {

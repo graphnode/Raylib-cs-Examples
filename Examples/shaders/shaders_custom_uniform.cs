@@ -20,9 +20,9 @@ using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
-using static Raylib_cs.CameraType;
+using static Raylib_cs.CameraProjection;
 using static Raylib_cs.CameraMode;
-using static Raylib_cs.MaterialMapType;
+using static Raylib_cs.MaterialMapIndex;
 
 namespace Examples
 {
@@ -35,7 +35,7 @@ namespace Examples
             const int screenWidth = 800;
             const int screenHeight = 450;
 
-            SetConfigFlags(ConfigFlag.FLAG_MSAA_4X_HINT);      // Enable Multi Sampling Anti Aliasing 4x (if available)
+            SetConfigFlags(ConfigFlags.FLAG_MSAA_4X_HINT);      // Enable Multi Sampling Anti Aliasing 4x (if available)
 
             InitWindow(screenWidth, screenHeight, "raylib [shaders] example - custom uniform variable");
 
@@ -45,13 +45,13 @@ namespace Examples
             camera.target = new Vector3(0.0f, 1.5f, 0.0f);
             camera.up = new Vector3(0.0f, 1.0f, 0.0f);
             camera.fovy = 45.0f;
-            camera.type = CAMERA_PERSPECTIVE;
+            camera.projection = CAMERA_PERSPECTIVE;
 
             Model model = LoadModel("resources/models/barracks.obj");                   // Load OBJ model
             Texture2D texture = LoadTexture("resources/models/barracks_diffuse.png");   // Load model texture (diffuse map)
 
             // Set model diffuse texture
-            Utils.SetMaterialTexture(ref model, 0, MAP_ALBEDO, ref texture);
+            Utils.SetMaterialTexture(ref model, 0, MATERIAL_MAP_ALBEDO, ref texture);
 
             // Set model position
             Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);
@@ -86,7 +86,7 @@ namespace Examples
                 swirlCenter[1] = screenHeight - mousePosition.Y;
 
                 // Send new value to the shader to be used on drawing
-                Utils.SetShaderValue(shader, swirlCenterLoc, swirlCenter, ShaderUniformDataType.UNIFORM_VEC2);
+                Utils.SetShaderValue(shader, swirlCenterLoc, swirlCenter, ShaderUniformDataType.SHADER_UNIFORM_VEC2);
 
                 UpdateCamera(ref camera);              // Update camera
                 //----------------------------------------------------------------------------------

@@ -39,7 +39,7 @@ namespace Examples
             const int screenWidth = 800;
             const int screenHeight = 450;
 
-            SetConfigFlags(ConfigFlag.FLAG_MSAA_4X_HINT);      // NOTE: Try to enable MSAA 4X
+            SetConfigFlags(ConfigFlags.FLAG_MSAA_4X_HINT);      // NOTE: Try to enable MSAA 4X
 
             InitWindow(screenWidth, screenHeight, "raylib [audio] example - module playing (streaming)");
 

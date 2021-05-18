@@ -21,7 +21,7 @@ using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
 using static Raylib_cs.CameraMode;
-using static Raylib_cs.MaterialMapType;
+using static Raylib_cs.MaterialMapIndex;
 using static Raylib_cs.KeyboardKey;
 
 namespace Examples
@@ -73,7 +73,7 @@ namespace Examples
             const int screenWidth = 800;
             const int screenHeight = 450;
 
-            SetConfigFlags(ConfigFlag.FLAG_MSAA_4X_HINT);      // Enable Multi Sampling Anti Aliasing 4x (if available)
+            SetConfigFlags(ConfigFlags.FLAG_MSAA_4X_HINT);      // Enable Multi Sampling Anti Aliasing 4x (if available)
             InitWindow(screenWidth, screenHeight, "raylib [shaders] example - postprocessing shader");
 
             // Define the camera to look into our 3d world
@@ -83,7 +83,7 @@ namespace Examples
             Texture2D texture = LoadTexture("resources/models/church_diffuse.png"); // Load model texture (diffuse map)
 
             // Set model diffuse texture
-            Utils.SetMaterialTexture(ref model, 0, MAP_ALBEDO, ref texture);
+            Utils.SetMaterialTexture(ref model, 0, MATERIAL_MAP_ALBEDO, ref texture);
 
             Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);                             // Set model position
 

@@ -12,7 +12,7 @@
 using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
-using static Raylib_cs.CameraType;
+using static Raylib_cs.CameraProjection;
 using static Raylib_cs.CameraMode;
 using static Raylib_cs.Color;
 
@@ -35,7 +35,7 @@ namespace Examples
             camera.target = new Vector3(0.0f, 2.0f, 0.0f);
             camera.up = new Vector3(0.0f, 1.0f, 0.0f);
             camera.fovy = 45.0f;
-            camera.type = CAMERA_PERSPECTIVE;
+            camera.projection = CAMERA_PERSPECTIVE;
 
             Texture2D bill = LoadTexture("resources/billboard.png");              // Our texture billboard
             Vector3 billPosition = new Vector3(0.0f, 2.0f, 0.0f);                 // Position where draw billboard
@@ -60,9 +60,8 @@ namespace Examples
 
                 BeginMode3D(camera);
 
+                DrawGrid(10, 1.0f);
                 DrawBillboard(camera, bill, billPosition, 2.0f, WHITE);
-
-                DrawGrid(10, 1.0f);        // Draw a grid
 
                 EndMode3D();
 

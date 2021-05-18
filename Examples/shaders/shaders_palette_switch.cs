@@ -115,7 +115,7 @@ namespace Examples
 
                 // Send new value to the shader to be used on drawing.
                 // NOTE: We are sending RGB triplets w/o the alpha channel
-                Utils.SetShaderValueV(shader, paletteLoc, palettes[currentPalette], UNIFORM_IVEC3, COLORS_PER_PALETTE);
+                Utils.SetShaderValueV(shader, paletteLoc, palettes[currentPalette], SHADER_UNIFORM_IVEC3, COLORS_PER_PALETTE);
                 //----------------------------------------------------------------------------------
 
                 // Draw

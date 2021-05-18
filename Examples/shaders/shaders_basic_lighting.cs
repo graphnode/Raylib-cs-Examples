@@ -31,12 +31,12 @@ using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Raymath;
 using static Raylib_cs.Color;
-using static Raylib_cs.ConfigFlag;
+using static Raylib_cs.ConfigFlags;
 using static Raylib_cs.CameraMode;
-using static Raylib_cs.CameraType;
+using static Raylib_cs.CameraProjection;
 using static Raylib_cs.KeyboardKey;
 using static Raylib_cs.ShaderLocationIndex;
-using static Raylib_cs.MaterialMapType;
+using static Raylib_cs.MaterialMapIndex;
 using static Examples.Rlights;
 
 namespace Examples
@@ -61,7 +61,7 @@ namespace Examples
             camera.target = new Vector3(0.0f, 0.5f, 0.0f);      // Camera looking at point
             camera.up = new Vector3(0.0f, 1.0f, 0.0f);          // Camera up vector (rotation towards target)
             camera.fovy = 45.0f;                                // Camera field-of-view Y
-            camera.type = CAMERA_PERSPECTIVE;                   // Camera mode type
+            camera.projection = CAMERA_PERSPECTIVE;                   // Camera mode type
 
             // Load models
             Model modelA = LoadModelFromMesh(GenMeshTorus(0.4f, 1.0f, 16, 32));
@@ -72,22 +72,22 @@ namespace Examples
             Texture2D texture = LoadTexture("resources/texel_checker.png");
 
             // Assign texture to default model material
-            Utils.SetMaterialTexture(ref modelA, 0, MAP_ALBEDO, ref texture);
-            Utils.SetMaterialTexture(ref modelB, 0, MAP_ALBEDO, ref texture);
-            Utils.SetMaterialTexture(ref modelC, 0, MAP_ALBEDO, ref texture);
+            Utils.SetMaterialTexture(ref modelA, 0, MATERIAL_MAP_ALBEDO, ref texture);
+            Utils.SetMaterialTexture(ref modelB, 0, MATERIAL_MAP_ALBEDO, ref texture);
+            Utils.SetMaterialTexture(ref modelC, 0, MATERIAL_MAP_ALBEDO, ref texture);
 
             Shader shader = LoadShader("resources/shaders/glsl330/base_lighting.vs",
                                        "resources/shaders/glsl330/lighting.fs");
 
             // Get some shader loactions
             int* locs = (int*)shader.locs.ToPointer();
-            locs[(int)LOC_MATRIX_MODEL] = GetShaderLocation(shader, "matModel");
-            locs[(int)LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
+            locs[(int)SHADER_LOC_MATRIX_MODEL] = GetShaderLocation(shader, "matModel");
+            locs[(int)SHADER_LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
 
             // ambient light level
             int ambientLoc = GetShaderLocation(shader, "ambient");
             float[] ambient = new float[] { 0.2f, 0.2f, 0.2f, 1.0f };
-            Utils.SetShaderValue(shader, ambientLoc, ambient, ShaderUniformDataType.UNIFORM_VEC4);
+            Utils.SetShaderValue(shader, ambientLoc, ambient, ShaderUniformDataType.SHADER_UNIFORM_VEC4);
 
             float angle = 6.282f;
 
@@ -154,7 +154,7 @@ namespace Examples
 
                 // Update the light shader with the camera view position
                 float[] cameraPos = { camera.position.X, camera.position.Y, camera.position.Z };
-                Utils.SetShaderValue(shader, locs[(int)LOC_VECTOR_VIEW], cameraPos, ShaderUniformDataType.UNIFORM_VEC3);
+                Utils.SetShaderValue(shader, locs[(int)SHADER_LOC_VECTOR_VIEW], cameraPos, ShaderUniformDataType.SHADER_UNIFORM_VEC3);
                 //----------------------------------------------------------------------------------
 
                 // Draw

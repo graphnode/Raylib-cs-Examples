@@ -86,7 +86,7 @@ namespace Examples
                         name[letterCount] = '\0';
                     }
                 }
-                else if (GetMouseCursor() != MOUSE_CURSOR_DEFAULT)
+                else
                 {
                     SetMouseCursor(MOUSE_CURSOR_DEFAULT);
                 }

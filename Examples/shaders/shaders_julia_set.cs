@@ -70,11 +70,11 @@ namespace Examples
 
             // Tell the shader what the screen dimensions, zoom, offset and c are
             float[] screenDims = { (float)screenWidth, (float)screenHeight };
-            Utils.SetShaderValue(shader, GetShaderLocation(shader, "screenDims"), screenDims, UNIFORM_VEC2);
+            Utils.SetShaderValue(shader, GetShaderLocation(shader, "screenDims"), screenDims, SHADER_UNIFORM_VEC2);
 
-            Utils.SetShaderValue(shader, cLoc, c, UNIFORM_VEC2);
-            Utils.SetShaderValue(shader, zoomLoc, zoomLoc, UNIFORM_FLOAT);
-            Utils.SetShaderValue(shader, offsetLoc, offset, UNIFORM_VEC2);
+            Utils.SetShaderValue(shader, cLoc, c, SHADER_UNIFORM_VEC2);
+            Utils.SetShaderValue(shader, zoomLoc, zoomLoc, SHADER_UNIFORM_FLOAT);
+            Utils.SetShaderValue(shader, offsetLoc, offset, SHADER_UNIFORM_VEC2);
 
             // Create a RenderTexture2D to be used for render to texture
             RenderTexture2D target = LoadRenderTexture(screenWidth, screenHeight);
@@ -130,7 +130,7 @@ namespace Examples
                         c[0] = POINTS_OF_INTEREST[5][0];
                         c[1] = POINTS_OF_INTEREST[5][1];
                     }
-                    Utils.SetShaderValue(shader, cLoc, c, UNIFORM_VEC2);
+                    Utils.SetShaderValue(shader, cLoc, c, SHADER_UNIFORM_VEC2);
                 }
 
                 // Pause animation (c change)
@@ -175,15 +175,15 @@ namespace Examples
                         offsetSpeed = new Vector2(0.0f, 0.0f);
                     }
 
-                    Utils.SetShaderValue(shader, zoomLoc, zoom, UNIFORM_FLOAT);
-                    Utils.SetShaderValue(shader, offsetLoc, offset, UNIFORM_VEC2);
+                    Utils.SetShaderValue(shader, zoomLoc, zoom, SHADER_UNIFORM_FLOAT);
+                    Utils.SetShaderValue(shader, offsetLoc, offset, SHADER_UNIFORM_VEC2);
 
                     // Increment c value with time
                     float amount = GetFrameTime() * incrementSpeed * 0.0005f;
                     c[0] += amount;
                     c[1] += amount;
 
-                    Utils.SetShaderValue(shader, cLoc, c, UNIFORM_VEC2);
+                    Utils.SetShaderValue(shader, cLoc, c, SHADER_UNIFORM_VEC2);
                 }
                 //----------------------------------------------------------------------------------
 

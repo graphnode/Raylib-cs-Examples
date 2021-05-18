@@ -19,9 +19,9 @@
 using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
-using static Raylib_cs.ConfigFlag;
+using static Raylib_cs.ConfigFlags;
 using static Raylib_cs.CameraMode;
-using static Raylib_cs.CameraType;
+using static Raylib_cs.CameraProjection;
 using static Raylib_cs.Color;
 using static Raylib_cs.ShaderUniformDataType;
 
@@ -61,7 +61,7 @@ namespace Examples
             int resolutionLoc = GetShaderLocation(shader, "resolution");
 
             float[] resolution = { (float)screenWidth, (float)screenHeight };
-            Utils.SetShaderValue(shader, resolutionLoc, resolution, UNIFORM_VEC2);
+            Utils.SetShaderValue(shader, resolutionLoc, resolution, SHADER_UNIFORM_VEC2);
 
             float runTime = 0.0f;
 
@@ -78,7 +78,7 @@ namespace Examples
                     screenWidth = GetScreenWidth();
                     screenHeight = GetScreenHeight();
                     resolution = new float[] { (float)screenWidth, (float)screenHeight };
-                    Utils.SetShaderValue(shader, resolutionLoc, resolution, UNIFORM_VEC2);
+                    Utils.SetShaderValue(shader, resolutionLoc, resolution, SHADER_UNIFORM_VEC2);
                 }
 
                 // Update
@@ -92,9 +92,9 @@ namespace Examples
                 runTime += deltaTime;
 
                 // Set shader required uniform values
-                Utils.SetShaderValue(shader, viewEyeLoc, cameraPos, UNIFORM_VEC3);
-                Utils.SetShaderValue(shader, viewCenterLoc, cameraTarget, UNIFORM_VEC3);
-                Utils.SetShaderValue(shader, runTimeLoc, runTime, UNIFORM_FLOAT);
+                Utils.SetShaderValue(shader, viewEyeLoc, cameraPos, SHADER_UNIFORM_VEC3);
+                Utils.SetShaderValue(shader, viewCenterLoc, cameraTarget, SHADER_UNIFORM_VEC3);
+                Utils.SetShaderValue(shader, runTimeLoc, runTime, SHADER_UNIFORM_FLOAT);
                 //----------------------------------------------------------------------------------
 
                 // Draw

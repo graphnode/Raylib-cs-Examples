@@ -12,7 +12,7 @@
 using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
-using static Raylib_cs.GestureType;
+using static Raylib_cs.Gestures;
 using static Raylib_cs.Color;
 
 namespace Examples
@@ -58,7 +58,7 @@ namespace Examples
                     if (currentGesture != lastGesture)
                     {
                         // Store gesture string
-                        switch ((GestureType)currentGesture)
+                        switch ((Gestures)currentGesture)
                         {
                             case GESTURE_TAP:
                                 gestureStrings[gesturesCount] = "GESTURE TAP";
