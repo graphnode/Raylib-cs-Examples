@@ -82,7 +82,7 @@ namespace Examples
 
         static void RunTextExamples()
         {
-            text_draw_3d.Main();
+            // text_draw_3d.Main();
             text_font_filters.Main();
             text_font_loading.Main();
             text_font_sdf.Main();
