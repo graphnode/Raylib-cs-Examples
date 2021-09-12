@@ -61,7 +61,7 @@ namespace Examples
                 circles[i].color = colors[GetRandomValue(0, 13)];
             }
 
-            Music xm = LoadMusicStream("resources/mini1111.xm");
+            Music xm = LoadMusicStream("resources/audio/mini1111.xm");
 
             PlayMusicStream(xm);
 

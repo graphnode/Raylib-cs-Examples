@@ -30,8 +30,8 @@ namespace Examples
             InitWindow(screenWidth, screenHeight, "raylib [audio] example - sound loading and playing");
             InitAudioDevice();      // Initialize audio device
 
-            Sound fxWav = LoadSound("resources/sound.wav");       // Load WAV audio file
-            Sound fxOgg = LoadSound("resources/target.ogg");      // Load OGG audio file
+            Sound fxWav = LoadSound("resources/audio/sound.wav");       // Load WAV audio file
+            Sound fxOgg = LoadSound("resources/audio/target.ogg");      // Load OGG audio file
 
             SetTargetFPS(60);
             //--------------------------------------------------------------------------------------

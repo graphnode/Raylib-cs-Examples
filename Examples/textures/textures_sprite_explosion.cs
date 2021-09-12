@@ -33,7 +33,7 @@ namespace Examples
             InitAudioDevice();
 
             // Load explosion sound
-            Sound fxBoom = LoadSound("resources/boom.wav");
+            Sound fxBoom = LoadSound("resources/audio/boom.wav");
 
             // Load explosion texture
             Texture2D explosion = LoadTexture("resources/explosion.png");

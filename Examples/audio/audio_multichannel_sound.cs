@@ -31,8 +31,8 @@ namespace Examples
 
             InitAudioDevice();      // Initialize audio device
 
-            Sound fxWav = LoadSound("resources/sound.wav");       // Load WAV audio file
-            Sound fxOgg = LoadSound("resources/target.ogg");      // Load OGG audio file
+            Sound fxWav = LoadSound("resources/audio/sound.wav");       // Load WAV audio file
+            Sound fxOgg = LoadSound("resources/audio/target.ogg");      // Load OGG audio file
 
             SetSoundVolume(fxWav, 0.2f);
 

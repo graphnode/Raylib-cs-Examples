@@ -32,7 +32,7 @@ namespace Examples
 
             InitAudioDevice();      // Initialize audio device
 
-            Sound fxButton = LoadSound("resources/buttonfx.wav");   // Load button sound
+            Sound fxButton = LoadSound("resources/audio/buttonfx.wav");   // Load button sound
             Texture2D button = LoadTexture("resources/button.png"); // Load button texture
 
             // Define frame rectangle for drawing

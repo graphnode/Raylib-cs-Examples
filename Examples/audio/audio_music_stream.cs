@@ -30,7 +30,7 @@ namespace Examples
             InitWindow(screenWidth, screenHeight, "raylib [audio] example - music playing (streaming)");
             InitAudioDevice();              // Initialize audio device
 
-            Music music = LoadMusicStream("resources/country.mp3");
+            Music music = LoadMusicStream("resources/audio/country.mp3");
             PlayMusicStream(music);
 
             float timePlayed = 0.0f;
