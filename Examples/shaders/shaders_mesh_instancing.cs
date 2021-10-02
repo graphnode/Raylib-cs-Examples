@@ -100,7 +100,7 @@ namespace Examples
 
             // Ambient light level
             int ambientLoc = GetShaderLocation(shader, "ambient");
-            Utils.SetShaderValueV(shader, ambientLoc, new float[] { 0.2f, 0.2f, 0.2f, 1.0f }, SHADER_UNIFORM_VEC4, 4);
+            Utils.SetShaderValue(shader, ambientLoc, new float[] { 0.2f, 0.2f, 0.2f, 1.0f }, SHADER_UNIFORM_VEC4);
 
             Rlights.CreateLight(0, LightType.LIGHT_DIRECTIONAL, new Vector3(50, 50, 0), Vector3.Zero, WHITE, shader);
 
@@ -109,7 +109,7 @@ namespace Examples
             unsafe
             {
                 MaterialMap* maps = (MaterialMap*)material.maps.ToPointer();
-                maps[(int)MATERIAL_MAP_ALBEDO].color = RED;
+                maps[(int)MATERIAL_MAP_DIFFUSE].color = RED;
             }
 
             SetCameraMode(camera, CAMERA_FREE); // Set a free camera mode
@@ -167,21 +167,25 @@ namespace Examples
                     variance = 0.70f;
                 }
 
-                // if (IsKeyDown(KEY_EQUAL)) speed = (int)(speed <= (fps*0.25f))? (fps*0.25f) : (speed*0.95f);
-                // if (IsKeyDown(KEY_KP_ADD)) speed = (int)(speed <= (fps*0.25f))? (fps*0.25f) : (speed*0.95f);
+                if (IsKeyDown(KEY_EQUAL))
+                    speed = (speed <= (int)(fps * 0.25f)) ? (int)(fps * 0.25f) : (int)(speed * 0.95f);
+                if (IsKeyDown(KEY_KP_ADD))
+                    speed = (speed <= (int)(fps * 0.25f)) ? (int)(fps * 0.25f) : (int)(speed * 0.95f);
 
-                // if (IsKeyDown(KEY_MINUS)) speed = (int)MathF.Max(speed*1.02f, speed + 1);
-                // if (IsKeyDown(KEY_KP_SUBTRACT)) speed = MathF.Max(speed*1.02f, speed + 1);
+                if (IsKeyDown(KEY_MINUS))
+                    speed = (int)MathF.Max(speed * 1.02f, speed + 1);
+                if (IsKeyDown(KEY_KP_SUBTRACT))
+                    speed = (int)MathF.Max(speed * 1.02f, speed + 1);
 
                 // Update the light shader with the camera view position
-                // float cameraPos[3] = { camera.position.x, camera.position.y, camera.position.z };
-                // SetShaderValue(shader, shader.locs[SHADER_LOC_VECTOR_VIEW], cameraPos, SHADER_UNIFORM_VEC3);
+                float[] cameraPos = { camera.position.X, camera.position.Y, camera.position.Z };
+                Utils.SetShaderValue(shader, (int)SHADER_LOC_VECTOR_VIEW, cameraPos, SHADER_UNIFORM_VEC3);
 
                 // Apply per-instance transformations
                 for (int i = 0; i < instances; i++)
                 {
-                    // rotations[i] = MatrixMultiply(rotations[i], rotationsInc[i]);
-                    // transforms[i] = MatrixMultiply(rotations[i], translations[i]);
+                    rotations[i] = Matrix4x4.Multiply(rotations[i], rotationsInc[i]);
+                    transforms[i] = Matrix4x4.Multiply(rotations[i], translations[i]);
 
                     // Get the animation cycle's framesCounter for this instance
                     loop = (float)((framesCounter + (int)(((float)(i % groups) / groups) * speed)) % speed) / speed;
@@ -192,7 +196,8 @@ namespace Examples
                     // Clamp to floor
                     y = (y < 0) ? 0.0f : y;
 
-                    // transforms[i] = MatrixMultiply(transforms[i], MatrixTranslate(0.0f, y, 0.0f));
+                    transforms[i] = Matrix4x4.Multiply(transforms[i], Matrix4x4.CreateTranslation(0.0f, y, 0.0f));
+                    transforms[i] = Matrix4x4.Transpose(transforms[i]);
                 }
                 //----------------------------------------------------------------------------------
 

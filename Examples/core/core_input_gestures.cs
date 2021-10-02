@@ -36,8 +36,8 @@ namespace Examples
             int gesturesCount = 0;
             string[] gestureStrings = new string[MAX_GESTURE_STRINGS];
 
-            int currentGesture = (int)GESTURE_NONE;
-            int lastGesture = (int)GESTURE_NONE;
+            Gestures currentGesture = GESTURE_NONE;
+            Gestures lastGesture = GESTURE_NONE;
 
             // SetGesturesEnabled(0b0000000000001001);   // Enable only some gestures to be detected
 
