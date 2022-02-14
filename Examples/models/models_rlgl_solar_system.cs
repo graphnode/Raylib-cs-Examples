@@ -140,7 +140,7 @@ namespace Examples
             int rings = 16;
             int slices = 16;
 
-            rlBegin(RL_TRIANGLES);
+            rlBegin(DrawMode.TRIANGLES);
             rlColor4ub(color.r, color.g, color.b, color.a);
 
             for (int i = 0; i < (rings + 2); i++)

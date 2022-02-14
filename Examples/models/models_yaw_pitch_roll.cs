@@ -5,10 +5,9 @@
 *   This example has been created using raylib 1.8 (www.raylib.com)
 *   raylib is licensed under an unmodified zlib/libpng license (View raylib.h for details)
 *
-*   Example based on Berni work on Raspberry Pi:
-*   http://forum.raylib.com/index.php?p=/discussion/124/line-versus-triangle-drawing-order
+*   Example contributed by Berni (@Berni8k) and reviewed by Ramon Santamaria (@raysan5)
 *
-*   Copyright (c) 2017 Ramon Santamaria (@raysan5)
+*   Copyright (c) 2017-2021 Berni (@Berni8k) and Ramon Santamaria (@raysan5)
 *
 ********************************************************************************************/
 
@@ -19,6 +18,7 @@ using static Raylib_cs.Raymath;
 using static Raylib_cs.Color;
 using static Raylib_cs.CameraProjection;
 using static Raylib_cs.KeyboardKey;
+using static Raylib_cs.MaterialMapIndex;
 
 namespace Examples
 {
@@ -34,15 +34,16 @@ namespace Examples
             InitWindow(screenWidth, screenHeight, "raylib [models] example - plane rotations (yaw, pitch, roll)");
 
             Camera3D camera = new Camera3D();
-            camera.position = new Vector3(0.0f, 60.0f, -120.0f);
-            camera.target = new Vector3(0.0f, 12.0f, 0.0f);
+            camera.position = new Vector3(0.0f, 50.0f, -120.0f);
+            camera.target = new Vector3(0.0f, 0.0f, 0.0f);
             camera.up = new Vector3(0.0f, 1.0f, 0.0f);
             camera.fovy = 30.0f;
             camera.projection = CAMERA_PERSPECTIVE;
 
             // Model loading
-            // NOTE: Diffuse map loaded automatically
-            Model model = LoadModel("resources/plane/plane.gltf");
+            Model model = LoadModel("resources/models/obj/plane.obj");
+            Texture2D texture = LoadTexture("resources/models/obj/plane_diffuse.png");
+            model.materials[0].maps[(int)MATERIAL_MAP_DIFFUSE].texture = texture;
 
             float pitch = 0.0f;
             float roll = 0.0f;
@@ -68,9 +69,13 @@ namespace Examples
                 else
                 {
                     if (pitch > 0.3f)
+                    {
                         pitch -= 0.3f;
+                    }
                     else if (pitch < -0.3f)
+                    {
                         pitch += 0.3f;
+                    }
                 }
 
                 // Plane yaw (y-axis) controls
@@ -85,9 +90,13 @@ namespace Examples
                 else
                 {
                     if (yaw > 0.0f)
+                    {
                         yaw -= 0.5f;
+                    }
                     else if (yaw < 0.0f)
+                    {
                         yaw += 0.5f;
+                    }
                 }
 
                 // Plane pitch (z-axis) controls
@@ -102,9 +111,13 @@ namespace Examples
                 else
                 {
                     if (roll > 0.0f)
+                    {
                         roll -= 0.5f;
+                    }
                     else if (roll < 0.0f)
+                    {
                         roll += 0.5f;
+                    }
                 }
 
                 // Tranformation matrix for rotations
@@ -120,7 +133,7 @@ namespace Examples
                 BeginMode3D(camera);
 
                 // Draw 3d model with texture
-                DrawModel(model, new Vector3(0.0f, 0.0f, 15.0f), 0.25f, WHITE);
+                DrawModel(model, new Vector3(0.0f, -8.0f, 0.0f), 1.0f, WHITE);
                 DrawGrid(10, 10.0f);
 
                 EndMode3D();

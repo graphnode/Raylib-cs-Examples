@@ -20,7 +20,7 @@ namespace Examples
 {
     public class models_heightmap
     {
-        public unsafe static int Main()
+        public static int Main()
         {
             // Initialization
             //--------------------------------------------------------------------------------------
@@ -39,7 +39,7 @@ namespace Examples
             Model model = LoadModelFromMesh(mesh);                          // Load model from generated mesh
 
             // Set map diffuse texture
-            Utils.SetMaterialTexture(ref model, 0, MATERIAL_MAP_ALBEDO, ref texture);
+            Raylib.SetMaterialTexture(ref model, 0, MATERIAL_MAP_ALBEDO, ref texture);
 
             Vector3 mapPosition = new Vector3(-8.0f, 0.0f, -8.0f);                   // Define model position
 

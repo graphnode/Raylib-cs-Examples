@@ -14,7 +14,6 @@
 
 using System.Numerics;
 using Raylib_cs;
-using static Raylib_cs.Easings;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
 using static Raylib_cs.KeyboardKey;
@@ -56,7 +55,9 @@ namespace Examples
 
             float rotation = 0.0f;
             int framesCounter = 0;
-            int state = 0;                  // Rectangles animation state: 0-Playing, 1-Finished
+
+            // Rectangles animation state: 0-Playing, 1-Finished
+            int state = 0;
 
             SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
             //--------------------------------------------------------------------------------------
@@ -72,8 +73,8 @@ namespace Examples
 
                     for (int i = 0; i < MAX_RECS_X * MAX_RECS_Y; i++)
                     {
-                        recs[i].height = EaseCircOut(framesCounter, RECS_HEIGHT, -RECS_HEIGHT, PLAY_TIME_IN_FRAMES);
-                        recs[i].width = EaseCircOut(framesCounter, RECS_WIDTH, -RECS_WIDTH, PLAY_TIME_IN_FRAMES);
+                        recs[i].height = Easings.EaseCircOut(framesCounter, RECS_HEIGHT, -RECS_HEIGHT, PLAY_TIME_IN_FRAMES);
+                        recs[i].width = Easings.EaseCircOut(framesCounter, RECS_WIDTH, -RECS_WIDTH, PLAY_TIME_IN_FRAMES);
 
                         if (recs[i].height < 0)
                         {
@@ -89,7 +90,7 @@ namespace Examples
                         {
                             state = 1;
                         }
-                        rotation = EaseLinearIn(framesCounter, 0.0f, 360.0f, PLAY_TIME_IN_FRAMES);
+                        rotation = Easings.EaseLinearIn(framesCounter, 0.0f, 360.0f, PLAY_TIME_IN_FRAMES);
                     }
                 }
                 else if ((state == 1) && IsKeyPressed(KEY_SPACE))

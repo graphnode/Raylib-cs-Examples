@@ -11,6 +11,7 @@
 *
 ********************************************************************************************/
 
+using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
 
@@ -27,8 +28,7 @@ namespace Examples
 
             InitWindow(screenWidth, screenHeight, "raylib [core] example - drop files");
 
-            int count = 0;
-            string[] droppedFiles = { };
+            string[] files = new string[0];
 
             SetTargetFPS(60);
             //--------------------------------------------------------------------------------------
@@ -40,7 +40,8 @@ namespace Examples
                 //----------------------------------------------------------------------------------
                 if (IsFileDropped())
                 {
-                    droppedFiles = Utils.MarshalDroppedFiles(ref count);
+                    files = Raylib.GetDroppedFiles();
+                    ClearDroppedFiles();
                 }
                 //----------------------------------------------------------------------------------
 
@@ -49,7 +50,7 @@ namespace Examples
                 BeginDrawing();
                 ClearBackground(RAYWHITE);
 
-                if (count == 0)
+                if (files.Length == 0)
                 {
                     DrawText("Drop your files to this window!", 100, 40, 20, DARKGRAY);
                 }
@@ -57,7 +58,7 @@ namespace Examples
                 {
                     DrawText("Dropped files:", 100, 40, 20, DARKGRAY);
 
-                    for (int i = 0; i < count; i++)
+                    for (int i = 0; i < files.Length; i++)
                     {
                         if (i % 2 == 0)
                         {
@@ -67,10 +68,10 @@ namespace Examples
                         {
                             DrawRectangle(0, 85 + 40 * i, screenWidth, 40, ColorAlpha(LIGHTGRAY, 0.3f));
                         }
-                        DrawText(droppedFiles[i], 120, 100 + 40 * i, 10, GRAY);
+                        DrawText(files[i], 120, 100 + 40 * i, 10, GRAY);
                     }
 
-                    DrawText("Drop new files...", 100, 110 + 40 * count, 20, DARKGRAY);
+                    DrawText("Drop new files...", 100, 110 + 40 * files.Length, 20, DARKGRAY);
                 }
 
                 EndDrawing();

@@ -47,7 +47,7 @@ namespace Examples
             int timeLoc = GetShaderLocation(shader, "time");
 
             float[] resolution = new[] { (float)screenWidth, (float)screenHeight };
-            Utils.SetShaderValue(shader, resolutionLoc, resolution, SHADER_UNIFORM_VEC2);
+            Raylib.SetShaderValue(shader, resolutionLoc, resolution, SHADER_UNIFORM_VEC2);
 
             float totalTime = 0.0f;
             bool shaderAutoReloading = false;
@@ -65,8 +65,8 @@ namespace Examples
                 float[] mousePos = new[] { mouse.X, mouse.Y };
 
                 // Set shader required uniform values
-                SetShaderValue(shader, timeLoc, ref totalTime, SHADER_UNIFORM_FLOAT);
-                Utils.SetShaderValue(shader, mouseLoc, mousePos, SHADER_UNIFORM_VEC2);
+                Raylib.SetShaderValue(shader, timeLoc, totalTime, SHADER_UNIFORM_FLOAT);
+                Raylib.SetShaderValue(shader, mouseLoc, mousePos, SHADER_UNIFORM_VEC2);
 
                 // Hot shader reloading
                 if (shaderAutoReloading || (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)))
@@ -80,7 +80,7 @@ namespace Examples
                         Shader updatedShader = LoadShader(null, fragShaderFileName);
 
                         // It was correctly loaded
-                        if (updatedShader.id != rlGetShaderDefault().id)
+                        if (updatedShader.id != 0) //rlGetShaderIdDefault())
                         {
                             UnloadShader(shader);
                             shader = updatedShader;
@@ -91,7 +91,7 @@ namespace Examples
                             timeLoc = GetShaderLocation(shader, "time");
 
                             // Reset required uniforms
-                            Utils.SetShaderValue(shader, resolutionLoc, resolution, SHADER_UNIFORM_VEC2);
+                            Raylib.SetShaderValue(shader, resolutionLoc, resolution, SHADER_UNIFORM_VEC2);
                         }
 
                         fragShaderFileModTime = currentFragShaderModTime;

@@ -1,5 +1,5 @@
 build:
-	dotnet build Examples/Examples.csproj -f net5.0
+	dotnet build Examples/Examples.csproj -f net6.0
 build-release:
 	dotnet build -c Release
 clean:
@@ -7,8 +7,8 @@ clean:
 restore:
 	dotnet restore
 watch:
-	dotnet watch -p Examples/Examples.csproj run
+	dotnet watch --project Examples/Examples.csproj run
 run-examples:
-	dotnet run -p Examples/Examples.csproj -f net5.0
+	dotnet run --project Examples/Examples.csproj -f net6.0
 run-imgui:
-	dotnet run -p ImGuiDemo/ImGuiDemo.csproj -f net5.0
+	dotnet run --project ImGuiDemo/ImGuiDemo.csproj -f net6.0

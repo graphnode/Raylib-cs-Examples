@@ -163,9 +163,9 @@ int main(int argc, char** argv)
     // Load the font resources
     // NOTE: fontAsian is for asian languages,
     // fontEmoji is the emojis and fontDefault is used for everything else
-    Font fontDefault = LoadFont("resources/dejavu.fnt");
-    Font fontAsian = LoadFont("resources/notoCJK.fnt");
-    Font fontEmoji = LoadFont("resources/emoji.fnt");
+    Font fontDefault = LoadFont("resources/fonts/dejavu.fnt");
+    Font fontAsian = LoadFont("resources/fonts/notoCJK.fnt");
+    Font fontEmoji = LoadFont("resources/fonts/emoji.fnt");
 
     Vector2 hoveredPos = new Vector2(0.0f, 0.0f);
     Vector2 selectedPos = new Vector2(0.0f, 0.0f);

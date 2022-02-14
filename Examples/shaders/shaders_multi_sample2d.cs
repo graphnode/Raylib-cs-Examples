@@ -70,7 +70,7 @@ namespace Examples
                 else if (dividerValue > 1.0f)
                     dividerValue = 1.0f;
 
-                SetShaderValue(shader, dividerLoc, ref dividerValue, SHADER_UNIFORM_FLOAT);
+                Raylib.SetShaderValue(shader, dividerLoc, dividerValue, SHADER_UNIFORM_FLOAT);
                 //----------------------------------------------------------------------------------
 
                 // Draw

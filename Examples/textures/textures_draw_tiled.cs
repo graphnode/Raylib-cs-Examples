@@ -22,9 +22,9 @@ namespace Examples
 {
     public class textures_draw_tiled
     {
-        const int OPT_WIDTH = 220;       // Max width for the options container
-        const int MARGIN_SIZE = 8;       // Size for the margins
-        const int COLOR_SIZE = 16;       // Size of the color select buttons
+        const int OPT_WIDTH = 220;
+        const int MARGIN_SIZE = 8;
+        const int COLOR_SIZE = 16;
 
         public static int Main()
         {
@@ -38,7 +38,9 @@ namespace Examples
 
             // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
             Texture2D texPattern = LoadTexture("resources/patterns.png");
-            SetTextureFilter(texPattern, TEXTURE_FILTER_TRILINEAR); // Makes the texture smoother when upscaled
+
+            // Makes the texture smoother when upscaled
+            SetTextureFilter(texPattern, TEXTURE_FILTER_TRILINEAR);
 
             // Coordinates for all patterns inside the texture
             Rectangle[] recPattern = new[] {
@@ -68,7 +70,9 @@ namespace Examples
                     y += COLOR_SIZE + MARGIN_SIZE;
                 }
                 else
+                {
                     x += (COLOR_SIZE * 2 + MARGIN_SIZE);
+                }
             }
 
             int activePattern = 0, activeCol = 0;
@@ -93,7 +97,13 @@ namespace Examples
                     // Check which pattern was clicked and set it as the active pattern
                     for (int i = 0; i < recPattern.Length; i++)
                     {
-                        if (CheckCollisionPointRec(mouse, new Rectangle(2 + MARGIN_SIZE + recPattern[i].x, 40 + MARGIN_SIZE + recPattern[i].y, recPattern[i].width, recPattern[i].height)))
+                        Rectangle rec = new Rectangle(
+                            2 + MARGIN_SIZE + recPattern[i].x,
+                            40 + MARGIN_SIZE + recPattern[i].y,
+                            recPattern[i].width,
+                            recPattern[i].height
+                        );
+                        if (CheckCollisionPointRec(mouse, rec))
                         {
                             activePattern = i;
                             break;
@@ -115,19 +125,31 @@ namespace Examples
 
                 // Change scale
                 if (IsKeyPressed(KEY_UP))
+                {
                     scale += 0.25f;
+                }
                 if (IsKeyPressed(KEY_DOWN))
+                {
                     scale -= 0.25f;
+                }
                 if (scale > 10.0f)
+                {
                     scale = 10.0f;
+                }
                 else if (scale <= 0.0f)
+                {
                     scale = 0.25f;
+                }
 
                 // Change rotation
                 if (IsKeyPressed(KEY_LEFT))
+                {
                     rotation -= 25.0f;
+                }
                 if (IsKeyPressed(KEY_RIGHT))
+                {
                     rotation += 25.0f;
+                }
 
                 // Reset
                 if (IsKeyPressed(KEY_SPACE))
@@ -143,22 +165,37 @@ namespace Examples
                 ClearBackground(RAYWHITE);
 
                 // Draw the tiled area
-                DrawTextureTiled(texPattern, recPattern[activePattern], new Rectangle(OPT_WIDTH + MARGIN_SIZE, MARGIN_SIZE, screenWidth - OPT_WIDTH - 2 * MARGIN_SIZE, screenHeight - 2 * MARGIN_SIZE),
-                    new Vector2(0.0f, 0.0f), rotation, scale, colors[activeCol]);
+                Rectangle source = recPattern[activePattern];
+                Rectangle dest = new Rectangle(
+                    OPT_WIDTH + MARGIN_SIZE,
+                    MARGIN_SIZE,
+                    screenWidth - OPT_WIDTH - 2 * MARGIN_SIZE,
+                    screenHeight - 2 * MARGIN_SIZE
+                );
+                DrawTextureTiled(texPattern, source, dest, Vector2.Zero, rotation, scale, colors[activeCol]);
 
                 // Draw options
-                DrawRectangle(MARGIN_SIZE, MARGIN_SIZE, OPT_WIDTH - MARGIN_SIZE, screenHeight - 2 * MARGIN_SIZE, ColorAlpha(LIGHTGRAY, 0.5f));
+                Color color = ColorAlpha(LIGHTGRAY, 0.5f);
+                DrawRectangle(MARGIN_SIZE, MARGIN_SIZE, OPT_WIDTH - MARGIN_SIZE, screenHeight - 2 * MARGIN_SIZE, color);
 
                 DrawText("Select Pattern", 2 + MARGIN_SIZE, 30 + MARGIN_SIZE, 10, BLACK);
                 DrawTexture(texPattern, 2 + MARGIN_SIZE, 40 + MARGIN_SIZE, BLACK);
-                DrawRectangle(2 + MARGIN_SIZE + (int)recPattern[activePattern].x, 40 + MARGIN_SIZE + (int)recPattern[activePattern].y, (int)recPattern[activePattern].width, (int)recPattern[activePattern].height, ColorAlpha(DARKBLUE, 0.3f));
+                DrawRectangle(
+                    2 + MARGIN_SIZE + (int)recPattern[activePattern].x,
+                    40 + MARGIN_SIZE + (int)recPattern[activePattern].y,
+                    (int)recPattern[activePattern].width,
+                    (int)recPattern[activePattern].height,
+                    ColorAlpha(DARKBLUE, 0.3f)
+                );
 
                 DrawText("Select Color", 2 + MARGIN_SIZE, 10 + 256 + MARGIN_SIZE, 10, BLACK);
                 for (int i = 0; i < colors.Length; i++)
                 {
                     DrawRectangleRec(colorRec[i], colors[i]);
                     if (activeCol == i)
+                    {
                         DrawRectangleLinesEx(colorRec[i], 3, ColorAlpha(WHITE, 0.5f));
+                    }
                 }
 
                 DrawText("Scale (UP/DOWN to change)", 2 + MARGIN_SIZE, 80 + 256 + MARGIN_SIZE, 10, BLACK);
@@ -177,7 +214,7 @@ namespace Examples
 
             // De-Initialization
             //--------------------------------------------------------------------------------------
-            UnloadTexture(texPattern);  // Unload texture
+            UnloadTexture(texPattern);
 
             CloseWindow();              // Close window and OpenGL context
             //--------------------------------------------------------------------------------------

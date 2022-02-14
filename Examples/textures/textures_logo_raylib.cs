@@ -27,7 +27,7 @@ namespace Examples
             InitWindow(screenWidth, screenHeight, "raylib [textures] example - texture loading and drawing");
 
             // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
-            Texture2D texture = LoadTexture("resources/raylib-cs_logo.png");        // Texture loading
+            Texture2D texture = LoadTexture("resources/raylib-cs_logo.png");
             //---------------------------------------------------------------------------------------
 
             // Main game loop

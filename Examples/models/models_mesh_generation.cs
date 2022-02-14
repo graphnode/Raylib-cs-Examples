@@ -23,7 +23,7 @@ namespace Examples
     {
         public const int NUM_MODELS = 7;
 
-        public unsafe static int Main()
+        public static int Main()
         {
             // Initialization
             //--------------------------------------------------------------------------------------
@@ -51,7 +51,7 @@ namespace Examples
             for (int i = 0; i < NUM_MODELS; i++)
             {
                 // Set map diffuse texture
-                Utils.SetMaterialTexture(ref models[i], 0, MATERIAL_MAP_ALBEDO, ref texture);
+                Raylib.SetMaterialTexture(ref models[i], 0, MATERIAL_MAP_ALBEDO, ref texture);
             }
 
             // Define the camera to look into our 3d world

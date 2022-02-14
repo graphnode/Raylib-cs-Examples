@@ -45,15 +45,20 @@ namespace Examples
             // Picking ray
             Ray ray = new Ray();
 
-            Model tower = LoadModel("resources/models/turret.obj");                     // Load OBJ model
-            Texture2D texture = LoadTexture("resources/models/turret_diffuse.png");     // Load model texture
-            Utils.SetMaterialTexture(ref tower, 0, MATERIAL_MAP_ALBEDO, ref texture);            // Set map diffuse texture
+            Model tower = LoadModel("resources/models/obj/turret.obj");
+            Texture2D texture = LoadTexture("resources/models/obj/turret_diffuse.png");
+            Raylib.SetMaterialTexture(ref tower, 0, MATERIAL_MAP_ALBEDO, ref texture);
 
-            Vector3 towerPos = new Vector3(0.0f, 0.0f, 0.0f);       // Set model position
-            Mesh* meshes = (Mesh*)tower.meshes.ToPointer();
-            BoundingBox towerBBox = MeshBoundingBox(meshes[0]);     // Get mesh bounding box
+            Vector3 towerPos = new Vector3(0.0f, 0.0f, 0.0f);
+            BoundingBox towerBBox = GetMeshBoundingBox(tower.meshes[0]);
             bool hitMeshBBox = false;
             bool hitTriangle = false;
+
+            // Ground quad
+            Vector3 g0 = new Vector3(-50.0f, 0.0f, -50.0f);
+            Vector3 g1 = new Vector3(-50.0f, 0.0f, 50.0f);
+            Vector3 g2 = new Vector3(50.0f, 0.0f, 50.0f);
+            Vector3 g3 = new Vector3(50.0f, 0.0f, -50.0f);
 
             // Test triangle
             Vector3 ta = new Vector3(-25.0f, 0.5f, 0.0f);
@@ -62,9 +67,9 @@ namespace Examples
 
             Vector3 bary = new Vector3(0.0f, 0.0f, 0.0f);
 
-            SetCameraMode(camera, CAMERA_FREE); // Set a free camera mode
+            SetCameraMode(camera, CAMERA_FREE);
 
-            SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
+            SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 
             //----------------------------------------------------------------------------------
             // Main game loop
@@ -77,54 +82,55 @@ namespace Examples
                 UpdateCamera(ref camera);       // Update camera
 
                 // Display information about closest hit
-                RayHitInfo nearestHit = new RayHitInfo();
+                RayCollision collision = new RayCollision();
                 string hitObjectName = "None";
-                nearestHit.distance = FLT_MAX;
-                nearestHit.hit = 0;
+                collision.distance = FLT_MAX;
+                collision.hit = false;
                 Color cursorColor = WHITE;
 
                 // Get ray and test against ground, triangle, and mesh
                 ray = GetMouseRay(GetMousePosition(), camera);
 
                 // Check ray collision aginst ground plane
-                RayHitInfo groundHitInfo = GetCollisionRayGround(ray, 0.0f);
+                RayCollision groundHitInfo = GetRayCollisionQuad(ray, g0, g1, g2, g3);
 
-                if ((groundHitInfo.hit == 1) && (groundHitInfo.distance < nearestHit.distance))
+                if (groundHitInfo.hit && (groundHitInfo.distance < collision.distance))
                 {
-                    nearestHit = groundHitInfo;
+                    collision = groundHitInfo;
                     cursorColor = GREEN;
                     hitObjectName = "Ground";
                 }
 
                 // Check ray collision against test triangle
-                RayHitInfo triHitInfo = GetCollisionRayTriangle(ray, ta, tb, tc);
+                RayCollision triHitInfo = GetRayCollisionTriangle(ray, ta, tb, tc);
 
-                if ((triHitInfo.hit == 1) && (triHitInfo.distance < nearestHit.distance))
+                if (triHitInfo.hit && (triHitInfo.distance < collision.distance))
                 {
-                    nearestHit = triHitInfo;
+                    collision = triHitInfo;
                     cursorColor = PURPLE;
                     hitObjectName = "Triangle";
 
-                    bary = Vector3Barycenter(nearestHit.position, ta, tb, tc);
+                    bary = Vector3Barycenter(collision.point, ta, tb, tc);
                     hitTriangle = true;
                 }
                 else
+                {
                     hitTriangle = false;
-
-                RayHitInfo meshHitInfo = new RayHitInfo();
+                }
 
                 // Check ray collision against bounding box first, before trying the full ray-mesh test
-                if (CheckCollisionRayBox(ray, towerBBox))
+                RayCollision boxHitInfo = GetRayCollisionBox(ray, towerBBox);
+                if (boxHitInfo.hit && boxHitInfo.distance < collision.distance)
                 {
                     hitMeshBBox = true;
 
                     // Check ray collision against model
                     // NOTE: It considers model.transform matrix!
-                    meshHitInfo = GetCollisionRayModel(ray, tower);
+                    RayCollision meshHitInfo = GetRayCollisionModel(ray, tower);
 
-                    if ((meshHitInfo.hit == 1) && (meshHitInfo.distance < nearestHit.distance))
+                    if (meshHitInfo.hit && (meshHitInfo.distance < collision.distance))
                     {
-                        nearestHit = meshHitInfo;
+                        collision = meshHitInfo;
                         cursorColor = ORANGE;
                         hitObjectName = "Mesh";
                     }
@@ -155,17 +161,13 @@ namespace Examples
                     DrawBoundingBox(towerBBox, LIME);
 
                 // If we hit something, draw the cursor at the hit point
-                if (nearestHit.hit == 1)
+                if (collision.hit)
                 {
-                    DrawCube(nearestHit.position, 0.3f, 0.3f, 0.3f, cursorColor);
-                    DrawCubeWires(nearestHit.position, 0.3f, 0.3f, 0.3f, RED);
+                    DrawCube(collision.point, 0.3f, 0.3f, 0.3f, cursorColor);
+                    DrawCubeWires(collision.point, 0.3f, 0.3f, 0.3f, RED);
 
-                    Vector3 normalEnd;
-                    normalEnd.X = nearestHit.position.X + nearestHit.normal.X;
-                    normalEnd.Y = nearestHit.position.Y + nearestHit.normal.Y;
-                    normalEnd.Z = nearestHit.position.Z + nearestHit.normal.Z;
-
-                    DrawLine3D(nearestHit.position, normalEnd, RED);
+                    Vector3 normalEnd = collision.point + collision.normal;
+                    DrawLine3D(collision.point, normalEnd, RED);
                 }
 
                 DrawRay(ray, MAROON);
@@ -177,22 +179,22 @@ namespace Examples
                 // Draw some debug GUI text
                 DrawText(string.Format("Hit Object: {0}", hitObjectName), 10, 50, 10, BLACK);
 
-                if (nearestHit.hit == 1)
+                if (collision.hit)
                 {
                     int ypos = 70;
 
-                    var x = string.Format("Distance: {0:000.00}", nearestHit.distance);
-                    DrawText(string.Format("Distance: {0:000.00}", nearestHit.distance), 10, ypos, 10, BLACK);
+                    var x = string.Format("Distance: {0:000.00}", collision.distance);
+                    DrawText(string.Format("Distance: {0:000.00}", collision.distance), 10, ypos, 10, BLACK);
 
                     DrawText(string.Format("Hit Pos: {0:000.00} {1:000.00} {2:000.00}",
-                                        nearestHit.position.X,
-                                        nearestHit.position.Y,
-                                        nearestHit.position.Z), 10, ypos + 15, 10, BLACK);
+                                        collision.point.X,
+                                        collision.point.Y,
+                                        collision.point.Z), 10, ypos + 15, 10, BLACK);
 
                     DrawText(string.Format("Hit Norm: {0:000.00} {1:000.00} {2:000.00}",
-                                        nearestHit.normal.X,
-                                        nearestHit.normal.Y,
-                                        nearestHit.normal.Z), 10, ypos + 30, 10, BLACK);
+                                        collision.normal.X,
+                                        collision.normal.Y,
+                                        collision.normal.Z), 10, ypos + 30, 10, BLACK);
 
                     if (hitTriangle)
                         DrawText(string.Format("Barycenter:{0:000.00} {1:000.00} {2:000.00}", bary.X, bary.Y, bary.Z), 10, ypos + 45, 10, BLACK);

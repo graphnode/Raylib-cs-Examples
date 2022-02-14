@@ -43,29 +43,27 @@ namespace Examples
 
             // Define the camera to look into our 3d world
             Camera3D camera = new Camera3D();
-            camera.position = new Vector3(50.0f, 50.0f, 50.0f); // Camera position
-            camera.target = new Vector3(0.0f, 10.0f, 0.0f);     // Camera looking at point
-            camera.up = new Vector3(0.0f, 1.0f, 0.0f);          // Camera up vector (rotation towards target)
-            camera.fovy = 45.0f;                                // Camera field-of-view Y
-            camera.projection = CAMERA_PERSPECTIVE;                   // Camera mode type
+            camera.position = new Vector3(50.0f, 50.0f, 50.0f);
+            camera.target = new Vector3(0.0f, 10.0f, 0.0f);
+            camera.up = new Vector3(0.0f, 1.0f, 0.0f);
+            camera.fovy = 45.0f;
+            camera.projection = CAMERA_PERSPECTIVE;
 
-            Model model = LoadModel("resources/models/castle.obj");                 // Load model
-            Texture2D texture = LoadTexture("resources/models/castle_diffuse.png"); // Load model texture
+            Model model = LoadModel("resources/models/obj/castle.obj");
+            Texture2D texture = LoadTexture("resources/models/obj/castle_diffuse.png");
 
             // Set map diffuse texture
-            Utils.SetMaterialTexture(ref model, 0, MATERIAL_MAP_ALBEDO, ref texture);
+            Raylib.SetMaterialTexture(ref model, 0, MATERIAL_MAP_ALBEDO, ref texture);
 
-            Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);                // Set model position
-
-            Mesh* meshes = (Mesh*)model.meshes.ToPointer();
-            BoundingBox bounds = MeshBoundingBox(meshes[0]);  // Set model bounds
+            Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);
+            BoundingBox bounds = GetMeshBoundingBox(model.meshes[0]);
 
             // NOTE: bounds are calculated from the original size of the model,
             // if model is scaled on drawing, bounds must be also scaled
 
-            SetCameraMode(camera, CAMERA_FREE);     // Set a free camera mode
+            SetCameraMode(camera, CAMERA_FREE);
 
-            bool selected = false;          // Selected object flag
+            bool selected = false;
 
             SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
             //--------------------------------------------------------------------------------------
@@ -80,32 +78,30 @@ namespace Examples
                 // Load new models/textures on dragref
                 if (IsFileDropped())
                 {
-                    int count = 0;
-                    string[] droppedFiles = Utils.MarshalDroppedFiles(ref count);
+                    string[] files = Raylib.GetDroppedFiles();
 
-                    if (count == 1) // Only support one file dropped
+                    if (files.Length == 1) // Only support one file dropped
                     {
-                        if (IsFileExtension(droppedFiles[0], ".obj") ||
-                            IsFileExtension(droppedFiles[0], ".gltf") ||
-                            IsFileExtension(droppedFiles[0], ".iqm"))       // Model file formats supported
+                        if (IsFileExtension(files[0], ".obj") ||
+                            IsFileExtension(files[0], ".gltf") ||
+                            IsFileExtension(files[0], ".iqm"))       // Model file formats supported
                         {
                             UnloadModel(model);                     // Unload previous model
-                            model = LoadModel(droppedFiles[0]);     // Load new model
+                            model = LoadModel(files[0]);     // Load new model
 
                             // Set current map diffuse texture
-                            Utils.SetMaterialTexture(ref model, 0, MATERIAL_MAP_ALBEDO, ref texture);
+                            Raylib.SetMaterialTexture(ref model, 0, MATERIAL_MAP_ALBEDO, ref texture);
 
-                            meshes = (Mesh*)model.meshes.ToPointer();
-                            bounds = MeshBoundingBox(meshes[0]);
+                            bounds = GetMeshBoundingBox(model.meshes[0]);
 
                             // TODO: Move camera position from target enough distance to visualize model properly
                         }
-                        else if (IsFileExtension(droppedFiles[0], ".png"))  // Texture file formats supported
+                        else if (IsFileExtension(files[0], ".png"))  // Texture file formats supported
                         {
                             // Unload current model texture and load new one
                             UnloadTexture(texture);
-                            texture = LoadTexture(droppedFiles[0]);
-                            Utils.SetMaterialTexture(ref model, 0, MATERIAL_MAP_ALBEDO, ref texture);
+                            texture = LoadTexture(files[0]);
+                            Raylib.SetMaterialTexture(ref model, 0, MATERIAL_MAP_ALBEDO, ref texture);
                         }
                     }
 
@@ -116,10 +112,14 @@ namespace Examples
                 if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
                 {
                     // Check collision between ray and box
-                    if (CheckCollisionRayBox(GetMouseRay(GetMousePosition(), camera), bounds))
+                    if (GetRayCollisionBox(GetMouseRay(GetMousePosition(), camera), bounds).hit)
+                    {
                         selected = !selected;
+                    }
                     else
+                    {
                         selected = false;
+                    }
                 }
                 //----------------------------------------------------------------------------------
 

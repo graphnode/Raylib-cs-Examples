@@ -45,9 +45,8 @@ namespace Examples
             // Load bunny texture
             Texture2D texBunny = LoadTexture("resources/wabbit_alpha.png");
 
-            Bunny[] bunnies = new Bunny[MAX_BUNNIES];    // Bunnies array
-
-            int bunniesCount = 0;           // Bunnies counter
+            Bunny[] bunnies = new Bunny[MAX_BUNNIES];
+            int bunniesCount = 0;
 
             SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
             //--------------------------------------------------------------------------------------
@@ -67,26 +66,35 @@ namespace Examples
                             bunnies[bunniesCount].position = GetMousePosition();
                             bunnies[bunniesCount].speed.X = (float)GetRandomValue(-250, 250) / 60.0f;
                             bunnies[bunniesCount].speed.Y = (float)GetRandomValue(-250, 250) / 60.0f;
-                            bunnies[bunniesCount].color = new Color(GetRandomValue(50, 240),
-                                                               GetRandomValue(80, 240),
-                                                               GetRandomValue(100, 240), 255);
+                            bunnies[bunniesCount].color = new Color(
+                                GetRandomValue(50, 240),
+                                GetRandomValue(80, 240),
+                                GetRandomValue(100, 240), 255
+                            );
                             bunniesCount++;
                         }
                     }
                 }
 
                 // Update bunnies
+                Vector2 screen = new Vector2(GetScreenWidth(), GetScreenHeight());
+                Vector2 halfSize = new Vector2(texBunny.width, texBunny.height) / 2;
+
                 for (int i = 0; i < bunniesCount; i++)
                 {
-                    bunnies[i].position.X += bunnies[i].speed.X;
-                    bunnies[i].position.Y += bunnies[i].speed.Y;
+                    bunnies[i].position += bunnies[i].speed;
 
-                    if (((bunnies[i].position.X + texBunny.width / 2) > GetScreenWidth()) ||
-                        ((bunnies[i].position.X + texBunny.width / 2) < 0))
+                    if (((bunnies[i].position.X + halfSize.X) > screen.X) ||
+                        ((bunnies[i].position.X + halfSize.X) < 0))
+                    {
                         bunnies[i].speed.X *= -1;
-                    if (((bunnies[i].position.Y + texBunny.height / 2) > GetScreenHeight()) ||
-                        ((bunnies[i].position.Y + texBunny.height / 2 - 40) < 0))
+                    }
+
+                    if (((bunnies[i].position.Y + halfSize.Y) > screen.Y) ||
+                        ((bunnies[i].position.Y + halfSize.Y - 40) < 0))
+                    {
                         bunnies[i].speed.Y *= -1;
+                    }
                 }
                 //----------------------------------------------------------------------------------
 
@@ -107,8 +115,8 @@ namespace Examples
                 }
 
                 DrawRectangle(0, 0, screenWidth, 40, BLACK);
-                DrawText(string.Format("bunnies: {0}", bunniesCount), 120, 10, 20, GREEN);
-                DrawText(string.Format("batched draw calls: {0}", 1 + bunniesCount / MAX_BATCH_ELEMENTS), 320, 10, 20, MAROON);
+                DrawText($"bunnies: {bunniesCount}", 120, 10, 20, GREEN);
+                DrawText($"batched draw calls: {1 + bunniesCount / MAX_BATCH_ELEMENTS}", 320, 10, 20, MAROON);
 
                 DrawFPS(10, 10);
 

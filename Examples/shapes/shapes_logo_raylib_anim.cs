@@ -39,8 +39,11 @@ namespace Examples
             int bottomSideRecWidth = 16;
             int rightSideRecHeight = 16;
 
-            int state = 0;                  // Tracking animation states (State Machine)
-            float alpha = 1.0f;             // Useful for fading
+            // Tracking animation states (State Machine)
+            int state = 0;
+
+            // Useful for fading
+            float alpha = 1.0f;
 
             Color outline = new Color(139, 71, 135, 255);
 
@@ -156,16 +159,21 @@ namespace Examples
                 }
                 else if (state == 3)
                 {
-                    DrawRectangle(logoPositionX, logoPositionY, topSideRecWidth, 16, ColorAlpha(outline, alpha));
-                    DrawRectangle(logoPositionX, logoPositionY + 16, 16, leftSideRecHeight - 32, ColorAlpha(outline, alpha));
+                    Color outlineFade = ColorAlpha(outline, alpha);
+                    DrawRectangle(logoPositionX, logoPositionY, topSideRecWidth, 16, outlineFade);
+                    DrawRectangle(logoPositionX, logoPositionY + 16, 16, leftSideRecHeight - 32, outlineFade);
 
-                    DrawRectangle(logoPositionX + 240, logoPositionY + 16, 16, rightSideRecHeight - 32, ColorAlpha(outline, alpha));
-                    DrawRectangle(logoPositionX, logoPositionY + 240, bottomSideRecWidth, 16, ColorAlpha(outline, alpha));
+                    DrawRectangle(logoPositionX + 240, logoPositionY + 16, 16, rightSideRecHeight - 32, outlineFade);
+                    DrawRectangle(logoPositionX, logoPositionY + 240, bottomSideRecWidth, 16, outlineFade);
 
-                    DrawRectangle(screenWidth / 2 - 112, screenHeight / 2 - 112, 224, 224, ColorAlpha(RAYWHITE, alpha));
+                    Color whiteFade = ColorAlpha(RAYWHITE, alpha);
+                    DrawRectangle(screenWidth / 2 - 112, screenHeight / 2 - 112, 224, 224, whiteFade);
 
-                    DrawText("raylib".SubText(0, lettersCount), screenWidth / 2 - 44, screenHeight / 2 + 28, 50, ColorAlpha(new Color(155, 79, 151, 255), alpha));
-                    DrawText("cs".SubText(0, lettersCount), screenWidth / 2 - 44, screenHeight / 2 + 58, 50, ColorAlpha(new Color(155, 79, 151, 255), alpha));
+                    Color label = ColorAlpha(new Color(155, 79, 151, 255), alpha);
+                    string text = "raylib".SubText(0, lettersCount);
+                    DrawText(text, screenWidth / 2 - 44, screenHeight / 2 + 28, 50, label);
+
+                    DrawText("cs".SubText(0, lettersCount), screenWidth / 2 - 44, screenHeight / 2 + 58, 50, label);
                 }
                 else if (state == 4)
                 {

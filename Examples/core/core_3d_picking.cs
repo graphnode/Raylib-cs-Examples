@@ -32,18 +32,18 @@ namespace Examples
 
             // Define the camera to look into our 3d world
             Camera3D camera;
-            camera.position = new Vector3(10.0f, 10.0f, 10.0f); // Camera3D position
-            camera.target = new Vector3(0.0f, 0.0f, 0.0f);      // Camera3D looking at point
-            camera.up = new Vector3(0.0f, 1.0f, 0.0f);          // Camera3D up vector (rotation towards target)
-            camera.fovy = 45.0f;                                // Camera3D field-of-view Y
-            camera.projection = CAMERA_PERSPECTIVE;                   // Camera3D mode type
+            camera.position = new Vector3(10.0f, 10.0f, 10.0f);
+            camera.target = new Vector3(0.0f, 0.0f, 0.0f);
+            camera.up = new Vector3(0.0f, 1.0f, 0.0f);
+            camera.fovy = 45.0f;
+            camera.projection = CAMERA_PERSPECTIVE;
 
             Vector3 cubePosition = new Vector3(0.0f, 1.0f, 0.0f);
             Vector3 cubeSize = new Vector3(2.0f, 2.0f, 2.0f);
 
-            Ray ray = new Ray(new Vector3(0.0f, 0.0f, 0.0f), Vector3.Zero);        // Picking line ray
-
-            bool collision = false;
+            // Picking line ray
+            Ray ray = new Ray(new Vector3(0.0f, 0.0f, 0.0f), Vector3.Zero);
+            RayCollision collision = new RayCollision();
 
             SetCameraMode(camera, CAMERA_FREE); // Set a free camera mode
 
@@ -59,14 +59,23 @@ namespace Examples
 
                 if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
                 {
-                    ray = GetMouseRay(GetMousePosition(), camera);
+                    if (!collision.hit)
+                    {
+                        ray = GetMouseRay(GetMousePosition(), camera);
 
-                    // Check collision between ray and box
-                    BoundingBox box = new BoundingBox(
-                        cubePosition - cubeSize / 2,
-                        cubePosition + cubeSize / 2
-                    );
-                    collision = CheckCollisionRayBox(ray, box);
+                        // Check collision between ray and box
+                        BoundingBox box = new BoundingBox(
+                            cubePosition - cubeSize / 2,
+                            cubePosition + cubeSize / 2
+                        );
+                        collision = GetRayCollisionBox(ray, box);
+                    }
+                    else
+                    {
+                        collision.hit = false;
+                    }
+
+                    ray = GetMouseRay(GetMousePosition(), camera);
                 }
                 //----------------------------------------------------------------------------------
 
@@ -77,7 +86,7 @@ namespace Examples
 
                 BeginMode3D(camera);
 
-                if (collision)
+                if (collision.hit)
                 {
                     DrawCube(cubePosition, cubeSize.X, cubeSize.Y, cubeSize.Z, RED);
                     DrawCubeWires(cubePosition, cubeSize.X, cubeSize.Y, cubeSize.Z, MAROON);
@@ -97,7 +106,7 @@ namespace Examples
 
                 DrawText("Try selecting the box with mouse!", 240, 10, 20, DARKGRAY);
 
-                if (collision)
+                if (collision.hit)
                 {
                     int posX = (screenWidth - MeasureText("BOX SELECTED", 30)) / 2;
                     DrawText("BOX SELECTED", posX, (int)(screenHeight * 0.1f), 30, GREEN);

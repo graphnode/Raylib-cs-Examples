@@ -19,7 +19,7 @@ namespace Examples
 {
     public class textures_image_generation
     {
-        public const int NUM_TEXTURES = 7;
+        public const int NUM_TEXTURES = 6;
 
         public static int Main()
         {
@@ -35,7 +35,6 @@ namespace Examples
             Image radialGradient = GenImageGradientRadial(screenWidth, screenHeight, 0.0f, WHITE, BLACK);
             Image isChecked = GenImageChecked(screenWidth, screenHeight, 32, 32, RED, BLUE);
             Image whiteNoise = GenImageWhiteNoise(screenWidth, screenHeight, 0.5f);
-            Image perlinNoise = GenImagePerlinNoise(screenWidth, screenHeight, 50, 50, 4.0f);
             Image cellular = GenImageCellular(screenWidth, screenHeight, 32);
 
             Texture2D[] textures = new Texture2D[NUM_TEXTURES];
@@ -44,8 +43,7 @@ namespace Examples
             textures[2] = LoadTextureFromImage(radialGradient);
             textures[3] = LoadTextureFromImage(isChecked);
             textures[4] = LoadTextureFromImage(whiteNoise);
-            textures[5] = LoadTextureFromImage(perlinNoise);
-            textures[6] = LoadTextureFromImage(cellular);
+            textures[5] = LoadTextureFromImage(cellular);
 
             // Unload image data (CPU RAM)
             UnloadImage(verticalGradient);
@@ -53,7 +51,6 @@ namespace Examples
             UnloadImage(radialGradient);
             UnloadImage(isChecked);
             UnloadImage(whiteNoise);
-            UnloadImage(perlinNoise);
             UnloadImage(cellular);
 
             int currentTexture = 0;
@@ -68,7 +65,8 @@ namespace Examples
                 //----------------------------------------------------------------------------------
                 if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) || IsKeyPressed(KEY_RIGHT))
                 {
-                    currentTexture = (currentTexture + 1) % NUM_TEXTURES; // Cycle between the textures
+                    // Cycle between the textures
+                    currentTexture = (currentTexture + 1) % NUM_TEXTURES;
                 }
                 //----------------------------------------------------------------------------------
 
@@ -101,9 +99,6 @@ namespace Examples
                         DrawText("WHITE NOISE", 640, 10, 20, RED);
                         break;
                     case 5:
-                        DrawText("PERLIN NOISE", 630, 10, 20, RAYWHITE);
-                        break;
-                    case 6:
                         DrawText("CELLULAR", 670, 10, 20, RAYWHITE);
                         break;
                     default:
@@ -126,7 +121,5 @@ namespace Examples
 
             return 0;
         }
-
     }
-
 }

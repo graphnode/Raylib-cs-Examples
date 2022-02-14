@@ -39,8 +39,13 @@ namespace Examples
             Texture2D explosion = LoadTexture("resources/explosion.png");
 
             // Init variables for animation
-            int frameWidth = explosion.width / NUM_FRAMES_PER_LINE;    // Sprite one frame rectangle width
-            int frameHeight = explosion.height / NUM_LINES;   // Sprite one frame rectangle height
+
+            // Sprite one frame rectangle width
+            int frameWidth = explosion.width / NUM_FRAMES_PER_LINE;
+
+            // Sprite one frame rectangle height
+            int frameHeight = explosion.height / NUM_LINES;
+
             int currentFrame = 0;
             int currentLine = 0;
 
@@ -107,7 +112,9 @@ namespace Examples
 
                 // Draw explosion required frame rectangle
                 if (active)
+                {
                     DrawTextureRec(explosion, frameRec, position, WHITE);
+                }
 
                 EndDrawing();
                 //----------------------------------------------------------------------------------

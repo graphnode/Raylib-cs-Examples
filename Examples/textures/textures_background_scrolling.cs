@@ -51,11 +51,17 @@ namespace Examples
 
                 // NOTE: Texture is scaled twice its size, so it sould be considered on scrolling
                 if (scrollingBack <= -background.width * 2)
+                {
                     scrollingBack = 0;
+                }
                 if (scrollingMid <= -midground.width * 2)
+                {
                     scrollingMid = 0;
+                }
                 if (scrollingFore <= -foreground.width * 2)
+                {
                     scrollingFore = 0;
+                }
                 //----------------------------------------------------------------------------------
 
                 // Draw
@@ -77,7 +83,10 @@ namespace Examples
                 DrawTextureEx(foreground, new Vector2(foreground.width * 2 + scrollingFore, 70), 0.0f, 2.0f, WHITE);
 
                 DrawText("BACKGROUND SCROLLING & PARALLAX", 10, 10, 20, RED);
-                DrawText("(c) Cyberpunk Street Environment by Luis Zuno (@ansimuz)", screenWidth - 330, screenHeight - 20, 10, RAYWHITE);
+
+                int x = screenWidth - 330;
+                int y = screenHeight - 20;
+                DrawText("(c) Cyberpunk Street Environment by Luis Zuno (@ansimuz)", x, y, 10, RAYWHITE);
 
                 EndDrawing();
                 //----------------------------------------------------------------------------------

@@ -22,6 +22,7 @@ namespace Examples
             core_3d_camera_free.Main();
             core_3d_camera_mode.Main();
             core_3d_picking.Main();
+            core_basic_screen_manager.Main();
             core_basic_window.Main();
             core_custom_logging.Main();
             core_drop_files.Main();
@@ -31,8 +32,11 @@ namespace Examples
             core_input_mouse_wheel.Main();
             core_input_mouse.Main();
             core_input_multitouch.Main();
+            core_quat_conversion.Main();
             core_random_values.Main();
             core_scissor_test.Main();
+            core_smooth_pixelperfect.Main();
+            core_split_screen.Main();
             core_storage_values.Main();
             core_vr_simulator.Main();
             core_window_flags.Main();
@@ -71,7 +75,7 @@ namespace Examples
             textures_mouse_painting.Main();
             textures_npatch_drawing.Main();
             textures_particles_blending.Main();
-            textures_poly.Main();
+            textures_polygon.Main();
             textures_raw_data.Main();
             textures_rectangle.Main();
             textures_sprite_button.Main();
@@ -102,11 +106,10 @@ namespace Examples
             models_cubicmap.Main();
             models_first_person_maze.Main();
             models_geometric_shapes.Main();
-            models_gltf_animation.Main();
-            models_gltf_model.Main();
             models_heightmap.Main();
+            models_loading_gltf.Main();
+            models_loading_vox.Main();
             models_loading.Main();
-            // models_material_pbr.Main();
             models_mesh_generation.Main();
             models_mesh_picking.Main();
             models_orthographic_projection.Main();
@@ -134,6 +137,7 @@ namespace Examples
             shaders_simple_mask.Main();
             shaders_spotlight.Main();
             shaders_texture_drawing.Main();
+            shaders_texture_outline.Main();
             shaders_texture_waves.Main();
         }
 

@@ -30,7 +30,8 @@ namespace Examples
 
             InitWindow(screenWidth, screenHeight, "raylib [text] example - input box");
 
-            char[] name = new char[MAX_INPUT_CHARS];      // NOTE: One extra space required for line ending char '\0'
+            // NOTE: One extra space required for line ending char '\0'
+            char[] name = new char[MAX_INPUT_CHARS];
             int letterCount = 0;
 
             Rectangle textBox = new Rectangle(screenWidth / 2 - 100, 180, 225, 50);

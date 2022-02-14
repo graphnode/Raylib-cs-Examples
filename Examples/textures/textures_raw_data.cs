@@ -22,7 +22,7 @@ namespace Examples
 {
     public class textures_raw_data
     {
-        public static int Main()
+        public unsafe static int Main()
         {
             // Initialization
             //--------------------------------------------------------------------------------------
@@ -35,39 +35,41 @@ namespace Examples
 
             // Load RAW image data (512x512, 32bit RGBA, no file header)
             Image fudesumiRaw = LoadImageRaw("resources/fudesumi.raw", 384, 512, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8, 0);
-            Texture2D fudesumi = LoadTextureFromImage(fudesumiRaw);   // Upload CPU (RAM) image to GPU (VRAM)
-            UnloadImage(fudesumiRaw);                                 // Unload CPU (RAM) image data
+            Texture2D fudesumi = LoadTextureFromImage(fudesumiRaw);
+            UnloadImage(fudesumiRaw);
 
             // Generate a checked texture by code
             int width = 960;
             int height = 480;
 
             // Store pixel data
-            Color[] pixels = new Color[width * height];
+            Color* pixels = (Color*)Raylib.MemAlloc(width * height * sizeof(Color));
             for (int y = 0; y < height; y++)
             {
                 for (int x = 0; x < width; x++)
                 {
                     if (((x / 32 + y / 32) / 1) % 2 == 0)
+                    {
                         pixels[y * width + x] = ORANGE;
+                    }
                     else
+                    {
                         pixels[y * width + x] = GOLD;
+                    }
                 }
             }
 
             // Load pixels data into an image structure and create texture
-            GCHandle pinnedArray = GCHandle.Alloc(pixels, GCHandleType.Pinned);
-            IntPtr pixelPointer = pinnedArray.AddrOfPinnedObject();
             Image checkedIm = new Image
             {
-                data = pixelPointer,
+                data = pixels,
                 width = width,
                 height = height,
                 format = PIXELFORMAT_UNCOMPRESSED_R8G8B8A8,
                 mipmaps = 1,
             };
             Texture2D checkedTex = LoadTextureFromImage(checkedIm);
-            pinnedArray.Free();
+            Raylib.MemFree(pixels);
             //---------------------------------------------------------------------------------------
 
             // Main game loop
@@ -83,8 +85,9 @@ namespace Examples
                 BeginDrawing();
                 ClearBackground(RAYWHITE);
 
-                DrawTexture(checkedTex, 0, 0, ColorAlpha(WHITE, 0.5f));
-                // DrawTexture(checkedTex, screenWidth / 2 - checkedTex.width / 2, screenHeight / 2 - checkedTex.height / 2, ColorAlpha(WHITE, 0.5f));
+                int x = screenWidth / 2 - checkedTex.width / 2;
+                int y = screenHeight / 2 - checkedTex.height / 2;
+                DrawTexture(checkedTex, x, y, ColorAlpha(WHITE, 0.5f));
                 DrawTexture(fudesumi, 430, -30, WHITE);
 
                 DrawText("CHECKED TEXTURE ", 84, 85, 30, BROWN);

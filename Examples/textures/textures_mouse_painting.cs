@@ -157,7 +157,7 @@ namespace Examples
                 // NOTE: Saving painted texture to a default named image
                 if ((btnSaveMouseHover && IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) || IsKeyPressed(KEY_S))
                 {
-                    Image image = GetTextureData(target.texture);
+                    Image image = LoadImageFromTexture(target.texture);
                     ImageFlipVertical(ref image);
                     ExportImage(image, "my_amazing_texture_painting.png");
                     UnloadImage(image);
@@ -182,15 +182,20 @@ namespace Examples
                 ClearBackground(RAYWHITE);
 
                 // NOTE: Render texture must be y-flipped due to default OpenGL coordinates (left-bottom)
-                DrawTextureRec(target.texture, new Rectangle(0, 0, target.texture.width, -target.texture.height), new Vector2(0, 0), WHITE);
+                Rectangle source = new Rectangle(0, 0, target.texture.width, -target.texture.height);
+                DrawTextureRec(target.texture, source, new Vector2(0, 0), WHITE);
 
                 // Draw drawing circle for reference
                 if (mousePos.Y > 50)
                 {
                     if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON))
+                    {
                         DrawCircleLines((int)mousePos.X, (int)mousePos.Y, brushSize, colors[colorSelected]);
+                    }
                     else
+                    {
                         DrawCircle(GetMouseX(), GetMouseY(), brushSize, colors[colorSelected]);
+                    }
                 }
 
                 // Draw top panel
@@ -206,10 +211,17 @@ namespace Examples
                 DrawRectangleLines(10, 10, 30, 30, LIGHTGRAY);
 
                 if (colorMouseHover >= 0)
+                {
                     DrawRectangleRec(colorsRecs[colorMouseHover], ColorAlpha(WHITE, 0.6f));
+                }
 
-                DrawRectangleLinesEx(new Rectangle(colorsRecs[colorSelected].x - 2, colorsRecs[colorSelected].y - 2,
-                                     colorsRecs[colorSelected].width + 4, colorsRecs[colorSelected].height + 4), 2, BLACK);
+                Rectangle rec = new Rectangle(
+                    colorsRecs[colorSelected].x - 2,
+                    colorsRecs[colorSelected].y - 2,
+                    colorsRecs[colorSelected].width + 4,
+                    colorsRecs[colorSelected].height + 4
+                );
+                DrawRectangleLinesEx(rec, 2, BLACK);
 
                 // Draw save image button
                 DrawRectangleLinesEx(btnSaveRec, 2, btnSaveMouseHover ? RED : BLACK);

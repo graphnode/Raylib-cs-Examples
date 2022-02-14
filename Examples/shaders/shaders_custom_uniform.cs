@@ -28,7 +28,7 @@ namespace Examples
 {
     public class shaders_custom_uniform
     {
-        public unsafe static int Main()
+        public static int Main()
         {
             // Initialization
             //--------------------------------------------------------------------------------------
@@ -51,7 +51,7 @@ namespace Examples
             Texture2D texture = LoadTexture("resources/models/barracks_diffuse.png");   // Load model texture (diffuse map)
 
             // Set model diffuse texture
-            Utils.SetMaterialTexture(ref model, 0, MATERIAL_MAP_ALBEDO, ref texture);
+            Raylib.SetMaterialTexture(ref model, 0, MATERIAL_MAP_ALBEDO, ref texture);
 
             // Set model position
             Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);
@@ -86,7 +86,7 @@ namespace Examples
                 swirlCenter[1] = screenHeight - mousePosition.Y;
 
                 // Send new value to the shader to be used on drawing
-                Utils.SetShaderValue(shader, swirlCenterLoc, swirlCenter, ShaderUniformDataType.SHADER_UNIFORM_VEC2);
+                Raylib.SetShaderValue(shader, swirlCenterLoc, swirlCenter, ShaderUniformDataType.SHADER_UNIFORM_VEC2);
 
                 UpdateCamera(ref camera);              // Update camera
                 //----------------------------------------------------------------------------------

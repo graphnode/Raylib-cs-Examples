@@ -30,7 +30,8 @@ namespace Examples
             public float alpha;
             public float size;
             public float rotation;
-            public bool active;        // NOTE: Use it to activate/deactive particle
+            // NOTE: Use it to activate/deactive particle
+            public bool active;
         }
 
         public static int Main()
@@ -49,7 +50,12 @@ namespace Examples
             for (int i = 0; i < MAX_PARTICLES; i++)
             {
                 mouseTail[i].position = new Vector2(0, 0);
-                mouseTail[i].color = new Color(GetRandomValue(0, 255), GetRandomValue(0, 255), GetRandomValue(0, 255), 255);
+                mouseTail[i].color = new Color(
+                    GetRandomValue(0, 255),
+                    GetRandomValue(0, 255),
+                    GetRandomValue(0, 255),
+                    255
+                );
                 mouseTail[i].alpha = 1.0f;
                 mouseTail[i].size = (float)GetRandomValue(1, 30) / 20.0f;
                 mouseTail[i].rotation = GetRandomValue(0, 360);
@@ -92,7 +98,9 @@ namespace Examples
                         mouseTail[i].alpha -= 0.005f;
 
                         if (mouseTail[i].alpha <= 0.0f)
+                        {
                             mouseTail[i].active = false;
+                        }
 
                         mouseTail[i].rotation += 2.0f;
                     }
@@ -101,9 +109,13 @@ namespace Examples
                 if (IsKeyPressed(KEY_SPACE))
                 {
                     if (blending == BlendMode.BLEND_ALPHA)
+                    {
                         blending = BlendMode.BLEND_ADDITIVE;
+                    }
                     else
+                    {
                         blending = BlendMode.BLEND_ALPHA;
+                    }
                 }
                 //----------------------------------------------------------------------------------
 
@@ -118,20 +130,35 @@ namespace Examples
                 for (int i = 0; i < MAX_PARTICLES; i++)
                 {
                     if (mouseTail[i].active)
-                        DrawTexturePro(smoke, new Rectangle(0, 0, smoke.width, smoke.height),
-                                      new Rectangle(mouseTail[i].position.X, mouseTail[i].position.Y, smoke.width * mouseTail[i].size, smoke.height * mouseTail[i].size),
-                                      new Vector2(smoke.width * mouseTail[i].size / 2, smoke.height * mouseTail[i].size / 2), mouseTail[i].rotation,
-                                      ColorAlpha(mouseTail[i].color, mouseTail[i].alpha));
+                    {
+                        Rectangle source = new Rectangle(0, 0, smoke.width, smoke.height);
+                        Rectangle dest = new Rectangle(
+                            mouseTail[i].position.X,
+                            mouseTail[i].position.Y,
+                            smoke.width * mouseTail[i].size,
+                            smoke.height * mouseTail[i].size
+                        );
+                        Vector2 position = new Vector2(
+                            smoke.width * mouseTail[i].size / 2,
+                            smoke.height * mouseTail[i].size / 2
+                        );
+                        Color color = ColorAlpha(mouseTail[i].color, mouseTail[i].alpha);
+                        DrawTexturePro(smoke, source, dest, position, mouseTail[i].rotation, color);
+                    }
                 }
 
                 EndBlendMode();
 
                 DrawText("PRESS SPACE to CHANGE BLENDING MODE", 180, 20, 20, BLACK);
 
-                if (blending == (int)BLEND_ALPHA)
+                if (blending == BLEND_ALPHA)
+                {
                     DrawText("ALPHA BLENDING", 290, screenHeight - 40, 20, BLACK);
+                }
                 else
+                {
                     DrawText("ADDITIVE BLENDING", 280, screenHeight - 40, 20, RAYWHITE);
+                }
 
                 EndDrawing();
                 //----------------------------------------------------------------------------------

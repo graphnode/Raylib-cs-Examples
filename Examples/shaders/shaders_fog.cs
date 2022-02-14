@@ -67,28 +67,27 @@ namespace Examples
             Texture2D texture = LoadTexture("resources/texel_checker.png");
 
             // Assign texture to default model material
-            Utils.SetMaterialTexture(ref modelA, 0, MATERIAL_MAP_ALBEDO, ref texture);
-            Utils.SetMaterialTexture(ref modelB, 0, MATERIAL_MAP_ALBEDO, ref texture);
-            Utils.SetMaterialTexture(ref modelC, 0, MATERIAL_MAP_ALBEDO, ref texture);
+            Raylib.SetMaterialTexture(ref modelA, 0, MATERIAL_MAP_ALBEDO, ref texture);
+            Raylib.SetMaterialTexture(ref modelB, 0, MATERIAL_MAP_ALBEDO, ref texture);
+            Raylib.SetMaterialTexture(ref modelC, 0, MATERIAL_MAP_ALBEDO, ref texture);
 
             // Load shader and set up some uniforms
             Shader shader = LoadShader("resources/shaders/glsl330/base_lighting.vs", "resources/shaders/glsl330/fog.fs");
-            int* locs = (int*)shader.locs.ToPointer();
-            locs[(int)SHADER_LOC_MATRIX_MODEL] = GetShaderLocation(shader, "matModel");
-            locs[(int)SHADER_LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
+            shader.locs[(int)SHADER_LOC_MATRIX_MODEL] = GetShaderLocation(shader, "matModel");
+            shader.locs[(int)SHADER_LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
 
             // Ambient light level
             int ambientLoc = GetShaderLocation(shader, "ambient");
-            Utils.SetShaderValue(shader, ambientLoc, new float[] { 0.2f, 0.2f, 0.2f, 1.0f }, SHADER_UNIFORM_VEC4);
+            Raylib.SetShaderValue(shader, ambientLoc, new float[] { 0.2f, 0.2f, 0.2f, 1.0f }, SHADER_UNIFORM_VEC4);
 
             float fogDensity = 0.15f;
             int fogDensityLoc = GetShaderLocation(shader, "fogDensity");
-            Utils.SetShaderValue(shader, fogDensityLoc, fogDensity, SHADER_UNIFORM_FLOAT);
+            Raylib.SetShaderValue(shader, fogDensityLoc, fogDensity, SHADER_UNIFORM_FLOAT);
 
             // NOTE: All models share the same shader
-            Utils.SetMaterialShader(ref modelA, 0, ref shader);
-            Utils.SetMaterialShader(ref modelB, 0, ref shader);
-            Utils.SetMaterialShader(ref modelC, 0, ref shader);
+            Raylib.SetMaterialShader(ref modelA, 0, ref shader);
+            Raylib.SetMaterialShader(ref modelB, 0, ref shader);
+            Raylib.SetMaterialShader(ref modelC, 0, ref shader);
 
             // Using just 1 point lights
             CreateLight(0, LightType.LIGHT_POINT, new Vector3(0, 2, 6), Vector3.Zero, WHITE, shader);
@@ -119,14 +118,14 @@ namespace Examples
                         fogDensity = 0.0f;
                 }
 
-                Utils.SetShaderValue(shader, fogDensityLoc, fogDensity, SHADER_UNIFORM_FLOAT);
+                Raylib.SetShaderValue(shader, fogDensityLoc, fogDensity, SHADER_UNIFORM_FLOAT);
 
                 // Rotate the torus
                 modelA.transform = MatrixMultiply(modelA.transform, MatrixRotateX(-0.025f));
                 modelA.transform = MatrixMultiply(modelA.transform, MatrixRotateZ(0.012f));
 
                 // Update the light shader with the camera view position
-                Utils.SetShaderValue(shader, locs[(int)SHADER_LOC_VECTOR_VIEW], camera.position.X, ShaderUniformDataType.SHADER_UNIFORM_VEC3);
+                Raylib.SetShaderValue(shader, shader.locs[(int)SHADER_LOC_VECTOR_VIEW], camera.position.X, ShaderUniformDataType.SHADER_UNIFORM_VEC3);
                 //----------------------------------------------------------------------------------
 
                 // Draw

@@ -33,11 +33,11 @@ namespace Examples
             InitWindow(screenWidth, screenHeight, "raylib [textures] example - blend modes");
 
             // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
-            Image bgImage = LoadImage("resources/cyberpunk_street_background.png");     // Loaded in CPU memory (RAM)
-            Texture2D bgTexture = LoadTextureFromImage(bgImage);          // Image converted to texture, GPU memory (VRAM)
+            Image bgImage = LoadImage("resources/cyberpunk_street_background.png");
+            Texture2D bgTexture = LoadTextureFromImage(bgImage);
 
-            Image fgImage = LoadImage("resources/cyberpunk_street_foreground.png");     // Loaded in CPU memory (RAM)
-            Texture2D fgTexture = LoadTextureFromImage(fgImage);          // Image converted to texture, GPU memory (VRAM)
+            Image fgImage = LoadImage("resources/cyberpunk_street_foreground.png");
+            Texture2D fgTexture = LoadTextureFromImage(fgImage);
 
             // Once image has been converted to texture and uploaded to VRAM, it can be unloaded from RAM
             UnloadImage(bgImage);
@@ -65,11 +65,15 @@ namespace Examples
                 BeginDrawing();
                 ClearBackground(RAYWHITE);
 
-                DrawTexture(bgTexture, screenWidth / 2 - bgTexture.width / 2, screenHeight / 2 - bgTexture.height / 2, WHITE);
+                int bgX = screenWidth / 2 - bgTexture.width / 2;
+                int bgY = screenHeight / 2 - bgTexture.height / 2;
+                DrawTexture(bgTexture, bgX, bgY, WHITE);
 
                 // Apply the blend mode and then draw the foreground texture
                 BeginBlendMode(blendMode);
-                DrawTexture(fgTexture, screenWidth / 2 - fgTexture.width / 2, screenHeight / 2 - fgTexture.height / 2, WHITE);
+                int fgX = screenWidth / 2 - fgTexture.width / 2;
+                int fgY = screenHeight / 2 - fgTexture.height / 2;
+                DrawTexture(fgTexture, fgX, fgY, WHITE);
                 EndBlendMode();
 
                 // Draw the texts
@@ -93,7 +97,8 @@ namespace Examples
                         break;
                 }
 
-                DrawText("(c) Cyberpunk Street Environment by Luis Zuno (@ansimuz)", screenWidth - 330, screenHeight - 20, 10, GRAY);
+                string text = "(c) Cyberpunk Street Environment by Luis Zuno (@ansimuz)";
+                DrawText(text, screenWidth - 330, screenHeight - 20, 10, GRAY);
 
                 EndDrawing();
                 //----------------------------------------------------------------------------------
@@ -105,7 +110,7 @@ namespace Examples
             UnloadTexture(bgTexture); // Unload background texture
 
             CloseWindow();            // Close window and OpenGL context
-                                      //--------------------------------------------------------------------------------------
+            //--------------------------------------------------------------------------------------
 
             return 0;
         }

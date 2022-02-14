@@ -9,9 +9,7 @@
 *
 ********************************************************************************************/
 
-using Raylib_cs;
 using static Raylib_cs.Raylib;
-using static Raylib_cs.Easings;
 using static Raylib_cs.Color;
 using static Raylib_cs.KeyboardKey;
 
@@ -47,7 +45,7 @@ namespace Examples
                 if (state == 0)             // Move ball position X with easing
                 {
                     framesCounter += 1;
-                    ballPositionX = (int)EaseElasticOut(framesCounter, -100, screenWidth / 2 + 100, 120);
+                    ballPositionX = (int)Easings.EaseElasticOut(framesCounter, -100, screenWidth / 2 + 100, 120);
 
                     if (framesCounter >= 120)
                     {
@@ -59,7 +57,7 @@ namespace Examples
                 else if (state == 1)
                 {
                     framesCounter += 1;
-                    ballRadius = (int)EaseElasticIn(framesCounter, 20, 500, 200);
+                    ballRadius = (int)Easings.EaseElasticIn(framesCounter, 20, 500, 200);
 
                     if (framesCounter >= 200)
                     {
@@ -71,7 +69,7 @@ namespace Examples
                 else if (state == 2)
                 {
                     framesCounter += 1;
-                    ballAlpha = EaseCubicOut(framesCounter, 0.0f, 1.0f, 200);
+                    ballAlpha = Easings.EaseCubicOut(framesCounter, 0.0f, 1.0f, 200);
 
                     if (framesCounter >= 200)
                     {

@@ -49,7 +49,7 @@ namespace Examples
             "FLIP HORIZONTAL"
         };
 
-        public static int Main()
+        public unsafe static int Main()
         {
             // Initialization
             //--------------------------------------------------------------------------------------
@@ -60,9 +60,9 @@ namespace Examples
 
             // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
 
-            Image image = LoadImage("resources/parrots.png");   // Loaded in CPU memory (RAM)
-            ImageFormat(ref image, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8); // Format image to RGBA 32bit (required for texture update) <-- ISSUE
-            Texture2D texture = LoadTextureFromImage(image);    // Image converted to texture, GPU memory (VRAM)
+            Image image = LoadImage("resources/parrots.png");
+            ImageFormat(ref image, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
+            Texture2D texture = LoadTextureFromImage(image);
 
             int currentProcess = (int)ImageProcess.NONE;
             bool textureReload = false;
@@ -117,8 +117,8 @@ namespace Examples
 
                 if (textureReload)
                 {
-                    UnloadImage(image);                         // Unload current image data
-                    image = LoadImage("resources/parrots.png"); // Re-load image data
+                    UnloadImage(image);
+                    image = LoadImage("resources/parrots.png");
 
                     // NOTE: Image processing is a costly CPU process to be done every frame,
                     // If image processing is required in a frame-basis, it should be done
@@ -150,9 +150,10 @@ namespace Examples
                             break;
                     }
 
-                    IntPtr pixels = LoadImageColors(image);     // Get pixel data from image (RGBA 32bit)
-                    UpdateTexture(texture, pixels);             // Update texture with new image data
-                    UnloadImageColors(pixels);                  // Unload pixels data from RAM
+                    // Get pixel data from image (RGBA 32bit)
+                    Color* pixels = LoadImageColors(image);
+                    UpdateTexture(texture, pixels);
+                    UnloadImageColors(pixels);
 
                     textureReload = false;
                 }
@@ -169,12 +170,26 @@ namespace Examples
                 for (int i = 0; i < NUM_PROCESSES; i++)
                 {
                     DrawRectangleRec(toggleRecs[i], (i == currentProcess) ? SKYBLUE : LIGHTGRAY);
-                    DrawRectangleLines((int)toggleRecs[i].x, (int)toggleRecs[i].y, (int)toggleRecs[i].width, (int)toggleRecs[i].height, (i == currentProcess) ? BLUE : GRAY);
-                    DrawText(processText[i], (int)(toggleRecs[i].x + toggleRecs[i].width / 2 - MeasureText(processText[i], 10) / 2), (int)toggleRecs[i].y + 11, 10, (i == currentProcess) ? DARKBLUE : DARKGRAY);
+                    DrawRectangleLines(
+                        (int)toggleRecs[i].x,
+                        (int)toggleRecs[i].y,
+                        (int)toggleRecs[i].width,
+                        (int)toggleRecs[i].height,
+                        (i == currentProcess) ? BLUE : GRAY
+                    );
+                    DrawText(
+                        processText[i],
+                        (int)(toggleRecs[i].x + toggleRecs[i].width / 2 - MeasureText(processText[i], 10) / 2),
+                        (int)toggleRecs[i].y + 11,
+                        10,
+                        (i == currentProcess) ? DARKBLUE : DARKGRAY
+                    );
                 }
 
-                DrawTexture(texture, screenWidth - texture.width - 60, screenHeight / 2 - texture.height / 2, WHITE);
-                DrawRectangleLines(screenWidth - texture.width - 60, screenHeight / 2 - texture.height / 2, texture.width, texture.height, BLACK);
+                int x = screenWidth - texture.width - 60;
+                int y = screenHeight / 2 - texture.height / 2;
+                DrawTexture(texture, x, y, WHITE);
+                DrawRectangleLines(x, y, texture.width, texture.height, BLACK);
 
                 EndDrawing();
                 //----------------------------------------------------------------------------------

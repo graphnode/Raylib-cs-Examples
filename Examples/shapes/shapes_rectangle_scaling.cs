@@ -48,8 +48,15 @@ namespace Examples
                 //----------------------------------------------------------------------------------
                 mousePosition = GetMousePosition();
 
+                Rectangle area = new Rectangle(
+                    rec.x + rec.width - MOUSE_SCALE_MARK_SIZE,
+                    rec.y + rec.height - MOUSE_SCALE_MARK_SIZE,
+                    MOUSE_SCALE_MARK_SIZE,
+                    MOUSE_SCALE_MARK_SIZE
+                );
+
                 if (CheckCollisionPointRec(mousePosition, rec) &&
-                    CheckCollisionPointRec(mousePosition, new Rectangle(rec.x + rec.width - MOUSE_SCALE_MARK_SIZE, rec.y + rec.height - MOUSE_SCALE_MARK_SIZE, MOUSE_SCALE_MARK_SIZE, MOUSE_SCALE_MARK_SIZE)))
+                    CheckCollisionPointRec(mousePosition, area))
                 {
                     mouseScaleReady = true;
                     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
@@ -96,9 +103,11 @@ namespace Examples
                 if (mouseScaleReady)
                 {
                     DrawRectangleLinesEx(rec, 1, RED);
-                    DrawTriangle(new Vector2(rec.x + rec.width - MOUSE_SCALE_MARK_SIZE, rec.y + rec.height),
-                                 new Vector2(rec.x + rec.width, rec.y + rec.height),
-                                 new Vector2(rec.x + rec.width, rec.y + rec.height - MOUSE_SCALE_MARK_SIZE), RED);
+                    DrawTriangle(
+                        new Vector2(rec.x + rec.width - MOUSE_SCALE_MARK_SIZE, rec.y + rec.height),
+                        new Vector2(rec.x + rec.width, rec.y + rec.height),
+                        new Vector2(rec.x + rec.width, rec.y + rec.height - MOUSE_SCALE_MARK_SIZE), RED
+                    );
                 }
 
                 EndDrawing();

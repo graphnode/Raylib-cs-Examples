@@ -29,7 +29,7 @@ namespace Examples
     {
         const int GLSL_VERSION = 330;
 
-        public unsafe static int Main()
+        public static int Main()
         {
             // Initialization
             //--------------------------------------------------------------------------------------
@@ -61,13 +61,13 @@ namespace Examples
             float speedY = 8.0f;
 
             float[] screenSize = { (float)GetScreenWidth(), (float)GetScreenHeight() };
-            Utils.SetShaderValue(shader, GetShaderLocation(shader, "size"), screenSize, SHADER_UNIFORM_VEC2);
-            Utils.SetShaderValue(shader, freqXLoc, freqX, SHADER_UNIFORM_FLOAT);
-            Utils.SetShaderValue(shader, freqYLoc, freqY, SHADER_UNIFORM_FLOAT);
-            Utils.SetShaderValue(shader, ampXLoc, ampX, SHADER_UNIFORM_FLOAT);
-            Utils.SetShaderValue(shader, ampYLoc, ampY, SHADER_UNIFORM_FLOAT);
-            Utils.SetShaderValue(shader, speedXLoc, speedX, SHADER_UNIFORM_FLOAT);
-            Utils.SetShaderValue(shader, speedYLoc, speedY, SHADER_UNIFORM_FLOAT);
+            Raylib.SetShaderValue(shader, GetShaderLocation(shader, "size"), screenSize, SHADER_UNIFORM_VEC2);
+            Raylib.SetShaderValue(shader, freqXLoc, freqX, SHADER_UNIFORM_FLOAT);
+            Raylib.SetShaderValue(shader, freqYLoc, freqY, SHADER_UNIFORM_FLOAT);
+            Raylib.SetShaderValue(shader, ampXLoc, ampX, SHADER_UNIFORM_FLOAT);
+            Raylib.SetShaderValue(shader, ampYLoc, ampY, SHADER_UNIFORM_FLOAT);
+            Raylib.SetShaderValue(shader, speedXLoc, speedX, SHADER_UNIFORM_FLOAT);
+            Raylib.SetShaderValue(shader, speedYLoc, speedY, SHADER_UNIFORM_FLOAT);
 
             float seconds = 0.0f;
 
@@ -81,7 +81,7 @@ namespace Examples
                 //----------------------------------------------------------------------------------
                 seconds += GetFrameTime();
 
-                Utils.SetShaderValue(shader, secondsLoc, seconds, SHADER_UNIFORM_FLOAT);
+                Raylib.SetShaderValue(shader, secondsLoc, seconds, SHADER_UNIFORM_FLOAT);
                 //----------------------------------------------------------------------------------
 
                 // Draw

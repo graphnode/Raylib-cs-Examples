@@ -22,23 +22,7 @@ namespace Examples
 {
     public class text_font_sdf
     {
-        // Load font data for further use
-        // fileData refers to const unsigned char *
-        // IntPtr refers to CharInfo *
-        [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr LoadFontData(IntPtr fileData, int dataSize, int fontSize, int[] fontChars, int charsCount, FontType type);
-
-        // Unload file data allocated by LoadFileData()
-        // data refers to a unsigned char *
-        [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void UnloadFileData(IntPtr data);
-
-        // Load file data as byte array (read)
-        // IntPtr refers to unsigned char *
-        [DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr LoadFileData(string fileName, ref int bytesRead);
-
-        public static int Main()
+        public unsafe static int Main()
         {
             // Initialization
             //--------------------------------------------------------------------------------------
@@ -51,30 +35,30 @@ namespace Examples
             string msg = "Signed Distance Fields";
 
             // Loading file to memory
-            int fileSize = 0;
-            IntPtr fileData = LoadFileData("resources/anonymous_pro_bold.ttf", ref fileSize);
+            uint fileSize = 0;
+            byte* fileData = LoadFileData("resources/fonts/anonymous_pro_bold.ttf", ref fileSize);
 
             // Default font generation from TTF font
             Font fontDefault = new Font();
             fontDefault.baseSize = 16;
-            fontDefault.charsCount = 95;
+            fontDefault.glyphCount = 95;
 
             // Loading font data from memory data
             // Parameters > font size: 16, no chars array provided (0), chars count: 95 (autogenerate chars array)
-            fontDefault.chars = LoadFontData(fileData, fileSize, 16, null, 95, FontType.FONT_DEFAULT);
+            fontDefault.glyphs = LoadFontData(fileData, (int)fileSize, 16, null, 95, FontType.FONT_DEFAULT);
             // Parameters > chars count: 95, font size: 16, chars padding in image: 4 px, pack method: 0 (default)
-            Image atlas = GenImageFontAtlas(fontDefault.chars, ref fontDefault.recs, 95, 16, 4, 0);
+            Image atlas = GenImageFontAtlas(fontDefault.glyphs, &fontDefault.recs, 95, 16, 4, 0);
             fontDefault.texture = LoadTextureFromImage(atlas);
             UnloadImage(atlas);
 
             // SDF font generation from TTF font
             Font fontSDF = new Font();
             fontSDF.baseSize = 16;
-            fontSDF.charsCount = 95;
+            fontSDF.glyphCount = 95;
             // Parameters > font size: 16, no chars array provided (0), chars count: 0 (defaults to 95)
-            fontSDF.chars = LoadFontData(fileData, fileSize, 16, null, 0, FontType.FONT_SDF);
+            fontSDF.glyphs = LoadFontData(fileData, (int)fileSize, 16, null, 0, FontType.FONT_SDF);
             // Parameters > chars count: 95, font size: 16, chars padding in image: 0 px, pack method: 1 (Skyline algorythm)
-            atlas = GenImageFontAtlas(fontSDF.chars, ref fontSDF.recs, 95, 16, 0, 1);
+            atlas = GenImageFontAtlas(fontSDF.glyphs, &fontSDF.recs, 95, 16, 0, 1);
             fontSDF.texture = LoadTextureFromImage(atlas);
             UnloadImage(atlas);
 
@@ -103,17 +87,27 @@ namespace Examples
                 fontSize += GetMouseWheelMove() * 8.0f;
 
                 if (fontSize < 6)
+                {
                     fontSize = 6;
+                }
 
                 if (IsKeyDown(KEY_SPACE))
+                {
                     currentFont = 1;
+                }
                 else
+                {
                     currentFont = 0;
+                }
 
                 if (currentFont == 0)
+                {
                     textSize = MeasureTextEx(fontDefault, msg, fontSize, 0);
+                }
                 else
+                {
                     textSize = MeasureTextEx(fontSDF, msg, fontSize, 0);
+                }
 
                 fontPosition.X = GetScreenWidth() / 2 - textSize.X / 2;
                 fontPosition.Y = GetScreenHeight() / 2 - textSize.Y / 2 + 80;
@@ -127,9 +121,9 @@ namespace Examples
                 if (currentFont == 1)
                 {
                     // NOTE: SDF fonts require a custom SDf shader to compute fragment color
-                    BeginShaderMode(shader);    // Activate SDF font shader
+                    BeginShaderMode(shader);
                     DrawTextEx(fontSDF, msg, fontPosition, fontSize, 0, BLACK);
-                    EndShaderMode();            // Activate our default shader for next drawings
+                    EndShaderMode();
 
                     DrawTexture(fontSDF.texture, 10, 10, BLACK);
                 }
@@ -140,9 +134,13 @@ namespace Examples
                 }
 
                 if (currentFont == 1)
+                {
                     DrawText("SDF!", 320, 20, 80, RED);
+                }
                 else
+                {
                     DrawText("default font", 315, 40, 30, GRAY);
+                }
 
                 DrawText("FONT SIZE: 16.0", GetScreenWidth() - 240, 20, 20, DARKGRAY);
                 DrawText(string.Format("RENDER SIZE: {0:00.00}", fontSize), GetScreenWidth() - 240, 50, 20, DARKGRAY);

@@ -9,6 +9,7 @@
 *
 ********************************************************************************************/
 
+using System;
 using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
@@ -17,7 +18,6 @@ using static Raylib_cs.CameraMode;
 using static Raylib_cs.CameraProjection;
 using static Raylib_cs.MaterialMapIndex;
 using static Raylib_cs.ShaderUniformDataType;
-using static Raylib_cs.PixelFormat;
 
 namespace Examples
 {
@@ -42,13 +42,13 @@ namespace Examples
             // Load skybox shader and set required locations
             // NOTE: Some locations are automatically set at shader loading
             Shader shader = LoadShader("resources/shaders/glsl330/skybox.vs", "resources/shaders/glsl330/skybox.fs");
-            Utils.SetMaterialShader(ref skybox, 0, ref shader);
-            Utils.SetShaderValue(shader, GetShaderLocation(shader, "environmentMap"), new int[] { (int)MATERIAL_MAP_CUBEMAP }, SHADER_UNIFORM_INT);
-            Utils.SetShaderValue(shader, GetShaderLocation(shader, "vflipped"), new int[] { 1 }, SHADER_UNIFORM_INT);
+            Raylib.SetMaterialShader(ref skybox, 0, ref shader);
+            Raylib.SetShaderValue(shader, GetShaderLocation(shader, "environmentMap"), (int)MATERIAL_MAP_CUBEMAP, SHADER_UNIFORM_INT);
+            Raylib.SetShaderValue(shader, GetShaderLocation(shader, "vflipped"), 1, SHADER_UNIFORM_INT);
 
             // Load cubemap shader and setup required shader locations
             Shader shdrCubemap = LoadShader("resources/shaders/glsl330/cubemap.vs", "resources/shaders/glsl330/cubemap.fs");
-            Utils.SetShaderValue(shdrCubemap, GetShaderLocation(shdrCubemap, "equirectangularMap"), new int[] { 0 }, SHADER_UNIFORM_INT);
+            Raylib.SetShaderValue(shdrCubemap, GetShaderLocation(shdrCubemap, "equirectangularMap"), 0, SHADER_UNIFORM_INT);
 
             // Load HDR panorama (sphere) texture
             string panoFileName = "resources/dresden_square_2k.hdr";
@@ -56,8 +56,8 @@ namespace Examples
 
             // Generate cubemap (texture with 6 quads-cube-mapping) from panorama HDR texture
             // NOTE: New texture is generated rendering to texture, shader computes the sphre->cube coordinates mapping
-            Texture2D cubemap = PBR.GenTextureCubemap(shdrCubemap, panorama, 1024, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
-            Utils.SetMaterialTexture(ref skybox, 0, MATERIAL_MAP_CUBEMAP, ref cubemap);
+            //Texture2D cubemap = PBR.GenTextureCubemap(shdrCubemap, panorama, 1024, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
+            //Raylib.SetMaterialTexture(ref skybox, 0, MATERIAL_MAP_CUBEMAP, ref cubemap);
             UnloadTexture(panorama);      // Texture not required anymore, cubemap already generated
 
             SetCameraMode(camera, CAMERA_FIRST_PERSON);  // Set a first person camera mode
@@ -72,25 +72,23 @@ namespace Examples
                 //----------------------------------------------------------------------------------
                 UpdateCamera(ref camera);              // Update camera
 
-                // Load new cubemap texture on drag&drop
+                // Load new cubemap texture on drag & drop
                 if (IsFileDropped())
                 {
-                    int count = 0;
-                    string[] droppedFiles = Utils.MarshalDroppedFiles(ref count);
+                    string[] files = Raylib.GetDroppedFiles();
 
-                    // Only support one file dropped
-                    if (count == 1)
+                    if (files.Length == 1)
                     {
-                        if (IsFileExtension(droppedFiles[0], ".png;.jpg;.hdr;.bmp;.tga"))
+                        if (IsFileExtension(files[0], ".png;.jpg;.hdr;.bmp;.tga"))
                         {
                             // Unload current cubemap texture and load new one
-                            UnloadTexture(Utils.GetMaterialTexture(ref skybox, 0, MATERIAL_MAP_CUBEMAP));
-                            panorama = LoadTexture(droppedFiles[0]);
-                            panoFileName = droppedFiles[0];
+                            UnloadTexture(Raylib.GetMaterialTexture(ref skybox, 0, MATERIAL_MAP_CUBEMAP));
+                            panorama = LoadTexture(files[0]);
+                            panoFileName = files[0];
 
                             // Generate cubemap from panorama texture
-                            cubemap = PBR.GenTextureCubemap(shdrCubemap, panorama, 1024, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
-                            Utils.SetMaterialTexture(ref skybox, 0, MATERIAL_MAP_CUBEMAP, ref cubemap);
+                            //cubemap = PBR.GenTextureCubemap(shdrCubemap, panorama, 1024, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
+                            // Raylib.SetMaterialTexture(ref skybox, 0, MATERIAL_MAP_CUBEMAP, ref cubemap);
                             UnloadTexture(panorama);
                         }
                     }

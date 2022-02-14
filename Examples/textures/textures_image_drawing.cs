@@ -31,34 +31,36 @@ namespace Examples
 
             // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
 
-            Image cat = LoadImage("resources/cat.png");             // Load image in CPU memory (RAM)
-            ImageCrop(ref cat, new Rectangle(100, 10, 280, 380));      // Crop an image piece
-            ImageFlipHorizontal(ref cat);                              // Flip cropped image horizontally
-            ImageResize(ref cat, 150, 200);                            // Resize flipped-cropped image
+            Image cat = LoadImage("resources/cat.png");
+            ImageCrop(ref cat, new Rectangle(100, 10, 280, 380));
+            ImageFlipHorizontal(ref cat);
+            ImageResize(ref cat, 150, 200);
 
-            Image parrots = LoadImage("resources/parrots.png");     // Load image in CPU memory (RAM)
+            Image parrots = LoadImage("resources/parrots.png");
 
             // Draw one image over the other with a scaling of 1.5f
-            ImageDraw(ref parrots, cat, new Rectangle(0, 0, cat.width, cat.height), new Rectangle(30, 40, cat.width * 1.5f, cat.height * 1.5f), WHITE);
-            ImageCrop(ref parrots, new Rectangle(0, 50, parrots.width, parrots.height - 100)); // Crop resulting image
+            Rectangle src = new Rectangle(0, 0, cat.width, cat.height);
+            ImageDraw(ref parrots, cat, src, new Rectangle(30, 40, cat.width * 1.5f, cat.height * 1.5f), WHITE);
+            ImageCrop(ref parrots, new Rectangle(0, 50, parrots.width, parrots.height - 100));
 
             // Draw on the image with a few image draw methods
             ImageDrawPixel(ref parrots, 10, 10, RAYWHITE);
             ImageDrawCircle(ref parrots, 10, 10, 5, RAYWHITE);
             ImageDrawRectangle(ref parrots, 5, 20, 10, 10, RAYWHITE);
 
-            UnloadImage(cat);       // Unload image from RAM
+            UnloadImage(cat);
 
             // Load custom font for frawing on image
-            Font font = LoadFont("resources/custom_jupiter_crash.png");
+            Font font = LoadFont("resources/fonts/custom_jupiter_crash.png");
 
             // Draw over image using custom font
             ImageDrawTextEx(ref parrots, font, "PARROTS & CAT", new Vector2(300, 230), font.baseSize, -2, WHITE);
 
-            UnloadFont(font); // Unload custom spritefont (already drawn used on image)
+            // Unload custom spritefont (already drawn used on image)
+            UnloadFont(font);
 
-            Texture2D texture = LoadTextureFromImage(parrots);      // Image converted to texture, uploaded to GPU memory (VRAM)
-            UnloadImage(parrots);   // Once image has been converted to texture and uploaded to VRAM, it can be unloaded from RAM
+            Texture2D texture = LoadTextureFromImage(parrots);
+            UnloadImage(parrots);
 
             SetTargetFPS(60);
             //---------------------------------------------------------------------------------------
@@ -76,11 +78,15 @@ namespace Examples
                 BeginDrawing();
                 ClearBackground(RAYWHITE);
 
-                DrawTexture(texture, screenWidth / 2 - texture.width / 2, screenHeight / 2 - texture.height / 2 - 40, WHITE);
-                DrawRectangleLines(screenWidth / 2 - texture.width / 2, screenHeight / 2 - texture.height / 2 - 40, texture.width, texture.height, DARKGRAY);
+                int x = screenWidth / 2 - texture.width / 2;
+                int y = screenHeight / 2 - texture.height / 2;
+                DrawTexture(texture, x, y - 40, WHITE);
+                DrawRectangleLines(x, y - 40, texture.width, texture.height, DARKGRAY);
 
                 DrawText("We are drawing only one texture from various images composed!", 240, 350, 10, DARKGRAY);
-                DrawText("Source images have been cropped, scaled, flipped and copied one over the other.", 190, 370, 10, DARKGRAY);
+
+                string text = "Source images have been cropped, scaled, flipped and copied one over the other.";
+                DrawText(text, 90, 370, 10, DARKGRAY);
 
                 EndDrawing();
                 //----------------------------------------------------------------------------------

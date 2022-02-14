@@ -45,7 +45,7 @@ namespace Examples
             */
 
             // Set configuration flags for window creation
-            SetConfigFlags(FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT | FLAG_WINDOW_HIGHDPI);
+            SetConfigFlags(FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT);
             InitWindow(screenWidth, screenHeight, "raylib [core] example - window flags");
 
             Vector2 ballPosition = new Vector2(GetScreenWidth() / 2, GetScreenHeight() / 2);

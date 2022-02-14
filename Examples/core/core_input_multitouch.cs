@@ -72,7 +72,7 @@ namespace Examples
                 ClearBackground(RAYWHITE);
 
                 // Multitouch
-                for (int i = 0; i < MAX_TOUCH_POINTS; ++i)
+                for (int i = 0; i < 10; ++i)
                 {
                     touchPosition = GetTouchPosition(i);                    // Get the touch point
 

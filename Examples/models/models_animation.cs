@@ -31,7 +31,7 @@ namespace Examples
 {
     public class models_animation
     {
-        public unsafe static int Main()
+        public static int Main()
         {
             // Initialization
             //--------------------------------------------------------------------------------------
@@ -48,18 +48,15 @@ namespace Examples
             camera.fovy = 45.0f;                                // Camera field-of-view Y
             camera.projection = CAMERA_PERSPECTIVE;                   // Camera mode type
 
-            Model model = LoadModel("resources/guy/guy.iqm");                // Load the animated model mesh and basic data
-            Texture2D texture = LoadTexture("resources/guy/guytex.png");     // Load model texture and set material
-            Utils.SetMaterialTexture(ref model, 0, MATERIAL_MAP_ALBEDO, ref texture); // Set model material map texture
+            Model model = LoadModel("resources/models/iqm/guy.iqm");                // Load the animated model mesh and basic data
+            Texture2D texture = LoadTexture("resources/models/iqm/guytex.png");     // Load model texture and set material
+            Raylib.SetMaterialTexture(ref model, 0, MATERIAL_MAP_ALBEDO, ref texture); // Set model material map texture
 
             Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);            // Set model position
 
             // Load animation data
-            int animsCount = 0;
-            IntPtr animsPtr = LoadModelAnimations("resources/guy/guyanim.iqm", ref animsCount);
-
-            ModelAnimation* anims = (ModelAnimation*)animsPtr.ToPointer();
-
+            uint animsCount = 0;
+            var anims = LoadModelAnimations("resources/models/iqm/guyanim.iqm", ref animsCount);
             int animFrameCounter = 0;
 
             SetCameraMode(camera, CAMERA_FREE); // Set free camera mode
@@ -95,7 +92,7 @@ namespace Examples
 
                 for (int i = 0; i < model.boneCount; i++)
                 {
-                    Transform** framePoses = (Transform**)anims[0].framePoses.ToPointer();
+                    var framePoses = anims[0].FramePoses;
                     DrawCube(framePoses[animFrameCounter][i].translation, 0.2f, 0.2f, 0.2f, RED);
                 }
 

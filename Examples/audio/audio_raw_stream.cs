@@ -36,7 +36,7 @@ namespace Examples
             InitAudioDevice();              // Initialize audio device
 
             // Init raw audio stream (sample rate: 22050, sample size: 16bit-short, channels: 1-mono)
-            AudioStream stream = InitAudioStream(22050, 16, 1);
+            AudioStream stream = LoadAudioStream(22050, 16, 1);
 
             // Buffer for the single cycle waveform we are synthesizing
             short[] data = new short[MAX_SAMPLES];
@@ -158,8 +158,8 @@ namespace Examples
 
             // De-Initialization
             //--------------------------------------------------------------------------------------
-            CloseAudioStream(stream);   // Close raw audio stream and delete buffers from RAM
-            CloseAudioDevice();         // Close audio device (music streaming is automatically stopped)
+            UnloadAudioStream(stream);   // Close raw audio stream and delete buffers from RAM
+            CloseAudioDevice();          // Close audio device (music streaming is automatically stopped)
 
             CloseWindow();              // Close window and OpenGL context
             //--------------------------------------------------------------------------------------

@@ -42,7 +42,7 @@ namespace Examples
 
             float time = 0.0f;
             int timeLoc = GetShaderLocation(shader, "uTime");
-            Utils.SetShaderValue(shader, timeLoc, time, SHADER_UNIFORM_FLOAT);
+            Raylib.SetShaderValue(shader, timeLoc, time, SHADER_UNIFORM_FLOAT);
 
             SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
             // -------------------------------------------------------------------------------------------------------------
@@ -53,7 +53,7 @@ namespace Examples
                 // Update
                 //----------------------------------------------------------------------------------
                 time = (float)GetTime();
-                Utils.SetShaderValue(shader, timeLoc, time, SHADER_UNIFORM_FLOAT);
+                Raylib.SetShaderValue(shader, timeLoc, time, SHADER_UNIFORM_FLOAT);
                 //----------------------------------------------------------------------------------
 
                 // Draw

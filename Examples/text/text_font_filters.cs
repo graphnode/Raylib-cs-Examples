@@ -38,7 +38,7 @@ namespace Examples
             // NOTE: Textures/Fonts MUST be loaded after Window initialization (OpenGL context is required)
 
             // TTF Font loading with custom generation parameters
-            Font font = LoadFontEx("resources/KAISG.ttf", 96, null, 0);
+            Font font = LoadFontEx("resources/fonts/KAISG.ttf", 96, null, 0);
 
             // Generate mipmap levels to use trilinear filtering
             // NOTE: On 2D drawing it won't be noticeable, it looks like TEXTURE_FILTER_BILINEAR
@@ -94,14 +94,13 @@ namespace Examples
                 // Load a dropped TTF file dynamically (at current fontSize)
                 if (IsFileDropped())
                 {
-                    int count = 0;
-                    string[] droppedFiles = Utils.MarshalDroppedFiles(ref count);
+                    string[] files = Raylib.GetDroppedFiles();
 
                     // NOTE: We only support first ttf file dropped
-                    if (IsFileExtension(droppedFiles[0], ".ttf"))
+                    if (IsFileExtension(files[0], ".ttf"))
                     {
                         UnloadFont(font);
-                        font = LoadFontEx(droppedFiles[0], (int)fontSize, null, 0);
+                        font = LoadFontEx(files[0], (int)fontSize, null, 0);
                     }
                     ClearDroppedFiles();
                 }

@@ -30,15 +30,15 @@ namespace Examples
 
             // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
 
-            Image image = LoadImage("resources/raylib-cs_logo.png");  // Load image data into CPU memory (RAM)
-            Texture2D texture = LoadTextureFromImage(image);       // Image converted to texture, GPU memory (RAM -> VRAM)
-            UnloadImage(image);                                    // Unload image data from CPU memory (RAM)
+            Image image = LoadImage("resources/raylib-cs_logo.png");
+            Texture2D texture = LoadTextureFromImage(image);
+            UnloadImage(image);
 
-            image = GetTextureData(texture);                       // Retrieve image data from GPU memory (VRAM -> RAM)
-            UnloadTexture(texture);                                // Unload texture from GPU memory (VRAM)
+            image = LoadImageFromTexture(texture);
+            UnloadTexture(texture);
 
-            texture = LoadTextureFromImage(image);                 // Recreate texture from retrieved image data (RAM -> VRAM)
-            UnloadImage(image);                                    // Unload retrieved image data from CPU memory (RAM)
+            texture = LoadTextureFromImage(image);
+            UnloadImage(image);
             //---------------------------------------------------------------------------------------
 
             // Main game loop
@@ -54,7 +54,9 @@ namespace Examples
                 BeginDrawing();
                 ClearBackground(RAYWHITE);
 
-                DrawTexture(texture, screenWidth / 2 - texture.width / 2, screenHeight / 2 - texture.height / 2, WHITE);
+                int x = screenWidth / 2 - texture.width / 2;
+                int y = screenHeight / 2 - texture.height / 2;
+                DrawTexture(texture, x, y, WHITE);
 
                 DrawText("this IS a texture loaded from an image!", 300, 370, 10, GRAY);
 

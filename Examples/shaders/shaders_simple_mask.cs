@@ -70,12 +70,12 @@ namespace Examples
             // Load and apply the diffuse texture (colour map)
             Texture2D texDiffuse = LoadTexture("resources/plasma.png");
 
-            Material* materials = (Material*)model1.materials.ToPointer();
-            MaterialMap* maps = (MaterialMap*)materials[0].maps.ToPointer();
-            maps[(int)MATERIAL_MAP_ALBEDO].texture = texDiffuse;
+            Material* materials = model1.materials;
+            MaterialMap* maps = materials[0].maps;
+            model1.materials[0].maps[(int)MATERIAL_MAP_ALBEDO].texture = texDiffuse;
 
-            materials = (Material*)model2.materials.ToPointer();
-            maps = (MaterialMap*)materials[0].maps.ToPointer();
+            materials = model2.materials;
+            maps = materials[0].maps;
             maps[(int)MATERIAL_MAP_ALBEDO].texture = texDiffuse;
 
             // Using MAP_EMISSION as a spare slot to use for 2nd texture
@@ -83,25 +83,25 @@ namespace Examples
             // as they are bound as cube maps
             Texture2D texMask = LoadTexture("resources/mask.png");
 
-            materials = (Material*)model1.materials.ToPointer();
-            maps = (MaterialMap*)materials[0].maps.ToPointer();
+            materials = model1.materials;
+            maps = (MaterialMap*)materials[0].maps;
             maps[(int)MATERIAL_MAP_EMISSION].texture = texMask;
 
-            materials = (Material*)model2.materials.ToPointer();
-            maps = (MaterialMap*)materials[0].maps.ToPointer();
+            materials = model2.materials;
+            maps = (MaterialMap*)materials[0].maps;
             maps[(int)MATERIAL_MAP_EMISSION].texture = texMask;
 
-            int* locs = (int*)shader.locs.ToPointer();
+            int* locs = shader.locs;
             locs[(int)SHADER_LOC_MAP_EMISSION] = GetShaderLocation(shader, "mask");
 
             // Frame is incremented each frame to animate the shader
             int shaderFrame = GetShaderLocation(shader, "framesCounter");
 
             // Apply the shader to the two models
-            materials = (Material*)model1.materials.ToPointer();
+            materials = model1.materials;
             materials[0].shader = shader;
 
-            materials = (Material*)model2.materials.ToPointer();
+            materials = (Material*)model2.materials;
             materials[0].shader = shader;
 
             int framesCounter = 0;
@@ -121,7 +121,7 @@ namespace Examples
                 rotation.Z -= 0.0025f;
 
                 // Send frames counter to shader for animation
-                Utils.SetShaderValue(shader, shaderFrame, framesCounter, SHADER_UNIFORM_INT);
+                Raylib.SetShaderValue(shader, shaderFrame, framesCounter, SHADER_UNIFORM_INT);
 
                 // Rotate one of the models
                 model1.transform = MatrixRotateXYZ(rotation);

@@ -67,26 +67,26 @@ namespace Examples
             Shader distortion = LoadShader(null, "resources/distortion330.fs");
 
             // Update distortion shader with lens and distortion-scale parameters
-            Utils.SetShaderValue(distortion, GetShaderLocation(distortion, "leftLensCenter"),
+            Raylib.SetShaderValue(distortion, GetShaderLocation(distortion, "leftLensCenter"),
                         config.leftLensCenter, SHADER_UNIFORM_VEC2);
-            Utils.SetShaderValue(distortion, GetShaderLocation(distortion, "rightLensCenter"),
+            Raylib.SetShaderValue(distortion, GetShaderLocation(distortion, "rightLensCenter"),
                         config.rightLensCenter, SHADER_UNIFORM_VEC2);
-            Utils.SetShaderValue(distortion, GetShaderLocation(distortion, "leftScreenCenter"),
+            Raylib.SetShaderValue(distortion, GetShaderLocation(distortion, "leftScreenCenter"),
                         config.leftScreenCenter, SHADER_UNIFORM_VEC2);
-            Utils.SetShaderValue(distortion, GetShaderLocation(distortion, "rightScreenCenter"),
+            Raylib.SetShaderValue(distortion, GetShaderLocation(distortion, "rightScreenCenter"),
                         config.rightScreenCenter, SHADER_UNIFORM_VEC2);
 
-            Utils.SetShaderValue(distortion, GetShaderLocation(distortion, "scale"),
+            Raylib.SetShaderValue(distortion, GetShaderLocation(distortion, "scale"),
                         config.scale, SHADER_UNIFORM_VEC2);
-            Utils.SetShaderValue(distortion, GetShaderLocation(distortion, "scaleIn"),
+            Raylib.SetShaderValue(distortion, GetShaderLocation(distortion, "scaleIn"),
                         config.scaleIn, SHADER_UNIFORM_VEC2);
 
             unsafe
             {
                 SetShaderValue(distortion, GetShaderLocation(distortion, "deviceWarpParam"),
-                            new IntPtr(device.lensDistortionValues), SHADER_UNIFORM_VEC4);
+                            device.lensDistortionValues, SHADER_UNIFORM_VEC4);
                 SetShaderValue(distortion, GetShaderLocation(distortion, "chromaAbParam"),
-                            new IntPtr(device.chromaAbCorrection), SHADER_UNIFORM_VEC4);
+                            device.chromaAbCorrection, SHADER_UNIFORM_VEC4);
             }
 
             // Initialize framebuffer for stereo rendering

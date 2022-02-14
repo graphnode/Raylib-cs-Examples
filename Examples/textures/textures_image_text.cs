@@ -29,17 +29,21 @@ namespace Examples
             InitWindow(screenWidth, screenHeight, "raylib [texture] example - image text drawing");
 
             // TTF Font loading with custom generation parameters
-            Font font = LoadFontEx("resources/KAISG.ttf", 64, null, 95);
+            Font font = LoadFontEx("resources/fonts/KAISG.ttf", 64, null, 95);
 
-            Image parrots = LoadImage("resources/parrots.png"); // Load image in CPU memory (RAM)
+            Image parrots = LoadImage("resources/parrots.png");
 
             // Draw over image using custom font
             ImageDrawTextEx(ref parrots, font, "[Parrots font drawing]", new Vector2(20, 20), font.baseSize, 0, WHITE);
 
-            Texture2D texture = LoadTextureFromImage(parrots);  // Image converted to texture, uploaded to GPU memory (VRAM)
-            UnloadImage(parrots);   // Once image has been converted to texture and uploaded to VRAM, it can be unloaded from RAM
+            // Image converted to texture, uploaded to GPU memory (VRAM)
+            Texture2D texture = LoadTextureFromImage(parrots);
+            UnloadImage(parrots);
 
-            Vector2 position = new Vector2(screenWidth / 2 - texture.width / 2, screenHeight / 2 - texture.height / 2 - 20);
+            Vector2 position = new Vector2(
+                screenWidth / 2 - texture.width / 2,
+                screenHeight / 2 - texture.height / 2 - 20
+            );
 
             bool showFont = false;
 
@@ -52,9 +56,13 @@ namespace Examples
                 // Update
                 //----------------------------------------------------------------------------------
                 if (IsKeyDown(KEY_SPACE))
+                {
                     showFont = true;
+                }
                 else
+                {
                     showFont = false;
+                }
                 //----------------------------------------------------------------------------------
 
                 // Draw
@@ -68,11 +76,13 @@ namespace Examples
                     DrawTextureV(texture, position, WHITE);
 
                     // Draw text directly using sprite font
-                    DrawTextEx(font, "[Parrots font drawing]", new Vector2(position.X + 20,
-                               position.Y + 20 + 280), font.baseSize, 0, WHITE);
+                    Vector2 textPosition = new Vector2(position.X + 20, position.Y + 20 + 280);
+                    DrawTextEx(font, "[Parrots font drawing]", textPosition, font.baseSize, 0, WHITE);
                 }
                 else
+                {
                     DrawTexture(font.texture, screenWidth / 2 - font.texture.width / 2, 50, BLACK);
+                }
 
                 DrawText("PRESS SPACE to SEE USED SPRITEFONT ", 290, 420, 10, DARKGRAY);
 
@@ -82,9 +92,8 @@ namespace Examples
 
             // De-Initialization
             //--------------------------------------------------------------------------------------
-            UnloadTexture(texture);     // Texture unloading
-
-            UnloadFont(font);     // Unload custom spritefont
+            UnloadTexture(texture);
+            UnloadFont(font);
 
             CloseWindow();              // Close window and OpenGL context
             //--------------------------------------------------------------------------------------

@@ -64,9 +64,10 @@ namespace Examples
 
                 if (IsGamepadAvailable(0))
                 {
-                    DrawText($"GP1: {GetGamepadName(0)}", 10, 10, 10, BLACK);
+                    string gamepadName = GetGamepadName_(0);
+                    DrawText($"GP1: {gamepadName}", 10, 10, 10, BLACK);
 
-                    if (IsGamepadName(0, XBOX360_NAME_ID))
+                    if (gamepadName == XBOX360_NAME_ID)
                     {
                         DrawTexture(texXboxPad, 0, 0, DARKGRAY);
 
@@ -124,7 +125,7 @@ namespace Examples
                         DrawRectangle(170, 30, 15, (int)(((1.0f + GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_TRIGGER)) / 2.0f) * 70), RED);
                         DrawRectangle(604, 30, 15, (int)(((1.0f + GetGamepadAxisMovement(0, GAMEPAD_AXIS_RIGHT_TRIGGER)) / 2.0f) * 70), RED);
                     }
-                    else if (IsGamepadName(0, PS3_NAME_ID))
+                    else if (gamepadName == PS3_NAME_ID)
                     {
                         DrawTexture(texPs3Pad, 0, 0, DARKGRAY);
 

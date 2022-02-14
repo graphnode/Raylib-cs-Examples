@@ -46,7 +46,12 @@ namespace Examples
             {
                 // Update
                 //----------------------------------------------------------------------------------
-                Rectangle rec = new Rectangle((GetScreenWidth() - width - 250) / 2, (GetScreenHeight() - height) / 2, width, height);
+                Rectangle rec = new Rectangle(
+                    (GetScreenWidth() - width - 250) / 2,
+                    (GetScreenHeight() - height) / 2,
+                    width,
+                    height
+                );
                 //----------------------------------------------------------------------------------
 
                 // Draw
@@ -58,11 +63,17 @@ namespace Examples
                 DrawRectangle(560, 0, GetScreenWidth() - 500, GetScreenHeight(), ColorAlpha(LIGHTGRAY, 0.3f));
 
                 if (drawRect)
+                {
                     DrawRectangleRec(rec, ColorAlpha(GOLD, 0.6f));
+                }
                 if (drawRoundedRect)
+                {
                     DrawRectangleRounded(rec, roundness, segments, ColorAlpha(MAROON, 0.2f));
+                }
                 if (drawRoundedLines)
+                {
                     DrawRectangleRoundedLines(rec, roundness, segments, lineThick, ColorAlpha(MAROON, 0.4f));
+                }
 
                 // Draw GUI controls
                 //------------------------------------------------------------------------------
@@ -77,7 +88,8 @@ namespace Examples
                 drawRect = GuiCheckBox(new Rectangle( 640, 380, 20, 20), "DrawRect", drawRect);*/
                 //------------------------------------------------------------------------------
 
-                DrawText($"MODE: {((segments >= 4) ? "MANUAL" : "AUTO")}", 640, 280, 10, (segments >= 4) ? MAROON : DARKGRAY);
+                string text = $"MODE: {((segments >= 4) ? "MANUAL" : "AUTO")}";
+                DrawText(text, 640, 280, 10, (segments >= 4) ? MAROON : DARKGRAY);
                 DrawFPS(10, 10);
 
                 EndDrawing();

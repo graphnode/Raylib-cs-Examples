@@ -19,7 +19,7 @@ namespace Examples
 {
     public class shapes_colors_palette
     {
-        const int MAX_COLORS_COUNT = 21;          // Number of colors available
+        const int MAX_COLORS_COUNT = 21;
 
         public static int Main()
         {
@@ -30,12 +30,15 @@ namespace Examples
 
             InitWindow(screenWidth, screenHeight, "raylib [shapes] example - colors palette");
 
-            Color[] colors = new[] {
-            DARKGRAY, MAROON, ORANGE, DARKGREEN, DARKBLUE, DARKPURPLE, DARKBROWN,
-            GRAY, RED, GOLD, LIME, BLUE, VIOLET, BROWN, LIGHTGRAY, PINK, YELLOW,
-            GREEN, SKYBLUE, PURPLE, BEIGE };
+            Color[] colors = new[]
+            {
+                DARKGRAY, MAROON, ORANGE, DARKGREEN, DARKBLUE, DARKPURPLE, DARKBROWN,
+                GRAY, RED, GOLD, LIME, BLUE, VIOLET, BROWN, LIGHTGRAY, PINK, YELLOW,
+                GREEN, SKYBLUE, PURPLE, BEIGE
+            };
 
-            string[] colorNames = new[] {
+            string[] colorNames = new[]
+            {
                 "DARKGRAY", "MAROON", "ORANGE", "DARKGREEN", "DARKBLUE", "DARKPURPLE",
                 "DARKBROWN", "GRAY", "RED", "GOLD", "LIME", "BLUE", "VIOLET", "BROWN",
                 "LIGHTGRAY", "PINK", "YELLOW", "GREEN", "SKYBLUE", "PURPLE", "BEIGE"
@@ -53,7 +56,8 @@ namespace Examples
                 colorsRecs[i].height = 100;
             }
 
-            int[] colorState = new int[MAX_COLORS_COUNT];           // Color state: 0-DEFAULT, 1-MOUSE_HOVER
+            // Color state: 0-DEFAULT, 1-MOUSE_HOVER
+            int[] colorState = new int[MAX_COLORS_COUNT];
 
             Vector2 mousePoint = new Vector2(0.0f, 0.0f);
 
@@ -94,10 +98,21 @@ namespace Examples
 
                     if (IsKeyDown(KEY_SPACE) || colorState[i] != 0)
                     {
-                        DrawRectangle((int)colorsRecs[i].x, (int)(colorsRecs[i].y + colorsRecs[i].height - 26), (int)colorsRecs[i].width, 20, BLACK);
+                        DrawRectangle(
+                            (int)colorsRecs[i].x,
+                            (int)(colorsRecs[i].y + colorsRecs[i].height - 26),
+                            (int)colorsRecs[i].width,
+                            20,
+                            BLACK
+                        );
                         DrawRectangleLinesEx(colorsRecs[i], 6, ColorAlpha(BLACK, 0.3f));
-                        DrawText(colorNames[i], (int)(colorsRecs[i].x + colorsRecs[i].width - MeasureText(colorNames[i], 10) - 12),
-                                (int)(colorsRecs[i].y + colorsRecs[i].height - 20), 10, colors[i]);
+                        DrawText(
+                            colorNames[i],
+                            (int)(colorsRecs[i].x + colorsRecs[i].width - MeasureText(colorNames[i], 10) - 12),
+                            (int)(colorsRecs[i].y + colorsRecs[i].height - 20),
+                            10,
+                            colors[i]
+                        );
                     }
                 }
 

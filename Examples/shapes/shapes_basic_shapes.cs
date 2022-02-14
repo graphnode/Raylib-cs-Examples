@@ -10,7 +10,6 @@
 ********************************************************************************************/
 
 using System.Numerics;
-using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
 
@@ -55,13 +54,17 @@ namespace Examples
                 DrawRectangleGradientH(screenWidth / 4 * 2 - 90, 170, 180, 130, MAROON, GOLD);
                 DrawRectangleLines(screenWidth / 4 * 2 - 40, 320, 80, 60, ORANGE);
 
-                DrawTriangle(new Vector2(screenWidth / 4 * 3, 80),
-                             new Vector2(screenWidth / 4 * 3 - 60, 150),
-                             new Vector2(screenWidth / 4 * 3 + 60, 150), VIOLET);
+                DrawTriangle(
+                    new Vector2(screenWidth / 4 * 3, 80),
+                    new Vector2(screenWidth / 4 * 3 - 60, 150),
+                    new Vector2(screenWidth / 4 * 3 + 60, 150), VIOLET
+                );
 
-                DrawTriangleLines(new Vector2(screenWidth / 4 * 3, 160),
-                                  new Vector2(screenWidth / 4 * 3 - 20, 230),
-                                  new Vector2(screenWidth / 4 * 3 + 20, 230), DARKBLUE);
+                DrawTriangleLines(
+                    new Vector2(screenWidth / 4 * 3, 160),
+                    new Vector2(screenWidth / 4 * 3 - 20, 230),
+                    new Vector2(screenWidth / 4 * 3 + 20, 230), DARKBLUE
+                );
 
                 DrawPoly(new Vector2(screenWidth / 4 * 3, 320), 6, 80, 0, BROWN);
 

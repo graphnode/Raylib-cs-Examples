@@ -96,9 +96,9 @@ namespace Examples
 
             for (int i = 0; i < MAX_SPOTS; i++)
             {
-                string posName = $"spots[{i}].pos\0";
-                string innerName = $"spots[{i}].inner\0";
-                string radiusName = $"spots[{i}].radius\0";
+                string posName = $"spots[{i}].pos";
+                string innerName = $"spots[{i}].inner";
+                string radiusName = $"spots[{i}].radius";
 
                 spots[i].posLoc = GetShaderLocation(shdrSpot, posName);
                 spots[i].innerLoc = GetShaderLocation(shdrSpot, innerName);
@@ -109,7 +109,7 @@ namespace Examples
             // a pitch black half and a dimly lit half.
             int wLoc = GetShaderLocation(shdrSpot, "screenWidth");
             float sw = (float)GetScreenWidth();
-            SetShaderValue(shdrSpot, wLoc, ref sw, SHADER_UNIFORM_FLOAT);
+            Raylib.SetShaderValue(shdrSpot, wLoc, sw, SHADER_UNIFORM_FLOAT);
 
             // Randomise the locations and velocities of the spotlights
             // and initialise the shader locations
@@ -121,16 +121,16 @@ namespace Examples
 
                 while ((MathF.Abs(spots[i].vel.X) + MathF.Abs(spots[i].vel.Y)) < 2)
                 {
-                    spots[i].vel.X = GetRandomValue(-40, 40) / 10;
-                    spots[i].vel.Y = GetRandomValue(-40, 40) / 10;
+                    spots[i].vel.X = GetRandomValue(-40, 40) / 10.0f;
+                    spots[i].vel.Y = GetRandomValue(-40, 40) / 10.0f;
                 }
 
-                spots[i].inner = 28 * (i + 1);
-                spots[i].radius = 48 * (i + 1);
+                spots[i].inner = 28.0f * (i + 1);
+                spots[i].radius = 48.0f * (i + 1);
 
-                SetShaderValue(shdrSpot, spots[i].posLoc, ref spots[i].pos.X, SHADER_UNIFORM_VEC2);
-                SetShaderValue(shdrSpot, spots[i].innerLoc, ref spots[i].inner, SHADER_UNIFORM_FLOAT);
-                SetShaderValue(shdrSpot, spots[i].radiusLoc, ref spots[i].radius, SHADER_UNIFORM_FLOAT);
+                Raylib.SetShaderValue(shdrSpot, spots[i].posLoc, spots[i].pos, SHADER_UNIFORM_VEC2);
+                Raylib.SetShaderValue(shdrSpot, spots[i].innerLoc, spots[i].inner, SHADER_UNIFORM_FLOAT);
+                Raylib.SetShaderValue(shdrSpot, spots[i].radiusLoc, spots[i].radius, SHADER_UNIFORM_FLOAT);
             }
 
             SetTargetFPS(60);               // Set  to run at 60 frames-per-second
@@ -171,7 +171,7 @@ namespace Examples
                             spots[i].vel.Y = -spots[i].vel.Y;
                     }
 
-                    SetShaderValue(shdrSpot, spots[i].posLoc, ref spots[i].pos.X, SHADER_UNIFORM_VEC2);
+                    Raylib.SetShaderValue(shdrSpot, spots[i].posLoc, spots[i].pos, SHADER_UNIFORM_VEC2);
                 }
 
                 // Draw

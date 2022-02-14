@@ -12,7 +12,6 @@
 using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
-using static Raylib_cs.Easings;
 using static Raylib_cs.Color;
 using static Raylib_cs.KeyboardKey;
 
@@ -53,7 +52,7 @@ namespace Examples
 
                         // NOTE: Remember that 3rd parameter of easing function refers to
                         // desired value variation, do not confuse it with expected final value!
-                        rec.y = EaseElasticOut(framesCounter, -100, GetScreenHeight() / 2 + 100, 120);
+                        rec.y = Easings.EaseElasticOut(framesCounter, -100, GetScreenHeight() / 2 + 100, 120);
 
                         if (framesCounter >= 120)
                         {
@@ -64,8 +63,8 @@ namespace Examples
                     // Scale box to an horizontal bar
                     case 1:
                         framesCounter += 1;
-                        rec.height = EaseBounceOut(framesCounter, 100, -90, 120);
-                        rec.width = EaseBounceOut(framesCounter, 100, GetScreenWidth(), 120);
+                        rec.height = Easings.EaseBounceOut(framesCounter, 100, -90, 120);
+                        rec.width = Easings.EaseBounceOut(framesCounter, 100, GetScreenWidth(), 120);
 
                         if (framesCounter >= 120)
                         {
@@ -76,7 +75,7 @@ namespace Examples
                     // Rotate horizontal bar rectangle
                     case 2:
                         framesCounter += 1;
-                        rotation = EaseQuadOut(framesCounter, 0.0f, 270.0f, 240);
+                        rotation = Easings.EaseQuadOut(framesCounter, 0.0f, 270.0f, 240);
 
                         if (framesCounter >= 240)
                         {
@@ -87,7 +86,7 @@ namespace Examples
                     // Increase bar size to fill all screen
                     case 3:
                         framesCounter += 1;
-                        rec.height = EaseCircOut(framesCounter, 10, GetScreenWidth(), 120);
+                        rec.height = Easings.EaseCircOut(framesCounter, 10, GetScreenWidth(), 120);
 
                         if (framesCounter >= 120)
                         {
@@ -98,7 +97,7 @@ namespace Examples
                     // Fade out animation
                     case 4:
                         framesCounter++;
-                        alpha = EaseSineOut(framesCounter, 1.0f, -1.0f, 160);
+                        alpha = Easings.EaseSineOut(framesCounter, 1.0f, -1.0f, 160);
 
                         if (framesCounter >= 160)
                         {

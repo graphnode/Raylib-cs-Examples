@@ -33,12 +33,13 @@ namespace Examples
 
             // Box B: Mouse moved box
             Rectangle boxB = new Rectangle(GetScreenWidth() / 2 - 30, GetScreenHeight() / 2 - 30, 60, 60);
-            Rectangle boxCollision = new Rectangle(); // Collision rectangle
+            Rectangle boxCollision = new Rectangle();
 
-            int screenUpperLimit = 40;      // Top menu limits
+            int screenUpperLimit = 40;
 
-            bool pause = false;             // Movement pause
-            bool collision = false;         // Collision detection
+            // Movement pause
+            bool pause = false;
+            bool collision = false;
 
             SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
             //----------------------------------------------------------
@@ -115,10 +116,13 @@ namespace Examples
                     DrawRectangleRec(boxCollision, LIME);
 
                     // Draw collision message
-                    DrawText("COLLISION!", GetScreenWidth() / 2 - MeasureText("COLLISION!", 20) / 2, screenUpperLimit / 2 - 10, 20, BLACK);
+                    int cx = GetScreenWidth() / 2 - MeasureText("COLLISION!", 20) / 2;
+                    int cy = screenUpperLimit / 2 - 10;
+                    DrawText("COLLISION!", cx, cy, 20, BLACK);
 
                     // Draw collision area
-                    DrawText(string.Format("Collision Area: {0}", (int)boxCollision.width * (int)boxCollision.height), GetScreenWidth() / 2 - 100, screenUpperLimit + 10, 20, BLACK);
+                    string text = $"Collision Area: {(int)boxCollision.width * (int)boxCollision.height}";
+                    DrawText(text, GetScreenWidth() / 2 - 100, screenUpperLimit + 10, 20, BLACK);
                 }
 
                 DrawFPS(10, 10);

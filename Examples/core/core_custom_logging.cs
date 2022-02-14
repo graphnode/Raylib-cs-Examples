@@ -11,36 +11,37 @@
 *
 ********************************************************************************************/
 
+using System;
+using System.Runtime.InteropServices;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 using static Raylib_cs.Color;
 
 namespace Examples
 {
-    public class core_custom_logging
+    public unsafe class core_custom_logging
     {
-        // Custom logging funtion
-        /*void LogCustom(int msgType, string text, va_list args)
+        [UnmanagedCallersOnly(CallConvs = new[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+        private static void LogCustom(int logLevel, sbyte* text, sbyte* args)
         {
-            char timeStr[64] = { 0 };
-            time_t now = time(NULL);
-            struct tm *tm_info = localtime(ref);
+            var message = Logging.GetLogMessage(new IntPtr(text), new IntPtr(args));
 
-            strftime(timeStr, sizeof(timeStr), "%Y-%m-%d %H:%M:%S", tm_info);
-            printf("[%s] ", timeStr);
-
-            switch (msgType)
+            /*Console.ForegroundColor = logLevel switch
             {
-                case LOG_INFO: printf("[INFO] : "); break;
-                case LOG_ERROR: printf("[ERROR]: "); break;
-                case LOG_WARNING: printf("[WARN] : "); break;
-                case LOG_DEBUG: printf("[DEBUG]: "); break;
-                default: break;
-            }
+                TraceLogLevel.LOG_ALL => ConsoleColor.White,
+                TraceLogLevel.LOG_TRACE => ConsoleColor.Black,
+                TraceLogLevel.LOG_DEBUG => ConsoleColor.Blue,
+                TraceLogLevel.LOG_INFO => ConsoleColor.Black,
+                TraceLogLevel.LOG_WARNING => ConsoleColor.DarkYellow,
+                TraceLogLevel.LOG_ERROR => ConsoleColor.Red,
+                TraceLogLevel.LOG_FATAL => ConsoleColor.Red,
+                TraceLogLevel.LOG_NONE => ConsoleColor.White,
+                _ => throw new ArgumentOutOfRangeException(nameof(logLevel), logLevel, null)
+            };*/
 
-            vprintf(text, args);
-            printf("\n");
-        }*/
+            Console.WriteLine(message);
+            // Console.ResetColor();
+        }
 
         public static int Main()
         {
@@ -51,7 +52,7 @@ namespace Examples
 
             // First thing we do is setting our custom logger to ensure everything raylib logs
             // will use our own logger instead of its internal one
-            // SetTraceLogCallback(LogCustom);
+            Raylib.SetTraceLogCallback(&LogCustom);
 
             InitWindow(screenWidth, screenHeight, "raylib [core] example - custom logging");
 
@@ -80,6 +81,7 @@ namespace Examples
             // De-Initialization
             //--------------------------------------------------------------------------------------
             CloseWindow();        // Close window and OpenGL context
+            Raylib.SetTraceLogCallback(&Logging.LogConsole);
             //--------------------------------------------------------------------------------------
 
             return 0;

@@ -115,9 +115,13 @@ namespace Examples
                 DrawRectangleLinesEx(container, 3, borderColor); // Draw container border
 
                 // Draw text in container (add some padding)
-                DrawTextRec(font, text,
+                /*DrawTextRec(font, text,
                            new Rectangle(container.x + 4, container.y + 4, container.width - 4, container.height - 4),
                            20.0f, 2.0f, wordWrap, GRAY);
+
+
+                DrawTextBoxed(font, text, (Rectangle){ container.x + 4, container.y + 4, container.width - 4, container.height - 4 }, 20.0f, 2.0f, wordWrap, GRAY);
+                */
 
                 DrawRectangleRec(resizer, borderColor);         // Draw the resize box
 

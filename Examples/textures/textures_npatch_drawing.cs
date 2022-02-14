@@ -13,6 +13,7 @@
 *
 ********************************************************************************************/
 
+using System;
 using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
@@ -44,14 +45,46 @@ namespace Examples
             Rectangle dstRecV = new Rectangle(92.0f, 160.0f, 32.0f, 32.0f);
 
             // A 9-patch (NPT_9PATCH) changes its sizes in both axis
-            NPatchInfo ninePatchInfo1 = new NPatchInfo { sourceRec = new Rectangle(0.0f, 0.0f, 64.0f, 64.0f), left = 12, top = 40, right = 12, bottom = 12, layout = NPatchLayout.NPATCH_NINE_PATCH };
-            NPatchInfo ninePatchInfo2 = new NPatchInfo { sourceRec = new Rectangle(0.0f, 128.0f, 64.0f, 64.0f), left = 16, top = 16, right = 16, bottom = 16, layout = NPatchLayout.NPATCH_NINE_PATCH };
+            NPatchInfo ninePatchInfo1 = new NPatchInfo
+            {
+                source = new Rectangle(0.0f, 0.0f, 64.0f, 64.0f),
+                left = 12,
+                top = 40,
+                right = 12,
+                bottom = 12,
+                layout = NPatchLayout.NPATCH_NINE_PATCH
+            };
+            NPatchInfo ninePatchInfo2 = new NPatchInfo
+            {
+                source = new Rectangle(0.0f, 128.0f, 64.0f, 64.0f),
+                left = 16,
+                top = 16,
+                right = 16,
+                bottom = 16,
+                layout = NPatchLayout.NPATCH_NINE_PATCH
+            };
 
             // A horizontal 3-patch (NPT_3PATCH_HORIZONTAL) changes its sizes along the x axis only
-            NPatchInfo h3PatchInfo = new NPatchInfo { sourceRec = new Rectangle(0.0f, 64.0f, 64.0f, 64.0f), left = 8, top = 8, right = 8, bottom = 8, layout = NPatchLayout.NPATCH_THREE_PATCH_HORIZONTAL };
+            NPatchInfo h3PatchInfo = new NPatchInfo
+            {
+                source = new Rectangle(0.0f, 64.0f, 64.0f, 64.0f),
+                left = 8,
+                top = 8,
+                right = 8,
+                bottom = 8,
+                layout = NPatchLayout.NPATCH_THREE_PATCH_HORIZONTAL
+            };
 
             // A vertical 3-patch (NPT_3PATCH_VERTICAL) changes its sizes along the y axis only
-            NPatchInfo v3PatchInfo = new NPatchInfo { sourceRec = new Rectangle(0.0f, 192.0f, 64.0f, 64.0f), left = 6, top = 6, right = 6, bottom = 6, layout = NPatchLayout.NPATCH_THREE_PATCH_VERTICAL };
+            NPatchInfo v3PatchInfo = new NPatchInfo
+            {
+                source = new Rectangle(0.0f, 192.0f, 64.0f, 64.0f),
+                left = 6,
+                top = 6,
+                right = 6,
+                bottom = 6,
+                layout = NPatchLayout.NPATCH_THREE_PATCH_VERTICAL
+            };
 
             SetTargetFPS(60);
             //---------------------------------------------------------------------------------------
@@ -72,22 +105,12 @@ namespace Examples
                 dstRecV.height = mousePosition.Y - dstRecV.y;
 
                 // Set a minimum width and/or height
-                if (dstRec1.width < 1.0f)
-                    dstRec1.width = 1.0f;
-                if (dstRec1.width > 300.0f)
-                    dstRec1.width = 300.0f;
-                if (dstRec1.height < 1.0f)
-                    dstRec1.height = 1.0f;
-                if (dstRec2.width < 1.0f)
-                    dstRec2.width = 1.0f;
-                if (dstRec2.width > 300.0f)
-                    dstRec2.width = 300.0f;
-                if (dstRec2.height < 1.0f)
-                    dstRec2.height = 1.0f;
-                if (dstRecH.width < 1.0f)
-                    dstRecH.width = 1.0f;
-                if (dstRecV.height < 1.0f)
-                    dstRecV.height = 1.0f;
+                dstRec1.width = Math.Clamp(dstRec1.width, 1.0f, 300.0f);
+                dstRec1.height = MathF.Max(dstRec1.height, 1.0f);
+                dstRec2.width = Math.Clamp(dstRec2.width, 1.0f, 300.0f);
+                dstRec2.height = MathF.Max(dstRec2.height, 1.0f);
+                dstRecH.width = MathF.Max(dstRecH.width, 1.0f);
+                dstRecV.height = MathF.Max(dstRecV.height, 1.0f);
                 //----------------------------------------------------------------------------------
 
                 // Draw

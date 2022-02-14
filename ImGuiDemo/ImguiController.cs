@@ -49,10 +49,9 @@ namespace ImGuiDemo
             io.Fonts.GetTexDataAsRGBA32(out byte* pixels, out int width, out int height);
 
             // Upload texture to graphics system
-            IntPtr data = new IntPtr(pixels);
             Image image = new Image
             {
-                data = data,
+                data = pixels,
                 width = width,
                 height = height,
                 mipmaps = 1,
@@ -116,6 +115,11 @@ namespace ImGuiDemo
             UpdateKeyboard();
             UpdateMouse();
             UpdateGamepad();
+
+            if (Raylib.IsWindowResized())
+            {
+                Resize(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
+            }
 
             ImGui.NewFrame();
         }
@@ -243,7 +247,7 @@ namespace ImGuiDemo
                 Rlgl.rlDrawRenderBatchActive();
             }
 
-            Rlgl.rlBegin(Rlgl.RL_TRIANGLES);
+            Rlgl.rlBegin(DrawMode.TRIANGLES);
             Rlgl.rlSetTexture((uint)textureId);
 
             for (int i = 0; i <= (count - 3); i += 3)

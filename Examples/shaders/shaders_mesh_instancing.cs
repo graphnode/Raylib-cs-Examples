@@ -54,7 +54,7 @@ namespace Examples
 
             // Define the camera to look into our 3d world
             Camera3D camera = new Camera3D();
-            camera.position = new Vector3(125.0f, 125.0f, 125.0f);
+            camera.position = new Vector3(-125.0f, 125.0f, -125.0f);
             camera.target = new Vector3(0.0f, 0.0f, 0.0f);
             camera.up = new Vector3(0.0f, 1.0f, 0.0f);
             camera.fovy = 45.0f;
@@ -100,7 +100,7 @@ namespace Examples
 
             // Ambient light level
             int ambientLoc = GetShaderLocation(shader, "ambient");
-            Utils.SetShaderValue(shader, ambientLoc, new float[] { 0.2f, 0.2f, 0.2f, 1.0f }, SHADER_UNIFORM_VEC4);
+            Raylib.SetShaderValue(shader, ambientLoc, new float[] { 0.2f, 0.2f, 0.2f, 1.0f }, SHADER_UNIFORM_VEC4);
 
             Rlights.CreateLight(0, LightType.LIGHT_DIRECTIONAL, new Vector3(50, 50, 0), Vector3.Zero, WHITE, shader);
 
@@ -108,8 +108,7 @@ namespace Examples
             material.shader = shader;
             unsafe
             {
-                MaterialMap* maps = (MaterialMap*)material.maps.ToPointer();
-                maps[(int)MATERIAL_MAP_DIFFUSE].color = RED;
+                material.maps[(int)MATERIAL_MAP_DIFFUSE].color = RED;
             }
 
             SetCameraMode(camera, CAMERA_FREE); // Set a free camera mode
@@ -179,7 +178,7 @@ namespace Examples
 
                 // Update the light shader with the camera view position
                 float[] cameraPos = { camera.position.X, camera.position.Y, camera.position.Z };
-                Utils.SetShaderValue(shader, (int)SHADER_LOC_VECTOR_VIEW, cameraPos, SHADER_UNIFORM_VEC3);
+                Raylib.SetShaderValue(shader, (int)SHADER_LOC_VECTOR_VIEW, cameraPos, SHADER_UNIFORM_VEC3);
 
                 // Apply per-instance transformations
                 for (int i = 0; i < instances; i++)

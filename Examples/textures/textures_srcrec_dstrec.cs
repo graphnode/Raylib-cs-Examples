@@ -25,10 +25,11 @@ namespace Examples
             const int screenWidth = 800;
             const int screenHeight = 450;
 
-            InitWindow(screenWidth, screenHeight, "raylib [textures] examples - texture source and destination rectangles");
+            string title = "raylib [textures] examples - texture source and destination rectangles";
+            InitWindow(screenWidth, screenHeight, title);
 
             // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
-            Texture2D scarfy = LoadTexture("resources/scarfy.png");        // Texture loading
+            Texture2D scarfy = LoadTexture("resources/scarfy.png");
 
             int frameWidth = scarfy.width / 6;
             int frameHeight = scarfy.height;

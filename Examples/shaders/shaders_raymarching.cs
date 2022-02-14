@@ -61,7 +61,7 @@ namespace Examples
             int resolutionLoc = GetShaderLocation(shader, "resolution");
 
             float[] resolution = { (float)screenWidth, (float)screenHeight };
-            Utils.SetShaderValue(shader, resolutionLoc, resolution, SHADER_UNIFORM_VEC2);
+            Raylib.SetShaderValue(shader, resolutionLoc, resolution, SHADER_UNIFORM_VEC2);
 
             float runTime = 0.0f;
 
@@ -78,23 +78,20 @@ namespace Examples
                     screenWidth = GetScreenWidth();
                     screenHeight = GetScreenHeight();
                     resolution = new float[] { (float)screenWidth, (float)screenHeight };
-                    Utils.SetShaderValue(shader, resolutionLoc, resolution, SHADER_UNIFORM_VEC2);
+                    Raylib.SetShaderValue(shader, resolutionLoc, resolution, SHADER_UNIFORM_VEC2);
                 }
 
                 // Update
                 //----------------------------------------------------------------------------------
                 UpdateCamera(ref camera);              // Update camera
 
-                float[] cameraPos = { camera.position.X, camera.position.Y, camera.position.Z };
-                float[] cameraTarget = { camera.target.X, camera.target.Y, camera.target.Z };
-
                 float deltaTime = GetFrameTime();
                 runTime += deltaTime;
 
                 // Set shader required uniform values
-                Utils.SetShaderValue(shader, viewEyeLoc, cameraPos, SHADER_UNIFORM_VEC3);
-                Utils.SetShaderValue(shader, viewCenterLoc, cameraTarget, SHADER_UNIFORM_VEC3);
-                Utils.SetShaderValue(shader, runTimeLoc, runTime, SHADER_UNIFORM_FLOAT);
+                Raylib.SetShaderValue(shader, viewEyeLoc, camera.position, SHADER_UNIFORM_VEC3);
+                Raylib.SetShaderValue(shader, viewCenterLoc, camera.target, SHADER_UNIFORM_VEC3);
+                Raylib.SetShaderValue(shader, runTimeLoc, runTime, SHADER_UNIFORM_FLOAT);
                 //----------------------------------------------------------------------------------
 
                 // Draw
