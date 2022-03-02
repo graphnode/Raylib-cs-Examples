@@ -29,14 +29,14 @@ namespace Examples
             InitWindow(screenWidth, screenHeight, "raylib [shapes] example - draw rectangle rounded");
 
             float roundness = 0.2f;
-            int width = 200;
-            int height = 100;
+            int width = 400;
+            int height = 200;
             int segments = 0;
-            int lineThick = 1;
+            int lineThick = 10;
 
             bool drawRect = false;
-            bool drawRoundedRect = true;
-            bool drawRoundedLines = false;
+            bool drawRoundedRect = false;
+            bool drawRoundedLines = true;
 
             SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
             //--------------------------------------------------------------------------------------
@@ -47,10 +47,10 @@ namespace Examples
                 // Update
                 //----------------------------------------------------------------------------------
                 Rectangle rec = new Rectangle(
-                    (GetScreenWidth() - width - 250) / 2,
-                    (GetScreenHeight() - height) / 2,
-                    width,
-                    height
+                    (GetScreenWidth() - width - 250) / 2.0f,
+                    (GetScreenHeight() - height) / 2.0f,
+                    (float)width,
+                    (float)height
                 );
                 //----------------------------------------------------------------------------------
 
@@ -72,7 +72,7 @@ namespace Examples
                 }
                 if (drawRoundedLines)
                 {
-                    DrawRectangleRoundedLines(rec, roundness, segments, lineThick, ColorAlpha(MAROON, 0.4f));
+                    DrawRectangleRoundedLines(rec, roundness, segments, (float)lineThick, ColorAlpha(MAROON, 0.4f));
                 }
 
                 // Draw GUI controls

@@ -4,13 +4,14 @@ namespace ImGuiDemo
 {
     class Program
     {
-        static void Main(string[] args)
+        static unsafe void Main(string[] args)
         {
             const int screenWidth = 1280;
             const int screenHeight = 720;
 
             // Initialization
             //--------------------------------------------------------------------------------------
+            Raylib.SetTraceLogCallback(&Logging.LogConsole);
             Raylib.SetConfigFlags(ConfigFlags.FLAG_MSAA_4X_HINT | ConfigFlags.FLAG_VSYNC_HINT | ConfigFlags.FLAG_WINDOW_RESIZABLE);
             Raylib.InitWindow(screenWidth, screenHeight, "ImGui demo");
             Raylib.SetTargetFPS(60);

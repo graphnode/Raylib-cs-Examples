@@ -26,7 +26,7 @@ namespace Examples
         {
             var message = Logging.GetLogMessage(new IntPtr(text), new IntPtr(args));
 
-            /*Console.ForegroundColor = logLevel switch
+            /*Console.ForegroundColor = (TraceLogLevel)logLevel switch
             {
                 TraceLogLevel.LOG_ALL => ConsoleColor.White,
                 TraceLogLevel.LOG_TRACE => ConsoleColor.Black,
@@ -39,7 +39,7 @@ namespace Examples
                 _ => throw new ArgumentOutOfRangeException(nameof(logLevel), logLevel, null)
             };*/
 
-            Console.WriteLine(message);
+            Console.WriteLine($"Custom " + message);
             // Console.ResetColor();
         }
 
