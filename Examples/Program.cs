@@ -1,10 +1,13 @@
+using Raylib_cs;
 
 namespace Examples
 {
     class Program
     {
-        static void Main(string[] args)
+        static unsafe void Main(string[] args)
         {
+            Raylib.SetTraceLogCallback(&Logging.LogConsole);
+
             RunCoreExamples();
             RunShapesExamples();
             RunTextureExamples();
